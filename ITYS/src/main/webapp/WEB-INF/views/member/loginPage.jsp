@@ -6,6 +6,32 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+	//발급받은 키 중 javascript키를 사용해준다.
+	Kakao.init('');
+	console.log(Kakao.isInitialized()); // sdk초기화여부판단
+	//카카오로그인
+	function kakaoLogin() {
+		Kakao.Auth.login({
+			success : function(response) {
+				Kakao.API.request({
+					url : '/v2/user/me',
+					success : function(response) {
+						console.log(response)
+					},
+					fail : function(error) {
+						console.log(error)
+					},
+				})
+			},
+			fail : function(error) {
+				console.log(error)
+			},
+		})
+	}
+</script>
 </head>
 <body class="sub_page">
   <div class="hero_area">
@@ -22,15 +48,23 @@
         <div class="col-md-6">
           <div class="detail-box">
             <h3>
-              GET ONLINE COURSES FOR FREE
+              '나는 선생이고 너는 학생이야'의 회원이 아니신가요??
+            </h3><br>
+            <p>
+              회원가입하러 가기
+            </p>
+            <a href="enrollPage.do">
+              회원가입
+            </a>
+          </div><br>
+          <div class="detail-box">
+            <h3>
             </h3>
             <p>
-              Create your free account now and get immediate access to 100s of
-              online courses
+              SNS 계정으로 로그인하기
             </p>
-            <a href="">
-              REGISTER NOW
-            </a>
+              <img src="${ pageContext.servletContext.contextPath }/resources/images/member/kakaoLogin.png"
+              	onclick="kakaoLogin();" style="cursor:pointer;">      
           </div>
         </div>
         <div class="col-md-6">
@@ -38,7 +72,7 @@
             <h5>
               로그인
             </h5>
-            <form action="">
+            <form action="login.do" method="post">
               <div>
                 <input type="userid" placeholder="아이디" />
               </div>
