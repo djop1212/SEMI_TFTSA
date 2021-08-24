@@ -112,10 +112,10 @@
                       </tr>
                       <tr>
                       <td>7</td>
-                        <td>Herrod Chandler</td>
-                        <td>Sales Assistant</td>
+                        <td>김주연</td>
+                        <td>수학</td>
                         <td>5.0</td>
-                        <td>59</td>
+                        <td>선생님 존예리 무야호~!!~!!</td>
                         <td><input type="checkbox" name="review 7" value="no7"></td>
                       </tr>
                       <tr>
