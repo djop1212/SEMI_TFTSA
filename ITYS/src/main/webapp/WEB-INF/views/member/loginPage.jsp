@@ -81,6 +81,8 @@
               </div>
               <button type="submit">로그인</button>
             </form>
+            <!-- mypage 넘어가기위한 임시코드 -->
+            <a href="myPage.do">마이페이지</a>
           </div>
         </div>
       </div>

@@ -24,10 +24,16 @@ public class MemberController {
 		return "member/enrollPage";
 	}
 	
+	@RequestMapping(value="myPage.do")
+	public String moveMyPage() {
+		return "member/myPage";
+	}
+	
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod() {
 		return "common/main";
 	}
+	
 
 
 
