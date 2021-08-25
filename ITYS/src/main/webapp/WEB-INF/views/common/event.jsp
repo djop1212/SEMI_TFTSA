@@ -12,9 +12,9 @@
 
 <body class="sub_page">
   <div class="hero_area">
-    
+
     <c:import url="/WEB-INF/views/common/menubar.jsp" />
-    
+
   </div>
 
   <!-- event section -->
@@ -83,7 +83,7 @@
   <!-- end event section -->
 
   <c:import url="/WEB-INF/views/common/footer.jsp" />
-
+  
 </body>
 
 </html>

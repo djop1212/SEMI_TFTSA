@@ -7,14 +7,14 @@
 <head>
 
   <title>Joson</title>
-
+  
 </head>
 
 <body class="sub_page">
   <div class="hero_area">
     
     <c:import url="/WEB-INF/views/common/menubar.jsp" />
-    
+
   </div>
 
   <!-- contact section -->

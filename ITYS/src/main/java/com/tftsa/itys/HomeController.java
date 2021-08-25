@@ -65,7 +65,12 @@ public class HomeController {
 	public String loginViewForward() {
 		return "common/login"; // 내보낼 뷰파일명 리턴
 	}
-	
+    
+    @RequestMapping("payment.do")
+    public String paymentViewForward() {
+        return "payment/payment"; // 내보낼 뷰파일명 리턴
+    }
+
 	@RequestMapping("adminDashboard.do")
 	public String AdminDashViewForward() {
 		return "admin/adminDashboard"; // 내보낼 뷰파일명 리턴

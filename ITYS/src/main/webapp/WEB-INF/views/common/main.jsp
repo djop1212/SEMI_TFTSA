@@ -12,9 +12,9 @@
 
 <body>
   <div class="hero_area">
-  
+
     <c:import url="/WEB-INF/views/common/menubar.jsp" />
-    
+
     <!-- slider section -->
     <section class=" slider_section position-relative">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
