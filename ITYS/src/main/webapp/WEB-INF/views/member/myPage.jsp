@@ -6,6 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+function Click(){
+	if($("input:radio[id='student']").is(":checked")==true){
+		console.log("student");
+		window.name = "studentForm";
+		window.open("upsprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+	}else{
+		console.log("tutor");
+		window.name = "tutorForm";
+		window.open("uptprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+	}
+}
+</script>
 <style type="text/css">
 div#left{
 	width: 200px;
@@ -69,7 +83,7 @@ div.box {
 	<!-- event section -->
 	<section class="event_section layout_padding">
 		<div class="container">
-			<div class="heading_container">
+			<div align="center" class="heading_container">
 				<h3>마이페이지</h3>
 				<!-- <p>Upcoming Education Events to feed your brain.</p> -->
 			</div>
@@ -94,9 +108,15 @@ div.box {
 					<div id="right">
 						<div>
 						<table>
-							<tr><td><h4>프로필 추가</h4></td>
-							<td width="100px" align="right"><input type="radio" name="profile_type" value="student">학생 &nbsp;</td>
-							<td><input type="radio" name="profile_type" value="tutor">선생님</td></tr>
+							<tr>
+								<td><h4>프로필 추가</h4></td>
+								<td width="100px" align="right">
+									<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
+								</td>
+								<td>
+									<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
+								</td>
+							</tr>
 						</table>
 						</div><br>
 						<div>

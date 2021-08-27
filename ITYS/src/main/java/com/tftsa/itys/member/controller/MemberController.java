@@ -34,6 +34,17 @@ public class MemberController {
 		return "common/main";
 	}
 	
+	@RequestMapping(value="upsprofile.do")
+	public String moveUpdateStudentProfile() {
+		return "member/studentProfile";
+	}
+	
+	@RequestMapping(value="uptprofile.do")
+	public String moveUpdateTutorProfile() {
+		return "member/tutorProfile";
+	}
+	
+	
 
 
 
