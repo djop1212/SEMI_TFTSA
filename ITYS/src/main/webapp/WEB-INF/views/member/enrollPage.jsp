@@ -22,8 +22,8 @@
 
   <section class="login_section layout_padding">
     <div class="container">
-      <div class="row">
-        
+      <!-- <div class="row"> -->
+        <center>
         <div class="col-md-6">
           <div class="login_form">
             <h5>
@@ -58,7 +58,8 @@
             </form>
           </div>
         </div>
-      </div>
+        </center>
+      
     </div>
   </section>
 

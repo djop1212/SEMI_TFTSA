@@ -6,10 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+function Click(){
+	if($("input:radio[id='student']").is(":checked")==true){
+		console.log("student");
+		window.name = "studentForm";
+		window.open("upsprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+	}else{
+		console.log("tutor");
+		window.name = "tutorForm";
+		window.open("uptprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+	}
+}
+</script>
 <style type="text/css">
 div#left{
-	width: 200px;
-	margin:5px;
+	/* width: 250px !important; */
+	margin: 5px;
+	-webkit-box-flex: 0.5;
+      -ms-flex: 0.5;
+          flex: 0.5;
 }
 div#right{
 	border-left:1px solid #cbcbcb;
@@ -54,7 +71,7 @@ ul#bar li a:hover{
 }
 div.box {
 	padding-top: 15px; 
-	width:950px !important; 
+	width:900px !important; 
 	align:center;
 }
 </style>
@@ -69,24 +86,23 @@ div.box {
 	<!-- event section -->
 	<section class="event_section layout_padding">
 		<div class="container">
-			<div class="heading_container">
-				<h3>마이페이지</h3>
-				<!-- <p>Upcoming Education Events to feed your brain.</p> -->
+			<div class="heading_container" style="padding-left: 130px;">
+				<h3 style="padding-left: 15px;">마이페이지</h3>
 			</div>
 			<div class="event_container" align="center">
 				<div class="box">
 					<div id="left">
 						<div>
 							<img
-								src="${ pageContext.servletContext.contextPath }/resources/images/event-img.jpg"
+								src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
 								width="120px" height="120px" />
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="">프로필</a></li>
+								<li><a href="myPage.do" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
 								<li><a href="">채팅목록</a></li>
-								<li><a href="">찜 목록</a></li>
-								<li><a href="">내 강의 내역</a></li>
+								<li><a href="wishl.do">찜 목록</a></li>
+								<li><a href="mclass.do">내 강의 내역</a></li>
 							</ul>
 						</div>
 						<div style="color:#969ca2;"><a href="">탈퇴하기</a></div>
@@ -94,9 +110,15 @@ div.box {
 					<div id="right">
 						<div>
 						<table>
-							<tr><td><h4>프로필 추가</h4></td>
-							<td width="100px" align="right"><input type="radio" name="profile_type" value="student">학생 &nbsp;</td>
-							<td><input type="radio" name="profile_type" value="tutor">선생님</td></tr>
+							<tr>
+								<td><h4>프로필 추가</h4></td>
+								<td width="100px" align="right">
+									<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
+								</td>
+								<td>
+									<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
+								</td>
+							</tr>
 						</table>
 						</div><br>
 						<div>
