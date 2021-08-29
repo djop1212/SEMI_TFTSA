@@ -95,7 +95,7 @@
 					<h6 class="dropdown-header">Message Center</h6>
 					<a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle" src="img/man.png"
+							<img class="rounded-circle" src="${ pageContext.servletContext.contextPath }/admin_resources/img/man.png"
 								style="max-width: 60px" alt="">
 							<div class="status-indicator bg-success"></div>
 						</div>
@@ -106,7 +106,7 @@
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center" href="#">
 						<div class="dropdown-list-image mr-3">
-							<img class="rounded-circle" src="img/girl.png"
+							<img class="rounded-circle" src="${ pageContext.servletContext.contextPath }/admin_resources/img/girl.png"
 								style="max-width: 60px" alt="">
 							<div class="status-indicator bg-default"></div>
 						</div>
@@ -179,7 +179,7 @@
 				class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> <img class="img-profile rounded-circle"
-					src="img/boy.png" style="max-width: 60px"> <span
+					src="${ pageContext.servletContext.contextPath }/admin_resources/img/boy.png" style="max-width: 60px"> <span
 					class="ml-2 d-none d-lg-inline text-white small">Maman
 						Ketoprak</span>
 			</a>
