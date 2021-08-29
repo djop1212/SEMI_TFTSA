@@ -44,7 +44,15 @@ public class MemberController {
 		return "member/tutorProfile";
 	}
 	
+	@RequestMapping("wishl.do")
+	public String moveWishList() {
+		return "member/wishList";
+	}
 	
+	@RequestMapping("mclass.do")
+	public String moveMyClass() {
+		return "member/myClass";
+	}
 
 
 

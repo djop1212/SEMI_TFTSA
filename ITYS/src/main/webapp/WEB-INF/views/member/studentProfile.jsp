@@ -21,7 +21,7 @@ tr td{
 						<tr>
 							<th>프로필 사진</th>
 							<td>
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/event-img.jpg"
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
 									width="120px" height="120px">
 							</td>
 						</tr>
