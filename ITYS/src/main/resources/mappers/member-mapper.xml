@@ -15,29 +15,26 @@
 		<result property="user_position" column="user_position" />
 		<result property="login_ok" column="login_ok" />
 	</resultMap>
-		
-	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
-		select * from member 
-		where user_id = #{ user_id } 
-		and user_pwd = #{ user_pwd }
-		and login_ok = 'Y'
-	</select>
 	
 	<select id="selectUser" parameterType="string" resultMap="resultMember">
-		select * from member 
-		where user_id = #{  }
+		select * from user_info 
+		where user_id = #{ uid }
 	</select>
 
 	<insert id="insertUser" parameterType="Member">
-		insert into user_info (user_no, user_ssn, user_name, user_phone, user_id, user_pwd, uwer_email, user_position, login_ok)
+		insert into user_info (user_no, user_ssn, user_name, user_phone, user_id, user_pwd, user_email, user_position, login_ok)
 		values 
-		(#{user_no}, #{user_ssn}, #{user_name}, #{user_phone}, #{user_id}, #{user_pwd}, #{user_email}, #{user_position}, #{login_ok})
+		(user_seq.nextval, #{user_ssn}, #{user_name}, #{user_phone}, #{user_id}, #{user_pwd}, #{user_email}, 'S', default)
 	</insert>
-
 	
 	<delete id="deleteUser" parameterType="string">
-		delete from member where userid = #{ userid }
+		delete from user_info where user_id = #{ user_id }
 	</delete>
+	
+	<select id="selectIdCheck" parameterType="string" resultType="_int">
+		select count(user_id) from user_info 
+		where user_id = #{ user_id }
+	</select>
 
 </mapper>
 
