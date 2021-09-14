@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paymentMapper">
+	<resultMap type="Tutor" id="resultTutor">
+		<id column="user_no" property="user_no" />
+		<result column="pic" property="pic" />
+		<result column="min_pay" property="min_pay" />
+		<result column="online_ok" property="online_ok" />
+		<result column="area" property="area" />
+		<result column="intro" property="intro" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="style" property="style" />
+		<result column="l_grd" property="l_grd" />
+		<result column="class_min" property="class_min" />
+		<result column="class_times" property="class_times" />
+		<result column="sub_name" property="sub_name" />
+	</resultMap>
+
+	<select id="selectTutor" parameterType="_int" resultMap="resultTutor">
+		select * from Tutor
+		where user_no = #{ user_no }
+	</select>
+</mapper>

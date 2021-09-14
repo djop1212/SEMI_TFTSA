@@ -139,6 +139,78 @@
 .header-hidden {
 	visibility: hidden;
 }
+
+.pop-layer .pop-container {
+  padding: 20px 25px;
+}
+
+.pop-layer p.ctxt {
+  color: #666;
+  line-height: 25px;
+}
+
+.pop-layer .btn-r {
+  width: 100%;
+  margin: 10px 0 20px;
+  padding-top: 10px;
+  border-top: 1px solid #DDD;
+  text-align: right;
+}
+
+.pop-layer {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 410px;
+  height: auto;
+  background-color: #fff;
+  border: 5px solid #3571B5;
+  z-index: 10;
+}
+
+.dim-layer {
+  display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.dim-layer .dimBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.dim-layer .pop-layer {
+  display: block;
+}
+
+a.btn-layerClose {
+  display: inline-block;
+  height: 25px;
+  padding: 0 14px 0;
+  border: 1px solid #304a8a;
+  background-color: #3f5a9d;
+  font-size: 13px;
+  color: #fff;
+  line-height: 25px;
+}
+
+a.btn-layerClose:hover {
+  border: 1px solid #091940;
+  background-color: #1f326a;
+  color: #fff;
+}
 </style>
 
 <body class="sub_page">
@@ -147,7 +219,7 @@
     <c:import url="/WEB-INF/views/common/menubar.jsp" />
     
   </div>
-	
+
 	<p class="header-payment header-hidden">결제 하기</p>
 	<center>
 	<div class="panel-heading">
@@ -159,20 +231,30 @@
 	    		<div>
 	    			<div class="panel-control">
 	    				<div class="btn-group">
-	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body"><i class="fa">찜하기</i></button>
-	    					<button type="button" class="btn btn-default"><i class="fa">대화삭제</i></button>
+	    					<c:url var="insertLikes" value="insertLikes.do">
+								<c:param name="student_no" value="1"/>
+								<c:param name="tutor_no" value="2"/>
+							</c:url>
+	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body" onclick="location.href='${ insertLikes }'"><i class="fa">찜하기</i></button>
+	    					<c:url var="deleteChatting" value="deleteChatting.do">
+								<c:param name="chat_room_no" value="1"/>
+							</c:url>
+	    					<button type="button" class="btn btn-default" onclick="nextDelete()"><i class="fa">대화삭제</i></button>
 	    				</div>
 	    			</div>
 	    			<div>
-	    				<h3 class="panel-title speech-left"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture">빽이</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.usertutor.pic }" class="img-circle img-sm">${ requestScope.usertutor.user_name }</h3>
 	    			</div>	
 	    		</div>
 	    		<div class="row panel-heading">
 	    			<div class="col-6">
-	    				<input class="btn btn-primary btn-block" type="button" value="신고하기">
+	    				<input class="btn btn-primary btn-block btn-example" type="button" value="신고하기" href="#layer2">
 	    			</div>
 	    			<div class="col-6">
-	    				<input class="btn btn-primary btn-block" type="button" value="과외성사">
+	    				<c:url var="payment" value="payment.do">
+							<c:param name="user_no" value="2"/>
+						</c:url>
+	    				<input class="btn btn-primary btn-block" type="button" value="과외성사" onclick="nextPayment()">
 	    			</div>
 	    		</div>
 	    
@@ -236,7 +318,7 @@
 	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input">
 	    					</div>
 	    					<div class="col-3">
-	    						<button class="btn btn-primary btn-block" type="submit">보내기</button>
+	    						<button class="btn btn-primary btn-block" type="button" onclick="send();">보내기</button>
 	    					</div>
 	    				</div>
 	    			</div>
@@ -246,10 +328,107 @@
 	</div>
 	<div class="panel-heading">
 	</div>
+	<div class="dim-layer">
+	    <div class="dimBg"></div>
+	    <div id="layer2" class="pop-layer">
+	        <div class="pop-container">
+	            <div class="pop-conts">
+	                <!--content //-->
+	                <p>신고내용을 입력하세요.</p>
+	                <input type="text" class="ctxt mb20" id="contents"><br>
+	                <div class="btn-r">
+	                		<c:url var="insertBlock" value="insertBlock.do">
+								<c:param name="student_name" value="임길동"/>
+								<c:param name="tutor_name" value="홍길동"/>
+								<c:param name="user_no" value="2"/>
+							</c:url>
+	                	<a href="#" class="btn-layerClose" onclick="nextBlock()">확인</a>
+	                    <a href="#" class="btn-layerClose">취소</a>
+	                </div>
+	                <!--// content-->
+	            </div>
+	        </div>
+	    </div>
+	</div>
 	</center>
 	<p class="header-payment header-hidden">결제 하기</p>
 
 	<c:import url="/WEB-INF/views/common/footer.jsp" />
 
+	<script>
+		function nextPayment() {
+			if(confirm("과외를 성사시키시겠습니까?"))
+		 	{
+		  		location.href="${ payment }";
+		 	}
+		 	else
+		 	{
+		 		alert('취소하셨습니다.');
+		 	}
+		}
+		
+		function nextDelete() {
+			if(confirm("대화를 삭제하시겠습니까?"))
+		 	{
+		  		location.href="${ deleteChatting }";
+		 	}
+		 	else
+		 	{
+		 		alert('취소하셨습니다.');
+		 	}
+		}
+		
+		function nextBlock() {
+			if(confirm("다음 내용으로 신고하시겠습니까?"))
+		 	{
+				var contents = document.getElementById("contents").value;
+		  		location.href="${ insertBlock }&contents=" + contents;
+		 	}
+		 	else
+		 	{
+		 		alert('취소하셨습니다.');
+		 	}
+		}
+	</script>
+	
+	<script type="text/javascript">
+		$('.btn-example').click(function(){
+	        var $href = $(this).attr('href');
+	        layer_popup($href);
+	    });
+	    function layer_popup(el){
+	
+	        var $el = $(el);    //레이어의 id를 $el 변수에 저장
+	        var isDim = $el.prev().hasClass('dimBg'); //dimmed 레이어를 감지하기 위한 boolean 변수
+	
+	        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+	
+	        var $elWidth = ~~($el.outerWidth()),
+	            $elHeight = ~~($el.outerHeight()),
+	            docWidth = $(document).width(),
+	            docHeight = $(document).height();
+	
+	        // 화면의 중앙에 레이어를 띄운다.
+	        if ($elHeight < docHeight || $elWidth < docWidth) {
+	            $el.css({
+	                marginTop: -$elHeight /2,
+	                marginLeft: -$elWidth/2
+	            })
+	        } else {
+	            $el.css({top: 0, left: 0});
+	        }
+	
+	        $el.find('a.btn-layerClose').click(function(){
+	            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+	            return false;
+	        });
+	
+	        $('.layer .dimBg').click(function(){
+	            $('.dim-layer').fadeOut();
+	            return false;
+	        });
+	    }
+	</script>
+	
 </body>
 </html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chattingMapper">
+
+	<resultMap type="UserTutor" id="resultUserTutor">
+		<id column="user_no" property="user_no"/>
+		<result column="pic" property="pic" />
+		<result column="min_pay" property="min_pay" />
+		<result column="online_ok" property="online_ok" />
+		<result column="area" property="area" />
+		<result column="intro" property="intro" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="style" property="style" />
+		<result column="l_grd" property="l_grd" />
+		<result column="class_min" property="class_min" />
+		<result column="class_times" property="class_times" />
+		<result column="sub_name" property="sub_name" />
+		<result column="user_ssn" property="user_ssn"/>
+		<result column="user_name" property="user_name"/>
+		<result column="user_phone" property="user_phone"/>
+		<result column="user_id" property="user_id"/>
+		<result column="user_pwd" property="user_pwd"/>
+		<result column="user_email" property="user_email"/>
+		<result column="user_position" property="user_position"/>
+		<result column="login_ok" property="login_ok"/>
+	</resultMap>
+
+	<resultMap type="Chattingroom" id="resultChattingroom">
+		<id column="chat_room_no" property="chat_room_no" />
+		<result column="student_name" property="student_name" />
+		<result column="tutor_name" property="tutor_name" />
+	</resultMap>
+	
+	<resultMap type="Likes" id="resultLikes">
+		<id column="like_no" property="like_no" />
+		<result column="student_no" property="student_no" />
+		<result column="tutor_no" property="tutor_no" />
+	</resultMap>
+	
+	<resultMap type="Chattingblock" id="resultChattingblock">
+		<id column="block_no" property="block_no" />
+		<result column="student_name" property="student_name" />
+		<result column="tutor_name" property="tutor_name" />
+		<result column="wrtn_datetm" property="wrtn_datetm" />
+		<result column="contents" property="contents" />
+		<result column="user_no" property="user_no" />
+		<result column="user_name" property="user_name" />
+	</resultMap>
+	
+	<select id="selectChatting" parameterType="_int" resultMap="resultUserTutor">
+		select * from tutor
+		join user_info using(user_no)
+		where user_no = #{ user_no }
+	</select>
+
+	<delete id="deleteChatting" parameterType="_int">
+		delete from chatting_room
+		where chat_room_no = #{ chat_room_no }
+	</delete>
+	
+	<insert id="insertLikes" parameterType="Likes" >
+		insert into likes (like_no, student_no, tutor_no)
+		values (likes_seq.nextval, #{ student_no }, #{ tutor_no })
+	</insert>
+	
+	<insert id="insertBlock" parameterType="Chattingblock">
+		insert into chatting_block
+		values (chatting_block_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, #{ contents }, #{ user_no }, #{ student_name })
+	</insert>
+</mapper>
