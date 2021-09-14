@@ -22,17 +22,17 @@ public class MemberDao {
 	public Member selectUser(String user_id) {
 		return session.selectOne("memberMapper.selectUser", user_id);
 	}
-//	
-//	public String selectUserId(String user_email) {
-//		return session.selectOne("memberMapper.selectUserId", user_email);
-//	}
-//	
-//	public String selectUserPwd(String user_email) {
-//		return session.selectOne("memberMapper.selectUserPwd", user_email);
-//	}
 
 	public int selectIdCheck(String user_id) {
 		return session.selectOne("memberMapper.selectIdCheck", user_id);
+	}
+
+	public String selectUserId(String user_email) throws Exception {
+		return session.selectOne("memberMapper.selectUserId", user_email);
+	}
+
+	public int updateUserPwd(Member member) {
+		return session.update("memberMapper.updateUserPwd", member);
 	}
 
 }

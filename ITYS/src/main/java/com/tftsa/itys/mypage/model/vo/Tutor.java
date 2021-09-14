@@ -1,7 +1,7 @@
 package com.tftsa.itys.mypage.model.vo;
 
 public class Tutor implements java.io.Serializable{
-	private static final long serialVersionUID = 1112L;
+	private static final long serialVersionUID = 112L;
 	
 	private int user_no;
 	private String pic;

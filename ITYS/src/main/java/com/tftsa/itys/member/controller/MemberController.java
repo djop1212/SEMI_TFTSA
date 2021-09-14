@@ -1,6 +1,7 @@
 package com.tftsa.itys.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +46,7 @@ public class MemberController {
 		member.setUser_pwd(bcryptPasswordEncoder.encode(member.getUser_pwd()));
 
 		if (memberService.insertUser(member) > 0) {
-			return "common/main";
+			return "common/loginPage";
 		} else {
 			model.addAttribute("message", "회원 가입 실패...");
 			return "common/error";
@@ -122,16 +124,35 @@ public class MemberController {
 	// 아이디 찾기 페이지로 이동
 	@RequestMapping("findIdPage.do")
 	public String moveSearchId() {
-		return "member/searchid";
+		return "member/searchId";
+	}
+	
+	// 아이디 찾기
+	@RequestMapping(value = "findId.do", method = { RequestMethod.POST, RequestMethod.GET})
+	public String find_id(HttpServletResponse response, @RequestParam(value="user_email", required=false) String user_email, Model md) throws Exception{
+		md.addAttribute("user_id", memberService.selectUserId(response, user_email));
+		return "/member/findId";
 	}
 
 	// 비밀번호 찾기 페이지로 이동
 	@RequestMapping("findPwdPage.do")
 	public String moveSearchPwd() {
-		return "member/searchpwd";
+		return "member/searchPwd";
 	}
 	
-	// id 
+	// 비밀번호 찾기 
+	@RequestMapping(value="findPwd.do", method = RequestMethod.POST)
+	public void find_pw(@ModelAttribute Member member, HttpServletResponse response, @RequestParam(value="user_id", required=true) String user_id, @RequestParam(value="user_email", required=true) String user_email) throws Exception{
+		member.setUser_id(user_id);
+		member.setUser_email(user_email);
+		memberService.findUserPwd(response, member);
+		
+		member.setUser_pwd(bcryptPasswordEncoder.encode(member.getUser_pwd()));
+		//logger.info("member: "+member);
+		memberService.updateUserPwd(member);
+	}
+	
+	// id 중복확인
 	@RequestMapping(value="idCheck.do", method = RequestMethod.POST)
 	@ResponseBody
 	public int idCheck(@RequestParam("id") String user_id) {

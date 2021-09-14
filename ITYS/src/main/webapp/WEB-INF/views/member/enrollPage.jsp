@@ -55,13 +55,12 @@
 		return true; //전송함
 	}
 	function checkId(){
-        //var id = $('#id').val(); //id값이 "id"인 입력란의 값을 저장
         $.ajax({
             url:'idCheck.do', //Controller에서 인식할 주소
             type:'post', //POST 방식으로 전달
             data:{id:$("#id").val()},
             success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
-            	console.log("id : "+id);
+            	//console.log("id : "+id);
                 if(cnt != 1){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
                     $('.id_ok').css("display","inline-block"); 
                     $('.id_already').css("display", "none");
@@ -119,6 +118,10 @@
 							</div>
 							<div>* 이메일
 								<input type="email" name="user_email" placeholder="예) itys@study.co.kr" required>
+							</div>
+							<div>* 
+								<input type="radio" name="user_position" value="S" checked> 학생 &nbsp;
+								<input type="radio" name="user_position" value="T"> 선생님
 							</div>
 							<button type="submit">회원가입하기</button>
 						</form>

@@ -1,7 +1,7 @@
 package com.tftsa.itys.mypage.model.vo;
 
 public class Likes implements java.io.Serializable{
-	private static final long serialVersionUID = 1114L;
+	private static final long serialVersionUID = 114L;
 	
 	private int like_no;
 	private int student_no;
