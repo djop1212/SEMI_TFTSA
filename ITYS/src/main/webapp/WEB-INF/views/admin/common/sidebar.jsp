@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,11 +39,13 @@
           
 
       <li class="nav-item ">
-        <a class="nav-link" href="adminDeposit.do">
+        <c:url var="selectpaymentall" value="selectpaymentall.do" />
+        <a class="nav-link" href="${ selectpaymentall }">
           <span>입금관리</span></a>
           
       <li class="nav-item">
-        <a class="nav-link" href="adminChatting.do">
+        <c:url var="selectchattingall" value="selectchattingall.do" />
+        <a class="nav-link" href="${ selectchattingall }">
           <span>채팅관리</span></a>
           
       <li class="nav-item">

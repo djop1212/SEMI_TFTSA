@@ -65,16 +65,16 @@ public class HomeController {
 	public String loginViewForward() {
 		return "common/login"; // 내보낼 뷰파일명 리턴
 	}
-    
-    @RequestMapping("payment.do")
-    public String paymentViewForward() {
-        return "payment/payment"; // 내보낼 뷰파일명 리턴
-    }
-    
-    @RequestMapping("chatting.do")
-    public String chattingViewForward() {
-        return "chatting/chatting"; // 내보낼 뷰파일명 리턴
-    }
+	
+	@RequestMapping("test.do")
+	public String testViewForward() {
+		return "chatting/test"; // 내보낼 뷰파일명 리턴
+	}
+	
+	@RequestMapping("adminTest.do")
+	public String adminTestViewForward() {
+		return "admin/adminTest"; // 내보낼 뷰파일명 리턴
+	}
 
 	@RequestMapping("adminDashboard.do")
 	public String AdminDashViewForward() {
