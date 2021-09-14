@@ -74,15 +74,24 @@
             </h5>
             <form action="login.do" method="post">
               <div>
-                <input type="userid" placeholder="아이디" />
+                <input type="text" name="user_id" id="uid" placeholder="아이디" />
               </div>
               <div>
-                <input type="userpwd" placeholder="비밀번호" />
+                <input type="password" name="user_pwd" id="upwd" placeholder="비밀번호" />
               </div>
               <button type="submit">로그인</button>
             </form>
-            <!-- mypage 넘어가기위한 임시코드 -->
-            <a href="myPage.do">마이페이지</a>
+            <c:if test="${!empty loginMember and loginMember.login_ok eq 'Y'}">
+            <c:url var="callMypage" value="myPage.do">
+            	<c:param name="user_id" value="${loginMember.user_id }"/>
+            </c:url>
+            <br><a href="${callMypage }">마이페이지</a>
+            <br><a href="logout.do">로그아웃</a>
+            <c:url var="udelete" value="deleteUser.do">
+            	<c:param name="user_id" value="${loginMember.user_id }"/>
+            </c:url>
+            <br><a href="${udelete }">회원탈퇴</a>
+            </c:if>
           </div>
         </div>
       </div>
