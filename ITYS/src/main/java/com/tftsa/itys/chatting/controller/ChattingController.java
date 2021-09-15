@@ -11,8 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.service.ChattingService;
-import com.tftsa.itys.chatting.model.vo.Likes;
 import com.tftsa.itys.chatting.model.vo.UserTutor;
+import com.tftsa.itys.mypage.model.vo.Likes;
 
 @Controller
 public class ChattingController {

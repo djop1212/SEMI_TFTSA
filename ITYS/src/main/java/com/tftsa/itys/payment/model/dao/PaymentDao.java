@@ -4,7 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.tftsa.itys.payment.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 @Repository("paymentDao")
 public class PaymentDao {

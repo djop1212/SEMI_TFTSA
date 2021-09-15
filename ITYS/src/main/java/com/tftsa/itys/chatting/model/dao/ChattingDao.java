@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
-import com.tftsa.itys.chatting.model.vo.Likes;
 import com.tftsa.itys.chatting.model.vo.UserTutor;
+import com.tftsa.itys.mypage.model.vo.Likes;
 
 @Repository("chattingDao")
 public class ChattingDao {

@@ -3,12 +3,34 @@
 "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<typeAliases>	
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="cacheEnabled" value="false" />
+	</settings>
+	
+	<typeAliases>
 	<!-- mapper 에서 사용할 vo 클래스 등록과 줄임말 지정 (선택) -->	
-		
+		<typeAlias type="com.tftsa.itys.payment.model.vo.Tutor" alias="Tutor" />
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserTutor" alias="UserTutor" />
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.Likes" alias="Likes" />
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.Chattingroom" alias="Chattingroom" />
+		<typeAlias type="com.tftsa.itys.adminPayment.model.vo.Payment" alias="Payment" />
+		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.UserChatting" alias="UserChatting" />
+		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Chattingblock" alias="Chattingblock" />
+		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
+    	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.ChattingRoom" alias="ChattingRoom"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
 	</typeAliases>
 	
 	<mappers>
-		
+		<mapper resource="mappers/adminchatting-mapper.xml" />
+		<mapper resource="mappers/adminpayment-mapper.xml" />
+		<mapper resource="mappers/chatting-mapper.xml" />
+		<mapper resource="mappers/payment-mapper.xml" />
+    	<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/mypage-mapper.xml"/>
 	</mappers>
 </configuration>

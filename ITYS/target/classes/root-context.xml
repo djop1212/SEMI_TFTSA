@@ -13,9 +13,9 @@
 		destroy-method="close" id="realDataSource">
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:51521:xe" />
-		<property name="username" value="c##student" />
-		<property name="password" value="c##student" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="c##finalproject" />
+		<property name="password" value="c##finalproject" />
 	</bean>
 	
 	<!-- 값이 적용되어 실행되는 query 문과 resultSet 결과값을

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.dao.ChattingDao;
-import com.tftsa.itys.chatting.model.vo.Likes;
 import com.tftsa.itys.chatting.model.vo.UserTutor;
+import com.tftsa.itys.mypage.model.vo.Likes;
 
 @Service("chattingService")
 public class ChattingServiceImpl implements ChattingService{
