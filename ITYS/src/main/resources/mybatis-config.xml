@@ -33,12 +33,10 @@
 		
 	<typeAliases>	
 	<!-- mapper 에서 사용할 vo 클래스 등록과 줄임말 지정 (선택) -->	
-		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
-		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
-		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
+		
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mappers/detail-mapper.xml" />
+		
 	</mappers>
 </configuration>
