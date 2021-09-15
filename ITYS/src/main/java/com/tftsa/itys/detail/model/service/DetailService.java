@@ -3,7 +3,7 @@ package com.tftsa.itys.detail.model.service;
 import java.util.ArrayList;
 
 import com.tftsa.itys.detail.model.vo.Detail;
-import com.tftsa.itys.detail.model.vo.TutorLikes;
+import com.tftsa.itys.detail.model.vo.ReviewDetail;
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 public interface DetailService {
@@ -14,7 +14,4 @@ public interface DetailService {
 	int tutorReview(int user_no);
 	double avgScore(int user_no);
 	ArrayList<Detail> reviewList(int user_no);
-	Detail reviewOne(int user_no);
-	int deleteReview(Detail detail);
-	int tutorSaveInsert(TutorLikes tlikes);
 }

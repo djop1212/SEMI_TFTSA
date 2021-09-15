@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-       
 <!DOCTYPE html>
 <html>
 <head>
@@ -229,9 +228,8 @@ S .br-theme-fontawesome-stars-o .br-widget {
   <span class="starR2">10</span>
 </div>  -->
 <span id="ex" class="ex">  </span> &nbsp;점
- <input type="hidden" name="score" id="score" >
-<input type="hidden" name="pay_no" value="1">
-<input type="hidden" name="user_no" value="2">
+ <input type="hidden" name="score" id="score" > 
+ <input type="hidden" name="pay_no" id="pay_no">
 <script type="text/javascript">
 $('#example').barrating('show', {
 	  theme: 'fontawesome-stars-o',
@@ -272,7 +270,7 @@ $('#example').barrating('show', {
     outline: none;
     border-radius: 5px;
     margin: 10px 0;
-		" class="rev_content" name="rev_content">
+		" class="rev_content">
                 </textarea>
               </div>
               <button type="submit">등록하기</button>
