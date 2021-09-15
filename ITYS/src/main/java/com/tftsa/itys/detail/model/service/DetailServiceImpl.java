@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.detail.model.dao.DetailDao;
 import com.tftsa.itys.detail.model.vo.Detail;
-import com.tftsa.itys.detail.model.vo.ReviewDetail;
+import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Service("detailService")
@@ -43,4 +43,17 @@ public class DetailServiceImpl implements DetailService{
 	 public ArrayList<Detail> reviewList(int user_no){
 		 return detailDao.reviewList(user_no);
 	 }
+	 @Override
+	 public Detail reviewOne(int user_no){
+		 return detailDao.reviewOne(user_no);
+	 }
+	 @Override
+	 public int deleteReview(Detail detail){
+		 return detailDao.deleteReview(detail);
+	 }
+	 @Override
+	 public int tutorSaveInsert(TutorLikes tlikes){
+		 return detailDao.tutorSaveInsert(tlikes);
+	 }
+	
 }
