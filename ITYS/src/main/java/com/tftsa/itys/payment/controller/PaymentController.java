@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.payment.model.service.PaymentService;
-import com.tftsa.itys.payment.model.vo.Tutor;
 
 @Controller
 public class PaymentController {

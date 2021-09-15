@@ -70,11 +70,6 @@ public class HomeController {
 	public String testViewForward() {
 		return "chatting/test"; // 내보낼 뷰파일명 리턴
 	}
-	
-	@RequestMapping("adminTest.do")
-	public String adminTestViewForward() {
-		return "admin/adminTest"; // 내보낼 뷰파일명 리턴
-	}
 
 	@RequestMapping("adminDashboard.do")
 	public String AdminDashViewForward() {
