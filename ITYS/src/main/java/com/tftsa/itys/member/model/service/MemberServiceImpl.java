@@ -39,6 +39,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int selectEmailCheck(String user_email) {
+		return memberDao.selectEmailCheck(user_email);
+	}
+	@Override
 	public String selectUserId(HttpServletResponse response, String user_email) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -136,5 +140,6 @@ public class MemberServiceImpl implements MemberService {
 	public int updateUserPwd(Member member) {
 		return memberDao.updateUserPwd(member);
 	}
+
 
 }

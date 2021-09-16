@@ -111,7 +111,7 @@ div.box {
 							<ul id="bar">
 								<li><a href="myPage.do">프로필</a></li>
 								<li><a href="">채팅목록</a></li>
-								<li><a href="wishl.do">찜 목록</a></li>
+								<li><a href="wishl.do?user_no=${user_no }">찜 목록</a></li>
 								<li><a href="mclass.do" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
 							</ul>
 						</div>

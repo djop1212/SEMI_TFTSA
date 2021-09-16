@@ -142,25 +142,7 @@ div.box {
 									</tr>
 								</table>
 								</li><hr>
-								<li>
-								<table>
-									<tr>
-									<td valign="top">
-										<img
-										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" />
-									</td>
-									<td style="width:475px; padding-left:15px">
-										선생님이름<br>	
-										과외 한 줄 소개<br>
-										전화번호<br>
-										과목<br>
-										지역<Br>
-									</td>
-									<td style="align: right;"><input type="checkbox"></td>
-									</tr>
-								</table>
-								</li>
+								
 							</ul>
 						</div>
 						<div class="btn-box" align="center">

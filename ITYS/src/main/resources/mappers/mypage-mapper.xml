@@ -12,9 +12,53 @@
 		<result property="time" column="time" />
 		<result property="stu_wish" column="stu_wish" />
 	</resultMap>
-		
 	
+	<resultMap type="Tutor" id="resultTutor">
+		<id property="user_no" column="user_no"/>
+		<result property="pic" column="pic"/>
+		<result property="min_pay" column="min_pay"/>
+		<result property="online_ok" column="online_ok"/>
+		<result property="area" column="area"/>
+		<result property="intro" column="intro"/>
+		<result property="day" column="day"/>
+		<result property="time" column="time"/>
+		<result property="style" column="style"/>
+		<result property="l_grd" column="l_grd"/>
+		<result property="class_min" column="class_min"/>
+		<result property="class_times" column="class_times"/>
+		<result property="sub_name" column="sub_name"/>
+	</resultMap>
+	
+	<resultMap type="Likes" id="resultLikes">
+		<id property="like_no" column="like_no"/>
+		<result property="student_no" column="student_no"/>
+		<result property="tutor_no" column="tutor_no"/>
+	</resultMap>
+		
+	<select id="selectListLikes" parameterType="_int" resultMap="resultLikes">
+		select * from likes	
+		where student_no = #{ user_no }
+	</select>
+	
+	<insert id="insertTutor" parameterType="Tutor">
+		insert into tutor (user_no, pic, min_pay, online_ok, area, intro, day, time, style, l_grd, class_min, class_times, sub_name) 
+		values 
+		(#{user_no}, #{pic}, #{min_pay}, #{online_ok}, #{area}, #{intro}, #{day}, #{time}, #{style}, #{l_grd}, #{class_time}, #{sub_name})
+	</insert>
+	<update id="updateTutorPosition" parameterType="_int">
+		update user_info set user_position = 'T' where user_no = #{user_no}
+	</update>
 
+	<insert id="insertStudent" parameterType="Student">
+		insert into student (user_no, pic, stu_job, day, time, stu_wish)
+		values
+		(#{user_no}, #{pic}, #{stu_job}, #{day}, #{time}, #{stu_wish})
+	</insert>
+	<update id="updateStudentPosition" parameterType="_int">
+		update user_info set user_position = 'S' where user_no = #{user_no}
+	</update>
+	
+	
 </mapper>
 
 

@@ -35,4 +35,8 @@ public class MemberDao {
 		return session.update("memberMapper.updateUserPwd", member);
 	}
 
+	public int selectEmailCheck(String user_email) {
+		return session.selectOne("memberMapper.selectEmailCheck", user_email);
+	}
+
 }

@@ -57,12 +57,22 @@
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/event.jsp' }">active</c:if>">
                 <a class="nav-link" href="event.do"> Events </a>
               </li>
+              <c:if test="${empty sessionScope.loginMember }">
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/contact.jsp' }">active</c:if>">
                 <a class="nav-link" href="contact.do">Contact us</a>
               </li>
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/login.jsp' }">active</c:if>">
-                <a class="nav-link" href="login.do">Login</a>
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if>">
+                <a class="nav-link" href="loginPage.do">Login</a>
               </li>
+              </c:if>
+              <c:if test="${!empty sessionScope.loginMember }">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/mypage/myPage.jsp' }">active</c:if>">
+                <a class="nav-link" href="myPage.do?user_id=${loginMember.user_id }">MyPage</a>
+              </li>
+              <li class="nav-item "><%-- <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if> --%>
+                <a class="nav-link" href="logout.do">Logout</a>
+              </li>
+              </c:if>
             </ul>
             <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
               <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>

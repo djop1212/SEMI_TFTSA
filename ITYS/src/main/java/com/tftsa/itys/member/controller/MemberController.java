@@ -38,7 +38,7 @@ public class MemberController {
 	}
 
 	// 회원가입하기
-	@RequestMapping(value="enroll.do", method = RequestMethod.POST)
+	@RequestMapping(value = "enroll.do", method = RequestMethod.POST)
 	public String insertUserMethod(Member member, Model model) {
 		logger.info("enroll.do : " + member);
 
@@ -46,7 +46,7 @@ public class MemberController {
 		member.setUser_pwd(bcryptPasswordEncoder.encode(member.getUser_pwd()));
 
 		if (memberService.insertUser(member) > 0) {
-			return "common/loginPage";
+			return "member/loginPage";
 		} else {
 			model.addAttribute("message", "회원 가입 실패...");
 			return "common/error";
@@ -64,7 +64,7 @@ public class MemberController {
 	public String loginMethod(Member member, HttpSession session, SessionStatus status, Model model) {
 		// System.out.println("login.do : "+member);
 		logger.info("login.do : " + member);
-		
+
 		// userid 가 일치하는 회원정보 조회해 옴
 		Member loginMember = memberService.selectUser(member.getUser_id());
 		// 조회해 온 회원정보의 암호화된 패스워드와 클라이언트가 보낸 암호 비교
@@ -75,7 +75,7 @@ public class MemberController {
 			// 세션 객체 생성 > 세션 안에 회원정보 저장
 			session.setAttribute("loginMember", loginMember);
 			status.setComplete(); // 요청 성공. 200 전송보냄
-			return "common/main";
+			return "member/loginPage";
 		} else {
 			model.addAttribute("message", "로그인 실패!");
 			return "common/error";
@@ -113,6 +113,7 @@ public class MemberController {
 	// 회원탈퇴
 	@RequestMapping("deleteUser.do")
 	public String deleteUserMethod(@RequestParam("user_id") String user_id, Model model) {
+		logger.info("user_id : " + user_id);
 		if (memberService.deleteUser(user_id) > 0) {
 			return "redirect:logout.do";
 		} else {
@@ -126,10 +127,11 @@ public class MemberController {
 	public String moveSearchId() {
 		return "member/searchId";
 	}
-	
+
 	// 아이디 찾기
-	@RequestMapping(value = "findId.do", method = { RequestMethod.POST, RequestMethod.GET})
-	public String find_id(HttpServletResponse response, @RequestParam(value="user_email", required=false) String user_email, Model md) throws Exception{
+	@RequestMapping(value = "findId.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public String find_id(HttpServletResponse response,
+			@RequestParam(value = "user_email", required = false) String user_email, Model md) throws Exception {
 		md.addAttribute("user_id", memberService.selectUserId(response, user_email));
 		return "/member/findId";
 	}
@@ -139,24 +141,36 @@ public class MemberController {
 	public String moveSearchPwd() {
 		return "member/searchPwd";
 	}
-	
-	// 비밀번호 찾기 
-	@RequestMapping(value="findPwd.do", method = RequestMethod.POST)
-	public void find_pw(@ModelAttribute Member member, HttpServletResponse response, @RequestParam(value="user_id", required=true) String user_id, @RequestParam(value="user_email", required=true) String user_email) throws Exception{
+
+	// 비밀번호 찾기
+	@RequestMapping(value = "findPwd.do", method = RequestMethod.POST)
+	public void find_pw(@ModelAttribute Member member, HttpServletResponse response,
+			@RequestParam(value = "user_id", required = true) String user_id,
+			@RequestParam(value = "user_email", required = true) String user_email) throws Exception {
 		member.setUser_id(user_id);
 		member.setUser_email(user_email);
 		memberService.findUserPwd(response, member);
-		
+
 		member.setUser_pwd(bcryptPasswordEncoder.encode(member.getUser_pwd()));
-		//logger.info("member: "+member);
+		// logger.info("member: "+member);
 		memberService.updateUserPwd(member);
 	}
-	
+
 	// id 중복확인
-	@RequestMapping(value="idCheck.do", method = RequestMethod.POST)
+	@RequestMapping(value = "idCheck.do", method = RequestMethod.POST)
 	@ResponseBody
 	public int idCheck(@RequestParam("id") String user_id) {
 		int cnt = memberService.selectIdCheck(user_id);
+		//logger.info("id : "+user_id);
+		return cnt;
+	}
+
+	// email 중복확인
+	@RequestMapping(value = "emailCheck.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int emailCheck(@RequestParam("email") String user_email) {
+		int cnt = memberService.selectEmailCheck(user_email);
+		//logger.info("email : "+user_email);
 		return cnt;
 	}
 
