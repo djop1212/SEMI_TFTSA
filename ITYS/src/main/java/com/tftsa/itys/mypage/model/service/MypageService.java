@@ -9,7 +9,7 @@ import com.tftsa.itys.mypage.model.vo.Tutor;
 public interface MypageService {
 
 	ArrayList<Likes> selectList(int user_no);
-	int insertTutor(int user_no);
+	int insertTutor(Tutor tutor);
 	int updateTutorPosition(int user_no);
 	int insertStudent(Student student);
 	int updateStudentPosition(int user_no);

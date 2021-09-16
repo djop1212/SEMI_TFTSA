@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 @Repository("mypageDao")
 public class MypageDao {
@@ -20,8 +21,8 @@ public class MypageDao {
 		return (ArrayList<Likes>)list;
 	}
 
-	public int insertTutor(int user_no) {
-		return session.insert("mypageMapper.insertTutor", user_no);
+	public int insertTutor(Tutor tutor) {
+		return session.insert("mypageMapper.insertTutor", tutor);
 	}
 	public int updateTutorPosition(int user_no) {
 		return session.update("mypageMapper.updateTutorPosition", user_no);

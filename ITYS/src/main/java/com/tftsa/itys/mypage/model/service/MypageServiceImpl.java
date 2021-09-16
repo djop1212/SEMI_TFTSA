@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tftsa.itys.mypage.model.dao.MypageDao;
 import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 @Service("mypageService")
 public class MypageServiceImpl implements MypageService{
@@ -21,8 +22,8 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public int insertTutor(int user_no) {
-		return mypageDao.insertTutor(user_no);
+	public int insertTutor(Tutor tutor) {
+		return mypageDao.insertTutor(tutor);
 	}
 
 	@Override

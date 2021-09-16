@@ -71,13 +71,20 @@ public class MypageController {
 
 	// 선생님 프로필 추가
 	@RequestMapping(value = "uptprofile.do", method = RequestMethod.POST)
-	public String insertTutorProfile(@RequestParam("user_no") int user_no, Tutor tutor, Model model) {
-		tutor.setUser_no(user_no);
+	public String insertTutorProfile(Tutor tutor, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name="pic", required = false) MultipartFile mfile) throws IOException {
 		logger.info("uptprofile.do : "+tutor);
-		if(mypageService.insertTutor(user_no)>0) {
-			return "mypage/myPage";
+		
+		if((mypageService.insertTutor(tutor) & mypageService.updateTutorPosition(tutor.getUser_no()))>0) {
+			PrintWriter out = response.getWriter();
+			String str = "";
+			str = "<script language='javascript'>";
+			str += "opener.window.location.reload();"; // 오프너 새로고침
+			str += "self.close();"; // 창닫기
+			str += "</script>";
+			out.print(str);
+			return null;
 		}else {
-			model.addAttribute("message", "선생님 프로필 추가 실패...");
+			model.addAttribute("message", "학생 프로필 추가 실패...");
 			return "common/error";
 		}
 	}
