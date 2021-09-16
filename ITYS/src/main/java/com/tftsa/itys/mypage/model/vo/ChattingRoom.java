@@ -1,7 +1,7 @@
 package com.tftsa.itys.mypage.model.vo;
 
 public class ChattingRoom implements java.io.Serializable{
-	private final static long serialVersionUID = 1115L;
+	private final static long serialVersionUID = 115L;
 	
 	private int chat_room_no;
 	private int student_no;

@@ -1,7 +1,7 @@
 package com.tftsa.itys.member.model.vo;
 
 public class Member implements java.io.Serializable{
-	private static final long serialVersionUID = 1111L;
+	private static final long serialVersionUID = 111L;
 	
 	private int user_no;
 	private String user_ssn;

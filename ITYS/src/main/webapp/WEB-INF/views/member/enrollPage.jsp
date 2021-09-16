@@ -34,6 +34,8 @@
 }
 .id_ok{color:#fff; display: none;}
 .id_already{color:#6A82FB; display: none;}
+.email_ok{color:#fff; display: none;}
+.email_already{color:#6A82FB; display: none;}
 </style>
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
@@ -55,7 +57,6 @@
 		return true; //전송함
 	}
 	function checkId(){
-        //var id = $('#id').val(); //id값이 "id"인 입력란의 값을 저장
         $.ajax({
             url:'idCheck.do', //Controller에서 인식할 주소
             type:'post', //POST 방식으로 전달
@@ -68,6 +69,27 @@
                 } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
                     $('.id_already').css("display","inline-block");
                     $('.id_ok').css("display", "none");
+                }
+            },
+            error: function(jqXHR, textstatus, errorthrown){
+				console.log("error : " + jqXHR + ", " + textstatus
+						+ ", " + errorthrown);
+			}
+        });
+    };
+    function checkEmail(){
+        $.ajax({
+            url:'emailCheck.do', //Controller에서 인식할 주소
+            type:'post', //POST 방식으로 전달
+            data:{email:$("#email").val()},
+            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
+            	console.log("email : "+email);
+                if(cnt != 1){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 이메일
+                    $('.email_ok').css("display","inline-block"); 
+                    $('.email_already').css("display", "none");
+                } else { // cnt가 1일 경우 -> 이미 존재하는 이메일
+                    $('.email_already').css("display","inline-block");
+                    $('.email_ok').css("display", "none");
                 }
             },
             error: function(jqXHR, textstatus, errorthrown){
@@ -101,7 +123,7 @@
 								<input type="text" name="user_name" placeholder="이름 " required/>
 							</div>
 							<div>* 아이디
-								<input type="text" id="id" name="user_id" placeholder="아이디" required oninput="checkId()" />&nbsp;
+								<input type="text" id="id" name="user_id" placeholder="아이디" required oninput="checkId()" /><br>
 								<span class="id_ok">사용 가능한 아이디입니다.</span>
 								<span class="id_already">이미 사용중인 아이디입니다.</span>
 							</div>
@@ -118,8 +140,14 @@
 								<input type="tel" name="user_phone" placeholder="예) 010-1234-5678" pattern="\d{3}-\d{4}-\d{4}" required>
 							</div>
 							<div>* 이메일
-								<input type="email" name="user_email" placeholder="예) itys@study.co.kr" required>
+								<input type="email" id="email" name="user_email" placeholder="예) itys@study.co.kr" required oninput="checkEmail()"/><br>
+								<span class="email_ok">사용 가능한 이메일입니다.</span>
+								<span class="email_already">이미 사용중인 이메일입니다.</span>
 							</div>
+							<!-- <div>* 
+								<input type="radio" name="user_position" value="S" checked> 학생 &nbsp;
+								<input type="radio" name="user_position" value="T"> 선생님
+							</div> -->
 							<button type="submit">회원가입하기</button>
 						</form>
 					</div>
