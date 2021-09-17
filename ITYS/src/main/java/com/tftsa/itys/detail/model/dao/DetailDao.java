@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 
 import com.tftsa.itys.detail.model.vo.Detail;
+import com.tftsa.itys.detail.model.vo.TutorLikes;
+import com.tftsa.itys.detail.model.vo.TutorQna;
 import com.tftsa.itys.detail.model.vo.ReviewDetail;
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
@@ -20,12 +22,20 @@ public class DetailDao {
 	SqlSessionTemplate sqlSession;
 	
 	public int reviewInsert(Detail detail) {
-		return sqlSession.update("detailMapper.reviewInsert", detail);
+
+		return sqlSession.insert("detailMapper.reviewInsert", detail);
 	}
+
+	public ArrayList<TutorDetail> tutorProfile(int user_no) {
+		List<TutorDetail> list = sqlSession.selectList("detailMapper.tutorProfile", user_no);
+		return (ArrayList<TutorDetail>)list;
+	}
+
 
 	public TutorDetail tutorProfile(int user_no) {
 		return sqlSession.selectOne("detailMapper.tutorProfile", user_no);
 	}
+
 
 	public ArrayList<TutorDetail> tutorPer(int user_no) {
 		List<TutorDetail> list = sqlSession.selectList("detailMapper.tutorPer", user_no);
@@ -45,4 +55,46 @@ public class DetailDao {
 		List<Detail> list = sqlSession.selectList("detailMapper.reviewList", user_no);
 		return (ArrayList<Detail>)list;
 	}
-}
+
+
+	public Detail reviewOne(int user_no) {
+		return sqlSession.selectOne("detailMapper.reviewOne", user_no);
+	}
+
+	public int deleteReview(Detail detail) {
+		return sqlSession.delete("detailMapper.deleteReview", detail);
+	}
+
+	public int tutorSaveInsert(TutorLikes tlikes) {
+		return sqlSession.insert("detailMapper.tutorSaveInsert", tlikes);
+	}
+
+	public ArrayList<TutorQna> qnaList(int tutor_no) {
+		List<TutorQna> list = sqlSession.selectList("detailMapper.qnaList", tutor_no);
+		return (ArrayList<TutorQna>)list;
+	}
+
+	public int qnaAnswerInsert(TutorQna tq) {
+		return sqlSession.insert("detailMapper.qnaAnswerInsert", tq);
+	}
+
+	public TutorQna qnaOne(int tutor_no) {
+		return sqlSession.selectOne("detailMapper.qnaOne", tutor_no);
+	}
+
+	public int qnaUpdate(TutorQna tqup) {
+		return sqlSession.update("detailMapper.qnaUpdate", tqup);
+	}
+
+	public ArrayList<TutorDetail> tutorPic(int user_no) {
+		List<TutorDetail> list = sqlSession.selectList("detailMapper.tutorPic", user_no);
+		return (ArrayList<TutorDetail>)list;
+	}
+
+	public int tutorSaveCancel(TutorLikes tlikes) {
+		return sqlSession.delete("detailMapper.tutorSaveCancel", tlikes);
+	}
+
+	
+	}
+
