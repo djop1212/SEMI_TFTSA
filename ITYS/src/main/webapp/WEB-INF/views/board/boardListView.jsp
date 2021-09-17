@@ -31,11 +31,11 @@ function showWriteForm(){
 <hr>
 <h2 align="center">게시글 목록 : 총 ${ listCount } 개</h2>
 <!-- 게시글 쓰기(등록)은 로그인한 회원만 가능함 -->
-<%-- <c:if test="${ !empty sessionScope.loginMember }"> --%>
+<c:if test="${ !empty sessionScope.loginMember }">
 	<div style="align:center;text-align:center;">
 		<button onclick="showWriteForm();">글쓰기</button>
 	</div>
-<%-- </c:if> --%>
+</c:if>
 <br>
 <table align="center" border="1" cellspacing="0" width="1000">
 <tr>

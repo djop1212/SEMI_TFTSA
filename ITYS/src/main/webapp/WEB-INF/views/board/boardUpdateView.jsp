@@ -17,6 +17,7 @@
 <%-- <c:if test="${ board.board_level eq 1 }"> --%>
 	<!-- form 에서 입력값들과 파일을 같이 전송하려면 
 	    반드시 enctype="multipart/form-data" 속성을 추가해야 함 -->
+<c:if test="${ !empty sessionScope.loginMember }">
 	<form action="boriginup.do" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="board_no" value="${ board.board_no }">
 	<input type="hidden" name="page" value="${ currentPage }">
@@ -50,11 +51,11 @@
 	</th></tr>
 	</table>
 	</form>
-<%-- </c:if> --%>
+</c:if>
 
 
 <%-- <c:if test="${ board.board_level ne 1 }"> --%>
-	<form action="breplyup.do" method="post">
+	<%-- <form action="breplyup.do" method="post">
 	<input type="hidden" name="board_num" value="${ board.board_no }">
 	<input type="hidden" name="page" value="${ currentPage }">
 	<table align="center" width="500" border="1" cellspacing="0" 
@@ -70,7 +71,7 @@
 	<input type="button" value="이전페이지로 이동" onclick="javascript:history.go(-1); return false;">
 	</th></tr>
 	</table>
-	</form>
+	</form> --%>
 <%-- </c:if> --%>
 </body>
 </html>

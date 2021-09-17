@@ -24,8 +24,7 @@
 cellpadding="5">
 <!-- <tr><th>제 목</th><td><input type="text" name="board_title" size="50"></td></tr> -->
 <tr><th>작성자</th>
-   <td><input type="text" name="com_writer" ></td>
-   				<!-- readonly value="${ loginMember.userid }" -->
+   <td><input type="text" name="com_writer" readonly value="${ loginMember.user_id }"></td>
 </tr>
 <tr><th>내 용</th><td><textarea rows="5" cols="50" name="com_content"></textarea></td></tr>
 <tr><th colspan="2">

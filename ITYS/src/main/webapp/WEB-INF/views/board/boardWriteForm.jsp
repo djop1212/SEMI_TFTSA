@@ -18,9 +18,7 @@
 cellpadding="5">
 <tr><th>제 목</th><td><input type="text" name="board_title" size="50"></td></tr>
 <tr> <th>작성자</th>
-   <td><input type="text" name="board_writer" ></td>
-            <!-- 멤버 관련 풀 받으면 input에 readonly value="${ loginMember.userid }" 넣어주기
-                  지금은 멤버가 없어서 작성자를 직접 작성해야만 등록이 가능함 -->
+   <td><input type="text" name="board_writer" readonly value="${ loginMember.user_id }"></td>      
 </tr>
 <tr>
 	<th>파일 선택 : </th>

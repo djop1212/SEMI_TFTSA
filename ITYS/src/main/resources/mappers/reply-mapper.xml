@@ -36,4 +36,9 @@
 				 where com_no = #{com_no}
 	</update>
 
+<!-- 댓글 삭제 -->
+	<delete id="deleteReply">
+		delete from comments where com_no = #{com_no}	
+	</delete>
+
 </mapper>

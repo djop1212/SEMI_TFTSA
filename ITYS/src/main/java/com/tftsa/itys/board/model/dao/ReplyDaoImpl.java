@@ -31,5 +31,11 @@ public class ReplyDaoImpl implements ReplyDao{
 	public void updateReply(Reply reply) {
 		sql.update("replyMapper.updateReply", reply);
 	}
+	
+	// 댓글 삭제
+	@Override
+	public void deleteReply(Reply reply) {
+		sql.delete("replyMapper.deleteReply", reply);
+	}
 
 }

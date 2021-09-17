@@ -30,4 +30,9 @@ public class ReplyServiceImpl implements ReplyService {
 		rdao.updateReply(reply);
 	}
 	
+	@Override
+	public void deleteReply(Reply reply) {
+		rdao.deleteReply(reply);
+	}
+	
 }

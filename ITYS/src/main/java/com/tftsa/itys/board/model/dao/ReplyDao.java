@@ -14,4 +14,7 @@ public interface ReplyDao {
 
 	// 댓글 수정
 	public void updateReply(Reply reply);
+	
+	// 댓글 삭제
+	public void deleteReply(Reply reply);
 }
