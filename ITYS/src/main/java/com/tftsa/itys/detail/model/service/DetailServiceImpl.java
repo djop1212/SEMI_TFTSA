@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.detail.model.dao.DetailDao;
 import com.tftsa.itys.detail.model.vo.Detail;
-import com.tftsa.itys.detail.model.vo.ReviewDetail;
+import com.tftsa.itys.detail.model.vo.TutorLikes;
+import com.tftsa.itys.detail.model.vo.TutorQna;
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Service("detailService")
@@ -24,7 +25,7 @@ public class DetailServiceImpl implements DetailService{
      }
 	
 	 @Override
-	 public TutorDetail tutorProfile(int user_no){
+	 public ArrayList<TutorDetail> tutorProfile(int user_no){
 		 return detailDao.tutorProfile(user_no);
 	 }
 	 @Override
@@ -43,4 +44,43 @@ public class DetailServiceImpl implements DetailService{
 	 public ArrayList<Detail> reviewList(int user_no){
 		 return detailDao.reviewList(user_no);
 	 }
+	 @Override
+	 public Detail reviewOne(int user_no){
+		 return detailDao.reviewOne(user_no);
+	 }
+	 @Override
+	 public int deleteReview(Detail detail){
+		 return detailDao.deleteReview(detail);
+	 }
+	 @Override
+	 public int tutorSaveInsert(TutorLikes tlikes){
+		 return detailDao.tutorSaveInsert(tlikes);
+	 }
+	 @Override
+	 public int tutorSaveCancel(TutorLikes tlikes){
+		 return detailDao.tutorSaveCancel(tlikes);
+	 }
+	 @Override
+	 public ArrayList<TutorQna> qnaList(int tutor_no){
+		 return detailDao.qnaList(tutor_no);
+	 }
+	 @Override
+	 public int qnaAnswerInsert(TutorQna tq){
+		 return detailDao.qnaAnswerInsert(tq);
+	 }
+	 @Override
+	 public int qnaUpdate(TutorQna tqup){
+		 return detailDao.qnaUpdate(tqup);
+	 }
+	 
+	 @Override
+	 public TutorQna qnaOne(int tutor_no){
+		 return detailDao.qnaOne(tutor_no);
+	 }
+	 
+	 @Override
+	 public ArrayList<TutorDetail> tutorPic(int user_no){
+		 return detailDao.tutorPic(user_no);
+	 }
+	
 }

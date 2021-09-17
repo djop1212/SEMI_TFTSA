@@ -229,7 +229,9 @@ S .br-theme-fontawesome-stars-o .br-widget {
 </div>  -->
 <span id="ex" class="ex">  </span> &nbsp;점
  <input type="hidden" name="score" id="score" > 
- <input type="hidden" name="pay_no" id="pay_no">
+ <input type="hidden" name="pay_no" id="pay_no" value="1">
+  <input type="hidden" name="student_no" id="student_no" value="1">
+  <input type="hidden" name="tutor_no" id="tutor_no" value="2">
 <script type="text/javascript">
 $('#example').barrating('show', {
 	  theme: 'fontawesome-stars-o',
@@ -270,8 +272,7 @@ $('#example').barrating('show', {
     outline: none;
     border-radius: 5px;
     margin: 10px 0;
-		" class="rev_content">
-                </textarea>
+		" class="rev_content" name="rev_content"></textarea>
               </div>
               <button type="submit">등록하기</button>
               <button type="submit">취소하기</button>
