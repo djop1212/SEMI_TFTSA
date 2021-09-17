@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
-import com.tftsa.itys.chatting.model.vo.UserTutor;
+import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
+import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
 
 @Repository("chattingDao")
@@ -13,9 +14,13 @@ public class ChattingDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	public UserChattingStudent selectStudent(int chat_room_no) {
+		return sqlSession.selectOne("chattingMapper.selectStudent", chat_room_no);
+	}
 
-	public UserTutor selectChatting(int user_no) {
-		return sqlSession.selectOne("chattingMapper.selectChatting", user_no);
+	public UserChattingTutor selectTutor(int chat_room_no) {
+		return sqlSession.selectOne("chattingMapper.selectTutor", chat_room_no);
 	}
 
 	public int deleteChatting(int chat_room_no) {

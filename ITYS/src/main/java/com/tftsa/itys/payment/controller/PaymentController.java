@@ -1,5 +1,15 @@
 package com.tftsa.itys.payment.controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +44,40 @@ public class PaymentController {
 		
 		return mv;
     }
+
+	@RequestMapping("kakaoPay.do")
+	public String kakaoPay() {
+		try {
+			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "KakaoAK 2b7ed483453ae102c4326907ebe77c26");
+			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			conn.setDoOutput(true);
+			String parameter = "cid=TC0ONETIME&partner_order_id=1001&partner_user_id=gorany&item_name=초코파이&quantity=1&total_amount=2200&tax_free_amount=0&approval_url=http://localhost:8080/kakaoPaySuccess&fail_url=http://localhost:8080/kakaoPaySuccessFail&cancel_url=http://localhost:8080/kakaoPayCancel";
+			OutputStream output = conn.getOutputStream();
+			DataOutputStream dataoutput = new DataOutputStream(output);
+			dataoutput.writeBytes(parameter);
+			dataoutput.close();
+			
+			int result = conn.getResponseCode();
+			
+			InputStream input;
+			if (result == 200) {
+				input = conn.getInputStream();
+			} else {
+				input = conn.getErrorStream();
+			}
+			InputStreamReader ireader = new InputStreamReader(input);
+			BufferedReader breader = new BufferedReader(ireader);
+			return breader.readLine();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "payment/payment";
+	}
+	
 }

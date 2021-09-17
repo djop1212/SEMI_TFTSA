@@ -15,7 +15,6 @@ public class UserTutor implements java.io.Serializable {
 	private String l_grd;
 	private String class_min;
 	private String class_times;
-	private String sub_name;
 	private String user_ssn;
 	private String user_name;
 	private String user_phone;
@@ -27,6 +26,33 @@ public class UserTutor implements java.io.Serializable {
 	
 	public UserTutor() {
 		super();
+	}
+
+	public UserTutor(int user_no, String pic, String min_pay, String online_ok, String area, String intro, String day,
+			String time, String style, String l_grd, String class_min, String class_times, String user_ssn,
+			String user_name, String user_phone, String user_id, String user_pwd, String user_email,
+			String user_position, String login_ok) {
+		super();
+		this.user_no = user_no;
+		this.pic = pic;
+		this.min_pay = min_pay;
+		this.online_ok = online_ok;
+		this.area = area;
+		this.intro = intro;
+		this.day = day;
+		this.time = time;
+		this.style = style;
+		this.l_grd = l_grd;
+		this.class_min = class_min;
+		this.class_times = class_times;
+		this.user_ssn = user_ssn;
+		this.user_name = user_name;
+		this.user_phone = user_phone;
+		this.user_id = user_id;
+		this.user_pwd = user_pwd;
+		this.user_email = user_email;
+		this.user_position = user_position;
+		this.login_ok = login_ok;
 	}
 
 	public int getUser_no() {
@@ -125,14 +151,6 @@ public class UserTutor implements java.io.Serializable {
 		this.class_times = class_times;
 	}
 
-	public String getSub_name() {
-		return sub_name;
-	}
-
-	public void setSub_name(String sub_name) {
-		this.sub_name = sub_name;
-	}
-
 	public String getUser_ssn() {
 		return user_ssn;
 	}
@@ -197,13 +215,17 @@ public class UserTutor implements java.io.Serializable {
 		this.login_ok = login_ok;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "UserTutor [user_no=" + user_no + ", pic=" + pic + ", min_pay=" + min_pay + ", online_ok=" + online_ok
 				+ ", area=" + area + ", intro=" + intro + ", day=" + day + ", time=" + time + ", style=" + style
-				+ ", l_grd=" + l_grd + ", class_min=" + class_min + ", class_times=" + class_times + ", sub_name="
-				+ sub_name + ", user_ssn=" + user_ssn + ", user_name=" + user_name + ", user_phone=" + user_phone
-				+ ", user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_email=" + user_email + ", user_position="
-				+ user_position + ", login_ok=" + login_ok + "]";
+				+ ", l_grd=" + l_grd + ", class_min=" + class_min + ", class_times=" + class_times + ", user_ssn="
+				+ user_ssn + ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_id=" + user_id
+				+ ", user_pwd=" + user_pwd + ", user_email=" + user_email + ", user_position=" + user_position
+				+ ", login_ok=" + login_ok + "]";
 	}
 }

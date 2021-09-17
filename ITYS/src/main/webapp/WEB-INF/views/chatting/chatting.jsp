@@ -220,6 +220,8 @@ a.btn-layerClose:hover {
     
   </div>
 
+	<input type="hidden" id="sender" value="${ requestScope.userchattingstudent.user_no }">
+	<input type="hidden" id="receiver" value="${ requestScope.userchattingtutor.user_no }">
 	<p class="header-payment header-hidden">결제 하기</p>
 	<center>
 	<div class="panel-heading">
@@ -234,6 +236,7 @@ a.btn-layerClose:hover {
 	    					<c:url var="insertLikes" value="insertLikes.do">
 								<c:param name="student_no" value="1"/>
 								<c:param name="tutor_no" value="2"/>
+								<c:param name="chat_room_no" value="1"/>
 							</c:url>
 	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body" onclick="location.href='${ insertLikes }'"><i class="fa">찜하기</i></button>
 	    					<c:url var="deleteChatting" value="deleteChatting.do">
@@ -243,7 +246,7 @@ a.btn-layerClose:hover {
 	    				</div>
 	    			</div>
 	    			<div>
-	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.usertutor.pic }" class="img-circle img-sm">${ requestScope.usertutor.user_name }</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name }</h3>
 	    			</div>	
 	    		</div>
 	    		<div class="row panel-heading">
@@ -262,7 +265,7 @@ a.btn-layerClose:hover {
 	    		<div id="demo-chat-body">
 	    			<div class="nano has-scrollbar" style="height:380px">
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
-	    					<ul class="list-unstyled media-block">
+	    					<ul class="list-unstyled media-block" id="messageWindow">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-right">
 	    								<div class="speech">
@@ -315,7 +318,7 @@ a.btn-layerClose:hover {
 	    			<div class="panel-footer">
 	    				<div class="row">
 	    					<div class="col-9">
-	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input">
+	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input" id="inputMessage" onkeyup="enterKey();">
 	    					</div>
 	    					<div class="col-3">
 	    						<button class="btn btn-primary btn-block" type="button" onclick="send();">보내기</button>
@@ -430,5 +433,109 @@ a.btn-layerClose:hover {
 	    }
 	</script>
 	
+	<script type="text/javascript">
+		//상대방과 연결할 웹소켓 객체 준비
+		var webSocket = null;
+		//채팅창 앨리먼트 변수
+		var $textarea = $('#messageWindow');
+		//상대방에게 전송할 메세지 입력 앨리먼트 변수
+		var $inputMessage = $('#inputMessage');
+		
+		function connection(){
+			/*
+			웹소켓 객체는 생성자를 통해 생성됨
+			객체 생성시에 서버와 자동 연결됨.
+			사용되는 프로토콜은 ws:// 임.
+			*/	
+			webSocket = new WebSocket(
+					"ws://localhost:8080/" +
+					"${ pageContext.servletContext.contextPath }/unicast");
+		
+			//웹소켓을 통해서 연결이 될 때 동작할 이벤트핸들러 작성
+			webSocket.onopen = function(event){
+				$textarea.html("<p class='chat_content'>"
+						+ $('#sender').val() + 
+						"님이 입장하셨습니다.</p><br>");
+				//웹소켓을 통해 채팅서버에 메세지 전송함
+				webSocket.send($('#sender').val() + 
+						"|님이 입장함.");
+			};
+			
+			//서버로 부터 메세지를 받을 때 동작할 이벤트핸들러 작성
+			webSocket.onmessage = function(event){
+				onMessage(event);
+			};
+			
+			//서버로 메세지 보낼 때 에러 발생 처리용 이벤트핸들러 작성
+			webSocket.onerror = function(event){
+				onError(event)
+			};
+			
+			//서버와 연결을 닫을 때의 이벤트핸들러 작성
+			webSocket.onclose = function(event){
+				onClose(event);
+			};
+		}
+	
+		//보내기 버튼 클릭시 실행되는 send() 함수 작성
+		function send(){
+			//메세지를 입력하지 않고 버튼 누른 경우
+			if($inputMessage.val() == "") {
+				alert("전송할 메세지를 입력하세요.");
+			}else{  //메세지가 입력된 경우
+				$textarea.html($textarea.html() + 
+					"<p class='chat_content'>나 : "
+					+ $inputMessage.val() + "</p><br>");
+				webSocket.send($('#sender').val() + "|"
+					+ $inputMessage.val());
+				$inputMessage.val('');  //기록된 메세지 삭제함
+			}
+			
+			//화면이 위로 스크롤되게 처리함
+			$textarea.scrollTop($textarea.height());
+		}  //send()
+		
+		//웹소켓 이벤트핸들러에 의해 실행되는 함수 작성
+		function onMessage(event){
+			//서버로 부터 데이터를 받았을 때 작동되는 함수임
+			var message = event.data.split("|");
+			//보낸사람 아이디
+			var receiverID = message[0];
+			//전송온 메세지
+			var content = message[1];
+			
+			//전송온 메세지가 비었거나, 보낸사람이 내가 연결한
+			//사람이 아닐 경우 아무 내용도 실행하지 않는다.
+			if(content == "" || 
+					!receiverID.match($('#receiver').val())){
+				//비워 놓음
+			}else{
+				$textarea.html($textarea.html() +
+						"<p class='chat_content other-side'>"
+						+ receiverID + " : " + content 
+						+ "</p><br>");
+				//화면이 위로 스크롤되게 처리함
+				$textarea.scrollTop($textarea.height());
+			}
+			
+		} //onMessage()
+		
+		function onError(event){
+			alert(event.data);
+		}
+		
+		function onClose(event){
+			alert(event);
+		}
+		
+		//전송할 메세지 입력하면서, 키보드 키에서 손뗄때마다
+		//실행되는 이벤트핸들러 함수
+		function enterKey(){
+			//누른 키가 엔터키(Enter) 이면 메세지 전송함
+			if(window.event.keyCode == 13){
+				send();
+			}
+		}
+	</script>
 </body>
 </html>
