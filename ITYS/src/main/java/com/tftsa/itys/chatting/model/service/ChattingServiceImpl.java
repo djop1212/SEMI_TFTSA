@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.dao.ChattingDao;
-import com.tftsa.itys.chatting.model.vo.UserTutor;
+import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
+import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
 
 @Service("chattingService")
@@ -15,8 +16,13 @@ public class ChattingServiceImpl implements ChattingService{
 	private ChattingDao chattingDao;
 	
 	@Override
-	public UserTutor selectChatting(int user_no) {
-		return chattingDao.selectChatting(user_no);
+	public UserChattingStudent selectStudent(int chat_room_no) {
+		return chattingDao.selectStudent(chat_room_no);
+	}
+
+	@Override
+	public UserChattingTutor selectTutor(int chat_room_no) {
+		return chattingDao.selectTutor(chat_room_no);
 	}
 
 	@Override

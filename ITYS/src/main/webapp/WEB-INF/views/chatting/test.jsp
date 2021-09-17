@@ -9,10 +9,10 @@
 </head>
 <body>
 	<div class="col-6">
-	    <c:url var="ubd" value="selectChatting.do">
-			<c:param name="user_no" value="2"/>
+	    <c:url var="selectchatting" value="selectChatting.do">
+			<c:param name="chat_room_no" value="1"/>
 		</c:url>
-	    <input type="button" value="버튼" id="start" onclick="location.href='${ ubd }'">
+	    <input type="button" value="버튼" id="start" onclick="location.href='${ selectchatting }'">
 	</div>
 </body>
 </html>
