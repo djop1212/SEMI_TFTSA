@@ -11,7 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.service.ChattingService;
-import com.tftsa.itys.chatting.model.vo.UserTutor;
+import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
+import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
 
 @Controller
@@ -23,14 +24,16 @@ public class ChattingController {
 	
 	// 채팅 조회 컨트롤러
 	@RequestMapping("selectChatting.do")
-	public ModelAndView selectChatting(ModelAndView mv, @RequestParam("user_no") int user_no) {
-		UserTutor usertutor = chattingService.selectChatting(user_no);
+	public ModelAndView selectChatting(ModelAndView mv, @RequestParam("chat_room_no") int chat_room_no) {
+		UserChattingStudent userchattingstudent = chattingService.selectStudent(chat_room_no);
+		UserChattingTutor userchattingtutor = chattingService.selectTutor(chat_room_no);
 
-		if (usertutor != null) {
-			mv.addObject("usertutor", usertutor);
+		if (userchattingstudent != null && userchattingtutor != null) {
+			mv.addObject("userchattingstudent", userchattingstudent);
+			mv.addObject("userchattingtutor", userchattingtutor);
 			mv.setViewName("chatting/chatting");
 		} else {
-			mv.addObject("message", user_no + "번 선생님 조회 실패.");
+			mv.addObject("message", chat_room_no + "번 채팅방 조회 실패.");
 			mv.setViewName("common/error");
 		}
 
@@ -72,14 +75,14 @@ public class ChattingController {
 	// 찜목록 추가
 	@RequestMapping("insertLikes.do")
 	public String insertLikes(Likes likes, Model model, @RequestParam("student_no") int student_no,
-			@RequestParam("tutor_no") int tutor_no) {
+			@RequestParam("tutor_no") int tutor_no, @RequestParam("chat_room_no") int chat_room_no) {
 		logger.info("insertLikes.do : " + likes);
 
 		likes.setStudent_no(student_no);
 		likes.setTutor_no(tutor_no);
 
 		if (chattingService.insertLikes(likes) > 0) {
-			return "redirect:selectChatting.do?user_no=" + likes.getTutor_no();
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no;
 		} else {
 			model.addAttribute("message", "찜목록 추가 실패!");
 			return "common/error";

@@ -10,21 +10,23 @@ public class Detail {
 	private Timestamp rev_datetm;
 	private int score; 
 	private String rev_content;
-	private int tutor_no;
+  private int tutor_no;
 	private int student_no;
 	
 	public  Detail() {}
 
 	public Detail(int rev_no, int pay_no, Timestamp rev_datetm, int score, String rev_content, int tutor_no,
 			int student_no) {
+
 		super();
 		this.rev_no = rev_no;
 		this.pay_no = pay_no;
 		this.rev_datetm = rev_datetm;
 		this.score = score;
 		this.rev_content = rev_content;
-		this.tutor_no = tutor_no;
+    this.tutor_no = tutor_no;
 		this.student_no = student_no;
+
 	}
 
 	public int getRev_no() {
@@ -67,6 +69,7 @@ public class Detail {
 		this.rev_content = rev_content;
 	}
 
+
 	public int getTutor_no() {
 		return tutor_no;
 	}
@@ -90,8 +93,9 @@ public class Detail {
 	@Override
 	public String toString() {
 		return "Detail [rev_no=" + rev_no + ", pay_no=" + pay_no + ", rev_datetm=" + rev_datetm + ", score=" + score
+
 				+ ", rev_content=" + rev_content + ", tutor_no=" + tutor_no + ", student_no=" + student_no + "]";
 	}
 
-		
+
 }

@@ -12,11 +12,19 @@ function Click(){
 	if($("input:radio[id='student']").is(":checked")==true){
 		console.log("student");
 		window.name = "studentForm";
-		window.open("upsprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+		window.open("upSPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=500, height=650, status=no, menubar=no, toolbar=no, resizable=no");
 	}else{
 		console.log("tutor");
 		window.name = "tutorForm";
-		window.open("uptprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+		window.open("upTPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+	}
+	//location.reload();
+}
+function deleteuser(){
+	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
+		location.href="deleteUser.do?user_id=${member.user_id}";	
+	}else{
+		return;
 	}
 }
 </script>
@@ -101,23 +109,40 @@ div.box {
 							<ul id="bar">
 								<li><a href="myPage.do" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
 								<li><a href="">채팅목록</a></li>
-								<li><a href="wishl.do">찜 목록</a></li>
-								<li><a href="mclass.do">내 강의 내역</a></li>
+								<li><a href="wishl.do?user_no=${user_no }">찜 목록</a></li>
+								<li><a href="mclass.do?user_no=${user_no }">내 강의 내역</a></li>
 							</ul>
 						</div>
-						<div style="color:#969ca2;"><a href="">탈퇴하기</a></div>
+						<%-- <c:url var="udelete" value="deleteUser.do">
+			            	<c:param name="user_id" value="${loginMember.user_id }"/>
+			            </c:url> --%>
+			            <br><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">회원탈퇴</a>
 					</div>
 					<div id="right">
 						<div>
 						<table>
 							<tr>
-								<td><h4>프로필 추가</h4></td>
-								<td width="100px" align="right">
-									<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
-								</td>
-								<td>
-									<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
-								</td>
+								<c:if test="${loginMember.user_position eq 'U'}">
+									<td><h4>프로필 추가</h4></td>
+									<td width="100px" align="right">
+										<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
+									</td>
+									<td>
+										<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
+									</td>
+								</c:if>
+								<c:if test="${loginMember.user_position eq 'S'}">
+									<td><h4>학생 프로필 수정</h4></td>
+									<td width="100px" align="right">
+										<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
+									</td>
+								</c:if>
+								<c:if test="${loginMember.user_position eq 'T'}">
+									<td><h4>선생님 프로필 수정</h4></td>
+									<td>
+										<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
+									</td>
+								</c:if>
 							</tr>
 						</table>
 						</div><br>
@@ -125,16 +150,20 @@ div.box {
 							<h4 align="left">내 프로필</h4>
 							<table>
 								<Tr>
-									<td width="100px">닉네임</td>
-									<td>뽀로로24</td>
+									<td width="100px">이름</td>
+									<td>${member.user_name }</td>
+								</Tr>
+								<Tr>
+									<td>아이디</td>
+									<td>${member.user_id }</td>
 								</Tr>
 								<Tr>
 									<td>휴대폰번호</td>
-									<td>010-2008-0904</td>
+									<td>${member.user_phone }</td>
 								</Tr>
 								<Tr>
-									<td>과외정보</td>
-									<td>매주 수, 토 14:00 ~ 16:00</td>
+									<td>이메일</td>
+									<td>${member.user_email }</td>
 								</Tr>
 							</table>
 						</div>

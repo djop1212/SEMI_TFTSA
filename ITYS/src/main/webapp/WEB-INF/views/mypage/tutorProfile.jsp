@@ -27,7 +27,7 @@ tr td{
 							</td>
 						</tr>
 						<tr>
-							<th>성격</th>
+							<th>과외스타일</th>
 							<td>
 								<select id="subject" name="selectSubject">
 									<option value="selectnone">== 선택 ==</option>
