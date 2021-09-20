@@ -10,6 +10,14 @@
 		<result column="tutor_name" property="tutor_name" />
 	</resultMap>
 	
+	<resultMap type="Chatting" id="resultChatting">
+		<id column="chat_no" property="chat_no"/>
+		<result column="chat_room_no" property="chat_room_no" />
+		<result column="wrtn_datetm" property="wrtn_datetm" />
+		<result column="user_no" property="user_no" />
+		<result column="chat_content" property="chat_content" />
+	</resultMap>
+
 	<resultMap type="Likes" id="resultLikes">
 		<id column="like_no" property="like_no" />
 		<result column="student_no" property="student_no" />
@@ -75,6 +83,12 @@
 		<result column="login_ok" property="login_ok" />
 	</resultMap>
 	
+	<select id="selectChattingInfo" parameterType="Chatting" resultMap="resultChatting">
+		select * from chatting
+		where chat_room_no = #{ chat_room_no }
+		order by chat_no
+	</select>
+	
 	<select id="selectStudent" parameterType="_int" resultMap="resultUserChattingStudent">
 		select * from student
 		join chatting using(user_no)
@@ -90,6 +104,11 @@
 		where chat_room_no = #{ chat_room_no }
 		and rownum = 1
 	</select>
+	
+	<select id="selectChattingroom" parameterType="_int" resultMap="resultChattingroom">
+		select * from chatting_room
+		where chat_room_no = #{ chat_room_no }
+	</select>
 
 	<delete id="deleteChatting" parameterType="_int">
 		delete from chatting_room
@@ -104,5 +123,15 @@
 	<insert id="insertBlock" parameterType="Chattingblock">
 		insert into chatting_block
 		values (chatting_block_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, #{ contents }, #{ user_no }, #{ student_name })
+	</insert>
+	
+	<insert id="insertChatting" parameterType="Chatting">
+		insert into chatting
+		values (chatting_seq.nextval, #{ chat_room_no }, systimestamp, #{ user_no }, #{ chat_content })
+	</insert>
+	
+	<insert id="insertChattingroom" parameterType="Chattingroom">
+		insert into chatting_room
+		values (chatting_room_seq.nextval, #{ student_name }, #{ tutor_name })
 	</insert>
 </mapper>

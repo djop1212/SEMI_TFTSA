@@ -17,6 +17,7 @@ public class UserChattingTutor implements java.io.Serializable {
 	private String l_grd;
 	private String class_min;
 	private String class_times;
+	private String sub_name;
 	private int chat_no;
 	private int chat_room_no;
 	private java.sql.Timestamp wrtn_datetm;
@@ -35,10 +36,10 @@ public class UserChattingTutor implements java.io.Serializable {
 	}
 
 	public UserChattingTutor(int user_no, String pic, String min_pay, String online_ok, String area, String intro,
-			String day, String time, String style, String l_grd, String class_min, String class_times, int chat_no,
-			int chat_room_no, Timestamp wrtn_datetm, String chat_content, String user_ssn, String user_name,
-			String user_phone, String user_id, String user_pwd, String user_email, String user_position,
-			String login_ok) {
+			String day, String time, String style, String l_grd, String class_min, String class_times, String sub_name,
+			int chat_no, int chat_room_no, Timestamp wrtn_datetm, String chat_content, String user_ssn,
+			String user_name, String user_phone, String user_id, String user_pwd, String user_email,
+			String user_position, String login_ok) {
 		super();
 		this.user_no = user_no;
 		this.pic = pic;
@@ -52,6 +53,7 @@ public class UserChattingTutor implements java.io.Serializable {
 		this.l_grd = l_grd;
 		this.class_min = class_min;
 		this.class_times = class_times;
+		this.sub_name = sub_name;
 		this.chat_no = chat_no;
 		this.chat_room_no = chat_room_no;
 		this.wrtn_datetm = wrtn_datetm;
@@ -162,6 +164,14 @@ public class UserChattingTutor implements java.io.Serializable {
 		this.class_times = class_times;
 	}
 
+	public String getSub_name() {
+		return sub_name;
+	}
+
+	public void setSub_name(String sub_name) {
+		this.sub_name = sub_name;
+	}
+
 	public int getChat_no() {
 		return chat_no;
 	}
@@ -258,14 +268,19 @@ public class UserChattingTutor implements java.io.Serializable {
 		this.login_ok = login_ok;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "UserChattingTutor [user_no=" + user_no + ", pic=" + pic + ", min_pay=" + min_pay + ", online_ok="
 				+ online_ok + ", area=" + area + ", intro=" + intro + ", day=" + day + ", time=" + time + ", style="
 				+ style + ", l_grd=" + l_grd + ", class_min=" + class_min + ", class_times=" + class_times
-				+ ", chat_no=" + chat_no + ", chat_room_no=" + chat_room_no + ", wrtn_datetm=" + wrtn_datetm
-				+ ", chat_content=" + chat_content + ", user_ssn=" + user_ssn + ", user_name=" + user_name
-				+ ", user_phone=" + user_phone + ", user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_email="
-				+ user_email + ", user_position=" + user_position + ", login_ok=" + login_ok + "]";
+				+ ", sub_name=" + sub_name + ", chat_no=" + chat_no + ", chat_room_no=" + chat_room_no
+				+ ", wrtn_datetm=" + wrtn_datetm + ", chat_content=" + chat_content + ", user_ssn=" + user_ssn
+				+ ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_id=" + user_id + ", user_pwd="
+				+ user_pwd + ", user_email=" + user_email + ", user_position=" + user_position + ", login_ok="
+				+ login_ok + "]";
 	}
 }

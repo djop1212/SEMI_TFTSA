@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -219,9 +222,14 @@ a.btn-layerClose:hover {
     <c:import url="/WEB-INF/views/common/menubar.jsp" />
     
   </div>
-
-	<input type="hidden" id="sender" value="${ requestScope.userchattingstudent.user_no }">
-	<input type="hidden" id="receiver" value="${ requestScope.userchattingtutor.user_no }">
+	<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
+		<input type="hidden" id="sender" value="${ requestScope.userchattingstudent.user_no }">
+		<input type="hidden" id="receiver" value="${ requestScope.userchattingtutor.user_no }">
+	</c:if>
+	<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
+		<input type="hidden" id="sender" value="${ requestScope.userchattingtutor.user_no }">
+		<input type="hidden" id="receiver" value="${ requestScope.userchattingstudent.user_no }">
+	</c:if>
 	<p class="header-payment header-hidden">결제 하기</p>
 	<center>
 	<div class="panel-heading">
@@ -263,57 +271,80 @@ a.btn-layerClose:hover {
 	    
 	    		<!--Widget body-->
 	    		<div id="demo-chat-body">
+	    			<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 	    			<div class="nano has-scrollbar" style="height:380px">
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
 	    					<ul class="list-unstyled media-block" id="messageWindow">
+	    						<c:forEach items="${ requestScope.chat }" var="ch">
+	    						<c:if test="${ ch.user_no eq 1 }">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-right">
 	    								<div class="speech">
-	    									<p>안녕하세요~<br>선생님과 상담하고 싶어서 연락드렸어요:)</p>
+	    									<p>${ ch.chat_content }<br></p>
 	    									<p class="speech-time">
-	    										<i class="fa fa-clock-o fa-fw"></i>14시간전
+	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
 	    									</p>
 	    									<p class="speech-time">읽음</p>
 	    								</div>
 	    							</div>
 	    						</li>
+	    						</c:if>
+	    						<c:if test="${ ch.user_no eq 2 }">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-left">
 	    								<div class="speech">
-	    									<p>안녕하세요!<br>어떤 수업 필요하신가요?</p>
+	    									<p>${ ch.chat_content }<br></p>
 	    									<p class="speech-time">
-	    									<i class="fa fa-clock-o fa-fw"></i>9시간전
+	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
 	    									</p>
 	    									<p class="speech-time">읽음</p>
 	    								</div>
 	    							</div>
 	    						</li>
-	    						<li class="mar-btm">
-	    							<div class="media-body pad-hor speech-right">
-	    								<div class="speech">
-	    									<p>안녕하세요~<br>선생님과 상담하고 싶어서 연락드렸어요:)</p>
-	    									<p class="speech-time">
-	    										<i class="fa fa-clock-o fa-fw"></i>14시간전
-	    									</p>
-	    									<p class="speech-time">읽음</p>
-	    								</div>
-	    							</div>
-	    						</li>
-	    						<li class="mar-btm">
-	    							<div class="media-body pad-hor speech-left">
-	    								<div class="speech">
-	    									<p>안녕하세요!<br>어떤 수업 필요하신가요?</p>
-	    									<p class="speech-time">
-	    									<i class="fa fa-clock-o fa-fw"></i>9시간전
-	    									</p>
-	    									<p class="speech-time">읽음</p>
-	    								</div>
-	    							</div>
-	    						</li>
+	    						</c:if>
+	    						</c:forEach>
 	    					</ul>
 	    				</div>
 	    			<div class="nano-pane"><div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div></div></div>
-	    
+	    			</c:if>
+	    			
+	    			<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
+	    			<div class="nano has-scrollbar" style="height:380px">
+	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
+	    					<ul class="list-unstyled media-block" id="messageWindow">
+	    						<c:forEach items="${ requestScope.chat }" var="ch">
+	    						<c:if test="${ ch.user_no eq 2 }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-right">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
+	    									</p>
+	    									<p class="speech-time">읽음</p>
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						<c:if test="${ ch.user_no eq 1 }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-left">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
+	    									</p>
+	    									<p class="speech-time">읽음</p>
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						</c:forEach>
+	    					</ul>
+	    				</div>
+	    			<div class="nano-pane"><div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div></div></div>
+	    			</c:if>
+	    			
 	    			<!--Widget footer-->
 	    			<div class="panel-footer">
 	    				<div class="row">
@@ -321,6 +352,17 @@ a.btn-layerClose:hover {
 	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input" id="inputMessage" onkeyup="enterKey();">
 	    					</div>
 	    					<div class="col-3">
+		    					<c:url var="insertChatting" value="insertChatting.do">
+									<c:param name="student_name" value="임길동"/>
+									<c:param name="tutor_name" value="홍길동"/>
+									<c:param name="chat_room_no" value="1"/>
+									<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
+										<c:param name="user_no" value="1"/>
+									</c:if>
+									<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
+										<c:param name="user_no" value="2"/>
+									</c:if>
+								</c:url>
 	    						<button class="btn btn-primary btn-block" type="button" onclick="send();">보내기</button>
 	    					</div>
 	    				</div>
@@ -344,6 +386,7 @@ a.btn-layerClose:hover {
 								<c:param name="student_name" value="임길동"/>
 								<c:param name="tutor_name" value="홍길동"/>
 								<c:param name="user_no" value="2"/>
+								<c:param name="chat_room_no" value="1"/>
 							</c:url>
 	                	<a href="#" class="btn-layerClose" onclick="nextBlock()">확인</a>
 	                    <a href="#" class="btn-layerClose">취소</a>
@@ -452,14 +495,14 @@ a.btn-layerClose:hover {
 					"${ pageContext.servletContext.contextPath }/unicast");
 		
 			//웹소켓을 통해서 연결이 될 때 동작할 이벤트핸들러 작성
-			webSocket.onopen = function(event){
+			/* webSocket.onopen = function(event){
 				$textarea.html("<p class='chat_content'>"
 						+ $('#sender').val() + 
 						"님이 입장하셨습니다.</p><br>");
 				//웹소켓을 통해 채팅서버에 메세지 전송함
 				webSocket.send($('#sender').val() + 
 						"|님이 입장함.");
-			};
+			}; */
 			
 			//서버로 부터 메세지를 받을 때 동작할 이벤트핸들러 작성
 			webSocket.onmessage = function(event){
@@ -479,20 +522,36 @@ a.btn-layerClose:hover {
 	
 		//보내기 버튼 클릭시 실행되는 send() 함수 작성
 		function send(){
-			//메세지를 입력하지 않고 버튼 누른 경우
-			if($inputMessage.val() == "") {
-				alert("전송할 메세지를 입력하세요.");
-			}else{  //메세지가 입력된 경우
+			var today = new Date();
+			var hours = today.getHours();
+			var minutes = today.getMinutes();
+			var timeString = hours + ' : ' + minutes
+			var message;
+			
+			//메세지가 입력된 경우
+			if($inputMessage.val() != "") {
 				$textarea.html($textarea.html() + 
-					"<p class='chat_content'>나 : "
-					+ $inputMessage.val() + "</p><br>");
+					"<li class='mar-btm'>"
+						+ "<div class='media-body pad-hor speech-right'>"
+							+ "<div class='speech'>"
+								+ "<p>" + $inputMessage.val() + "<br></p>"
+								+ "<p class='speech-time'>"
+									+ "<i class='fa fa-clock-o fa-fw'></i>" + timeString
+								+ "</p>"
+								+ "<p class='speech-time'>읽음</p>"
+							+ "</div>"
+						+ "</div>"
+					+ "</li>");
 				webSocket.send($('#sender').val() + "|"
 					+ $inputMessage.val());
+				message = $inputMessage.val();
 				$inputMessage.val('');  //기록된 메세지 삭제함
 			}
 			
 			//화면이 위로 스크롤되게 처리함
 			$textarea.scrollTop($textarea.height());
+			
+			location.href="${ insertChatting }&chat_content=" + message;
 		}  //send()
 		
 		//웹소켓 이벤트핸들러에 의해 실행되는 함수 작성
@@ -504,6 +563,11 @@ a.btn-layerClose:hover {
 			//전송온 메세지
 			var content = message[1];
 			
+			var today = new Date();
+			var hours = today.getHours();
+			var minutes = today.getMinutes();
+			var timeString = hours + ' : ' + minutes
+			
 			//전송온 메세지가 비었거나, 보낸사람이 내가 연결한
 			//사람이 아닐 경우 아무 내용도 실행하지 않는다.
 			if(content == "" || 
@@ -511,9 +575,17 @@ a.btn-layerClose:hover {
 				//비워 놓음
 			}else{
 				$textarea.html($textarea.html() +
-						"<p class='chat_content other-side'>"
-						+ receiverID + " : " + content 
-						+ "</p><br>");
+						"<li class='mar-btm'>"
+							+ "<div class='media-body pad-hor speech-left'>"
+								+ "<div class='speech'>"
+									+ "<p>" + content + "<br></p>"
+									+ "<p class='speech-time'>"
+									+ "<i class='fa fa-clock-o fa-fw'></i>" + timeString
+									+ "</p>"
+									+ "<p class='speech-time'>읽음</p>"
+								+ "</div>"
+							+ "</div>"
+						+ "</li>");
 				//화면이 위로 스크롤되게 처리함
 				$textarea.scrollTop($textarea.height());
 			}
@@ -527,6 +599,8 @@ a.btn-layerClose:hover {
 		function onClose(event){
 			alert(event);
 		}
+		
+		connection();
 		
 		//전송할 메세지 입력하면서, 키보드 키에서 손뗄때마다
 		//실행되는 이벤트핸들러 함수

@@ -1,5 +1,7 @@
 package com.tftsa.itys.chatting.controller;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.service.ChattingService;
+import com.tftsa.itys.chatting.model.vo.Chatting;
+import com.tftsa.itys.chatting.model.vo.Chattingroom;
 import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
 import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
@@ -27,10 +31,12 @@ public class ChattingController {
 	public ModelAndView selectChatting(ModelAndView mv, @RequestParam("chat_room_no") int chat_room_no) {
 		UserChattingStudent userchattingstudent = chattingService.selectStudent(chat_room_no);
 		UserChattingTutor userchattingtutor = chattingService.selectTutor(chat_room_no);
+		ArrayList<Chatting> chat = chattingService.selectChattingInfo(chat_room_no);
 
-		if (userchattingstudent != null && userchattingtutor != null) {
+		if (userchattingstudent != null && userchattingtutor != null && chat.size() > 0) {
 			mv.addObject("userchattingstudent", userchattingstudent);
 			mv.addObject("userchattingtutor", userchattingtutor);
+			mv.addObject("chat", chat);
 			mv.setViewName("chatting/chatting");
 		} else {
 			mv.addObject("message", chat_room_no + "번 채팅방 조회 실패.");
@@ -55,7 +61,8 @@ public class ChattingController {
 	@RequestMapping("insertBlock.do")
 	public String insertBlock(Chattingblock chattingblock, Model model, 
 			@RequestParam("student_name") String student_name, @RequestParam("tutor_name") String tutor_name, 
-			@RequestParam("contents") String contents, @RequestParam("user_no") int user_no) {
+			@RequestParam("contents") String contents, @RequestParam("user_no") int user_no, 
+			@RequestParam("chat_room_no") int chat_room_no) {
 		logger.info("insertBlock.do : " + chattingblock);
 
 		chattingblock.setStudent_name(student_name);
@@ -65,14 +72,14 @@ public class ChattingController {
 		chattingblock.setUser_name(student_name);
 		
 		if (chattingService.insertBlock(chattingblock) > 0) {
-			return "redirect:selectChatting.do?user_no=" + chattingblock.getUser_no();
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no;
 		} else {
 			model.addAttribute("message", "신고하기 실패!");
 			return "common/error";
 		}
 	}
 	
-	// 찜목록 추가
+	// 찜목록 추가 컨트롤러
 	@RequestMapping("insertLikes.do")
 	public String insertLikes(Likes likes, Model model, @RequestParam("student_no") int student_no,
 			@RequestParam("tutor_no") int tutor_no, @RequestParam("chat_room_no") int chat_room_no) {
@@ -88,4 +95,33 @@ public class ChattingController {
 			return "common/error";
 		}
 	}
+	
+	// 채팅 내역 저장 컨트롤러
+	@RequestMapping("insertChatting.do")
+	public String insertChatting(Chatting chatting, Chattingroom chattingroom, Model model, 
+			@RequestParam("student_name") String student_name, @RequestParam("tutor_name") String tutor_name, 
+			@RequestParam("chat_room_no") int chat_room_no, @RequestParam("user_no") int user_no, 
+			@RequestParam("chat_content") String chat_content) {
+		logger.info("insertChatting.do : " + chattingroom);
+		logger.info("insertChatting.do : " + chatting);
+		
+		Chattingroom chatroom = chattingService.selectChattingroom(chat_room_no);
+		
+		if (chatroom == null) {
+			chattingroom.setStudent_name(student_name);
+			chattingroom.setTutor_name(tutor_name);
+			
+			chattingService.insertChattingroom(chattingroom);
+		}
+		chatting.setChat_room_no(chat_room_no);
+		chatting.setUser_no(user_no);
+		chatting.setChat_content(chat_content);
+
+		if (chattingService.insertChatting(chatting) > 0) {
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no + "&user_no=" + user_no;
+		} else {
+			model.addAttribute("message", "채팅 내역 저장 실패!");
+			return "common/error";
+		}
+    } 
 }
