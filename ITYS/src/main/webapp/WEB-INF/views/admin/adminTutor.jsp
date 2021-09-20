@@ -15,31 +15,11 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script>
+<%-- <sctipt>
 	function searchFunction(){
-	$.ajax({
-		type: 'GET',
-		url : "/itys/adminMember",
-		data : $("form[name=navbar-search]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
+		request.open("Post","")
 		}
-	})
-}
-</script>
+</sctipt>--%>
 <style>
 /* Dropdown Button */
 .btn btn-primary dropdown-toggle {
@@ -109,11 +89,11 @@ a {
 				<c:import url="/WEB-INF/views/admin/common/topbar.jsp" />
 			        <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h3 class="h3 mb-0 text-gray-800">회원 관리</h3>
+            <h3 class="h3 mb-0 text-gray-800">선생님 관리</h3>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
               <li class="breadcrumb-item"><a href="/itys/adminDashboard.do">관리자 페이지</a></li>
-              <li class="breadcrumb-item active" aria-current="page">회원관리</li>
+              <li class="breadcrumb-item active" aria-current="page">선생님관리</li>
             </ol>
           </div> 
 
@@ -127,7 +107,7 @@ a {
                 
                 <div class="search-option" style="display:flex;">
 					<div class="dropdown">
-					  <button class="btn btn-primary dropdown-toggle" style="height:43px;"> 회원 조회 선택 </button>
+					  <button class="btn btn-primary dropdown-toggle" style="height:43px;min-width: 149px;"> 선생님 </button>
 					  <div class="dropdown-content">
 					    <a href="/itys/adminMember.do"> 전체 회원 </a>
 					    <a href="/itys/adminStudent.do"> 학생 </a>
@@ -152,7 +132,6 @@ a {
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
-                      	<th>권한</th>
                         <th>회원번호</th>
                         <th>아이디</th>
                         <th>이름</th>
@@ -165,7 +144,6 @@ a {
                     </thead>
                     <tfoot>
                       <tr>
-                      	<th>권한</th>
                         <th>회원번호</th>
                         <th>아이디</th>
                         <th>이름</th>
@@ -179,7 +157,6 @@ a {
                     <tbody>
                        <c:forEach items="${ requestScope.list }" var="m">
 						<tr>
-							<td>${ m.user_position }</td>
 							<td>${ m.user_no }</td>
 							<td>${ m.user_id }</td>
 							<td>${ m.user_name }</td>
