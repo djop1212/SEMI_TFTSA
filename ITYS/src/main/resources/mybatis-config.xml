@@ -34,6 +34,7 @@
 	<mappers>
 		<mapper resource="mappers/adminchatting-mapper.xml" />
 		<mapper resource="mappers/adminpayment-mapper.xml" />
+		<mapper resource="mappers/adminmember-mapper.xml"/>
 		<mapper resource="mappers/chatting-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
     	<mapper resource="mappers/member-mapper.xml"/>
