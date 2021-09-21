@@ -115,8 +115,7 @@
 
 	</div>
 
-	<form action="kakaoPay.do" method="post" id="contactForm"
-		novalidate="novalidate" target="popup_window">
+	<form action="kakaoPay.do" method="post" id="contactForm" novalidate="novalidate">
 		<div class="row upper">
 			<div class="row">
 				<div class="col-md-7">
@@ -297,7 +296,7 @@
 								</p>
 							</div>
 						</div>
-						<button class="btn-payment" id="contactForm" type="submit">결제하기</button>
+						<button class="btn-payment" type="submit">결제하기</button>
 						<p class="text-muted text-center">서비스 제공이 완료된 이후에 전문가에게 결제 대금이
 							전달됩니다.</p>
 					</div>

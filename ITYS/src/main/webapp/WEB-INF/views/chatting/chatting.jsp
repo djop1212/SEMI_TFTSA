@@ -272,7 +272,7 @@ a.btn-layerClose:hover {
 	    		<!--Widget body-->
 	    		<div id="demo-chat-body">
 	    			<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
-	    			<div class="nano has-scrollbar" style="height:380px">
+	    			<div class="nano has-scrollbar" style="height:380px;">
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
 	    					<ul class="list-unstyled media-block" id="messageWindow">
 	    						<c:forEach items="${ requestScope.chat }" var="ch">
