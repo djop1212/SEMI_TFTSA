@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="detailMapper">
+
+	<resultMap id="resultDetail" type="Detail">
+		<id property="rev_no" column="rev_no" />
+		<result property="pay_no" column="pay_no" />
+		<result property="rev_datetm" column="rev_datetm" />
+		<result property="score" column="score" />
+		<result property="rev_content" column="rev_content" />
+	
+		
+	</resultMap>
+	<resultMap id="resultTutorDetail" type="TutorDetail">
+		<id property="user_no" column="user_no"/>
+		<result property="min_pay" column="min_pay"/>
+		<result property="online_ok" column="online_ok"/>
+		<result property="area" column="area"/>
+		<result property="intro" column="intro"/>
+		<result property="day" column="day"/>
+		<result property="time" column="time"/>
+		<result property="style" column="style"/>
+		<result property="l_grd" column="l_grd"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_email" column="user_email"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="user_position" column="user_position"/>
+		<result property="type_per" column="type_per"/>
+		
+		
+	</resultMap>
+	
+	<resultMap id="resultTutorLikes" type="TutorLikes">
+		<id property="like_no" column="like_no" />
+		<result property="student_no" column="student_no" />
+		<result property="tutor_no" column="tutor_no" />
+
+	
+		
+	</resultMap>
+	
+		<resultMap id="resultTutorQna" type="TutorQna">
+		<id property="tutor_no" column="tutor_no" />
+		<result property="answer" column="answer" />
+
+	</resultMap>
+	
+	<insert id="reviewInsert" parameterType="Detail">
+		insert into review values ((review_seq.nextval), #{pay_no}, sysdate, #{score}, #{rev_content}, #{tutor_no}, #{student_no} ) 
+
+		</insert>
+		
+	
+	<select id="tutorProfile" parameterType="TutorDetail" resultMap="resultTutorDetail">
+		select * from user_info
+		left join tutor using (user_no)
+		left join sub_data using (user_no)
+        left join subject using(sub_no)
+	
+		where user_no = #{ user_no }
+	</select>
+	
+	<select id="tutorPer" parameterType="TutorDetail" resultMap="resultTutorDetail">
+		select * from key_data 
+		left join keyword using (key_no)
+        where user_no= #{ user_no }
+	</select>
+	
+	<select id="tutorReview" resultType="int" >
+	select count(*) from review
+	left join payment using (pay_no)
+	left join tutor on (user_no = tutor_no )
+	where user_no = #{ user_no }
+	</select>
+	
+	<select id="avgScore" resultType="double">
+	select round(avg(score)) from review
+	left join payment using (pay_no)
+	left join tutor on (user_no = tutor_no )
+	where user_no = #{ user_no }
+	</select>
+	
+	<select id="reviewList" resultType="Detail">
+	select * from review
+	left join payment using (pay_no)
+	left join tutor on (user_no = tutor_no )
+	where user_no = #{ user_no }
+	</select>
+	
+	<select id="reviewOne" resultType="Detail">
+	 select * from review
+	</select>
+	
+	<delete id="deleteReview" parameterType="Detail">
+	delete from review where student_no = #{ student_no } and rev_no = #{ rev_no }
+	</delete>
+	
+	<insert id="tutorSaveInsert" parameterType="TutorLikes">
+	insert into likes values ((LIKES_SEQ.nextval), #{ student_no }, #{ tutor_no } )
+	</insert>
+	<delete id="tutorSaveCancel" parameterType="TutorLikes">
+	delete from likes where tutor_no = #{ tutor_no }
+	</delete>
+	
+		<select id="qnaList" parameterType="TutorQna" resultMap="resultTutorQna">
+		select * from qna where tutor_no = #{ tutor_no }
+	</select>
+
+<insert id="qnaAnswerInsert" parameterType="TutorQna">
+	insert into qna values (#{ tutor_no }, #{ answer1 }, #{ answer2 }, #{ answer3 }, #{ answer4 }  )
+	</insert>
+	
+	<select id="qnaOne" parameterType="TutorQna" resultMap="resultTutorQna">
+		select * from qna where tutor_no = #{ tutor_no }
+	</select>
+	
+ <update id="qnaUpdate" parameterType="TutorQna">
+ 	update qna set answer1 = #{ answer1 }, answer2 = #{ answer2 }, answer3 = #{ answer3 }, answer4 = #{ answer4 } where tutor_no = #{ tutor_no}
+ </update>
+ <select id="tutorPic" parameterType="TutorDetail" resultMap="resultTutorDetail">
+		select * from user_info
+		left join tutor using (user_no)
+		left join sub_data using (user_no)
+        left join subject using(sub_no)
+		where user_no = #{ user_no }
+	</select>
+</mapper>

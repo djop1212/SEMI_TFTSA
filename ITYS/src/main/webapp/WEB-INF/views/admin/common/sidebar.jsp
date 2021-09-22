@@ -37,7 +37,6 @@
         <a class="nav-link" href="adminReview.do">
           <span>리뷰관리</span></a>
           
-
       <li class="nav-item ">
         <c:url var="selectpaymentall" value="selectpaymentall.do" />
         <a class="nav-link" href="${ selectpaymentall }">
@@ -50,7 +49,11 @@
           
       <li class="nav-item">
         <a class="nav-link" href="adminCategory.do">
-          <span>카테고리관리</span></a>
+          <span>과목관리</span></a>
+          
+      <li class="nav-item">
+        <a class="nav-link" href="adminKeyword.do">
+          <span>키워드관리</span></a>
           
 
       <div class="version" id="version-ruangadmin"></div>

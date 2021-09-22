@@ -115,8 +115,7 @@
 
 	</div>
 
-	<form action="main.do" method="post" id="contactForm"
-		novalidate="novalidate">
+	<form action="kakaoPay.do" method="post" id="contactForm" novalidate="novalidate">
 		<div class="row upper">
 			<div class="row">
 				<div class="col-md-7">
@@ -234,20 +233,20 @@
 						</p>
 						<div class="row">
 							<div class="col-2">
-								<input class="input-payment" type="radio" name="payment" checked>신용카드
+								<input class="input-payment" type="radio" name="payment" id="creditcard" checked>신용카드
 							</div>
 							<div class="col-3">
-								<input class="input-payment" type="radio" name="payment">실시간
+								<input class="input-payment" type="radio" name="payment" id="transfer">실시간
 								계좌이체
 							</div>
 							<div class="col-3">
-								<input class="input-payment" type="radio" name="payment">무통장입금
+								<input class="input-payment" type="radio" name="payment" id="nopassbook">무통장입금
 							</div>
 							<div class="col-2">
-								<input class="input-payment" type="radio" name="payment">휴대폰
+								<input class="input-payment" type="radio" name="payment" id="phone">휴대폰
 							</div>
 							<div class="col-2">
-								<input class="input-payment" type="radio" name="payment">카카오페이
+								<input class="input-payment" type="radio" name="payment" id="kakao">카카오페이
 							</div>
 						</div>
 					</div>
@@ -297,7 +296,7 @@
 								</p>
 							</div>
 						</div>
-						<button class="btn-payment" id="contactForm" type="submit">결제하기</button>
+						<button class="btn-payment" type="submit">결제하기</button>
 						<p class="text-muted text-center">서비스 제공이 완료된 이후에 전문가에게 결제 대금이
 							전달됩니다.</p>
 					</div>

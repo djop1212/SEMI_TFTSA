@@ -15,6 +15,90 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<script>
+	function searchFunction(){
+	$.ajax({
+		type: 'GET',
+		url : "/itys/adminMember",
+		data : $("form[name=navbar-search]").serialize(),
+		success : function(result){
+			//테이블 초기화
+			$('#boardtable > tbody').empty();
+			if(result.length>=1){
+				result.forEach(function(item){
+					str='<tr>'
+					str += "<td>"+item.idx+"</td>";
+					str+="<td>"+item.writer+"</td>";
+					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
+					str+="<td>"+item.date+"</td>";
+					str+="<td>"+item.hit+"</td>";
+					str+="</tr>"
+					$('#boardtable').append(str);
+        		})				 
+			}
+		}
+	})
+}
+</script>
+<style>
+/* Dropdown Button */
+.btn btn-primary dropdown-toggle {
+  background-color: #6777EF;
+  color: white;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border-radius: .25rem;
+  border-color: #6777EF;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 147px;
+  border-radius: .25rem;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+	background-color: #e3e6f0;
+	text-decoration: none;
+	color: black;
+	}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+	display: block;
+	}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .btn btn-primary dropdown-toggle {background-color: #394eea;}
+
+a {
+  text-decoration-line: none;
+  text-align : center;
+  }
+
+</style> 
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -25,124 +109,87 @@
 				<c:import url="/WEB-INF/views/admin/common/topbar.jsp" />
 			        <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">리뷰관리</h1>
+            <h3 class="h3 mb-0 text-gray-800">회원 관리</h3>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
-              <li class="breadcrumb-item">Tables</li>
-              <li class="breadcrumb-item active" aria-current="page">DataTables</li>
+              <li class="breadcrumb-item"><a href="/itys/adminDashboard.do">관리자 페이지</a></li>
+              <li class="breadcrumb-item active" aria-current="page">회원관리</li>
             </ol>
-          </div>
+          </div> 
 
           <!-- Row -->
           <div class="row">
             <div class="col-lg-12">
               <div class="card mb-4">
+              
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 </div>
+                
+                <div class="search-option" style="display:flex;">
+					<div class="dropdown">
+					  <button class="btn btn-primary dropdown-toggle" style="height:43px;"> 회원 조회 선택 </button>
+					  <div class="dropdown-content">
+					    <a href="/itys/adminMember.do"> 전체 회원 </a>
+					    <a href="/itys/adminStudent.do"> 학생 </a>
+					    <a href="/itys/adminTutor.do"> 선생님 </a>
+					  </div>
+					</div>
+                <form class="navbar-search">
+                  <div class="input-group" style="width:200px;float:right;margin-right:15px">
+                    <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                </div>
+                
                 <div class="table-responsive p-3">
+                
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
-                      	<th>번호</th>
-                        <th>선생님성함</th>
-                        <th>과목</th>
-                        <th>별점</th>
-                        <th>수강후기</th>
+                      	<th>권한</th>
+                        <th>회원번호</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>주민등록번호</th>
+                        <th>전화번호</th>
+                        <th>이메일</th>
+                        <th>로그인여부</th>
                         <th>선택</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
-                      	<th>번호</th>
-                        <th>선생님성함</th>
-                        <th>과목</th>
-                        <th>별점</th>
-                        <th>수강후기</th>
+                      	<th>권한</th>
+                        <th>회원번호</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>주민등록번호</th>
+                        <th>전화번호</th>
+                        <th>이메일</th>
+                        <th>로그인여부</th>
                         <th>선택</th>
                       </tr>
                     </tfoot>
                     <tbody>
-                      <tr>
-                      	<td>1</td>
-                        <td>노민지</td>
-                        <td>영어</td>
-                        <td>5.0</td>
-                        <td>내 이름은 곽두팔 나 살면서 이런 멋진 과외는 처음 받아본다.</td>
-                        <td><input type="checkbox" name="review 1" value="no1"></td>
-                      </tr>
-                      <tr>
-                      <td>2</td>
-                        <td>Garrett Winters</td>
-                        <td>수학</td>
-                        <td>5.0</td>
-                        <td>수학 진짜 개 재밌다 무야호~~</td>
-                        <td><input type="checkbox" name="review 2" value="no2"></td>
-                      </tr>
-                      <tr>
-                      <td>3</td>
-                        <td>Andy Baek</td>
-                        <td>영어</td>
-                        <td>5.0</td>
-                        <td>교재가 꼼꼼하고 선생님이 저렴해요!</td>
-                        <td><input type="checkbox" name="review 3" value="no3"></td>
-                      </tr>
-                      <tr>
-                      <td>4</td>
-                        <td>End Back</td>
-                        <td>물리</td>
-                        <td>5.0</td>
-                        <td>역시 탐구과목으로 물리는 무리였어</td>
-                        <td><input type="checkbox" name="review 4" value="no4"></td>
-                      </tr>
-                      <tr>
-                      <td>5</td>
-                        <td>현우진</td>
-                        <td>수학</td>
-                        <td>5.0</td>
-                        <td>스탠포드 나온 존잘 강사 아 오지고 지리고~</td>
-                        <td><input type="checkbox" name="review 5" value="no5"></td>
-                      </tr>
-                      <tr>
-                      <td>6</td>
-                        <td>노민지</td>
-                        <td>TOEIC</td>
-                        <td>5.0</td>
-                        <td>와우! 넘모 완벽한 강의~!!</td>
-                        <td><input type="checkbox" name="review 6" value="no6"></td>
-                      </tr>
-                      <tr>
-                      <td>7</td>
-                        <td>Herrod Chandler</td>
-                        <td>Sales Assistant</td>
-                        <td>5.0</td>
-                        <td>59</td>
-                        <td><input type="checkbox" name="review 7" value="no7"></td>
-                      </tr>
-                      <tr>
-                      <td>8</td>
-                        <td>Rhona Davidson</td>
-                        <td>Integration Specialist</td>
-                        <td>5.0</td>
-                        <td>55</td>
-                        <td><input type="checkbox" name="review 8" value="no8"></td>
-                      </tr>
-                      <tr>
-                      <td>9</td>
-                        <td>Colleen Hurst</td>
-                        <td>Javascript Developer</td>
-                        <td>5.0</td>
-                        <td>39</td>
-                        <td><input type="checkbox" name="review 9" value="no9"></td>
-                      </tr>
-                      <tr>
-                      <td>10</td>
-                        <td>Sonya Frost</td>
-                        <td>Software Engineer</td>
-                        <td>5.0</td>
-                        <td>23</td>
-                        <td><input type="checkbox" name="review 10" value="no10"></td>
-                      </tr>
-                      
+                       <c:forEach items="${ requestScope.list }" var="m">
+						<tr>
+							<td>${ m.user_position }</td>
+							<td>${ m.user_no }</td>
+							<td>${ m.user_id }</td>
+							<td>${ m.user_name }</td>
+							<td>${ m.user_ssn }</td>
+							<td>${ m.user_phone }</td>
+							<td>${ m.user_email }</td>
+							<td>${ m.login_ok }</td>
+							<td><input type="checkbox" value=${ m.user_no }></td>
+						</tr>
+					  </c:forEach>  
                     </tbody>
                   </table>
                   <div align="right" style=50px>
@@ -185,7 +232,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <!---Container Fluid-->
       </div>
