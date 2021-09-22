@@ -3,6 +3,8 @@ package com.tftsa.itys.member.model.service;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tftsa.itys.member.model.vo.Member;
+import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 public interface MemberService {
 
@@ -15,4 +17,6 @@ public interface MemberService {
 	void send_mail(Member member, String div) throws Exception;
 	void findUserPwd(HttpServletResponse response, Member member) throws Exception;
 	int updateUserPwd(Member member);
+	Student selectStudent(int user_no);
+	Tutor selectTutor(int user_no);
 }

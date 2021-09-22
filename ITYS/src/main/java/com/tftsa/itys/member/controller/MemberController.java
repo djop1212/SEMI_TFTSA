@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.member.model.service.MemberService;
 import com.tftsa.itys.member.model.vo.Member;
+import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 @Controller
 public class MemberController {
@@ -62,13 +64,13 @@ public class MemberController {
 	// 로그인하기
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	public String loginMethod(Member member, HttpSession session, SessionStatus status, Model model) {
-		// System.out.println("login.do : "+member);
-		logger.info("login.do : " + member);
 
 		// userid 가 일치하는 회원정보 조회해 옴
 		Member loginMember = memberService.selectUser(member.getUser_id());
 		// 조회해 온 회원정보의 암호화된 패스워드와 클라이언트가 보낸 암호 비교
 		// matches(일반글자 암호, 암호화된 패스워드)
+		
+		logger.info("login.do : " + member);
 
 		if (loginMember != null && bcryptPasswordEncoder.matches(member.getUser_pwd(), loginMember.getUser_pwd())
 				&& loginMember.getLogin_ok().equals("Y")) {
@@ -102,6 +104,13 @@ public class MemberController {
 		Member member = memberService.selectUser(user_id);
 		if (member != null) {
 			mv.addObject("member", member);
+			if(member.getUser_position().equals("S")) {
+				Student student = memberService.selectStudent(member.getUser_no());
+				mv.addObject("student", student);
+			}else if(member.getUser_position().equals("T")) {
+				Tutor tutor = memberService.selectTutor(member.getUser_no());
+				mv.addObject("tutor", tutor);
+			}
 			mv.setViewName("mypage/myPage");
 		} else {
 			mv.addObject("message", user_id + " 회원 조회 실패!");
