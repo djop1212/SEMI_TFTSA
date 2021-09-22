@@ -34,21 +34,67 @@
 		<result property="student_no" column="student_no"/>
 		<result property="tutor_no" column="tutor_no"/>
 	</resultMap>
+	
+	<resultMap type="SubData" id="resultSubData">
+		<result property="user_no" column="user_no"/>
+		<result property="sub_no" column="sub_no"/>
+	</resultMap>
+	
+	<resultMap type="Subject" id="resultSubject">
+		<id property="sub_no" column="sub_no"/>
+		<result property="category" column="category"/>
+		<result property="sub_name" column="sub_name"/>
+	</resultMap>
+	
+	<resultMap type="MyLikes" id="resultMyLikes">
+		<id property="user_no" column="user_no"/>
+		<result property="pic" column="pic"/>
+		<result property="min_pay" column="min_pay"/>
+		<result property="online_ok" column="online_ok"/>
+		<result property="area" column="area"/>
+		<result property="intro" column="intro"/>
+		<result property="day" column="day"/>
+		<result property="time" column="time"/>
+		<result property="style" column="style"/>
+		<result property="l_grd" column="l_grd"/>
+		<result property="class_min" column="class_min"/>
+		<result property="class_times" column="class_times"/>
+		<result property="sub_name" column="sub_name"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="user_email" column="user_email"/>
+	</resultMap>
 		
-	<select id="selectListLikes" parameterType="_int" resultMap="resultLikes">
-		select * from likes	
-		where student_no = #{ user_no }
+	<select id="selectLikesList" parameterType="_int" resultMap="resultMyLikes">
+		select * from tutor
+		left join user_info using (user_no) 
+		where user_no in
+		(select tutor_no from likes where student_no = #{user_no})
 	</select>
 	
+	<select id="selectSubjectList" resultMap="resultSubject">
+		select * from subject
+	</select>
+	
+	<!-- 선생님 프로필 추가 -->
 	<insert id="insertTutor" parameterType="Tutor">
 		insert into tutor (user_no, pic, min_pay, online_ok, area, intro, day, time, style, l_grd, class_min, class_times, sub_name) 
 		values 
-		(#{user_no}, #{pic}, #{min_pay}, #{online_ok}, #{area}, #{intro}, #{day}, #{time}, #{style}, #{l_grd}, #{class_time}, #{sub_name})
+		(#{user_no}, #{pic}, #{min_pay}, #{online_ok}, #{area}, #{intro}, #{day}, #{time}, #{style}, #{l_grd}, #{class_min}, #{class_times}, #{sub_name})
 	</insert>
+	<insert id="insertSubData" parameterType="SubData">
+		insert into sub_data (user_no, sub_no)
+		values
+		(#{user_no}, #{sub_no})
+	</insert>
+	<select id="selectSubName" parameterType="_int" resultType="String">
+		select sub_name from subject where sub_no = #{sub_no}
+	</select>
 	<update id="updateTutorPosition" parameterType="_int">
 		update user_info set user_position = 'T' where user_no = #{user_no}
 	</update>
 
+	<!-- 학생 프로필 추가 -->
 	<insert id="insertStudent" parameterType="Student">
 		insert into student (user_no, pic, stu_job, day, time, stu_wish)
 		values
@@ -57,6 +103,42 @@
 	<update id="updateStudentPosition" parameterType="_int">
 		update user_info set user_position = 'S' where user_no = #{user_no}
 	</update>
+	
+	<select id="selectStudent" parameterType="_int" resultMap="resultStudent">
+		select * from student where user_no = #{user_no}
+	</select>
+	<select id="selectTutor" parameterType="_int" resultMap="resultTutor">
+		select * from tutor where user_no = #{user_no}
+	</select>
+	
+	<!-- 프로필 수정 -->
+	<update id="updateStudent" parameterType="Student">
+		update student 
+		set stu_job = #{stu_job},
+			day = #{day},
+			time = #{time},
+			stu_wish = #{stu_wish}
+		where user_no = #{user_no}
+	</update>
+	<update id="updateTutor" parameterType="Tutor">
+		update tutor
+		set min_pay = #{min_pay},
+			online_ok = #{online_ok},
+			area = #{area},
+			intro = #{intro},
+			day = #{day},
+			time = #{time},
+			style = #{style},
+			l_grd = #{l_grd},
+			class_min = #{class_min},
+			class_times = #{class_times},
+			sub_name = #{sub_name}
+		where user_no = #{user_no}
+	</update>
+	
+	<delete id="deleteSubData" parameterType="_int">
+		delete sub_data where user_no = #{user_no}
+	</delete>
 	
 	
 </mapper>

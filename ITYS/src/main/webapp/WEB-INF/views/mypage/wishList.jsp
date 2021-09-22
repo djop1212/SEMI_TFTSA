@@ -21,6 +21,10 @@ function Click(){
 }
 </script>
 <style type="text/css">
+hr{
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+}
 div#left{
 	/* width: 250px !important; */
 	margin: 5px;
@@ -105,43 +109,49 @@ div.box {
 						<div>
 							<img
 								src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-								width="120px" height="120px" />
+								width="120px" height="120px"/>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do">프로필</a></li>
-								<li><a href="">채팅목록</a></li>
-								<li><a href="wishl.do" style="color:white; background: #42acae; border-radius:3px;">찜 목록</a></li>
-								<li><a href="mclass.do">내 강의 내역</a></li>
+								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
+								<li><a href="wishl.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">찜 목록</a></li>
+								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
 							</ul>
 						</div>
 						<div style="color:#969ca2;"><a href="">탈퇴하기</a></div>
 					</div>
 					<div id="right">
 						<div>
+						<c:if test="">
+							
+						</c:if>
 							<h4>❤ 찜 목록</h4>
 						</div><br>
 						<div>
 							<ul id="wlist">
 								<li>
+								<c:forEach items="${requestScope.list }" var="w">
 								<table>
 									<tr>
 									<td valign="top">
 										<img
 										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" />
+										width="75px" height="75px" style="margin-top:5px" />
 									</td>
 									<td style="width:475px; padding-left:15px">
-										선생님이름<br>	
-										과외 한 줄 소개<br>
-										전화번호<br>
-										과목<br>
-										지역<Br>
+										선생님이름 : ${w.user_name }<br>	
+										과외 한 줄 소개 : ${w.intro }<br>
+										전화번호 : ${w.user_phone }<br>
+										과목 : ${w.sub_name }<br>
+										지역 : ${w.area }<Br>
 									</td>
 									<td style="align: right;"><input type="checkbox"></td>
 									</tr>
-								</table>
-								</li><hr>
+								</table><hr>
+								<%-- <c:if test="${list. }"></c:if> --%>
+								</c:forEach>
+								</li>
 								
 							</ul>
 						</div>

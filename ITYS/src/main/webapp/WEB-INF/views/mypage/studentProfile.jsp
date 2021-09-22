@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,20 +16,23 @@ tr td{
 <body class="sub_page">
 		<div>
 			<h3 align="center">학생 프로필 추가</h3>
-				<form action="upsprofile.do" method="post">
+				<form action="upsprofile.do" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="user_no" value="${user_no }">
 				<br>
 					<table align="center">
 						<tr>
 							<th rowspan=2>프로필 사진</th>
 							<td>
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-									width="120px" height="120px">
+								<c:if test="${pic eq null }">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif" width="120px" height="120px">
+								</c:if>
+								<c:if test="${pic ne null }">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${user_no}" width="120px" height="120px">
+								</c:if>
 							</td>
-							
 						</tr>
 						<tr>
-							<td><input type="file" name="pic"></td>
+							<td><input type="file" name="upfile" accept="image/*" ></td>
 						</tr>
 						<tr>
 							<th>학년</th>

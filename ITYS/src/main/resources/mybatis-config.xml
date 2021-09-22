@@ -19,8 +19,11 @@
 		
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
 		<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
 	</typeAliases>
 	
 	<mappers>
