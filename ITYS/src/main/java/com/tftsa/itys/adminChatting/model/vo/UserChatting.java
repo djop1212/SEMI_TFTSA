@@ -10,6 +10,8 @@ public class UserChatting implements java.io.Serializable {
 	private int chat_no;
 	private java.sql.Timestamp wrtn_datetm;
 	private String chat_content;
+	private int student_no;
+	private int tutor_no;
 	private String student_name;
 	private String tutor_name;
 	private String user_ssn;
@@ -26,14 +28,17 @@ public class UserChatting implements java.io.Serializable {
 	}
 
 	public UserChatting(int user_no, int chat_room_no, int chat_no, Timestamp wrtn_datetm, String chat_content,
-			String student_name, String tutor_name, String user_ssn, String user_name, String user_phone,
-			String user_id, String user_pwd, String user_email, String user_position, String login_ok) {
+			int student_no, int tutor_no, String student_name, String tutor_name, String user_ssn, String user_name,
+			String user_phone, String user_id, String user_pwd, String user_email, String user_position,
+			String login_ok) {
 		super();
 		this.user_no = user_no;
 		this.chat_room_no = chat_room_no;
 		this.chat_no = chat_no;
 		this.wrtn_datetm = wrtn_datetm;
 		this.chat_content = chat_content;
+		this.student_no = student_no;
+		this.tutor_no = tutor_no;
 		this.student_name = student_name;
 		this.tutor_name = tutor_name;
 		this.user_ssn = user_ssn;
@@ -84,6 +89,22 @@ public class UserChatting implements java.io.Serializable {
 
 	public void setChat_content(String chat_content) {
 		this.chat_content = chat_content;
+	}
+
+	public int getStudent_no() {
+		return student_no;
+	}
+
+	public void setStudent_no(int student_no) {
+		this.student_no = student_no;
+	}
+
+	public int getTutor_no() {
+		return tutor_no;
+	}
+
+	public void setTutor_no(int tutor_no) {
+		this.tutor_no = tutor_no;
 	}
 
 	public String getStudent_name() {
@@ -173,9 +194,10 @@ public class UserChatting implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "UserChatting [user_no=" + user_no + ", chat_room_no=" + chat_room_no + ", chat_no=" + chat_no
-				+ ", wrtn_datetm=" + wrtn_datetm + ", chat_content=" + chat_content + ", student_name=" + student_name
-				+ ", tutor_name=" + tutor_name + ", user_ssn=" + user_ssn + ", user_name=" + user_name + ", user_phone="
-				+ user_phone + ", user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_email=" + user_email
-				+ ", user_position=" + user_position + ", login_ok=" + login_ok + "]";
+				+ ", wrtn_datetm=" + wrtn_datetm + ", chat_content=" + chat_content + ", student_no=" + student_no
+				+ ", tutor_no=" + tutor_no + ", student_name=" + student_name + ", tutor_name=" + tutor_name
+				+ ", user_ssn=" + user_ssn + ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_id="
+				+ user_id + ", user_pwd=" + user_pwd + ", user_email=" + user_email + ", user_position=" + user_position
+				+ ", login_ok=" + login_ok + "]";
 	}
 }
