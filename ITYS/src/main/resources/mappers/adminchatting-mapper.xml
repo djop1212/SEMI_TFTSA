@@ -10,6 +10,8 @@
 		<result column="chat_no" property="chat_no" />
 		<result column="wrtn_datetm" property="wrtn_datetm" />
 		<result column="chat_content" property="chat_content" />
+		<result column="student_no" property="student_no" />
+		<result column="tutor_no" property="tutor_no" />
 		<result column="student_name" property="student_name" />
 		<result column="tutor_name" property="tutor_name" />
 		<result column="user_ssn" property="user_ssn" />

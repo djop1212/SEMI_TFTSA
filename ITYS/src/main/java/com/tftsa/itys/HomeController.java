@@ -65,11 +65,6 @@ public class HomeController {
 	public String loginViewForward() {
 		return "common/login"; // 내보낼 뷰파일명 리턴
 	}
-	
-	@RequestMapping("test.do")
-	public String testViewForward() {
-		return "chatting/test"; // 내보낼 뷰파일명 리턴
-	}
 
 	@RequestMapping("adminDashboard.do")
 	public String AdminDashViewForward() {

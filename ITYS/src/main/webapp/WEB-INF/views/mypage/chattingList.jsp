@@ -119,20 +119,38 @@ div.box {
 						<div>
 							<ul id="wlist">
 								<li>
-								<%-- <c:forEach items="${requestScope.list }" var=""> --%>
+								<c:if test="${ requestScope.userchattingroomtutor1 != null }">
+								<c:forEach items="${ requestScope.userchattingroomtutor1 }" var="ucrt">
 								<table>
 									<tr>
-									<td style="width:475px; padding-left:15px">
-										선생님이름 : <br>	
-										과외 한 줄 소개 : <br>
-										전화번호 : <br>
-										과목 : <br>
-										지역 : <Br>
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }'">
+										선생님이름 : ${ ucrt.tutor_name }<br>	
+										과외 한 줄 소개 : ${ ucrt.intro }<br>
+										전화번호 : ${ ucrt.user_phone }<br>
+										과목 : ${ ucrt.sub_name }<br>
+										지역 : ${ ucrt.area }<Br>
 									</td>
 									<td style="align: right;"><input type="checkbox"></td>
 									</tr>
 								</table><hr>
-								<%-- </c:forEach> --%>
+								</c:forEach>
+								</c:if>
+								<c:if test="${ requestScope.userchattingroomtutor2 != null }">
+								<c:forEach items="${ requestScope.userchattingroomtutor2 }" var="ucrt">
+								<table>
+									<tr>
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }'">
+										선생님이름 : ${ ucrt.tutor_name }<br>	
+										과외 한 줄 소개 : ${ ucrt.intro }<br>
+										전화번호 : ${ ucrt.user_phone }<br>
+										과목 : ${ ucrt.sub_name }<br>
+										지역 : ${ ucrt.area }<Br>
+									</td>
+									<td style="align: right;"><input type="checkbox"></td>
+									</tr>
+								</table><hr>
+								</c:forEach>
+								</c:if>
 								</li>
 								
 							</ul>

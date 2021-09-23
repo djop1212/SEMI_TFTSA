@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +27,7 @@ import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 
 @Controller
 public class MypageController {
@@ -153,7 +153,7 @@ public class MypageController {
 	// 채팅 목록 조회
 	@RequestMapping("clist.do")
 	public String moveChattingList(@RequestParam("user_no") int user_no, ModelAndView mv) {
-		return "mypage/chattingList";
+		return "redirect:selectChattingList.do?user_no=" + user_no;
 	}
 	
 	// 내 수업 목록 조회
@@ -274,4 +274,21 @@ public class MypageController {
 		}
 	}
 
+	// 채팅 목록 조회 컨트롤러
+	@RequestMapping("selectChattingList.do")
+	public String selectChattingList(Model model, @RequestParam("user_no") int user_no) {
+		ArrayList<UserChattingroomTutor> userchattingroomtutor1 = mypageService.selectChattingStudentList(user_no);
+		ArrayList<UserChattingroomTutor> userchattingroomtutor2 = mypageService.selectChattingTutorList(user_no);
+		
+		if (userchattingroomtutor1.size() > 0) {
+			model.addAttribute("userchattingroomtutor1", userchattingroomtutor1);
+			return "mypage/chattingList";
+		} else if(userchattingroomtutor2.size() > 0) {
+			model.addAttribute("userchattingroomtutor2", userchattingroomtutor2);
+			return "mypage/chattingList";
+		} else {
+			model.addAttribute("message", "등록된 채팅목록 정보가 없습니다.");
+			return "common/error";
+		}
+	}
 }

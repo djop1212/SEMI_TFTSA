@@ -28,12 +28,13 @@
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
-
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.UserChattingroomTutor" alias="UserChattingroomTutor"/>
+ 		
  		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
-	</typeAliases>
+		</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/adminchatting-mapper.xml" />
