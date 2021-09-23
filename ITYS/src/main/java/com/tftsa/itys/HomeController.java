@@ -76,11 +76,6 @@ public class HomeController {
 		return "admin/adminDashboard"; // 내보낼 뷰파일명 리턴
 	}
 
-	@RequestMapping("adminReview.do")
-	public String AdminReviewViewForward() {
-		return "admin/adminReview"; // 내보낼 뷰파일명 리턴
-	}
-	
 	@RequestMapping("adminDeposit.do")
 	public String AdminDepositViewForward() {
 		return "admin/adminDeposit"; // 내보낼 뷰파일명 리턴
