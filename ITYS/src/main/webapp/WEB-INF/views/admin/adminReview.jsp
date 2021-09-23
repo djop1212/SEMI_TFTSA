@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/img/logo/logo.png" rel="icon">
-<title>Admin - 회원 관리</title>
+<title>Admin - 리뷰 관리</title>
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
@@ -62,87 +62,16 @@
                       </tr>
                     </tfoot>
                     <tbody>
-                      <tr>
-                      	<td>1</td>
-                        <td>노민지</td>
-                        <td>영어</td>
-                        <td>5.0</td>
-                        <td>내 이름은 곽두팔 나 살면서 이런 멋진 과외는 처음 받아본다.</td>
-                        <td><input type="checkbox" name="review 1" value="no1"></td>
-                      </tr>
-                      <tr>
-                      <td>2</td>
-                        <td>Garrett Winters</td>
-                        <td>수학</td>
-                        <td>5.0</td>
-                        <td>수학 진짜 개 재밌다 무야호~~</td>
-                        <td><input type="checkbox" name="review 2" value="no2"></td>
-                      </tr>
-                      <tr>
-                      <td>3</td>
-                        <td>Andy Baek</td>
-                        <td>영어</td>
-                        <td>5.0</td>
-                        <td>교재가 꼼꼼하고 선생님이 저렴해요!</td>
-                        <td><input type="checkbox" name="review 3" value="no3"></td>
-                      </tr>
-                      <tr>
-                      <td>4</td>
-                        <td>End Back</td>
-                        <td>물리</td>
-                        <td>5.0</td>
-                        <td>역시 탐구과목으로 물리는 무리였어</td>
-                        <td><input type="checkbox" name="review 4" value="no4"></td>
-                      </tr>
-                      <tr>
-                      <td>5</td>
-                        <td>현우진</td>
-                        <td>수학</td>
-                        <td>5.0</td>
-                        <td>스탠포드 나온 존잘 강사 아 오지고 지리고~</td>
-                        <td><input type="checkbox" name="review 5" value="no5"></td>
-                      </tr>
-                      <tr>
-                      <td>6</td>
-                        <td>노민지</td>
-                        <td>TOEIC</td>
-                        <td>5.0</td>
-                        <td>와우! 넘모 완벽한 강의~!!</td>
-                        <td><input type="checkbox" name="review 6" value="no6"></td>
-                      </tr>
-                      <tr>
-                      <td>7</td>
-                        <td>김주연</td>
-                        <td>수학</td>
-                        <td>5.0</td>
-                        <td>선생님 존예리 무야호~!!~!!</td>
-                        <td><input type="checkbox" name="review 7" value="no7"></td>
-                      </tr>
-                      <tr>
-                      <td>8</td>
-                        <td>Rhona Davidson</td>
-                        <td>Integration Specialist</td>
-                        <td>5.0</td>
-                        <td>55</td>
-                        <td><input type="checkbox" name="review 8" value="no8"></td>
-                      </tr>
-                      <tr>
-                      <td>9</td>
-                        <td>Colleen Hurst</td>
-                        <td>Javascript Developer</td>
-                        <td>5.0</td>
-                        <td>39</td>
-                        <td><input type="checkbox" name="review 9" value="no9"></td>
-                      </tr>
-                      <tr>
-                      <td>10</td>
-                        <td>Sonya Frost</td>
-                        <td>Software Engineer</td>
-                        <td>5.0</td>
-                        <td>23</td>
-                        <td><input type="checkbox" name="review 10" value="no10"></td>
-                      </tr>
-                      
+                      <c:forEach items="${ requestScope.list }" var="r">
+						<tr>
+							<td>${ r.rev_no }</td>
+							<td>${ r.user_name }</td>
+							<td>${ r.sub_name }</td>
+							<td>${ r.score }</td>
+							<td>${ r.rev_content }</td>
+							<td><input type="checkbox" value=${ r.rev_no }></td>
+						</tr>
+					  </c:forEach>
                     </tbody>
                   </table>
                   <div align="right" style=50px>
