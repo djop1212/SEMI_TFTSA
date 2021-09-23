@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
@@ -34,6 +35,10 @@
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
+    
+    <typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.tftsa.itys.common.Paging" alias="Paging" />
+		<typeAlias type="com.tftsa.itys.board.model.vo.Reply" alias="Reply" />
 		</typeAliases>
 	
 	<mappers>
@@ -47,6 +52,9 @@
     	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
+    <mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/reply-mapper.xml" />
 	</mappers>
 	
 </configuration>
+

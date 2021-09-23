@@ -56,9 +56,14 @@ public class HomeController {
 		return "common/contact"; // 내보낼 뷰파일명 리턴
 	}
 	
-	@RequestMapping("event.do")
-	public String eventViewForward() {
-		return "common/event"; // 내보낼 뷰파일명 리턴
+//	@RequestMapping("event.do")
+//	public String eventViewForward() {
+//		return "common/event"; // 내보낼 뷰파일명 리턴
+//	}
+	
+	@RequestMapping("info.do")
+	public String infoViewForward() {
+		return "common/info"; // 내보낼 뷰파일명 리턴
 	}
 	
 	@RequestMapping("login.do")

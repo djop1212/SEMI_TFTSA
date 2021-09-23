@@ -107,8 +107,8 @@
 
 	<!-- 게시글 삭제 -->
 	<delete id="deleteBoard" parameterType="Board">
-		delete from board 
-		where board_no = #{board_no}
+		delete from board
+		where board_no = #{board_no} 
 		<!-- <if test="board_level == 1">
 			where board_ref = #{board_no}
 		</if>
@@ -116,7 +116,7 @@
 			where board_reply_ref = #{board_no}
 		</if>
 		<if test="board_level == 3">
-			where board_num = #{board_no}
+			where board_no = #{board_no}
 		</if>		 -->
 	</delete>
 	
