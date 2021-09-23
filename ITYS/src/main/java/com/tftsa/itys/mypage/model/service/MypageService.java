@@ -6,6 +6,7 @@ import javax.security.auth.Subject;
 
 import com.tftsa.itys.member.model.vo.Member;
 import com.tftsa.itys.mypage.model.vo.Likes;
+import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -13,6 +14,7 @@ import com.tftsa.itys.mypage.model.vo.Tutor;
 public interface MypageService {
 
 	ArrayList<Likes> selectLikesList(int user_no);
+	ArrayList<MyClass> selectMyclassList(int user_no);
 	int insertTutor(Tutor tutor);
 	int updateTutorPosition(int user_no);
 	int insertStudent(Student student);
@@ -28,5 +30,6 @@ public interface MypageService {
 	ArrayList<Subject> selectSubjectList();
 	String selectPosition(int user_no);
 	int deleteSubData(int user_no);
+	int deleteLikes(Likes likes);
 
 }

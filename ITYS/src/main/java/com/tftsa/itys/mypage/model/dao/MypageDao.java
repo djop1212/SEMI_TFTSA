@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.member.model.vo.Member;
 import com.tftsa.itys.mypage.model.vo.Likes;
+import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -23,6 +24,11 @@ public class MypageDao {
 	public ArrayList<Likes> selectLikesList(int user_no) {
 		List<Likes> list = session.selectList("mypageMapper.selectLikesList", user_no);
 		return (ArrayList<Likes>)list;
+	}
+	
+	public ArrayList<MyClass> selectMyclassList(int user_no){
+		List<MyClass> list = session.selectList("mypageMapper.selectMyClassList", user_no);
+		return (ArrayList<MyClass>)list;
 	}
 
 	public int insertTutor(Tutor tutor) {
@@ -82,6 +88,10 @@ public class MypageDao {
 
 	public int deleteSubData(int user_no) {
 		return session.delete("mypageMapper.deleteSubData", user_no);
+	}
+
+	public int deleteLikes(Likes likes) {
+		return session.delete("mypageMapper.deleteLikes", likes);
 	}
 	
 	

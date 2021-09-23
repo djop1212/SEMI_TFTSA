@@ -12,6 +12,34 @@ tr td{
 	padding-bottom: 10px;
 }
 </style>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+	$('#stime').timepicker({
+		'timeFormat' : 'HH:mm',
+		'minTime' : '06:00',
+		'maxTime' : '23:30',
+		'scrollDefaultNow' : true
+	}).on('changeTime', function() { //stime 을 선택한 후 동작
+		var from_time = $("input[name='stime']").val(); //stime 값을 변수에 저장
+		$('#etime').timepicker('option', 'minTime', from_time);//etime의 mintime 지정
+
+		if ($('#etime').val() && $('#etime').val() < from_time) {
+			$('#etime').timepicker('setTime', from_time);
+			//etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
+		}
+	});
+
+	$('#etime').timepicker({
+		'timeFormat' : 'HH:mm',
+		'minTime' : '06:00',
+		'maxTime' : '23:30'
+	});//etime 시간 기본 설정
+});
+</script>
 </head>
 <body class="sub_page">
 		<div>
@@ -22,16 +50,6 @@ tr td{
 					<table align="center">
 						<tr>
 							<th rowspan=2>프로필 사진</th>
-							<td>
-								<c:if test="${pic eq null }">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif" width="120px" height="120px">
-								</c:if>
-								<c:if test="${pic ne null }">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${user_no}" width="120px" height="120px">
-								</c:if>
-							</td>
-						</tr>
-						<tr>
 							<td><input type="file" name="upfile" accept="image/*" ></td>
 						</tr>
 						<tr>
@@ -64,7 +82,9 @@ tr td{
 						<tr>
 							<th>과외 가능 시간</th>
 							<td>
-								<input type="text" name="time" placeholder="예) 18~20시, 주말가능" size="25">
+			                     <input type="text" id="stime" name="stime" value="" class="timePicker" placeholder="00:00">
+			                     ~
+			                     <input type="text" id="etime" name="etime" value="" class="timePicker" placeholder="24:00">
 							</td>
 						</tr>
 						<tr>

@@ -1,10 +1,12 @@
 package com.tftsa.itys.mypage.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tftsa.itys.member.model.vo.Member;
 import com.tftsa.itys.mypage.model.service.MypageService;
 import com.tftsa.itys.mypage.model.vo.Likes;
+import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -51,13 +54,54 @@ public class MypageController {
 	// 학생 프로필 추가
 	@RequestMapping(value = "upsprofile.do", method = RequestMethod.POST)
 	public String insertStudentProfile( Model model, Student student,
-			HttpServletRequest request, HttpServletResponse response, @RequestParam(name="upfile", required = false) MultipartFile mfile) throws Exception {
+			HttpServletRequest request, HttpServletResponse response, @RequestParam(name="upfile", required = false) MultipartFile mfile,
+			@RequestParam(name="stime") String stime, @RequestParam(name="etime") String etime) throws Exception {
 		
 		// 업로드된 파일 저장 폴더 지정
-		//String savePath = request.getSession().getServletContext().getRealPath("resources/images/mypage/student");
-		
-		// image ... 실패!
+		String savePath = request.getSession().getServletContext().getRealPath("resources/images/mypage/studentImg");
+		if(!mfile.isEmpty()) {
+			String originFileName = mfile.getOriginalFilename();
+			if(originFileName!= null && originFileName.length()>0) {
+				logger.info(savePath);
+				logger.info("upsprofile.do : "+originFileName);
+				logger.info("getSize() : "+mfile.getSize());
+				logger.info("getInputStream() : "+mfile.getInputStream());
+				try {
+					mfile.transferTo(new File(savePath+"\\"+originFileName));
+					
+					String renameFileName = (Integer.toString(student.getUser_no()));
+					renameFileName += "."+originFileName.substring(originFileName.lastIndexOf(".")+1);
+					
+					File originFile = new File(savePath + "\\" + originFileName);
+					File renameFile = new File(savePath + "\\" + renameFileName);
+					
+					if(!originFile.renameTo(renameFile)) {
+						FileInputStream fin = new FileInputStream(originFile);
+						FileOutputStream fout = new FileOutputStream(renameFile);
+						
+						int data = -1;
+						byte[] buffer = new byte[1024];
 
+						while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
+							fout.write(buffer, 0, buffer.length);
+						}
+
+						fin.close();
+						fout.close();
+						originFile.delete();
+					}
+					student.setPic(renameFileName);
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+					model.addAttribute("message", "전송파일 저장 실패");
+					return "common/error";
+				}
+			}// 업로드된 파일 있음
+			//student.setOriginal_filename(originFileName);
+		}// 첨부 파일 있음
+		
+		student.setTime(stime+", "+etime);
 		logger.info("upsprofile.do : "+student);
 		
 		if((mypageService.insertStudent(student) & mypageService.updateStudentPosition(student.getUser_no()))>0) {
@@ -89,11 +133,11 @@ public class MypageController {
 			@RequestParam(name="upfile") MultipartFile mfile, @RequestParam("sub_no") String arr_sub_no, 
 			@RequestParam(name="stime") String stime, @RequestParam(name="etime") String etime, 
 			@RequestParam(name="city") String city, @RequestParam(name="country") String country) throws IOException {
-		logger.info("stime : "+stime);
-		logger.info("etime : "+etime);
-		logger.info("city : "+city);
-		logger.info("country : "+country);
-		logger.info("sub_no : "+arr_sub_no);
+//		logger.info("stime : "+stime);
+//		logger.info("etime : "+etime);
+//		logger.info("city : "+city);
+//		logger.info("country : "+country);
+//		logger.info("sub_no : "+arr_sub_no);
 		
 		tutor.setTime(stime+", "+etime);
 		tutor.setArea(city+" "+country);
@@ -116,12 +160,56 @@ public class MypageController {
 				}
 				cnt++;
 			}
-		}logger.info("insertSubDate cnt : "+cnt);		
+		}
+		logger.info("insertSubDate cnt : " + cnt);
 		tutor.setSub_name(sub_name);
-		
-		logger.info("uptprofile.do : "+tutor);
-		String savePath = request.getSession().getServletContext().getRealPath("resources/images/mypage/tutor");
-		
+		tutor.setTime(stime + ", " + etime);
+
+		String savePath = request.getSession().getServletContext().getRealPath("resources/images/mypage/tutorImg");
+		if (!mfile.isEmpty()) {
+			String originFileName = mfile.getOriginalFilename();
+			if (originFileName != null && originFileName.length() > 0) {
+				logger.info(savePath);
+				logger.info("upsprofile.do : " + originFileName);
+				logger.info("getSize() : " + mfile.getSize());
+				logger.info("getInputStream() : " + mfile.getInputStream());
+				try {
+					mfile.transferTo(new File(savePath + "\\" + originFileName));
+
+					String renameFileName = (Integer.toString(tutor.getUser_no()));
+					renameFileName += "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+
+					File originFile = new File(savePath + "\\" + originFileName);
+					File renameFile = new File(savePath + "\\" + renameFileName);
+
+					if (!originFile.renameTo(renameFile)) {
+						FileInputStream fin = new FileInputStream(originFile);
+						FileOutputStream fout = new FileOutputStream(renameFile);
+
+						int data = -1;
+						byte[] buffer = new byte[1024];
+
+						while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
+							fout.write(buffer, 0, buffer.length);
+						}
+
+						fin.close();
+						fout.close();
+						originFile.delete();
+					}
+					tutor.setPic(renameFileName);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					model.addAttribute("message", "전송파일 저장 실패");
+					return "common/error";
+				}
+			} // 업로드된 파일 있음
+				// tutor.setOriginal_filename(originFileName);
+		} // 첨부 파일 있음
+
+		logger.info("upsprofile.do : " + tutor);
+
 		if((mypageService.insertTutor(tutor) & mypageService.updateTutorPosition(tutor.getUser_no()))>0) {
 			PrintWriter out = response.getWriter();
 			String str = "";
@@ -140,25 +228,64 @@ public class MypageController {
 	// 찜목록 조회
 	@RequestMapping("wishl.do")
 	public String moveWishList(@RequestParam("user_no") int user_no, Model model) {
-		logger.info("wishl.do user_no : "+user_no);
+		//logger.info("wishl.do user_no : "+user_no);
 		ArrayList<Likes> list = mypageService.selectLikesList(user_no);
-
+		if(mypageService.selectPosition(user_no).equals("T")) {
+			Tutor tutor = mypageService.selectTutor(user_no);
+			model.addAttribute("tutor", tutor);
+		}else if(mypageService.selectPosition(user_no).equals("S")) {
+			Student student = mypageService.selectStudent(user_no);
+			model.addAttribute("student", student);
+		}
 		if (list.size() > 0) {
 			logger.info("wishList : " + list.toString());
 			model.addAttribute("list", list);
 		}
 		return "mypage/wishList";
 	}
+	
+	// 찜 목록 삭제 
+	@RequestMapping("delwlist.do")
+	public String deleteWishList(@RequestParam("chk") String checkedList, Likes likes) {
+		//logger.info("delwlist.do : "+checkedList);
+		//logger.info("delwlist.do likes : "+likes.toString());
+		
+		String[] array = checkedList.split(",");
+	    for(int i=0 ;i<array.length; i++) {
+	    	//logger.info(array[i]);
+	    	likes.setTutor_no(Integer.parseInt(array[i]));
+	    	if(mypageService.deleteLikes(likes)>0) {
+	    		//logger.info("delwlist.do delete["+i+"] : "+array[i]);
+	    	}
+	    }
+		
+		return "redirect:wishl.do?user_no="+likes.getStudent_no();
+	}
 
 	// 채팅 목록 조회
 	@RequestMapping("clist.do")
-	public String moveChattingList(@RequestParam("user_no") int user_no, ModelAndView mv) {
+	public String moveChattingList(@RequestParam("user_no") int user_no, Model model) {
+		
 		return "mypage/chattingList";
 	}
 	
 	// 내 수업 목록 조회
 	@RequestMapping("mclass.do")
-	public String moveMyClass(@RequestParam("user_no") int user_no, ModelAndView mv) {
+	public String moveMyClass(@RequestParam("user_no") int user_no, Model model) {
+		logger.info("mclass.do");
+		ArrayList<MyClass> list = mypageService.selectMyclassList(user_no);
+		if(mypageService.selectPosition(user_no).equals("T")) {
+			Tutor tutor = mypageService.selectTutor(user_no);
+			model.addAttribute("tutor", tutor);
+		}else if(mypageService.selectPosition(user_no).equals("S")) {
+			Student student = mypageService.selectStudent(user_no);
+			model.addAttribute("student", student);
+		}		
+		
+		if(list.size()>0) {
+			logger.info("myclassList : "+list.toString());
+			model.addAttribute("list", list);
+		}
 		return "mypage/myClass";
 	}
 	
@@ -171,9 +298,7 @@ public class MypageController {
 		//ArrayList<Subject> subjectList = 
 		
 		List<Subject> subjectList = mypageService.selectSubjectList();
-//		if(subjectList.size()>0) {
-//			logger.info(subjectList.toString());
-//		}
+		//logger.info(subjectList.toString());
 		
 		
 		if(member != null && (student != null || tutor != null)) {
@@ -186,7 +311,7 @@ public class MypageController {
 				String[] array = str.split(",");
 				String stime = array[0];
 				String etime = array[1];
-				logger.info("upUserPage.do : stime, etime "+stime+", "+etime);
+				//logger.info("upUserPage.do : stime, etime "+stime+", "+etime);
 				mv.addObject("stime", stime);
 				mv.addObject("etime", etime);
 				mv.addObject("tutor", tutor);
