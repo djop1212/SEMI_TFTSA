@@ -7,14 +7,19 @@ import com.tftsa.itys.board.model.vo.Reply;
 public interface ReplyDao {
 	
 	// 댓글조회
-	public List<Reply> readReply(int board_no);
-	
-	// 댓글 작성 
-	public void writeReply(Reply reply);
+		public List<Reply> readReply(int board_no);
+		
+		// 댓글 작성 
+		public void writeReply(Reply reply);
 
-	// 댓글 수정
-	public void updateReply(Reply reply);
+		// 댓글 수정
+		public void updateReply(Reply reply);
+		
+		// 댓글 삭제
+		public void deleteReply(Reply reply);
+
+		public Reply selectReply(int com_no);
+
+
 	
-	// 댓글 삭제
-	public void deleteReply(Reply reply);
 }

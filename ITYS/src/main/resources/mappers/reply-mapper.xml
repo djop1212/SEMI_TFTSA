@@ -17,28 +17,36 @@
 	<select id="readReply" resultType="Reply">
     	SELECT
     		  com_no, com_writer, com_date, com_content
-    	 FROM COMMENTS
+    	 FROM REPLY
     	WHERE board_no = #{board_no}
 	</select>
 	
 <!-- 댓글 작성 -->
 	<insert id="writeReply">
-		INSERT INTO COMMENTS ( com_no, board_no, com_level, com_writer, com_date, com_content )
+		INSERT INTO REPLY ( com_no, board_no, com_level, com_writer, com_date, com_content )
 			VALUES 
-			((select max(com_no) + 1 from comments), #{board_no}, 
-				(select max(com_no) + 1 from comments), #{com_writer}, sysdate, 
+			((select max(com_no) + 1 from REPLY), #{board_no}, 
+				(select max(com_no) + 1 from REPLY), #{com_writer}, sysdate, 
 				#{com_content})
 	</insert>
 	
 <!-- 댓글 수정 -->
-	<update id="updateReply">
-		update COMMENTS set com_content = #{com_content}
-				 where com_no = #{com_no}
+	<update id="updateReply" parameterType="Reply">
+		update REPLY set com_content = #{ com_content }
+				 where com_no = #{com_no }
 	</update>
 
 <!-- 댓글 삭제 -->
-	<delete id="deleteReply">
-		delete from comments where com_no = #{com_no}	
+	<delete id="deleteReply" parameterType="Reply">
+		delete from REPLY where com_no = #{com_no}
 	</delete>
+	
+<!-- 댓글 수정페이지 댓글 조회 -->
+	<select id="selectReply" resultType="Reply">
+		SELECT
+    		  com_no, board_no, com_writer, com_date, com_content
+    	 FROM REPLY
+    	WHERE com_no = #{com_no}
+	</select>
 
 </mapper>

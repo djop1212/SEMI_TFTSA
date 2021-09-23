@@ -46,7 +46,7 @@
 	<td><textarea rows="5" cols="50" name="board_content">${ board.board_content }</textarea></td></tr>
 	<tr><th colspan="2">
 	<input type="submit" value="수정하기"> &nbsp; 
-	<input type="reset" value="작성취소"> &nbsp;
+	<!-- <input type="reset" value="작성취소"> &nbsp; -->
 	<input type="button" value="이전 페이지로 이동" onclick="javascript:history.go(-1); return false;">
 	</th></tr>
 	</table>

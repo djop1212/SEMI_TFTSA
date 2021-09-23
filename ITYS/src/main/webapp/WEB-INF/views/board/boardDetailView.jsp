@@ -6,6 +6,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
     
 <c:set var="currentPage" value="${ requestScope.currentPage }" />
+<c:set var="board_no" value="${ requestScope.board_no }" />
+<c:set var="com_no" value="${ requestScope.com_no }" />     
+
    
 <!DOCTYPE html>
 <html>
@@ -13,18 +16,7 @@
 <meta charset="UTF-8">
 <title></title>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	var formObj = $("form[name='readForm']");
-	
-	//댓글 수정 View
-	$(".updateReplyBtn").on("click", function(){
-		location.href = "/board/replyUpdateView?board_no=${board_no}"
-						+ "&com_no="+$(this).attr("data-com_no");
-	});
-	
-});
-</script>
+
 
 
 
@@ -101,15 +93,17 @@ cellpadding="5">
 	<c:if test="${ loginMember.user_id eq replyList.com_writer }">
  		<c:url var="ubup" value="/rupview.do">
 	    	<c:param name="com_no" value="${ replyList.com_no }"/>
+	    	<c:param name="board_no" value="${ replyList.board_no }"/>
 	    	<c:param name="page" value="${ currentPage }"/>
 	    </c:url>
 	    <a href="${ ubup }">[댓글 수정]</a>
 	    <c:url var="ubd" value="/rdelete.do">
 	    	<c:param name="com_no" value="${ replyList.com_no }"/>
+	    	<c:param name="board_no" value="${ replyList.board_no }"/>
+	    	<c:param name="page" value="${ currentPage }"/>
 	    	<%-- <c:param name="board_level" value="${ board.board_level }"/> --%>
-	    	<%-- <c:param name="board_rename_filename" value="${ board.board_rename_filename }"/> --%>
 	    </c:url>
-	    <a href="${ ubd }">[글삭제]</a>
+	    <a href="${ ubd }">[댓글 삭제]</a>
      </c:if></c:if>
 	         
    
