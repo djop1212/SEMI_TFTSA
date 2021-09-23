@@ -109,10 +109,10 @@ div.box {
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do">프로필</a></li>
-								<li><a href="">채팅목록</a></li>
-								<li><a href="wishl.do?user_no=${user_no }">찜 목록</a></li>
-								<li><a href="mclass.do" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
+								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
+								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
+								<li><a href="mclass.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
 							</ul>
 						</div>
 						<div style="color:#969ca2;"><a href="">탈퇴하기</a></div>

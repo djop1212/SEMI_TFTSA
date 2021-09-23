@@ -70,22 +70,12 @@ public class HomeController {
 	public String loginViewForward() {
 		return "common/login"; // 내보낼 뷰파일명 리턴
 	}
-	
-	@RequestMapping("test.do")
-	public String testViewForward() {
-		return "chatting/test"; // 내보낼 뷰파일명 리턴
-	}
 
 	@RequestMapping("adminDashboard.do")
 	public String AdminDashViewForward() {
 		return "admin/adminDashboard"; // 내보낼 뷰파일명 리턴
 	}
-	
-	@RequestMapping("adminMember.do")
-	public String AdminMemberViewForward() {
-		return "admin/adminMember"; // 내보낼 뷰파일명 리턴
-	}
-	
+
 	@RequestMapping("adminReview.do")
 	public String AdminReviewViewForward() {
 		return "admin/adminReview"; // 내보낼 뷰파일명 리턴
@@ -101,8 +91,4 @@ public class HomeController {
 		return "admin/adminChatting"; // 내보낼 뷰파일명 리턴
 	}
 	
-	@RequestMapping("adminCategory.do")
-	public String AdminCategoryViewForward() {
-		return "admin/adminCategory"; // 내보낼 뷰파일명 리턴
-	}
 }

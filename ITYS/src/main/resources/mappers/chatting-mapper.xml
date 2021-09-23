@@ -4,36 +4,22 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chattingMapper">
 
-	<resultMap type="UserTutor" id="resultUserTutor">
-		<id column="user_no" property="user_no"/>
-		<result column="pic" property="pic" />
-		<result column="min_pay" property="min_pay" />
-		<result column="online_ok" property="online_ok" />
-		<result column="area" property="area" />
-		<result column="intro" property="intro" />
-		<result column="day" property="day" />
-		<result column="time" property="time" />
-		<result column="style" property="style" />
-		<result column="l_grd" property="l_grd" />
-		<result column="class_min" property="class_min" />
-		<result column="class_times" property="class_times" />
-		<result column="sub_name" property="sub_name" />
-		<result column="user_ssn" property="user_ssn"/>
-		<result column="user_name" property="user_name"/>
-		<result column="user_phone" property="user_phone"/>
-		<result column="user_id" property="user_id"/>
-		<result column="user_pwd" property="user_pwd"/>
-		<result column="user_email" property="user_email"/>
-		<result column="user_position" property="user_position"/>
-		<result column="login_ok" property="login_ok"/>
-	</resultMap>
-
 	<resultMap type="Chattingroom" id="resultChattingroom">
 		<id column="chat_room_no" property="chat_room_no" />
+		<result column="student_no" property="student_no" />
+		<result column="tutor_no" property="tutor_no" />
 		<result column="student_name" property="student_name" />
 		<result column="tutor_name" property="tutor_name" />
 	</resultMap>
 	
+	<resultMap type="Chatting" id="resultChatting">
+		<id column="chat_no" property="chat_no"/>
+		<result column="chat_room_no" property="chat_room_no" />
+		<result column="wrtn_datetm" property="wrtn_datetm" />
+		<result column="user_no" property="user_no" />
+		<result column="chat_content" property="chat_content" />
+	</resultMap>
+
 	<resultMap type="Likes" id="resultLikes">
 		<id column="like_no" property="like_no" />
 		<result column="student_no" property="student_no" />
@@ -50,10 +36,80 @@
 		<result column="user_name" property="user_name" />
 	</resultMap>
 	
-	<select id="selectChatting" parameterType="_int" resultMap="resultUserTutor">
-		select * from tutor
+	<resultMap type="UserChattingStudent" id="resultUserChattingStudent">
+		<id column="user_no" property="user_no" />
+		<result column="pic" property="pic" />
+		<result column="stu_job" property="stu_job" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="stu_wish" property="stu_wish" />
+		<result column="chat_no" property="chat_no" />
+		<result column="chat_room_no" property="chat_room_no" />
+		<result column="wrtn_datetm" property="wrtn_datetm" />
+		<result column="chat_content" property="chat_content" />
+		<result column="user_ssn" property="user_ssn" />
+		<result column="user_name" property="user_name" />
+		<result column="user_phone" property="user_phone" />
+		<result column="user_id" property="user_id" />
+		<result column="user_pwd" property="user_pwd" />
+		<result column="user_email" property="user_email" />
+		<result column="user_position" property="user_position" />
+		<result column="login_ok" property="login_ok" />
+	</resultMap>
+	
+	<resultMap type="UserChattingTutor" id="resultUserChattingTutor">
+		<id column="user_no" property="user_no" />
+		<result column="pic" property="pic" />
+		<result column="min_pay" property="min_pay" />
+		<result column="online_ok" property="online_ok" />
+		<result column="area" property="area" />
+		<result column="intro" property="intro" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="style" property="style" />
+		<result column="l_grd" property="l_grd" />
+		<result column="class_min" property="class_min" />
+		<result column="class_times" property="class_times" />
+		<result column="sub_name" property="sub_name" />
+		<result column="chat_no" property="chat_no" />
+		<result column="chat_room_no" property="chat_room_no" />
+		<result column="wrtn_datetm" property="wrtn_datetm" />
+		<result column="chat_content" property="chat_content" />
+		<result column="user_ssn" property="user_ssn" />
+		<result column="user_name" property="user_name" />
+		<result column="user_phone" property="user_phone" />
+		<result column="user_id" property="user_id" />
+		<result column="user_pwd" property="user_pwd" />
+		<result column="user_email" property="user_email" />
+		<result column="user_position" property="user_position" />
+		<result column="login_ok" property="login_ok" />
+	</resultMap>
+	
+	<select id="selectChattingInfo" parameterType="Chatting" resultMap="resultChatting">
+		select * from chatting
+		where chat_room_no = #{ chat_room_no }
+		order by chat_no
+	</select>
+	
+	<select id="selectStudent" parameterType="_int" resultMap="resultUserChattingStudent">
+		select * from student
+		join chatting using(user_no)
 		join user_info using(user_no)
-		where user_no = #{ user_no }
+		where chat_room_no = #{ chat_room_no }
+		and rownum = 1
+	</select>
+	
+	<select id="selectTutor" parameterType="_int" resultMap="resultUserChattingTutor">
+		select * from tutor
+		join chatting using(user_no)
+		join user_info using(user_no)
+		where chat_room_no = #{ chat_room_no }
+		and rownum = 1
+	</select>
+	
+	<select id="selectChattingroom" parameterType="_int" resultMap="resultChattingroom">
+		select * from chatting_room
+		where chat_room_no = #{ chat_room_no }
 	</select>
 
 	<delete id="deleteChatting" parameterType="_int">
@@ -69,5 +125,15 @@
 	<insert id="insertBlock" parameterType="Chattingblock">
 		insert into chatting_block
 		values (chatting_block_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, #{ contents }, #{ user_no }, #{ student_name })
+	</insert>
+	
+	<insert id="insertChatting" parameterType="Chatting">
+		insert into chatting
+		values (chatting_seq.nextval, #{ chat_room_no }, systimestamp, #{ user_no }, #{ chat_content })
+	</insert>
+	
+	<insert id="insertChattingroom" parameterType="Chattingroom">
+		insert into chatting_room
+		values (chatting_room_seq.nextval, #{ student_name }, #{ tutor_name })
 	</insert>
 </mapper>

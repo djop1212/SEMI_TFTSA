@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminmemberMapper">
+
+	<resultMap id="resultMember" type="Member">
+		<id property="user_no" column="user_no" />
+		<result property="user_ssn" column="user_ssn" />
+		<result property="user_name" column="user_name" />
+		<result property="user_phone" column="user_phone" />
+		<result property="user_id" column="user_id" />
+		<result property="user_pwd" column="user_pwd" />
+		<result property="user_email" column="user_email" />
+		<result property="user_position" column="user_position" />
+		<result property="login_ok" column="login_ok" />
+	</resultMap>
+	
+	<select id="selectAllList" resultMap="resultMember">
+		select * from user_info
+	</select>
+	
+	<select id="selectAllStudents" resultMap="resultMember">
+		select * from user_info where user_position='S'
+	</select>
+	
+	<select id="selectAllTutors" resultMap="resultMember">
+		select * from user_info where user_position='T'
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
