@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.adminCategory.model.dao.AdminCategoryDao;
-import com.tftsa.itys.adminCategory.model.vo.Subject;
+import com.tftsa.itys.mypage.model.vo.Subject;
 
 @Service("admincategoryService")
 public class AdminCategoryServiceImpl implements AdminCategoryService{

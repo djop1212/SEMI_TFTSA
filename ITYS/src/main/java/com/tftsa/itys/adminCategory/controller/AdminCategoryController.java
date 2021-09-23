@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tftsa.itys.adminCategory.model.service.AdminCategoryService;
-import com.tftsa.itys.adminCategory.model.vo.Subject;
+import com.tftsa.itys.mypage.model.vo.Subject;
 
 @Controller
 public class AdminCategoryController {

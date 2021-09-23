@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.tftsa.itys.adminCategory.model.vo.Subject;
+import com.tftsa.itys.mypage.model.vo.Subject;
 
 @Repository("admincategoryDao")
 public class AdminCategoryDao {

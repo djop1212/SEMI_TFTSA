@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/img/logo/logo.png" rel="icon">
-<title>Admin - 회원 관리</title>
+<title>Admin - 과목 관리</title>
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
@@ -109,7 +109,7 @@ a {
 				<c:import url="/WEB-INF/views/admin/common/topbar.jsp" />
 			        <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h3 class="h3 mb-0 text-gray-800">키워드 관리</h3>
+            <h3 class="h3 mb-0 text-gray-800">과목 관리</h3>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
               <li class="breadcrumb-item"><a href="/itys/adminDashboard.do">관리자 페이지</a></li>
