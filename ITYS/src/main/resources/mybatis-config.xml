@@ -20,6 +20,7 @@
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Chattingblock" alias="Chattingblock" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
+		<typeAlias type="com.tftsa.itys.adminCategory.model.vo.Subject" alias="Subject" />
 		
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
@@ -34,6 +35,7 @@
 	
 	<mappers>
 		<mapper resource="mappers/adminchatting-mapper.xml" />
+		<mapper resource="mappers/admincategory-mapper.xml" />
 		<mapper resource="mappers/adminpayment-mapper.xml" />
 		<mapper resource="mappers/adminmember-mapper.xml"/>
 		<mapper resource="mappers/adminkeyword-mapper.xml"/>

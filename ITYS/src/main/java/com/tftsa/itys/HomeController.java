@@ -91,8 +91,4 @@ public class HomeController {
 		return "admin/adminChatting"; // 내보낼 뷰파일명 리턴
 	}
 	
-	@RequestMapping("adminCategory.do")
-	public String AdminCategoryViewForward() {
-		return "admin/adminCategory"; // 내보낼 뷰파일명 리턴
-	}
 }

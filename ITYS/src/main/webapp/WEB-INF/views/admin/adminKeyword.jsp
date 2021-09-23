@@ -109,14 +109,14 @@ a {
 				<c:import url="/WEB-INF/views/admin/common/topbar.jsp" />
 			        <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h3 class="h3 mb-0 text-gray-800">회원 관리</h3>
+            <h3 class="h3 mb-0 text-gray-800">키워드 관리</h3>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
               <li class="breadcrumb-item"><a href="/itys/adminDashboard.do">관리자 페이지</a></li>
               <li class="breadcrumb-item active" aria-current="page">회원관리</li>
             </ol>
           </div> 
-
+          
           <!-- Row -->
           <div class="row">
             <div class="col-lg-12">
