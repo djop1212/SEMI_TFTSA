@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.member.model.vo.Member;
+import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 @Repository("memberDao")
 public class MemberDao {
@@ -37,6 +39,14 @@ public class MemberDao {
 
 	public int selectEmailCheck(String user_email) {
 		return session.selectOne("memberMapper.selectEmailCheck", user_email);
+	}
+
+	public Student selectStudent(int user_no) {
+		return session.selectOne("mypageMapper.selectStudent", user_no);
+	}
+
+	public Tutor selectTutor(int user_no) {
+		return session.selectOne("mypageMapper.selectTutor", user_no);
 	}
 
 }

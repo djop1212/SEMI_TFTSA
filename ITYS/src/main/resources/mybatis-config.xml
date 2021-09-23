@@ -20,13 +20,15 @@
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Chattingblock" alias="Chattingblock" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
-		<typeAlias type="com.tftsa.itys.adminCategory.model.vo.Subject" alias="Subject" />
 		
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
-		<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
+    <typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
- 		
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
+
  		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>

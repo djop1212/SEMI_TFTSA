@@ -16,7 +16,7 @@ function Click(){
 	}else{
 		console.log("tutor");
 		window.name = "tutorForm";
-		window.open("upTPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+		window.open("upTPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=950, height=650, status=no, menubar=no, toolbar=no, resizable=no");
 	}
 	//location.reload();
 }
@@ -27,6 +27,7 @@ function deleteuser(){
 		return;
 	}
 }
+
 </script>
 <style type="text/css">
 div#left{
@@ -82,6 +83,9 @@ div.box {
 	width:900px !important; 
 	align:center;
 }
+.event_section .event_container .box {
+	align-items: flex-start !important;
+}
 </style>
 </head>
 
@@ -101,28 +105,33 @@ div.box {
 				<div class="box">
 					<div id="left">
 						<div>
-							<img
-								src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-								width="120px" height="120px" />
+							<c:if test="${pic eq null }">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif" width="120px" height="120px">
+							</c:if>
+							<c:if test="${pic ne null and member.user_position eq 'S'}">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}" width="120px" height="120px">
+							</c:if>
+							<c:if test="${pic ne null and member.user_position eq 'T'}">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}" width="120px" height="120px">
+							</c:if>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
-								<li><a href="">채팅목록</a></li>
-								<li><a href="wishl.do?user_no=${user_no }">찜 목록</a></li>
-								<li><a href="mclass.do?user_no=${user_no }">내 강의 내역</a></li>
+								<li><a href="myPage.do?user_id=${loginMember.user_id }" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
+								<c:if test="${loginMember.user_position eq 'S' }">
+								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
+								</c:if>
+								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
 							</ul>
 						</div>
-						<%-- <c:url var="udelete" value="deleteUser.do">
-			            	<c:param name="user_id" value="${loginMember.user_id }"/>
-			            </c:url> --%>
 			            <br><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">회원탈퇴</a>
 					</div>
 					<div id="right">
 						<div>
 						<table>
 							<tr>
-								<c:if test="${loginMember.user_position eq 'U'}">
+								<c:if test="${member.user_position eq 'U'}">
 									<td><h4>프로필 추가</h4></td>
 									<td width="100px" align="right">
 										<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
@@ -131,18 +140,18 @@ div.box {
 										<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
 									</td>
 								</c:if>
-								<c:if test="${loginMember.user_position eq 'S'}">
+								<%-- <c:if test="${member.user_position eq 'S'}">
 									<td><h4>학생 프로필 수정</h4></td>
 									<td width="100px" align="right">
 										<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
 									</td>
 								</c:if>
-								<c:if test="${loginMember.user_position eq 'T'}">
+								<c:if test="${member.user_position eq 'T'}">
 									<td><h4>선생님 프로필 수정</h4></td>
 									<td>
 										<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
 									</td>
-								</c:if>
+								</c:if> --%>
 							</tr>
 						</table>
 						</div><br>
@@ -150,7 +159,7 @@ div.box {
 							<h4 align="left">내 프로필</h4>
 							<table>
 								<Tr>
-									<td width="100px">이름</td>
+									<td width="150px">이름</td>
 									<td>${member.user_name }</td>
 								</Tr>
 								<Tr>
@@ -165,10 +174,74 @@ div.box {
 									<td>이메일</td>
 									<td>${member.user_email }</td>
 								</Tr>
+							<c:if test="${member.user_position eq 'S'}">
+								<Tr>
+									<td>학년</td>
+									<td>${student.stu_job }</td>
+								</Tr>
+								<Tr>
+									<td>과외 가능 요일</td>
+									<td>${student.day }</td>
+								</Tr>
+								<Tr>
+									<td>과외 가능 시간</td>
+									<td>${student.time }</td>
+								</Tr>
+								<Tr>
+									<td>선생님께 바라는 점</td>
+									<td>${student.stu_wish }</td>
+								</Tr>
+							</c:if>
+							<c:if test="${member.user_position eq 'T'}">
+								<Tr>
+									<td>한줄소개</td>
+									<td>${tutor.intro }</td>
+								</Tr>
+								<Tr>
+									<td>학력</td>
+									<td>${tutor.l_grd }</td>
+								</Tr>
+								<Tr>
+									<td>과목</td>
+									<td>${tutor.sub_name }</td>
+								</Tr>
+								<Tr>
+									<td>과외 가능 요일</td>
+									<td>${tutor.day }</td>
+								</Tr>
+								<Tr>
+									<td>과외 가능 시간</td>
+									<td>${tutor.time }</td>
+								</Tr>
+								<Tr>
+									<td>1회당 수업시간(분)</td>
+									<td>${tutor.class_min }</td>
+								</Tr>
+								<Tr>
+									<td>수업 횟수(월)</td>
+									<td>${tutor.class_times }</td>
+								</Tr>
+								<Tr>
+									<td>과외 가능 지역</td>
+									<td>${tutor.area }</td>
+								</Tr>
+								<Tr>
+									<td>최소페이</td>
+									<td>${tutor.min_pay }</td>
+								</Tr>
+								<Tr>
+									<td>화상가능여부</td>
+									<td>${tutor.online_ok }</td>
+								</Tr>
+								<Tr>
+									<td>과외 스타일</td>
+									<td>${tutor.style }</td>
+								</Tr>
+							</c:if>
 							</table>
 						</div>
 						<div class="btn-box" align="center">
-							<a href="">수정하기</a>
+							<a href="upUserPage.do?user_id=${ requestScope.member.user_id }">수정 페이지로 이동</a>
 						</div>
 					</div>
 				</div>

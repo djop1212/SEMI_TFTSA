@@ -18,7 +18,7 @@
 	
 	<select id="selectUser" parameterType="string" resultMap="resultMember">
 		select * from user_info 
-		where user_id = #{ uid }
+		where user_id = #{ user_id }
 	</select>
 
 	<insert id="insertUser" parameterType="Member">
@@ -50,6 +50,20 @@
 	<update id="updateUserPwd" parameterType="Member">
 		update user_info set user_pwd = #{user_pwd} where user_id = #{user_id}
 	</update>
+	
+	<update id="updateMember" parameterType="Member">
+		update user_info
+		set user_pwd = #{user_pwd},
+			user_phone = #{user_phone},
+			user_email = #{user_email}
+		where user_no = #{user_no}
+	</update>
+	
+	<select id="selectPosition" parameterType="_int"  resultType="String">
+		select user_position
+		from user_info
+		where user_no = #{user_no}
+	</select>
 	
 	
 </mapper>

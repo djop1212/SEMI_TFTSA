@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.member.model.dao.MemberDao;
 import com.tftsa.itys.member.model.vo.Member;
+import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.Tutor;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -68,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
 		String hostSMTPid = "jooo9898@naver.com";
-		String hostSMTPpwd = "locus0704@";
+		String hostSMTPpwd = "XQR6EHLYW6H8";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "jooo9898@naver.com";
@@ -139,6 +141,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateUserPwd(Member member) {
 		return memberDao.updateUserPwd(member);
+	}
+
+	@Override
+	public Student selectStudent(int user_no) {
+		return memberDao.selectStudent(user_no);
+	}
+
+	@Override
+	public Tutor selectTutor(int user_no) {
+		return memberDao.selectTutor(user_no);
 	}
 
 
