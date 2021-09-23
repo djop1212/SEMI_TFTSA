@@ -23,8 +23,8 @@
 		
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
- 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
-		<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
+    <typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
@@ -38,12 +38,13 @@
 	
 	<mappers>
 		<mapper resource="mappers/adminchatting-mapper.xml" />
+		<mapper resource="mappers/admincategory-mapper.xml" />
 		<mapper resource="mappers/adminpayment-mapper.xml" />
 		<mapper resource="mappers/adminmember-mapper.xml"/>
 		<mapper resource="mappers/adminkeyword-mapper.xml"/>
 		<mapper resource="mappers/chatting-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
-    <mapper resource="mappers/member-mapper.xml"/>
+    	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
 	</mappers>
