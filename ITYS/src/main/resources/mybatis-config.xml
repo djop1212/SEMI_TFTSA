@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
@@ -10,8 +9,7 @@
 	</settings>
 	
 	<typeAliases>
-	<!-- mapper 에서 사용할 vo 클래스 등록과 줄임말 지정 (선택) -->	
-<!-- 		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserTutor" alias="UserTutor" /> -->
+	<!-- mapper 에서 사용할 vo 클래스 등록과 줄임말 지정 (선택) -->
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.Chattingroom" alias="Chattingroom" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.Chatting" alias="Chatting" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserChattingStudent" alias="UserChattingStudent" />
@@ -32,16 +30,17 @@
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyClass" alias="MyClass"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.UserChattingroomTutor" alias="UserChattingroomTutor"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.UserChattingroomStudent" alias="UserChattingroomStudent"/>
  		
  		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
     
-    <typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
+    	<typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.tftsa.itys.common.Paging" alias="Paging" />
 		<typeAlias type="com.tftsa.itys.board.model.vo.Reply" alias="Reply" />
-		</typeAliases>
+	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/adminchatting-mapper.xml" />
@@ -55,7 +54,7 @@
     	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
-    <mapper resource="mappers/board-mapper.xml" />
+    	<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/reply-mapper.xml" />
 	</mappers>
 	

@@ -31,6 +31,7 @@ import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomStudent;
 import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 
 @Controller
@@ -402,14 +403,14 @@ public class MypageController {
 	// 채팅 목록 조회 컨트롤러
 	@RequestMapping("selectChattingList.do")
 	public String selectChattingList(Model model, @RequestParam("user_no") int user_no) {
-		ArrayList<UserChattingroomTutor> userchattingroomtutor1 = mypageService.selectChattingStudentList(user_no);
-		ArrayList<UserChattingroomTutor> userchattingroomtutor2 = mypageService.selectChattingTutorList(user_no);
+		ArrayList<UserChattingroomTutor> userchattingroomtutor = mypageService.selectChattingStudentList(user_no);
+		ArrayList<UserChattingroomStudent> userchattingroomstudent = mypageService.selectChattingTutorList(user_no);
 		
-		if (userchattingroomtutor1.size() > 0) {
-			model.addAttribute("userchattingroomtutor1", userchattingroomtutor1);
+		if (userchattingroomtutor.size() > 0) {
+			model.addAttribute("userchattingroomtutor", userchattingroomtutor);
 			return "mypage/chattingList";
-		} else if(userchattingroomtutor2.size() > 0) {
-			model.addAttribute("userchattingroomtutor2", userchattingroomtutor2);
+		} else if(userchattingroomstudent.size() > 0) {
+			model.addAttribute("userchattingroomstudent", userchattingroomstudent);
 			return "mypage/chattingList";
 		} else {
 			model.addAttribute("message", "등록된 채팅목록 정보가 없습니다.");
