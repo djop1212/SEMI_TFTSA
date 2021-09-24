@@ -91,7 +91,7 @@ $(function () {
 <body class="sub_page">
 	<div>
 		<h3 align="center">선생님 프로필 추가</h3>
-		<form action="uptprofile.do" method="post">
+		<form action="uptprofile.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="user_no" value="${user_no }"> <br>
 			<table align="center">
 					<tr>

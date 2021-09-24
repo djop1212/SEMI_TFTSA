@@ -15,8 +15,8 @@
 
 <!-- 댓글 조회 -->
 	<select id="readReply" resultType="Reply">
-    	SELECT
-    		  com_no, com_writer, com_date, com_content
+    	SELECT *
+
     	 FROM REPLY
     	WHERE board_no = #{board_no}
 	</select>

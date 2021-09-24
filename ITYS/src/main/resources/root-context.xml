@@ -51,6 +51,15 @@
 	<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
+	<!-- 파일 업로드 라이브러리 -->
+	<bean
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		id="multipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="10485760" />
+	</bean>
+	
+	
 	<!-- service 에서 필요한 시점에서 commit / rollback 이 구동되게 aop 설정 처리 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>

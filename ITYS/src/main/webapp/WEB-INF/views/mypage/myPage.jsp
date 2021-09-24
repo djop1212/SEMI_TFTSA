@@ -12,7 +12,7 @@ function Click(){
 	if($("input:radio[id='student']").is(":checked")==true){
 		console.log("student");
 		window.name = "studentForm";
-		window.open("upSPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=500, height=650, status=no, menubar=no, toolbar=no, resizable=no");
+		window.open("upSPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=550, height=650, status=no, menubar=no, toolbar=no, resizable=no");
 	}else{
 		console.log("tutor");
 		window.name = "tutorForm";
@@ -86,6 +86,11 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
+img{
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+}
 </style>
 </head>
 
@@ -105,14 +110,14 @@ div.box {
 				<div class="box">
 					<div id="left">
 						<div>
-							<c:if test="${pic eq null }">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif" width="120px" height="120px">
+							<c:if test="${member.user_position eq 'U'}">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 							</c:if>
-							<c:if test="${pic ne null and member.user_position eq 'S'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}" width="120px" height="120px">
+							<c:if test="${student.pic ne null and member.user_position eq 'S'}">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 							</c:if>
-							<c:if test="${pic ne null and member.user_position eq 'T'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}" width="120px" height="120px">
+							<c:if test="${tutor.pic ne null and member.user_position eq 'T'}">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 							</c:if>
 						</div>
 						<div style="padding-top: 5px;">

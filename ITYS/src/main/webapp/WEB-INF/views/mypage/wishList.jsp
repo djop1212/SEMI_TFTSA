@@ -8,15 +8,11 @@
 <title>마이페이지</title>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-function Click(){
-	if($("input:radio[id='student']").is(":checked")==true){
-		console.log("student");
-		window.name = "studentForm";
-		window.open("upsprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+function deleteuser(){
+	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
+		location.href="deleteUser.do?user_id=${member.user_id}";	
 	}else{
-		console.log("tutor");
-		window.name = "tutorForm";
-		window.open("uptprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+		return;
 	}
 }
 </script>
@@ -69,6 +65,14 @@ ul#bar li a{
 	margin:0;
 	color: #343a40;
 }
+.delbutton{
+	display: inline-block;
+    padding: 8px 45px;
+    background-color: #133e3f;
+    border: 1px solid #133e3f;
+    color: #ffffff;
+    margin-top: 35px;
+}
 ul#bar li a:hover{
 	width:120px;
 	height: 30px;
@@ -80,6 +84,14 @@ ul#bar li a:hover{
 	display: block;
 	border-radius:3px;
 }
+.delbutton:hover{
+	display: inline-block;
+    padding: 8px 45px;
+    background-color: white;
+    /* border: 1px solid #133e3f; */
+    color: #133e3f;
+    margin-top: 35px;
+}
 div.box {
 	padding-top: 15px; 
 	width:900px !important; 
@@ -87,6 +99,11 @@ div.box {
 }
 .event_section .event_container .box {
 	align-items: flex-start !important;
+}
+img{
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
 }
 </style>
 </head>
@@ -107,9 +124,17 @@ div.box {
 				<div class="box">
 					<div id="left">
 						<div>
-							<img
-								src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-								width="120px" height="120px"/>
+							<c:choose>
+								<c:when test="${student.pic ne null}">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+								</c:when>
+								<c:when test="${tutor.pic ne null}">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+								</c:when>
+								<c:otherwise>
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
@@ -119,15 +144,15 @@ div.box {
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
 							</ul>
 						</div>
-						<div style="color:#969ca2;"><a href="">탈퇴하기</a></div>
+						<div style="color:#969ca2;"><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">탈퇴하기</a></div>
 					</div>
 					<div id="right">
 						<div>
-						<c:if test="">
-							
-						</c:if>
+						
 							<h4>❤ 찜 목록</h4>
 						</div><br>
+						<form action="delwlist.do" method="post">
+						<input type="hidden" name="student_no" value="${loginMember.user_no}">
 						<div>
 							<ul id="wlist">
 								<li>
@@ -146,7 +171,7 @@ div.box {
 										과목 : ${w.sub_name }<br>
 										지역 : ${w.area }<Br>
 									</td>
-									<td style="align: right;"><input type="checkbox"></td>
+									<td style="align: right;"><input type="checkbox" name="chk" value="${w.user_no }"></td>
 									</tr>
 								</table><hr>
 								<%-- <c:if test="${list. }"></c:if> --%>
@@ -156,8 +181,9 @@ div.box {
 							</ul>
 						</div>
 						<div class="btn-box" align="center">
-							<a href="">삭제하기</a>
+							<input type="submit" class="delbutton" value="삭제하기">
 						</div>
+						</form>
 					</div>
 				</div>
 				

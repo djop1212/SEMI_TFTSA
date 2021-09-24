@@ -83,6 +83,7 @@ public class DetailController {
 										@RequestParam("tutor_no")int tutor_no) {
 		logger.info("pay_no " + pay_no);
 		if (detailService.reviewInsert(detail) > 0) {
+			
 			return  "detail/detail";
 
 		} else {
@@ -108,18 +109,22 @@ public class DetailController {
 	
 	@RequestMapping("tprofile.do")
 	
-	public String tutorProfile(@RequestParam(value="user_no" , required=false) int user_no,  Model model) {
+	public String tutorProfile(@RequestParam(value="user_no" , required=false) int user_no, 
+										@RequestParam(value="student_no",required=false) int student_no,
+									 Model model) {
 		logger.info("user_no "+user_no);
+		logger.info("student_no "+student_no);
 
 		ArrayList<TutorDetail> tprofile = detailService.tutorProfile(user_no);
 		ArrayList<TutorDetail> pd =detailService.tutorPer(user_no);
 		int reviewCount = detailService.tutorReview(user_no);
 		double avgScore = detailService.avgScore(user_no);
+		TutorLikes tlikes = detailService.tutorSave(student_no);
 		logger.info("pd " + tprofile.size()); 
 		
 		if(tprofile.size() >0 ) {
 			 model.addAttribute("tprofile", tprofile); 
-
+			 model.addAttribute("tlikes",tlikes);
 			model.addAttribute("pd", pd);
 			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("avgScore", avgScore);
@@ -132,19 +137,22 @@ public class DetailController {
 	}
 @RequestMapping("treview.do")
 	
-	public String tutorReview(@RequestParam(value="user_no" , required=false) int user_no,  Model model) {
+	public String tutorReview(@RequestParam(value="user_no" , required=false) int user_no,  @RequestParam(value="student_no",required=false) int student_no,Model model) {
 		logger.info("user_no "+user_no);
 		int reviewCount = detailService.tutorReview(user_no);
 		double avgScore = detailService.avgScore(user_no);
 		ArrayList<Detail> rl = detailService.reviewList(user_no);
-   	ArrayList<TutorDetail> td2 = detailService.tutorProfile(user_no);
+		Detail reviewPay = detailService.reviewPay(student_no);
+		ArrayList<TutorDetail> td2 = detailService.tutorProfile(user_no);
+		TutorLikes tlikes = detailService.tutorSave(student_no);
 		
 		if(rl.size() > 0  ) {
+			model.addAttribute("reviewPay", reviewPay);
 			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("avgScore", avgScore);
 			model.addAttribute("rl", rl);
 			model.addAttribute("td2", td2);
-
+			 model.addAttribute("tlikes",tlikes);
 			return "detail/detail";
 		}else {
 			model.addAttribute("message", "회원 목록이 존재 하지 않습니다.");
@@ -155,31 +163,33 @@ public class DetailController {
 
 @RequestMapping("tpic.do")
 
-public String tutorPic(@RequestParam(value="user_no" , required=false) int user_no,  Model model) {
+public String tutorPic(@RequestParam(value="user_no" , required=false) int user_no, @RequestParam(value="student_no",required=false) int student_no, Model model) {
 	logger.info("user_no "+user_no);
 	int reviewCount = detailService.tutorReview(user_no);
 	double avgScore = detailService.avgScore(user_no);
-	
+	TutorLikes tlikes = detailService.tutorSave(student_no);
 	ArrayList<TutorDetail> tpic = detailService.tutorPic(user_no);
 	
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("avgScore", avgScore);
 		model.addAttribute("tpic", tpic);
+		 model.addAttribute("tlikes",tlikes);
 		return "detail/detail";
 		
 
 }
 @RequestMapping("tsave.do")
 
-public String tutorSave(TutorLikes tlikes,@RequestParam(value="student_no" , required=false) int student_no,  Model model
-								, @RequestParam(value="tutor_no") int tutor_no
+public String tutorSaveInsert(TutorLikes tlikes,@RequestParam(value="student_no" , required=false) int student_no,  Model model
+								, @RequestParam(value="tutor_no",required=false) int tutor_no
+								, @RequestParam(value="user_no",required=false) int user_no
 								) {
-	logger.info("tutor_no "+tutor_no);
+	logger.info("user_no "+user_no);
 	
 	
 	if(detailService.tutorSaveInsert(tlikes) > 0) {
-	
-		return  "detail/detail";
+		model.addAttribute("tlikes", tlikes);
+		return "redirect:detail.do";
 	}else {
 		model.addAttribute("message", "회원 목록이 존재 하지 않습니다.");
 		return "common/error";
@@ -204,9 +214,10 @@ public String tutorSaveCancel(TutorLikes tlikes,@RequestParam(value="student_no"
 
 }
 	@RequestMapping("tqna.do")
-	public String tutorQna(Model model, @RequestParam(value="tutor_no") int tutor_no) {
+	public String tutorQna(Model model, @RequestParam(value="tutor_no") int tutor_no,
+			@RequestParam(value="student_no" ) int student_no) {
 		logger.info("tutor_no "+ tutor_no);
-		
+		TutorLikes tlikes = detailService.tutorSave(student_no);
 		TutorQna tutorqna = detailService.qnaOne(tutor_no);
 		ArrayList<TutorDetail> td2 = detailService.tutorProfile(tutor_no);
 		int reviewCount = detailService.tutorReview(tutor_no);
@@ -215,8 +226,8 @@ public String tutorSaveCancel(TutorLikes tlikes,@RequestParam(value="student_no"
 			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("avgScore", avgScore);
 			model.addAttribute("td2", td2);
-		
-		
+			model.addAttribute("tlikes", tlikes);
+		;
 			return  "detail/detail";
 		
 
@@ -256,4 +267,4 @@ public String tutorSaveCancel(TutorLikes tlikes,@RequestParam(value="student_no"
 
 }
 
-}
+

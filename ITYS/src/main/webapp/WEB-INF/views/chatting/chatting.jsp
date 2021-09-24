@@ -246,7 +246,9 @@ a.btn-layerClose:hover {
 								<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 							</c:url>
+							<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body" onclick="location.href='${ insertLikes }'"><i class="fa">찜하기</i></button>
+	    					</c:if>
 	    					<c:url var="deleteChatting" value="deleteChatting.do">
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 							</c:url>
@@ -254,10 +256,11 @@ a.btn-layerClose:hover {
 	    				</div>
 	    			</div>
 	    			<div>
-	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name }</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name } 선생님</h3>
 	    			</div>	
 	    		</div>
 	    		<div class="row panel-heading">
+	    			<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 	    			<div class="col-6">
 	    				<input class="btn btn-primary btn-block btn-example" type="button" value="신고하기" href="#layer2">
 	    			</div>
@@ -267,6 +270,7 @@ a.btn-layerClose:hover {
 						</c:url>
 	    				<input class="btn btn-primary btn-block" type="button" value="과외성사" onclick="nextPayment()">
 	    			</div>
+	    			</c:if>
 	    		</div>
 	    
 	    		<!--Widget body-->
