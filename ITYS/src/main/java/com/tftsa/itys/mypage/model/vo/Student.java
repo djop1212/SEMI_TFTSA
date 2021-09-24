@@ -9,10 +9,12 @@ public class Student implements java.io.Serializable{
 	private String day;
 	private String time;
 	private String stu_wish;
+	private String original_filename;
 	
 	public Student() {}
 
-	public Student(int user_no, String pic, String stu_job, String day, String time, String stu_wish) {
+	public Student(int user_no, String pic, String stu_job, String day, String time, String stu_wish,
+			String original_filename) {
 		super();
 		this.user_no = user_no;
 		this.pic = pic;
@@ -20,6 +22,16 @@ public class Student implements java.io.Serializable{
 		this.day = day;
 		this.time = time;
 		this.stu_wish = stu_wish;
+		this.original_filename = original_filename;
+	}
+
+
+	public String getOriginal_filename() {
+		return original_filename;
+	}
+
+	public void setOriginal_filename(String original_filename) {
+		this.original_filename = original_filename;
 	}
 
 	public int getUser_no() {
@@ -77,7 +89,7 @@ public class Student implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Student [user_no=" + user_no + ", pic=" + pic + ", stu_job=" + stu_job + ", day=" + day + ", time="
-				+ time + ", stu_wish=" + stu_wish + "]";
+				+ time + ", stu_wish=" + stu_wish + ", original_filename=" + original_filename + "]";
 	}
 	
 	

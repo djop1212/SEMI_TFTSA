@@ -28,15 +28,18 @@ public class ReplyDaoImpl implements ReplyDao{
 		
 		// 댓글 수정
 		@Override
+
 		public int updateReply(Reply reply) {
 			return sql.update("replyMapper.updateReply", reply);
+
 		}
 		
 		// 댓글 삭제
 		@Override
+
 		public int deleteReply(Reply reply) {
 			return sql.delete("replyMapper.deleteReply", reply);
-		}
+
 
 		@Override
 		public Reply selectReply(int com_no) {

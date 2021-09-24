@@ -337,6 +337,7 @@ public class BoardController {
 		model.addAttribute("reply", reply);
 		
 		return "board/replyUpdateView";
+
 		
 	}
 	
@@ -376,10 +377,12 @@ public class BoardController {
 //	
 		
 	}
+
 	
 	
 	// 댓글삭제
 	@RequestMapping("rdelete.do")	
+
 	public String replyDelete(Reply reply, @RequestParam("com_no") int com_no, 
 			@RequestParam("page") int currentPage, 
 			@RequestParam(value="board_no", required = true) int board_no,

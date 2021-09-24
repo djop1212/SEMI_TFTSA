@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminreviewMapper">
+
+	<resultMap id="resultReview" type="AdminReview">
+		<id property="rev_no" column="rev_no" />
+		<result property="user_name" column="user_name" />
+		<result property="sub_name" column="sub_name" />
+		<result property="score" column="score" />
+		<result property="rev_content" column="rev_content" />
+	</resultMap>
+	
+	<select id="selectReviewAll" resultMap="resultReview">
+		select r.rev_no, u.user_name, t.sub_name, r.score, r.rev_content
+		from review r
+		left outer join user_info u
+		on (r.tutor_no = u.user_no)
+		left outer join tutor t
+		on (r.tutor_no = t.user_no) 
+	</select>
+	
+</mapper>

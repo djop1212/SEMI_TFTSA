@@ -230,7 +230,7 @@ S .br-theme-fontawesome-stars-o .br-widget {
 <span id="ex" class="ex">  </span> &nbsp;점
  <input type="hidden" name="score" id="score" > 
  <input type="hidden" name="pay_no" id="pay_no" value="1">
-  <input type="hidden" name="student_no" id="student_no" value="1">
+  <input type="hidden" name="student_no" id="student_no" value="${ loginMember.user_no }">
   <input type="hidden" name="tutor_no" id="tutor_no" value="2">
 
 <script type="text/javascript">

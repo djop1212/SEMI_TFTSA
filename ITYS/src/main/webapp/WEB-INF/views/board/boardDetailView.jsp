@@ -101,6 +101,7 @@ cellpadding="5">
 	    	<c:param name="com_no" value="${ replyList.com_no }"/>
 	    	<c:param name="board_no" value="${ replyList.board_no }"/>
 	    	<c:param name="page" value="${ currentPage }"/>
+
 	    </c:url>
 	    <a href="${ ubd }">[댓글 삭제]</a>
      </c:if></c:if>

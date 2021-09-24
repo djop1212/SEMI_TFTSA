@@ -16,6 +16,7 @@
 <!-- 댓글 조회 -->
 	<select id="readReply" resultType="Reply">
     	SELECT *
+
     	 FROM REPLY
     	WHERE board_no = #{board_no}
 	</select>
