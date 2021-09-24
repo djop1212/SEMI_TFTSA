@@ -9,8 +9,8 @@ public interface ReplyService {
 	public List<Reply> readReply(int board_no);
 //	public List<Reply> readReplyNo(int board_no);
 	public void writeReply(Reply reply);
-	public void updateReply(Reply reply);
-	public void deleteReply(Reply reply);
+	public int updateReply(Reply reply);
+	public int deleteReply(Reply reply);
 	public Reply selectReply(int com_no);
 
 }

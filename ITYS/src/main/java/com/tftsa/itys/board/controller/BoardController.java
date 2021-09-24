@@ -185,7 +185,7 @@ public class BoardController {
 			return "common/error";
 		}
 	}
-
+	//게시글 상세보기
 	@RequestMapping("bdetail.do")
 	public ModelAndView boardDetailMethod(ModelAndView mv, 
 			@RequestParam("board_no") int board_no, @RequestParam("page") int page
@@ -201,6 +201,7 @@ public class BoardController {
 			mv.addObject("board", board);
 			mv.addObject("currentPage", page);
 			
+			//댓글 보이는 부분
 			List<Reply> replyList = replyService.readReply(board.getBoard_no());
 			mv.addObject("replyList", replyList);
 			
@@ -350,26 +351,52 @@ public class BoardController {
 		System.out.println("com_no : " + com_no);
 		System.out.println("page : " + currentPage);
 		System.out.println("board_no : " + reply.getBoard_no());
-	
 		
-	
-		return "redirect:bdetail.do?board_no=" + board_no + "&page=" + currentPage;
+		if (replyService.updateReply(reply) > 0) { 
+			model.addAttribute("page", currentPage);
+			model.addAttribute("board_no", reply.getBoard_no());
+			model.addAttribute("com_no", reply.getCom_no());
+			//return "redirect:bdetail.do";
+			return "redirect:bdetail.do?board_no=" + board_no + "&page=" + currentPage;
+		} else {
+			model.addAttribute("message", 
+					reply.getBoard_no() + "번 게시 원글 수정 실패.");
+			return "common/error";
+		}
+		
+//		if (boardService.updateOrigin(origin) > 0) {
+//			model.addAttribute("page", page);
+//			model.addAttribute("board_no", origin.getBoard_no());
+//			return "redirect:bdetail.do";
+//		} else {
+//			model.addAttribute("message", 
+//					origin.getBoard_no() + "번 게시 원글 수정 실패.");
+//			return "common/error";
+//		}
+//	
 		
 	}
 	
 	
 	// 댓글삭제
 	@RequestMapping("rdelete.do")	
-	public String replyDelete(Reply reply, Model model, @RequestParam("page") int currentPage) {
+	public String replyDelete(Reply reply, @RequestParam("com_no") int com_no, 
+			@RequestParam("page") int currentPage, 
+			@RequestParam(value="board_no", required = true) int board_no,
+			Model model) {
 		logger.info("reply delete");
+		System.out.println("board_no : " + board_no);
+		System.out.println("board_no : " + reply.getBoard_no());
+				
+		reply =  replyService.selectReply(com_no);
 		
-		replyService.deleteReply(reply);
-		
-		model.addAttribute("board_no", reply.getBoard_no());
-		model.addAttribute("com_no", reply.getCom_no());
-		//model.addAttribute("page", currentPage);
-		
-		return "redirect:bdetail.do?page=" + currentPage;
+		if (replyService.deleteReply(reply) > 0) {
+
+			return "redirect:bdetail.do?board_no=" + board_no + "&page=" +currentPage ;
+			} else {
+			model.addAttribute("message", board_no + "번 글 삭제 실패.");
+			return "common/error";
+		}
 		
 	}
 	
