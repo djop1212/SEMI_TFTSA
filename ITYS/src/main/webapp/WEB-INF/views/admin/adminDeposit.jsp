@@ -65,7 +65,18 @@
                         <td>${ adp.tutor_name }</td>
                         <td>${ adp.pay_datetm }</td>
                         <td>${ adp.pay_method }</td>
+                        <c:if test="${ adp.pay_status == 'COMPLETE' }">
                         <td><span class="badge badge-success">${ adp.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ adp.pay_status == 'WAITING' }">
+                        <td><span class="badge badge-info">${ adp.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ adp.pay_status == 'RETURN' }">
+                        <td><span class="badge badge-warning">${ adp.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ adp.pay_status == 'CANCEL' }">
+                        <td><span class="badge badge-danger">${ adp.pay_status }</span></td>
+                        </c:if>
                         <td><span class="btn btn-sm btn-primary">${ adp.pay_amount }</span></td>
                         <!-- warning, danger, info -->
                       </tr>
