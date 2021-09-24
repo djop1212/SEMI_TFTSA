@@ -140,21 +140,23 @@
         		<div class="head" style="font-size:30px; text-align:center; margin-top:5px">
         		
 
-                   선생님 이름  ${ tprofile[0].user_name } ${tpic[0].user_name } ${td2[0].user_name} 
+                   선생님 이름  ${ tprofile[0].user_name } ${tpic[0].user_name } ${td2[0].user_name}
+                
                    <c:url var="ts" value="/tsave.do">
-					<c:param name="student_no" value="1" />
+					<c:param name="student_no" value="${ loginMember.user_no }" />
 					<c:param name="tutor_no" value="2"/>
-					
+					<c:param name="user_no" value="2"/>
 				</c:url> 
-				<%-- <c:if test="${ student.like_no ne tutor.like_no}"> --%>
+				 <c:if test="${ empty requestScope.tlikes.student_no }"> 
 				 <a href="${ ts }" class="tsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_off.png" class="select-heart"  style="maring-left:10px" ></a>
-				<%-- </c:if> --%>
+				 </c:if> 
+				 
 				 <c:url var="cts" value="/ctsave.do">
-					<c:param name="student_no" value="1" />
+					<c:param name="student_no" value="${ loginMember.user_no }" />
 					<c:param name="tutor_no" value="2"/>
-				
-				</c:url>
-				 <c:if test="${ student.like_no eq tutor.like_no}">
+					<c:param name="user_no" value="2"/>
+					</c:url>
+				 <c:if test="${ !empty requestScope.tlikes.student_no }">
 				 <a href="${ cts }" class="ctsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_on.png" class="select-heart"  style="maring-left:10px" ></a>
 				</c:if>
           		<%-- <c:if test="${ td.user_position eq 'S'  &&  td.student_no }"/> --%>
@@ -178,15 +180,7 @@
               <span class="sub" style="width:30px; height:30px; margin-left:10px;">
 
               			   과목
-              <c:forEach items="${ requestScope.tprofile }" var="tprofile">
-                           ${ tprofile.sub_name } 
-                </c:forEach>
-                <c:forEach items="${ requestScope.tpic }" var="tpic">
-                           ${tpic.sub_name }
-                </c:forEach>
-                <c:forEach items="${ requestScope.td2 }" var="td2">
-                           ${td2.sub_name}
-                </c:forEach>
+                       ${ tprofile[0].sub_name } ${tpic[0].sub_name } ${td2[0].sub_name}
 
              	</span>
              </div>
@@ -353,21 +347,25 @@
                 <ul class="menus">
                 <c:url var="tp" value="/tprofile.do">
 					<c:param name="user_no" value="2" />
-				</c:url>
+					 <c:param name="student_no" value="${loginMember.user_no }"/>
+								</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tp }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">프로필</a></li>
 
                 	 <c:url var="tv" value="/tpic.do">
 					<c:param name="user_no" value="2" />
+					<c:param name="student_no" value="${ loginMember.user_no }"/>
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tv }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">사진</a></li>
 
                 	<c:url var="tr" value="/treview.do">
 					<c:param name="user_no" value="2" />
+					<c:param name="student_no" value="${ loginMember.user_no }"/>
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tr }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;" >리뷰</a></li>
 
                 	<c:url var="tq" value="/tqna.do">
 					<c:param name="tutor_no" value="4" />
+					<c:param name="student_no" value="${ loginMember.user_no }"/>
 					
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tq }"  style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">질문/답변</a></li>
@@ -433,9 +431,9 @@
               <Br>
               <table class="intro" style="width:960px;height:50px; margin:0px; padding:0px;">
 
-               	<c:forEach items="${ requestScope.tprofile }" var="tprofile">
-               	<tr><td>${ tprofile.sub_name }</td></tr>
-                </c:forEach> 
+               	
+               	<tr><td>${ tprofile[0].sub_name }</td></tr>
+            
 
               </table>
               <hr>
@@ -799,32 +797,33 @@
                 		
                 			
               			</table>
-
-              			<%-- <c:if test="${ !empty sessionScope.loginMember }"> --%>
+     
+              			<c:if test="${ !empty sessionScope.loginMember }">
+              			<c:if test="${ rl.student_no eq loginMember.user_no }"> 
                <c:url var="vdel" value="/vdelete.do">
-	    	<c:param name="student_no" value="1"/>
-	    	<c:param name="rev_no" value="25"/>
-	    	
+	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
+	    	<c:param name="rev_no" value="${ rl.rev_no }"/>
 	    	</c:url>
-	       
-               <a href="${ vdel }" style="margin:0;width:80px;height:30px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#fff; color:#20c997; font-size:15px;">리뷰 삭제</a>	
-              <%-- </c:if> --%>
-             
+	         <a href="${ vdel }" style="margin:0;width:80px;height:30px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#fff; color:#20c997; font-size:15px;">리뷰 삭제</a>	
+               </c:if>
+             </c:if>
               		</li>
                </ul>
-               </c:forEach>
+          </c:forEach>
               
               </div>
                <hr>
                <br>
+               <c:if test="${ !empty reviewPay.pay_no }">
               <c:url var="rform" value="/reviewform.do">
 	    	<c:param name="tutor_no" value="2"/>
-	    	<c:param name="student_no" value="1"/>
+	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
 	   		</c:url>
                <a href="${ rform }"style="margin:0;width:550px;height:550px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#fff; color:#20c997; font-size:20px">리뷰 달기</a>
+             </c:if>
              
-                          
              </div>
+             
              </c:if>
              
              <c:if test="${ !empty requestScope.tutorqna }">
