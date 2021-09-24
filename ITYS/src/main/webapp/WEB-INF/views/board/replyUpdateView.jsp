@@ -24,9 +24,11 @@
 	<!-- form 에서 입력값들과 파일을 같이 전송하려면 
 	    반드시 enctype="multipart/form-data" 속성을 추가해야 함 -->
 	<form action="roriginup.do" method="post">
-	<input type="text" name="com_no" value="${ reply.com_no }">
-	<input type="text" name="page" value="${ currentPage }">
-	<input type="text" name="board_no" value="${ reply.board_no }">
+
+	<input type="hidden" name="com_no" value="${ reply.com_no }">
+	<input type="hidden" name="page" value="${ currentPage }">
+	<input type="hidden" name="board_no" value="${ reply.board_no }">
+
 	<table align="center" width="500" border="1" cellspacing="0" 
 	cellpadding="5">
 	<%-- <tr><th width="120">제 목</th>

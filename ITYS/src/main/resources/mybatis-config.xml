@@ -26,7 +26,9 @@
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
-	    <typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+
+    	<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
@@ -37,8 +39,10 @@
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
-    
-    <typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
+
+		
+		<typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
+
 		<typeAlias type="com.tftsa.itys.common.Paging" alias="Paging" />
 		<typeAlias type="com.tftsa.itys.board.model.vo.Reply" alias="Reply" />
 		</typeAliases>
@@ -55,7 +59,9 @@
     	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
-    <mapper resource="mappers/board-mapper.xml" />
+
+		<mapper resource="mappers/board-mapper.xml" />
+
 		<mapper resource="mappers/reply-mapper.xml" />
 	</mappers>
 	
