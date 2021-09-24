@@ -27,6 +27,10 @@
 	<select id="selectAllTutors" resultMap="resultMember">
 		select * from user_info where user_position='T'
 	</select>
+	
+	<delete id="deleteMember" parameterType="string">
+		delete from user_info where user_id = #{ user_id } 
+	</delete>
 </mapper>
 
 

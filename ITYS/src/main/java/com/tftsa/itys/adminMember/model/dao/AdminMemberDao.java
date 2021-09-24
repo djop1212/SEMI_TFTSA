@@ -25,11 +25,11 @@ public class AdminMemberDao {
 		return sqlSession.selectOne("adminmemberMapper.selectMember", memberNo);
 	}
 	
-//	//회원 삭제
-//	public int deleteMember(int memberNo) {
-//		return sqlSession.delete("memberMapper.deleteMember", memberNo);
-//	}
-//	
+	//회원 삭제
+	public int deleteMember(String mid) {
+		return sqlSession.delete("adminmemberMapper.deleteMember", mid);
+	}
+	
 //	//로그인한 사용자만 출력
 //	public ArrayList<Member> selectLoggedInUser() {
 //		List<Member> list = sqlSession.selectList("memberMapper.selectLoggedInUser");

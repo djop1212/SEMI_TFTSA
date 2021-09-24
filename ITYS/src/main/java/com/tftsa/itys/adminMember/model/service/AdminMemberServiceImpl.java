@@ -23,10 +23,10 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 //		return memberDao.selectMember(mid);
 //	}
 //	
-//	@Override
-//	public int deleteMember(int mid) {
-//		return 0;
-//	}
+	@Override
+	public int deleteMember(String mid) {
+		return memberDao.deleteMember(mid);
+	}
 //
 //	@Override
 //	public ArrayList<Member> selectLoggedInUser() {

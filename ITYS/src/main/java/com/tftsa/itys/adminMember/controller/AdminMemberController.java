@@ -1,6 +1,10 @@
 package com.tftsa.itys.adminMember.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tftsa.itys.adminMember.model.service.AdminMemberService;
+import com.tftsa.itys.board.model.vo.Board;
 import com.tftsa.itys.member.model.vo.Member;
 
 @Controller
@@ -28,6 +36,31 @@ public class AdminMemberController {
 		model.addAttribute("list", list);
 		return "admin/adminMember";
 	}
+	
+	@RequestMapping(value = "deleteMember.do", method = RequestMethod.POST)
+	public String deleteMemberMethod(@RequestParam(value="list") List<String> list ,HttpServletRequest req,  Model model) {
+		
+		for (int i=0; i<list.size();i++) {
+			System.out.println(list.get(i));
+			memberService.deleteMember(list.get(i));
+			logger.info("삭제완료");
+		}
+		
+		return "redirect:adminMember.do";
+
+//		if (memberService.deleteMember(member.getUser_id()) > 0) {
+//			// 글삭제 성공하면 저장폴더에 첨부파일도 삭제 처리
+//			if (member.getUser_id()!= null) {
+//				
+//			}
+//
+//			return "redirect:adminMember.do";
+//		} else {
+//			model.addAttribute("message", member.getUser_id() + " 회원 삭제 실패.");
+//			return "common/error";
+//		}
+	}
+	
 	
 	@RequestMapping("adminStudent.do")
 	public String memberStudentsViewMethod(Model model) {
