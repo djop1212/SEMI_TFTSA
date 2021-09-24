@@ -126,4 +126,14 @@
         left join subject using(sub_no)
 		where user_no = #{ user_no }
 	</select>
+	
+	<select id="tutorSave" parameterType="TutorLikes" resultMap="resultTutorLikes">
+	select * from likes
+	join  user_info on (user_no = student_no)
+	where student_no = #{ student_no }
+	</select>
+	
+	<select id="reviewPay" parameterType="Detail" resultMap="resultDetail">
+	 select * from review where student_no = #{ student_no }
+	</select>
 </mapper>

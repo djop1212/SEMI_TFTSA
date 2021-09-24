@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.tftsa.itys.detail.model.vo.Detail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-import com.tftsa.itys.detail.model.vo.ReviewDetail;
+
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 public interface DetailService {
@@ -25,6 +25,8 @@ public interface DetailService {
 	TutorQna qnaOne(int tutor_no);
 	ArrayList<TutorDetail> tutorPic(int user_no);
 	int tutorSaveCancel(TutorLikes tlikes);
+	TutorLikes tutorSave(int student_no);
+	Detail reviewPay(int student_no);
 
 
 }
