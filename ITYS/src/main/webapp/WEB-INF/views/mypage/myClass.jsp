@@ -8,19 +8,20 @@
 <title>마이페이지</title>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-function Click(){
-	if($("input:radio[id='student']").is(":checked")==true){
-		console.log("student");
-		window.name = "studentForm";
-		window.open("upsprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+
+function deleteuser(){
+	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
+		location.href="deleteUser.do?user_id=${member.user_id}";	
 	}else{
-		console.log("tutor");
-		window.name = "tutorForm";
-		window.open("uptprofile.do", "new", "top=100, left=300, width=450, height=600, status=no, menubar=no, toolbar=no, resizable=no");
+		return;
 	}
 }
 </script>
 <style type="text/css">
+hr{
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+}
 div#left{
 	/* width: 250px !important; */
 	margin: 5px;
@@ -84,6 +85,11 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
+img{
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+}
 </style>
 </head>
 
@@ -103,19 +109,29 @@ div.box {
 				<div class="box">
 					<div id="left">
 						<div>
-							<img
-								src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-								width="120px" height="120px" />
+							<c:choose>
+								<c:when test="${student.pic ne null}">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+								</c:when>
+								<c:when test="${tutor.pic ne null}">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+								</c:when>
+								<c:otherwise>
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
 								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
 								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
+								<c:if test="${loginMember.user_position eq 'S' }">
 								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
+								</c:if>
 								<li><a href="mclass.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
 							</ul>
 						</div>
-						<div style="color:#969ca2;"><a href="">탈퇴하기</a></div>
+						<div style="color:#969ca2;"><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">탈퇴하기</a></div>
 					</div>
 					<div id="right">
 						<div>
@@ -124,29 +140,30 @@ div.box {
 						<div>
 							<ul id="wlist">
 								<li>
+								<c:forEach items="${list }" var="c">
 								<table>
 									<tr>
 									<td valign="top">
 										<img
 										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" />
+										width="75px" height="75px" style="margin-top:5px" />
 									</td>
 									<td style="width:475px; padding-left:15px">
-										과외 한 줄 소개<br>
-										선생님이름<br>	
-										전화번호<br>
-										과목<br>
-										지역<Br>
-										과외시간 <br>
-										수업료<br>
-										
+										선생님이름 : ${c.user_name }<br>	
+										과외 한 줄 소개 : ${c.intro }<br>
+										전화번호 : ${c.user_phone }<br>
+										과목 : ${c.sub_name }<br>
+										지역 : ${c.area }<Br>
+										과외시간 : ${c.time }<br>
+										수업료 : ${c.pay_amount }<br>
+										온라인 가능여부 : ${c.online_ok }<br>
 									</td>
 									</tr>
-								</table>
+								</table><hr>
+								</c:forEach>
 								</li>
 							</ul>
 						</div>
-						
 					</div>
 				</div>
 				

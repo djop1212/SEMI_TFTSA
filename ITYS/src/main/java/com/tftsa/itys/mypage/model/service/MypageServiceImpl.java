@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tftsa.itys.member.model.vo.Member;
 import com.tftsa.itys.mypage.model.dao.MypageDao;
 import com.tftsa.itys.mypage.model.vo.Likes;
+import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -26,6 +27,11 @@ public class MypageServiceImpl implements MypageService{
 		return mypageDao.selectLikesList(user_no);
 	}
 
+	@Override
+	public ArrayList<MyClass> selectMyclassList(int user_no) {
+		return mypageDao.selectMyclassList(user_no);
+	}
+	
 	@Override
 	public int insertTutor(Tutor tutor) {
 		return mypageDao.insertTutor(tutor);
@@ -102,6 +108,10 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
+  public int deleteLikes(Likes likes) {
+		return mypageDao.deleteLikes(likes);
+	}
+
 	public ArrayList<UserChattingroomTutor> selectChattingStudentList(int user_no) {
 		return mypageDao.selectChattingStudentList(user_no);
 	}

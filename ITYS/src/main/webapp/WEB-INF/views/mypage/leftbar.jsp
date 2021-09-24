@@ -43,25 +43,30 @@ ul#bar li a:hover{
 	display: block;
 	border-radius:3px;
 }
+img{
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+}
 </style>
 </head>
 <body>
 <div id="left">
 						<div>
 							<c:if test="${pic eq null }">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif" width="120px" height="120px">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 							</c:if>
 							<c:if test="${pic ne null and member.user_position eq 'S'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}" width="120px" height="120px">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 							</c:if>
 							<c:if test="${pic ne null and member.user_position eq 'T'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}" width="120px" height="120px">
+								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 							</c:if>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
 								<li><a href="myPage.do?user_id=${loginMember.user_id }" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
-								<li><a href="">채팅목록</a></li>
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
 								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
 							</ul>

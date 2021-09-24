@@ -66,8 +66,29 @@ div.box {
 	width:900px !important; 
 	align:center;
 }
+.btn2{
+	display: inline-block;
+    padding: 8px 45px;
+    background-color: #133e3f;
+    border: 1px solid #133e3f;
+    color: #ffffff;
+    margin-top: 35px;
+}
+.btn2:hover{
+	display: inline-block;
+    padding: 8px 45px;
+    background-color: white;
+    /* border: 1px solid #133e3f; */
+    color: #133e3f;
+    margin-top: 35px;
+}
 .event_section .event_container .box {
 	align-items: flex-start !important;
+}
+img{
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
 }
 </style>
 
@@ -194,15 +215,17 @@ function deleteuser(){
 				<div class="box">
 					<div id="left">
 						<div>
-							<c:if test="${pic eq null }">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif" width="120px" height="120px">
-							</c:if>
-							<c:if test="${pic ne null and member.user_position eq 'S'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}" width="120px" height="120px">
-							</c:if>
-							<c:if test="${pic ne null and member.user_position eq 'T'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}" width="120px" height="120px">
-							</c:if>
+							<c:choose>
+								<c:when test="${student.pic ne null}">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+								</c:when>
+								<c:when test="${tutor.pic ne null}">
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+								</c:when>
+								<c:otherwise>
+									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
@@ -215,7 +238,7 @@ function deleteuser(){
 			            <br><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">회원탈퇴</a>
 					</div>
 					<div id="right">
-					<form action="upUser.do" method="post">
+					<form action="upUser.do" method="post" enctype="multipart/form-data">
 						<!-- <div>
 						<table>
 							<tr>
@@ -325,7 +348,10 @@ function deleteuser(){
 								</Tr>
 								<Tr>
 									<td>과외 가능 시간</td>
-									<td><input type="text" value="${student.time }" name="time">
+									<td><input type="text" id="stime" name="stime" value="" class="timePicker" placeholder="00:00">
+										 ~ 
+										<input type="text" id="etime" name="etime" value="" class="timePicker" placeholder="24:00">
+									</td>
 								</Tr>
 								<Tr>
 									<td>선생님께 바라는 점</td>
@@ -343,101 +369,30 @@ function deleteuser(){
 								</Tr>
 								<Tr>
 									<td>과목</td>
-									<td><%-- ${tutor.sub_name }
-									<c:forTokens items="${tutor.sub_name }" delims="," var="subject_name">
-											<input type="checkbox" name="sub_no" value="${subject.sub_no }"
-												<c:if test="${subject.sub_name eq subject_name }">checked</c:if>
-											>&nbsp;
-									</c:forTokens> --%>
-									
+									<td>
 									<c:forEach items="${requestScope.subjectList }" var="subject">
-									<%-- <c:set var="sn" value="${tutor.sub_name }"/>${tutor.sub_name } | ${sn }
-									<c:set var="subject_name" value="${fn:split(sn,',') }"/> --%>
-									<%-- <input type="text" value="${ subject_name}"> --%>
+									
 										<c:if test="${ subject.sub_no eq 1}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 7}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 12}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 18}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 29}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 42}">${subject.category }<br></c:if>
-											<c:forTokens items="${tutor.sub_name }" delims="," var="subject_name">
 											<input type="checkbox" name="sub_no" value="${subject.sub_no }"
-												<c:if test="${subject.sub_name eq subject_name }">checked</c:if>
-											>
-											${subject.sub_name }&nbsp;
-											</c:forTokens>
+													<c:forTokens items="${tutor.sub_name }" delims=", " var="subject_name">
+													<c:if test="${subject.sub_name eq subject_name }">
+													checked
+													</c:if>
+													</c:forTokens>
+											>${subject.sub_name }&nbsp;
 										<c:if test="${ subject.sub_no eq 6}"><hr></c:if>
 										<c:if test="${ subject.sub_no eq 11}"><hr></c:if>
 										<c:if test="${ subject.sub_no eq 17}"><hr></c:if>
 										<c:if test="${ subject.sub_no eq 28}"><hr></c:if>
 										<c:if test="${ subject.sub_no eq 41}"><hr></c:if>
+									
 									</c:forEach>
-									<%-- <c:forTokens items="${tutor.sub_name }" delims="," var="subject_name">
-											<input type="checkbox" name="sub_no" value="${subject.sub_no }"
-												<c:if test="${subject.sub_name eq subject_name }">checked</c:if>
-											>&nbsp;
-									</c:forTokens> --%>
 									</td>
-									<!-- <td>
-										수학<br>
-										<input type="checkbox" name="sub_no" value="1">초등수학 
-										<input type="checkbox" name="sub_no" value="2">중등수학 
-										<input type="checkbox" name="sub_no" value="3">고등공통수학 
-										<input type="checkbox" name="sub_no" value="4">고등문과수학 
-										<input type="checkbox" name="sub_no" value="5">고등이과수학 
-										<input type="checkbox" name="sub_no" value="6">편입수학<hr>
-										영어<br>
-										<input type="checkbox" name="sub_no" value="7">초등영어 
-										<input type="checkbox" name="sub_no" value="8">중등영어 
-										<input type="checkbox" name="sub_no" value="9">고등영어 
-										<input type="checkbox" name="sub_no" value="10">수능영어 
-										<input type="checkbox" name="sub_no" value="11">편입영어<hr>
-										국어<br>
-										<input type="checkbox" name="sub_no" value="12">초등국어 
-										<input type="checkbox" name="sub_no" value="13">중등국어 
-										<input type="checkbox" name="sub_no" value="14">고등국어 
-										<input type="checkbox" name="sub_no" value="15">고등국어 문학 
-										<input type="checkbox" name="sub_no" value="16">고등국어 화법과작문 
-										<input type="checkbox" name="sub_no" value="17">고등국어 독서문법<hr>
-										과학<br>
-										<input type="checkbox" name="sub_no" value="18">초등과학 
-										<input type="checkbox" name="sub_no" value="19">중등과학 
-										<input type="checkbox" name="sub_no" value="20">고등과학 
-										<input type="checkbox" name="sub_no" value="21">물리1 
-										<input type="checkbox" name="sub_no" value="22">물리2 
-										<input type="checkbox" name="sub_no" value="23">화학1 
-										<input type="checkbox" name="sub_no" value="24">화학2<br>
-										<input type="checkbox" name="sub_no" value="25">생명과학1 
-										<input type="checkbox" name="sub_no" value="26">생명과학2 
-										<input type="checkbox" name="sub_no" value="27">지구과학1 
-										<input type="checkbox" name="sub_no" value="28">지구과학2<hr>
-										사회<br>
-										<input type="checkbox" name="sub_no" value="29">초등사회 
-										<input type="checkbox" name="sub_no" value="30">중등사회 
-										<input type="checkbox" name="sub_no" value="31">고등사회 
-										<input type="checkbox" name="sub_no" value="32">세계사
-										<input type="checkbox" name="sub_no" value="33">한국사 
-										<input type="checkbox" name="sub_no" value="34">세계지리 
-										<input type="checkbox" name="sub_no" value="35">윤리와사상<br>
-										<input type="checkbox" name="sub_no" value="36">생활과윤리 
-										<input type="checkbox" name="sub_no" value="37">사회문화 
-										<input type="checkbox" name="sub_no" value="38">경제 
-										<input type="checkbox" name="sub_no" value="39">법과정치 
-										<input type="checkbox" name="sub_no" value="40">동아시아사 
-										<input type="checkbox" name="sub_no" value="41">한국지리<hr>
-										외국어공인인증<br>
-										<input type="checkbox" name="sub_no" value="42">토익 
-										<input type="checkbox" name="sub_no" value="43">토스 
-										<input type="checkbox" name="sub_no" value="44">텝스 
-										<input type="checkbox" name="sub_no" value="45">토플 
-										<input type="checkbox" name="sub_no" value="46">아이엘츠 
-										<input type="checkbox" name="sub_no" value="47">오픽<br>
-										<input type="checkbox" name="sub_no" value="48">HSK/TSC 
-										<input type="checkbox" name="sub_no" value="49">JPT/JLPT 
-										<input type="checkbox" name="sub_no" value="50">DELE 
-										<input type="checkbox" name="sub_no" value="51">DELE/DALF 
-										<input type="checkbox" name="sub_no" value="52">TOREL 
-									</td> -->
 								</Tr>
 								<Tr>
 									<td>과외 가능 요일</td>
@@ -605,8 +560,8 @@ function deleteuser(){
 							</table>
 						<div class="btn-box" align="center">
 							<a href="javascript:history.go(-1);">이전 페이지로 이동</a> &nbsp; 
-							<input type="submit" value="수정하기" id="btnn"> &nbsp; 
-							<input type="reset" value="수정취소" id="btnn"> &nbsp;</div>
+							<input type="submit" value="수정하기" class="btn2"> &nbsp; 
+							<input type="reset" value="수정취소" class="btn2"> &nbsp;</div>
 						</div>
 						</form>
 					</div>
