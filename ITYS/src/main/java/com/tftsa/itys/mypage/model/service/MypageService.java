@@ -10,6 +10,7 @@ import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 
 public interface MypageService {
 
@@ -31,5 +32,6 @@ public interface MypageService {
 	String selectPosition(int user_no);
 	int deleteSubData(int user_no);
 	int deleteLikes(Likes likes);
-
+	ArrayList<UserChattingroomTutor> selectChattingStudentList(int user_no);
+	ArrayList<UserChattingroomTutor> selectChattingTutorList(int user_no);
 }

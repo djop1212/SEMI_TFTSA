@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
@@ -20,32 +21,43 @@
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Chattingblock" alias="Chattingblock" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
+		<typeAlias type="com.tftsa.itys.adminReview.model.vo.AdminReview" alias="AdminReview" />
 		
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
- 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
-		<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
+	    <typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyClass" alias="MyClass"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.UserChattingroomTutor" alias="UserChattingroomTutor"/>
  		
  		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
-	</typeAliases>
+    
+    <typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.tftsa.itys.common.Paging" alias="Paging" />
+		<typeAlias type="com.tftsa.itys.board.model.vo.Reply" alias="Reply" />
+		</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/adminchatting-mapper.xml" />
+		<mapper resource="mappers/admincategory-mapper.xml" />
 		<mapper resource="mappers/adminpayment-mapper.xml" />
 		<mapper resource="mappers/adminmember-mapper.xml"/>
+		<mapper resource="mappers/adminreview-mapper.xml"/>
 		<mapper resource="mappers/adminkeyword-mapper.xml"/>
 		<mapper resource="mappers/chatting-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
-    <mapper resource="mappers/member-mapper.xml"/>
+    	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
+    <mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/reply-mapper.xml" />
 	</mappers>
 	
 </configuration>
+

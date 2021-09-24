@@ -6,6 +6,8 @@
 
 	<resultMap type="Chattingroom" id="resultChattingroom">
 		<id column="chat_room_no" property="chat_room_no" />
+		<result column="student_no" property="student_no" />
+		<result column="tutor_no" property="tutor_no" />
 		<result column="student_name" property="student_name" />
 		<result column="tutor_name" property="tutor_name" />
 	</resultMap>

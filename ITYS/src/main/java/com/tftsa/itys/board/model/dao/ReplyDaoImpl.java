@@ -15,21 +15,34 @@ public class ReplyDaoImpl implements ReplyDao{
 	@Inject SqlSession sql;
 	
 	// 댓글 조회
-	@Override
-	public List<Reply> readReply(int board_no) {
-		return sql.selectList("replyMapper.readReply", board_no);
-	}
+		@Override
+		public List<Reply> readReply(int board_no) {
+			return sql.selectList("replyMapper.readReply", board_no);
+		}
+		
+		// 댓글 작성
+		@Override
+		public void writeReply(Reply reply) {
+			sql.insert("replyMapper.writeReply", reply);
+		}
+		
+		// 댓글 수정
+		@Override
+		public void updateReply(Reply reply) {
+			sql.update("replyMapper.updateReply", reply);
+		}
+		
+		// 댓글 삭제
+		@Override
+		public void deleteReply(Reply reply) {
+			sql.delete("replyMapper.deleteReply", reply);
+		}
+
+		@Override
+		public Reply selectReply(int com_no) {
+			return sql.selectOne("replyMapper.selectReply", com_no);
+		}
 	
-	// 댓글 작성
-	@Override
-	public void writeReply(Reply reply) {
-		sql.insert("replyMapper.writeReply", reply);
-	}
-	
-	// 댓글 수정
-	@Override
-	public void updateReply(Reply reply) {
-		sql.update("replyMapper.updateReply", reply);
-	}
+
 
 }

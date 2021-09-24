@@ -15,65 +15,60 @@
         <div class="col-md-3">
           <div class="info_menu">
             <h5>
-              QUICK LINKS
+              메뉴
             </h5>
             <ul class="navbar-nav  ">
               <li class="nav-item active">
-                <a class="nav-link" href="main.do">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="main.do">메인 <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.do"> About </a>
+                <a class="nav-link" href="about.do"> 과외찾기 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="course.do"> Courses </a>
+                <a class="nav-link" href="course.do"> 선생님 찾기 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="event.do"> Events </a>
+              	<a class="nav-link" href="${ pageContext.servletContext.contextPath }/blist.do?page=1"> 질문하기 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.do">Contact us</a>
+                <a class="nav-link" href="info.do"> 고객센터 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="login.do">Login</a>
+                <a class="nav-link" href="contact.do">회원가입</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login.do">로그인</a>
               </li>
             </ul>
           </div>
         </div>
         <div class="col-md-3">
           <div class="info_course">
-            <h5>
-              TOP RATED COURSE
-            </h5>
-            <p>
-              There are many variations of passages of Lorem Ipsum available,
-              but the majority have suffered alteration in some form, by
-              injected humou
-            </p>
+            <h6>
+              (주)itys
+            </h6>
+            <p><font size=2>
+              사업자등록번호: 012-34-56789<br>
+              서울시 마포구 양화로 127, 첨단빌딩 7층<br>
+              통신판매업신고증: 제2021-서울강남-00001 호
+            </font></p>
           </div>
         </div>
 
         <div class="col-md-5 offset-md-1">
           <div class="info_news">
             <h5>
-              FOR ANY QUERY, PLEASE WRITE TO US
+              도움이 필요하신가요?
             </h5>
             <div class="info_contact">
-              <a href="">
-                Location
-              </a>
-              <a href="">
-                demo@gmail.com
-              </a>
-              <a href="">
-                Call : +01 1234567890
-              </a>
+            	<ul>
+            		<li>iyts1001@finalproject.com</li>
+            		<li>02) 123 - 4567</li>
+            		<li>운영시간 : 평일 오전 10시 - 오후 6시 <br>
+            		(점심시간: 오후 1시 - 2시) <br>
+            		(주말 & 공휴일 제외)</li>
+            	</ul>
             </div>
-            <form action="">
-              <input type="text" placeholder="Enter Your email" />
-              <button>
-                Subscribe
-              </button>
-            </form>
           </div>
         </div>
       </div>
@@ -97,12 +92,12 @@
       <a href="https://themewagon.com/">Themewagon</a>
     </p>
 
-  </footer>
+</footer>
   <!-- footer section -->
-  
+
   <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/bootstrap.js"></script>
-  
+
 </body>
 
 </html>

@@ -2,7 +2,8 @@ package com.tftsa.itys.board.model.vo;
 
 import java.sql.Date;
 
-public class Reply {
+public class Reply implements java.io.Serializable {
+	private static final long serialVersionUID = 5500L;
 
 	private int com_no;
 	private int board_no;

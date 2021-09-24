@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -20,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tftsa.itys.board.model.service.BoardService;
 import com.tftsa.itys.board.model.service.ReplyService;
 import com.tftsa.itys.board.model.vo.Board;
 import com.tftsa.itys.board.model.vo.Reply;
 import com.tftsa.itys.common.Paging;
+
+
 
 @Controller // 이걸 써야 컨트롤러로 등록됨
 public class BoardController {
@@ -34,7 +36,7 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	@Inject
+	@Autowired
 	ReplyService replyService;
 
 	@RequestMapping("blist.do")
@@ -276,6 +278,8 @@ public class BoardController {
 		replyService.writeReply(reply);
 		
 		model.addAttribute("board_no", reply.getBoard_no());
+		model.addAttribute("com_no", reply.getCom_no());
+		model.addAttribute("com_writer", reply.getCom_writer());
 		
 		return "redirect:/bdetail.do?page=" + page;
 	}
@@ -297,7 +301,6 @@ public class BoardController {
 		}
 	}
 
-
 	// 글 수정페이지로 이동 처리용
 	@RequestMapping("bupview.do")
 	public String moveBoardUpdateView(@RequestParam("board_no") int board_no, 
@@ -315,49 +318,60 @@ public class BoardController {
 		}
 	}
 	
-	@RequestMapping("rup.do")
-	public String moveReplyUpdateView (@RequestParam("com_no") int com_no,
-			@RequestParam("page") int currentPage,
+
+	// 댓글 수정페이지로 이동 처리용
+	@RequestMapping("rupview.do")
+	public String replyUpdateView (@RequestParam("com_no") int com_no,	@RequestParam("page") int currentPage, 
+			Model model, Board board) {
+		logger.info("reply Update");
+		Reply reply =  replyService.selectReply(com_no);
+		
+		System.out.println("rupview.do");
+		System.out.println("com_no : " + reply.getCom_no());
+		System.out.println("page : " + currentPage);
+		System.out.println("board_no : " + reply.getBoard_no());
+				
+		model.addAttribute("currentPage", currentPage);
+		logger.info("reply : "+reply.toString());
+		model.addAttribute("reply", reply);
+		
+		return "board/replyUpdateView";
+		
+	}
+	
+	@RequestMapping(value = "roriginup.do", method = RequestMethod.POST)
+	public String replyUpdate(Reply reply, @RequestParam("com_no") int com_no, 
+			@RequestParam("page") int currentPage, 
+			@RequestParam(value="board_no", required = true) int board_no,
 			Model model) {
-		List<Reply> reply = replyService.readReply(com_no);
-		if(reply !=reply) {
-			model.addAttribute("reply", reply);
-			return "board/replyUpdateView";
-		} else {
-			model.addAttribute("message", com_no + "번 글 수정페이지로 이동 실패.");
-			return "common/error";
-		}
-	}
-
-//	// 댓글 | 대댓글 수정 처리용
-//	@RequestMapping(value = "breplyup.do", method = RequestMethod.POST)
-//	public String replyUpdateMethod(Board reply, @RequestParam("page") int page, Model model) {
-//		if (boardService.updateReply(reply) > 0) {
-//			model.addAttribute("board_num", reply.getBoard_no());
-//			model.addAttribute("page", page);
-//			return "redirect:bdetail.do";
-//		} else {
-//			model.addAttribute("message", reply.getBoard_num() + "번글 수정 실패");
-//			return "common/error";
-//		}
-//	}
-	
-	// 댓글 | 대댓글 수정 처리용
-	@RequestMapping(value = "breplyup.do", method = RequestMethod.POST)
-	public String replyUpdateMethod(Reply reply, @RequestParam("page") int page, Model model) {
+		logger.info("reply UP Write");
 		
-			model.addAttribute("board_no", reply.getBoard_no());
-			model.addAttribute("page", page);
-			
-			
-			return "redirect:bdetail.do";
+		System.out.println("roriginup.do");
+		System.out.println("com_no : " + com_no);
+		System.out.println("page : " + currentPage);
+		System.out.println("board_no : " + reply.getBoard_no());
+	
+		
+	
+		return "redirect:bdetail.do?board_no=" + board_no + "&page=" + currentPage;
 		
 	}
-
 	
 	
-	
-	
+	// 댓글삭제
+	@RequestMapping("rdelete.do")	
+	public String replyDelete(Reply reply, Model model, @RequestParam("page") int currentPage) {
+		logger.info("reply delete");
+		
+		replyService.deleteReply(reply);
+		
+		model.addAttribute("board_no", reply.getBoard_no());
+		model.addAttribute("com_no", reply.getCom_no());
+		//model.addAttribute("page", currentPage);
+		
+		return "redirect:bdetail.do?page=" + currentPage;
+		
+	}
 	
 	// 게시 원글 수정 요청 처리용
 	@RequestMapping(value = "boriginup.do", method = RequestMethod.POST)
