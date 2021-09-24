@@ -15,6 +15,7 @@ import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomStudent;
 import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 
 @Repository("mypageDao")
@@ -100,8 +101,8 @@ public class MypageDao {
 		return (ArrayList<UserChattingroomTutor>)list;
 	}
 	
-	public ArrayList<UserChattingroomTutor> selectChattingTutorList(int user_no) {
-		List<UserChattingroomTutor> list = session.selectList("mypageMapper.selectChattingTutorList", user_no);
-		return (ArrayList<UserChattingroomTutor>)list;
+	public ArrayList<UserChattingroomStudent> selectChattingTutorList(int user_no) {
+		List<UserChattingroomStudent> list = session.selectList("mypageMapper.selectChattingTutorList", user_no);
+		return (ArrayList<UserChattingroomStudent>)list;
 	}
 }

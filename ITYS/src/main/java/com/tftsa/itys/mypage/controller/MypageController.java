@@ -1,327 +1,420 @@
-/*
- * package com.tftsa.itys.mypage.controller;
- * 
- * import java.io.File; import java.io.FileInputStream; import
- * java.io.FileOutputStream; import java.io.IOException; import
- * java.io.PrintWriter; import java.util.ArrayList; import java.util.List;
- * 
- * import javax.security.auth.Subject; import
- * javax.servlet.http.HttpServletRequest; import
- * javax.servlet.http.HttpServletResponse;
- * 
- * import org.slf4j.Logger; import org.slf4j.LoggerFactory; import
- * org.springframework.beans.factory.annotation.Autowired; import
- * org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; import
- * org.springframework.stereotype.Controller; import
- * org.springframework.ui.Model; import
- * org.springframework.web.bind.annotation.RequestMapping; import
- * org.springframework.web.bind.annotation.RequestMethod; import
- * org.springframework.web.bind.annotation.RequestParam; import
- * org.springframework.web.multipart.MultipartFile; import
- * org.springframework.web.servlet.ModelAndView;
- * 
- * import com.tftsa.itys.member.model.vo.Member; import
- * com.tftsa.itys.mypage.model.service.MypageService; import
- * com.tftsa.itys.mypage.model.vo.Likes; import
- * com.tftsa.itys.mypage.model.vo.MyClass; import
- * com.tftsa.itys.mypage.model.vo.Student; import
- * com.tftsa.itys.mypage.model.vo.SubData; import
- * com.tftsa.itys.mypage.model.vo.Tutor; import
- * com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
- * 
- * @Controller public class MypageController { private static final Logger
- * logger = LoggerFactory.getLogger(MypageController.class);
- * 
- * @Autowired private MypageService mypageService;
- * 
- * @Autowired private BCryptPasswordEncoder bcryptPasswordEncoder;
- * 
- * // ÇĞ»ı ÇÁ·ÎÇÊ Ãß°¡ ÆäÀÌÁö·Î ÀÌµ¿
- * 
- * @RequestMapping(value = "upSPage.do") public ModelAndView
- * moveStudentPage(@RequestParam("user_no") int user_no, ModelAndView mv) {
- * //logger.info("upSPage.do : "+user_no); mv.addObject("user_no", user_no);
- * mv.setViewName("mypage/studentProfile"); return mv; }
- * 
- * // ÇĞ»ı ÇÁ·ÎÇÊ Ãß°¡
- * 
- * @RequestMapping(value = "upsprofile.do", method = RequestMethod.POST) public
- * String insertStudentProfile( Model model, Student student, HttpServletRequest
- * request, HttpServletResponse response, @RequestParam(name="upfile", required
- * = false) MultipartFile mfile,
- * 
- * @RequestParam(name="stime") String stime, @RequestParam(name="etime") String
- * etime) throws Exception {
- * 
- * // ¾÷·ÎµåµÈ ÆÄÀÏ ÀúÀå Æú´õ ÁöÁ¤ String savePath =
- * request.getSession().getServletContext().getRealPath(
- * "resources/images/mypage/studentImg"); if(!mfile.isEmpty()) { String
- * originFileName = mfile.getOriginalFilename(); if(originFileName!= null &&
- * originFileName.length()>0) { logger.info(savePath);
- * logger.info("upsprofile.do : "+originFileName);
- * logger.info("getSize() : "+mfile.getSize());
- * logger.info("getInputStream() : "+mfile.getInputStream()); try {
- * mfile.transferTo(new File(savePath+"\\"+originFileName));
- * 
- * String renameFileName = (Integer.toString(student.getUser_no()));
- * renameFileName +=
- * "."+originFileName.substring(originFileName.lastIndexOf(".")+1);
- * 
- * File originFile = new File(savePath + "\\" + originFileName); File renameFile
- * = new File(savePath + "\\" + renameFileName);
- * 
- * if(!originFile.renameTo(renameFile)) { FileInputStream fin = new
- * FileInputStream(originFile); FileOutputStream fout = new
- * FileOutputStream(renameFile);
- * 
- * int data = -1; byte[] buffer = new byte[1024];
- * 
- * while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
- * fout.write(buffer, 0, buffer.length); }
- * 
- * fin.close(); fout.close(); originFile.delete(); }
- * student.setPic(renameFileName);
- * 
- * }catch(Exception e) { e.printStackTrace(); model.addAttribute("message",
- * "Àü¼ÛÆÄÀÏ ÀúÀå ½ÇÆĞ"); return "common/error"; } }// ¾÷·ÎµåµÈ ÆÄÀÏ ÀÖÀ½
- * //student.setOriginal_filename(originFileName); }// Ã·ºÎ ÆÄÀÏ ÀÖÀ½
- * 
- * student.setTime(stime+", "+etime); logger.info("upsprofile.do : "+student);
- * 
- * if((mypageService.insertStudent(student) &
- * mypageService.updateStudentPosition(student.getUser_no()))>0) { PrintWriter
- * out = response.getWriter(); String str = ""; str =
- * "<script language='javascript'>"; str += "opener.window.location.reload();";
- * // ¿ÀÇÁ³Ê »õ·Î°íÄ§ str += "self.close();"; // Ã¢´İ±â str += "</script>";
- * out.print(str); return null; }else { model.addAttribute("message",
- * "ÇĞ»ı ÇÁ·ÎÇÊ Ãß°¡ ½ÇÆĞ..."); return "common/error"; } }
- * 
- * // ¼±»ı´Ô ÇÁ·ÎÇÊ Ãß°¡ ÆäÀÌÁö·Î ÀÌµ¿
- * 
- * @RequestMapping(value = "upTPage.do") public ModelAndView
- * moveTutorPage(@RequestParam("user_no") int user_no, ModelAndView mv) {
- * mv.addObject("user_no", user_no); mv.setViewName("mypage/tutorProfile");
- * return mv; }
- * 
- * // ¼±»ı´Ô ÇÁ·ÎÇÊ Ãß°¡
- * 
- * @RequestMapping(value = "uptprofile.do", method = RequestMethod.POST) public
- * String insertTutorProfile(Tutor tutor, SubData subdata, Model model,
- * HttpServletRequest request, HttpServletResponse response,
- * 
- * @RequestParam(name="upfile") MultipartFile mfile, @RequestParam("sub_no")
- * String arr_sub_no,
- * 
- * @RequestParam(name="stime") String stime, @RequestParam(name="etime") String
- * etime,
- * 
- * @RequestParam(name="city") String city, @RequestParam(name="country") String
- * country) throws IOException { // logger.info("stime : "+stime); //
- * logger.info("etime : "+etime); // logger.info("city : "+city); //
- * logger.info("country : "+country); // logger.info("sub_no : "+arr_sub_no);
- * 
- * tutor.setTime(stime+", "+etime); tutor.setArea(city+" "+country);
- * 
- * 
- * String[] array = arr_sub_no.split(","); int cnt=0; String sub_name ="";
- * 
- * // °ú¸ñ¹øÈ£ subdata¿¡ ÀúÀå, tutor Å×ÀÌºí subname for(int i=0;i<array.length;i++) {
- * logger.info("array["+i+"] : "+array[i]); int sub_no =
- * Integer.parseInt(array[i]); subdata.setSub_no(sub_no);
- * if(mypageService.insertSubData(subdata)>0) { if(i == 0) { sub_name +=
- * mypageService.selectSubName(sub_no); }else { sub_name += (", "+
- * mypageService.selectSubName(sub_no)); } cnt++; } }
- * logger.info("insertSubDate cnt : " + cnt); tutor.setSub_name(sub_name);
- * tutor.setTime(stime + ", " + etime);
- * 
- * String savePath = request.getSession().getServletContext().getRealPath(
- * "resources/images/mypage/tutorImg"); if (!mfile.isEmpty()) { String
- * originFileName = mfile.getOriginalFilename(); if (originFileName != null &&
- * originFileName.length() > 0) { logger.info(savePath);
- * logger.info("upsprofile.do : " + originFileName); logger.info("getSize() : "
- * + mfile.getSize()); logger.info("getInputStream() : " +
- * mfile.getInputStream()); try { mfile.transferTo(new File(savePath + "\\" +
- * originFileName));
- * 
- * String renameFileName = (Integer.toString(tutor.getUser_no()));
- * renameFileName += "." +
- * originFileName.substring(originFileName.lastIndexOf(".") + 1);
- * 
- * File originFile = new File(savePath + "\\" + originFileName); File renameFile
- * = new File(savePath + "\\" + renameFileName);
- * 
- * if (!originFile.renameTo(renameFile)) { FileInputStream fin = new
- * FileInputStream(originFile); FileOutputStream fout = new
- * FileOutputStream(renameFile);
- * 
- * int data = -1; byte[] buffer = new byte[1024];
- * 
- * while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
- * fout.write(buffer, 0, buffer.length); }
- * 
- * fin.close(); fout.close(); originFile.delete(); }
- * tutor.setPic(renameFileName);
- * 
- * } catch (Exception e) { e.printStackTrace(); model.addAttribute("message",
- * "Àü¼ÛÆÄÀÏ ÀúÀå ½ÇÆĞ"); return "common/error"; } } // ¾÷·ÎµåµÈ ÆÄÀÏ ÀÖÀ½ //
- * tutor.setOriginal_filename(originFileName); } // Ã·ºÎ ÆÄÀÏ ÀÖÀ½
- * 
- * logger.info("upsprofile.do : " + tutor);
- * 
- * if((mypageService.insertTutor(tutor) &
- * mypageService.updateTutorPosition(tutor.getUser_no()))>0) { PrintWriter out =
- * response.getWriter(); String str = ""; str =
- * "<script language='javascript'>"; str += "opener.window.location.reload();";
- * // ¿ÀÇÁ³Ê »õ·Î°íÄ§ str += "self.close();"; // Ã¢´İ±â str += "</script>";
- * out.print(str); return null; }else { model.addAttribute("message",
- * "ÇĞ»ı ÇÁ·ÎÇÊ Ãß°¡ ½ÇÆĞ..."); return "common/error"; } }
- * 
- * // Âò¸ñ·Ï Á¶È¸
- * 
- * @RequestMapping("wishl.do") public String
- * moveWishList(@RequestParam("user_no") int user_no, Model model) {
- * //logger.info("wishl.do user_no : "+user_no); ArrayList<Likes> list =
- * mypageService.selectLikesList(user_no);
- * if(mypageService.selectPosition(user_no).equals("T")) { Tutor tutor =
- * mypageService.selectTutor(user_no); model.addAttribute("tutor", tutor); }else
- * if(mypageService.selectPosition(user_no).equals("S")) { Student student =
- * mypageService.selectStudent(user_no); model.addAttribute("student", student);
- * } if (list.size() > 0) { logger.info("wishList : " + list.toString());
- * model.addAttribute("list", list); } return "mypage/wishList"; }
- * 
- * // Âò ¸ñ·Ï »èÁ¦
- * 
- * @RequestMapping("delwlist.do") public String
- * deleteWishList(@RequestParam("chk") String checkedList, Likes likes) {
- * //logger.info("delwlist.do : "+checkedList);
- * //logger.info("delwlist.do likes : "+likes.toString());
- * 
- * String[] array = checkedList.split(","); for(int i=0 ;i<array.length; i++) {
- * //logger.info(array[i]); likes.setTutor_no(Integer.parseInt(array[i]));
- * if(mypageService.deleteLikes(likes)>0) {
- * //logger.info("delwlist.do delete["+i+"] : "+array[i]); } }
- * 
- * return "redirect:wishl.do?user_no="+likes.getStudent_no(); }
- * 
- * // Ã¤ÆÃ ¸ñ·Ï Á¶È¸
- * 
- * @RequestMapping("clist.do") public String
- * moveChattingList(@RequestParam("user_no") int user_no, ModelAndView mv) {
- * return "redirect:selectChattingList.do?user_no=" + user_no; }
- * 
- * // ³» ¼ö¾÷ ¸ñ·Ï Á¶È¸
- * 
- * @RequestMapping("mclass.do") public String
- * moveMyClass(@RequestParam("user_no") int user_no, Model model) {
- * logger.info("mclass.do"); ArrayList<MyClass> list =
- * mypageService.selectMyclassList(user_no);
- * if(mypageService.selectPosition(user_no).equals("T")) { Tutor tutor =
- * mypageService.selectTutor(user_no); model.addAttribute("tutor", tutor); }else
- * if(mypageService.selectPosition(user_no).equals("S")) { Student student =
- * mypageService.selectStudent(user_no); model.addAttribute("student", student);
- * }
- * 
- * if(list.size()>0) { logger.info("myclassList : "+list.toString());
- * model.addAttribute("list", list); } return "mypage/myClass"; }
- * 
- * // ¼öÁ¤ÆäÀÌÁö·Î ÀÌµ¿
- * 
- * @RequestMapping("upUserPage.do") public ModelAndView
- * moveUpdateUserView(@RequestParam("user_id") String user_id, ModelAndView mv)
- * { Member member = mypageService.selectUser(user_id); Student student =
- * mypageService.selectStudent(member.getUser_no()); Tutor tutor =
- * mypageService.selectTutor(member.getUser_no()); //ArrayList<Subject>
- * subjectList =
- * 
- * List<Subject> subjectList = mypageService.selectSubjectList();
- * //logger.info(subjectList.toString());
- * 
- * 
- * if(member != null && (student != null || tutor != null)) {
- * mv.addObject("member", member); mv.addObject("subjectList", subjectList);
- * if(member.getUser_position().equals("S")) { mv.addObject("student", student);
- * }else if(member.getUser_position().equals("T")) { String str =
- * tutor.getTime(); String[] array = str.split(","); String stime = array[0];
- * String etime = array[1];
- * //logger.info("upUserPage.do : stime, etime "+stime+", "+etime);
- * mv.addObject("stime", stime); mv.addObject("etime", etime);
- * mv.addObject("tutor", tutor); } mv.setViewName("mypage/updateProfile"); }else
- * if(member != null && (student == null && tutor == null)){
- * mv.addObject("member", member); mv.setViewName("mypage/updateProfile"); }else
- * { mv.addObject("message", member.getUser_id() + "´Ô È¸¿ø Á¤º¸ ¼öÁ¤ÆäÀÌÁö·Î ÀÌµ¿ ½ÇÆĞ..");
- * mv.setViewName("common/error"); } return mv; }
- * 
- * // ¼öÁ¤ÇÏ±â
- * 
- * @RequestMapping(value = "upUser.do", method = RequestMethod.POST) public
- * String updateUser(Member member, Student student, Tutor tutor, SubData
- * subdata, Model model,
- * 
- * @RequestParam("origin_userpwd") String originUserpwd, @RequestParam("stime")
- * String stime, @RequestParam("etime") String etime,
- * 
- * @RequestParam("city") String city, @RequestParam("country") String country,
- * 
- * @RequestParam("sub_no") String arr_sub_no) throws IOException {
- * logger.info("upUser.do - member : " + member);
- * logger.info("upUser.do - student : " + student);
- * logger.info("upUser.do - tutor : " + tutor); // logger.info("opwd : " +
- * originUserpwd); // logger.info("stime : "+stime); //
- * logger.info("etime : "+etime); // logger.info("city : "+city); //
- * logger.info("country : "+country); // logger.info("sub_no : "+arr_sub_no);
- * 
- * tutor.setTime(stime+", "+etime); tutor.setArea(city+" "+country);
- * 
- * String []array = arr_sub_no.split(","); String sub_name=""; // °ú¸ñ¹øÈ£ subdata¿¡
- * ÀúÀå, tutor Å×ÀÌºí subname if (mypageService.deleteSubData(member.getUser_no()) >
- * 0) { logger.info("upUser.do : deleteSubData"); } for (int i = 0; i <
- * array.length; i++) { logger.info("array[" + i + "] : " + array[i]); int
- * sub_no = Integer.parseInt(array[i]); subdata.setSub_no(sub_no); if
- * (mypageService.insertSubData(subdata) > 0) { if (i == 0) { sub_name +=
- * mypageService.selectSubName(sub_no); } else { sub_name += (", " +
- * mypageService.selectSubName(sub_no)); } } }
- * 
- * tutor.setSub_name(sub_name);
- * 
- * logger.info("uptprofile.do : "+tutor);
- * 
- * // »õ·Î¿î ¾ÏÈ£°¡ Àü¼ÛÀÌ ¿Ô´Ù¸é String user_pwd = member.getUser_pwd().trim(); if
- * (user_pwd != null && user_pwd.length() > 0) { // ±âÁ¸ ¾ÏÈ£¿Í ´Ù¸¥ °ªÀÌ¸é ¾ÏÈ£È­ Ã³¸®¸¦ ÇØ¶ó if
- * (!bcryptPasswordEncoder.matches(user_pwd, originUserpwd)) {
- * member.setUser_pwd(bcryptPasswordEncoder.encode(user_pwd)); } } else { // »õ·Î¿î
- * ¾ÏÈ£°ªÀÌ Àü¼Û¿ÀÁö ¾Ê¾Ò´Ù¸é ¿ø·¡ ¾ÏÈ£¸¦ ±â·Ï member.setUser_pwd(originUserpwd); }
- * 
- * member.setUser_position(mypageService.selectPosition(member.getUser_no()));
- * logger.info("after : " + member);
- * 
- * if(member.getUser_position().equals("U") &&
- * mypageService.updateMember(member)>0) {
- * logger.info("upUser.do : updateUser \nmember : "+member); return
- * "redirect:myPage.do?user_id=" + member.getUser_id(); }else
- * if(member.getUser_position().equals("S") &&
- * mypageService.updateStudent(student)>0) {
- * logger.info("upUser.do : updateStudent \nstudent : "+student); return
- * "redirect:myPage.do?user_id=" + member.getUser_id(); }else
- * if(member.getUser_position().equals("T") &&
- * mypageService.updateTutor(tutor)>0) {
- * logger.info("upUser.do : updateTutor \ntutor : "+tutor); return
- * "redirect:myPage.do?user_id=" + member.getUser_id(); } else {
- * model.addAttribute("message", member.getUser_id() + "È¸¿øÁ¤º¸ ¼öÁ¤ ½ÇÆĞ.."); return
- * "common/error"; } }
- * 
- * // Ã¤ÆÃ ¸ñ·Ï Á¶È¸ ÄÁÆ®·Ñ·¯
- * 
- * @RequestMapping("selectChattingList.do") public String
- * selectChattingList(Model model, @RequestParam("user_no") int user_no) {
- * ArrayList<UserChattingroomTutor> userchattingroomtutor1 =
- * mypageService.selectChattingStudentList(user_no);
- * ArrayList<UserChattingroomTutor> userchattingroomtutor2 =
- * mypageService.selectChattingTutorList(user_no);
- * 
- * if (userchattingroomtutor1.size() > 0) {
- * model.addAttribute("userchattingroomtutor1", userchattingroomtutor1); return
- * "mypage/chattingList"; } else if(userchattingroomtutor2.size() > 0) {
- * model.addAttribute("userchattingroomtutor2", userchattingroomtutor2); return
- * "mypage/chattingList"; } else { model.addAttribute("message",
- * "µî·ÏµÈ Ã¤ÆÃ¸ñ·Ï Á¤º¸°¡ ¾ø½À´Ï´Ù."); return "common/error"; } } }
- */
+package com.tftsa.itys.mypage.controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.security.auth.Subject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.tftsa.itys.member.model.vo.Member;
+import com.tftsa.itys.mypage.model.service.MypageService;
+import com.tftsa.itys.mypage.model.vo.Likes;
+import com.tftsa.itys.mypage.model.vo.MyClass;
+import com.tftsa.itys.mypage.model.vo.Student;
+import com.tftsa.itys.mypage.model.vo.SubData;
+import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomStudent;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
+
+@Controller
+public class MypageController {
+	private static final Logger logger = LoggerFactory.getLogger(MypageController.class);
+
+	@Autowired
+	private MypageService mypageService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+
+	// í•™ìƒ í”„ë¡œí•„ ì¶”ê°€ í˜ì´ì§€ë¡œ ì´ë™
+	@RequestMapping(value = "upSPage.do")
+	public ModelAndView moveStudentPage(@RequestParam("user_no") int user_no, ModelAndView mv) {
+		//logger.info("upSPage.do : "+user_no);
+		mv.addObject("user_no", user_no);
+		mv.setViewName("mypage/studentProfile");
+		return mv;
+	}
+
+	// í•™ìƒ í”„ë¡œí•„ ì¶”ê°€
+	@RequestMapping(value = "upsprofile.do", method = RequestMethod.POST)
+	public String insertStudentProfile( Model model, Student student,
+			HttpServletRequest request, HttpServletResponse response, @RequestParam(name="upfile", required = false) MultipartFile mfile,
+			@RequestParam(name="stime") String stime, @RequestParam(name="etime") String etime) throws Exception {
+		
+		// ì—…ë¡œë“œëœ íŒŒì¼ ì €ì¥ í´ë” ì§€ì •
+		String savePath = request.getSession().getServletContext().getRealPath("resources/images/mypage/studentImg");
+		if(!mfile.isEmpty()) {
+			String originFileName = mfile.getOriginalFilename();
+			if(originFileName!= null && originFileName.length()>0) {
+				logger.info(savePath);
+				logger.info("upsprofile.do : "+originFileName);
+				logger.info("getSize() : "+mfile.getSize());
+				logger.info("getInputStream() : "+mfile.getInputStream());
+				try {
+					mfile.transferTo(new File(savePath+"\\"+originFileName));
+					
+					String renameFileName = (Integer.toString(student.getUser_no()));
+					renameFileName += "."+originFileName.substring(originFileName.lastIndexOf(".")+1);
+					
+					File originFile = new File(savePath + "\\" + originFileName);
+					File renameFile = new File(savePath + "\\" + renameFileName);
+					
+					if(!originFile.renameTo(renameFile)) {
+						FileInputStream fin = new FileInputStream(originFile);
+						FileOutputStream fout = new FileOutputStream(renameFile);
+						
+						int data = -1;
+						byte[] buffer = new byte[1024];
+
+						while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
+							fout.write(buffer, 0, buffer.length);
+						}
+
+						fin.close();
+						fout.close();
+						originFile.delete();
+					}
+					student.setPic(renameFileName);
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+					model.addAttribute("message", "ì „ì†¡íŒŒì¼ ì €ì¥ ì‹¤íŒ¨");
+					return "common/error";
+				}
+			}// ì—…ë¡œë“œëœ íŒŒì¼ ìˆìŒ
+			//student.setOriginal_filename(originFileName);
+		}// ì²¨ë¶€ íŒŒì¼ ìˆìŒ
+		
+		student.setTime(stime+", "+etime);
+		logger.info("upsprofile.do : "+student);
+		
+		if((mypageService.insertStudent(student) & mypageService.updateStudentPosition(student.getUser_no()))>0) {
+			PrintWriter out = response.getWriter();
+			String str = "";
+			str = "<script language='javascript'>";
+			str += "opener.window.location.reload();"; // ì˜¤í”„ë„ˆ ìƒˆë¡œê³ ì¹¨
+			str += "self.close();"; // ì°½ë‹«ê¸°
+			str += "</script>";
+			out.print(str);
+			return null;
+		}else {
+			model.addAttribute("message", "í•™ìƒ í”„ë¡œí•„ ì¶”ê°€ ì‹¤íŒ¨...");
+			return "common/error";
+		}
+	}
+
+	// ì„ ìƒë‹˜ í”„ë¡œí•„ ì¶”ê°€ í˜ì´ì§€ë¡œ ì´ë™
+	@RequestMapping(value = "upTPage.do")
+	public ModelAndView moveTutorPage(@RequestParam("user_no") int user_no, ModelAndView mv) {
+		mv.addObject("user_no", user_no);
+		mv.setViewName("mypage/tutorProfile");
+		return mv;
+	}
+
+	// ì„ ìƒë‹˜ í”„ë¡œí•„ ì¶”ê°€
+	@RequestMapping(value = "uptprofile.do", method = RequestMethod.POST)
+	public String insertTutorProfile(Tutor tutor, SubData subdata, Model model, HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(name="upfile") MultipartFile mfile, @RequestParam("sub_no") String arr_sub_no, 
+			@RequestParam(name="stime") String stime, @RequestParam(name="etime") String etime, 
+			@RequestParam(name="city") String city, @RequestParam(name="country") String country) throws IOException {
+//		logger.info("stime : "+stime);
+//		logger.info("etime : "+etime);
+//		logger.info("city : "+city);
+//		logger.info("country : "+country);
+//		logger.info("sub_no : "+arr_sub_no);
+		
+		tutor.setTime(stime+", "+etime);
+		tutor.setArea(city+" "+country);
+		
+		
+		String[] array = arr_sub_no.split(",");
+	    int cnt=0;
+	    String sub_name ="";
+		
+	    // ê³¼ëª©ë²ˆí˜¸ subdataì— ì €ì¥, tutor í…Œì´ë¸” subname 
+		for(int i=0;i<array.length;i++) {
+			logger.info("array["+i+"] : "+array[i]);
+			int sub_no = Integer.parseInt(array[i]);
+			subdata.setSub_no(sub_no);
+			if(mypageService.insertSubData(subdata)>0) {
+				if(i == 0) {
+					sub_name += mypageService.selectSubName(sub_no);
+				}else {
+					sub_name += (", "+ mypageService.selectSubName(sub_no));
+				}
+				cnt++;
+			}
+		}
+		logger.info("insertSubDate cnt : " + cnt);
+		tutor.setSub_name(sub_name);
+		tutor.setTime(stime + ", " + etime);
+
+		String savePath = request.getSession().getServletContext().getRealPath("resources/images/mypage/tutorImg");
+		if (!mfile.isEmpty()) {
+			String originFileName = mfile.getOriginalFilename();
+			if (originFileName != null && originFileName.length() > 0) {
+				logger.info(savePath);
+				logger.info("upsprofile.do : " + originFileName);
+				logger.info("getSize() : " + mfile.getSize());
+				logger.info("getInputStream() : " + mfile.getInputStream());
+				try {
+					mfile.transferTo(new File(savePath + "\\" + originFileName));
+
+					String renameFileName = (Integer.toString(tutor.getUser_no()));
+					renameFileName += "." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+
+					File originFile = new File(savePath + "\\" + originFileName);
+					File renameFile = new File(savePath + "\\" + renameFileName);
+
+					if (!originFile.renameTo(renameFile)) {
+						FileInputStream fin = new FileInputStream(originFile);
+						FileOutputStream fout = new FileOutputStream(renameFile);
+
+						int data = -1;
+						byte[] buffer = new byte[1024];
+
+						while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
+							fout.write(buffer, 0, buffer.length);
+						}
+
+						fin.close();
+						fout.close();
+						originFile.delete();
+					}
+					tutor.setPic(renameFileName);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					model.addAttribute("message", "ì „ì†¡íŒŒì¼ ì €ì¥ ì‹¤íŒ¨");
+					return "common/error";
+				}
+			} // ì—…ë¡œë“œëœ íŒŒì¼ ìˆìŒ
+				// tutor.setOriginal_filename(originFileName);
+		} // ì²¨ë¶€ íŒŒì¼ ìˆìŒ
+
+		logger.info("upsprofile.do : " + tutor);
+
+		if((mypageService.insertTutor(tutor) & mypageService.updateTutorPosition(tutor.getUser_no()))>0) {
+			PrintWriter out = response.getWriter();
+			String str = "";
+			str = "<script language='javascript'>";
+			str += "opener.window.location.reload();"; // ì˜¤í”„ë„ˆ ìƒˆë¡œê³ ì¹¨
+			str += "self.close();"; // ì°½ë‹«ê¸°
+			str += "</script>";
+			out.print(str);
+			return null;
+		}else {
+			model.addAttribute("message", "í•™ìƒ í”„ë¡œí•„ ì¶”ê°€ ì‹¤íŒ¨...");
+			return "common/error";
+		}
+	}
+
+	// ì°œëª©ë¡ ì¡°íšŒ
+	@RequestMapping("wishl.do")
+	public String moveWishList(@RequestParam("user_no") int user_no, Model model) {
+		//logger.info("wishl.do user_no : "+user_no);
+		ArrayList<Likes> list = mypageService.selectLikesList(user_no);
+		if(mypageService.selectPosition(user_no).equals("T")) {
+			Tutor tutor = mypageService.selectTutor(user_no);
+			model.addAttribute("tutor", tutor);
+		}else if(mypageService.selectPosition(user_no).equals("S")) {
+			Student student = mypageService.selectStudent(user_no);
+			model.addAttribute("student", student);
+		}
+		if (list.size() > 0) {
+			logger.info("wishList : " + list.toString());
+			model.addAttribute("list", list);
+		}
+		return "mypage/wishList";
+	}
+	
+	// ì°œ ëª©ë¡ ì‚­ì œ 
+	@RequestMapping("delwlist.do")
+	public String deleteWishList(@RequestParam("chk") String checkedList, Likes likes) {
+		//logger.info("delwlist.do : "+checkedList);
+		//logger.info("delwlist.do likes : "+likes.toString());
+		
+		String[] array = checkedList.split(",");
+	    for(int i=0 ;i<array.length; i++) {
+	    	//logger.info(array[i]);
+	    	likes.setTutor_no(Integer.parseInt(array[i]));
+	    	if(mypageService.deleteLikes(likes)>0) {
+	    		//logger.info("delwlist.do delete["+i+"] : "+array[i]);
+	    	}
+	    }
+		
+		return "redirect:wishl.do?user_no="+likes.getStudent_no();
+	}
+
+	// ì±„íŒ… ëª©ë¡ ì¡°íšŒ
+	@RequestMapping("clist.do")
+	public String moveChattingList(@RequestParam("user_no") int user_no, ModelAndView mv) {
+		return "redirect:selectChattingList.do?user_no=" + user_no;
+	}
+	
+	// ë‚´ ìˆ˜ì—… ëª©ë¡ ì¡°íšŒ
+	@RequestMapping("mclass.do")
+	public String moveMyClass(@RequestParam("user_no") int user_no, Model model) {
+		logger.info("mclass.do");
+		ArrayList<MyClass> list = mypageService.selectMyclassList(user_no);
+		if(mypageService.selectPosition(user_no).equals("T")) {
+			Tutor tutor = mypageService.selectTutor(user_no);
+			model.addAttribute("tutor", tutor);
+		}else if(mypageService.selectPosition(user_no).equals("S")) {
+			Student student = mypageService.selectStudent(user_no);
+			model.addAttribute("student", student);
+		}		
+		
+		if(list.size()>0) {
+			logger.info("myclassList : "+list.toString());
+			model.addAttribute("list", list);
+		}
+		return "mypage/myClass";
+	}
+	
+	// ìˆ˜ì •í˜ì´ì§€ë¡œ ì´ë™
+	@RequestMapping("upUserPage.do")
+	public ModelAndView moveUpdateUserView(@RequestParam("user_id") String user_id, ModelAndView mv) {
+		Member member = mypageService.selectUser(user_id);
+		Student student = mypageService.selectStudent(member.getUser_no());
+		Tutor tutor = mypageService.selectTutor(member.getUser_no());
+		//ArrayList<Subject> subjectList = 
+		
+		List<Subject> subjectList = mypageService.selectSubjectList();
+		//logger.info(subjectList.toString());
+		
+		
+		if(member != null && (student != null || tutor != null)) {
+			mv.addObject("member", member);
+			mv.addObject("subjectList", subjectList);
+			if(member.getUser_position().equals("S")) {
+				mv.addObject("student", student);
+			}else if(member.getUser_position().equals("T")) {
+				String str = tutor.getTime();
+				String[] array = str.split(",");
+				String stime = array[0];
+				String etime = array[1];
+				//logger.info("upUserPage.do : stime, etime "+stime+", "+etime);
+				mv.addObject("stime", stime);
+				mv.addObject("etime", etime);
+				mv.addObject("tutor", tutor);
+			}
+			mv.setViewName("mypage/updateProfile");
+		}else if(member != null && (student == null && tutor == null)){
+			mv.addObject("member", member);
+			mv.setViewName("mypage/updateProfile");
+		}else {
+			mv.addObject("message", member.getUser_id() + "ë‹˜ íšŒì› ì •ë³´ ìˆ˜ì •í˜ì´ì§€ë¡œ ì´ë™ ì‹¤íŒ¨..");
+			mv.setViewName("common/error");
+		}
+		return mv;
+	}
+	
+	// ìˆ˜ì •í•˜ê¸°
+	@RequestMapping(value = "upUser.do", method = RequestMethod.POST)
+	public String updateUser(Member member, Student student, Tutor tutor, SubData subdata, Model model,
+			@RequestParam("origin_userpwd") String originUserpwd, @RequestParam("stime") String stime, @RequestParam("etime") String etime,
+			@RequestParam("city") String city, @RequestParam("country") String country,
+			@RequestParam("sub_no") String arr_sub_no) throws IOException {
+		logger.info("upUser.do - member : " + member);
+		logger.info("upUser.do - student : " + student);
+		logger.info("upUser.do - tutor : " + tutor);
+//		logger.info("opwd : " + originUserpwd);
+//		logger.info("stime : "+stime);
+//		logger.info("etime : "+etime);
+//		logger.info("city : "+city);
+//		logger.info("country : "+country);
+//		logger.info("sub_no : "+arr_sub_no);
+		
+		tutor.setTime(stime+", "+etime);
+		tutor.setArea(city+" "+country);
+		
+		String []array = arr_sub_no.split(",");
+		String sub_name="";
+		// ê³¼ëª©ë²ˆí˜¸ subdataì— ì €ì¥, tutor í…Œì´ë¸” subname 
+		if (mypageService.deleteSubData(member.getUser_no()) > 0) {
+			logger.info("upUser.do : deleteSubData");
+		}
+		for (int i = 0; i < array.length; i++) {
+			logger.info("array[" + i + "] : " + array[i]);
+			int sub_no = Integer.parseInt(array[i]);
+			subdata.setSub_no(sub_no);
+			if (mypageService.insertSubData(subdata) > 0) {
+				if (i == 0) {
+					sub_name += mypageService.selectSubName(sub_no);
+				} else {
+					sub_name += (", " + mypageService.selectSubName(sub_no));
+				}
+			}
+		}
+		
+		tutor.setSub_name(sub_name);
+		
+		logger.info("uptprofile.do : "+tutor);
+
+		// ìƒˆë¡œìš´ ì•”í˜¸ê°€ ì „ì†¡ì´ ì™”ë‹¤ë©´
+		String user_pwd = member.getUser_pwd().trim();
+		if (user_pwd != null && user_pwd.length() > 0) {
+			// ê¸°ì¡´ ì•”í˜¸ì™€ ë‹¤ë¥¸ ê°’ì´ë©´ ì•”í˜¸í™” ì²˜ë¦¬ë¥¼ í•´ë¼
+			if (!bcryptPasswordEncoder.matches(user_pwd, originUserpwd)) {
+				member.setUser_pwd(bcryptPasswordEncoder.encode(user_pwd));
+			}
+		} else {
+			// ìƒˆë¡œìš´ ì•”í˜¸ê°’ì´ ì „ì†¡ì˜¤ì§€ ì•Šì•˜ë‹¤ë©´ ì›ë˜ ì•”í˜¸ë¥¼ ê¸°ë¡
+			member.setUser_pwd(originUserpwd);
+		}
+		
+		member.setUser_position(mypageService.selectPosition(member.getUser_no()));
+		logger.info("after : " + member);
+		
+		if(member.getUser_position().equals("U") && mypageService.updateMember(member)>0) {
+			logger.info("upUser.do : updateUser \nmember : "+member);
+			return "redirect:myPage.do?user_id=" + member.getUser_id();
+		}else if(member.getUser_position().equals("S") && mypageService.updateStudent(student)>0) {
+			logger.info("upUser.do : updateStudent \nstudent : "+student);
+			return "redirect:myPage.do?user_id=" + member.getUser_id();
+		}else if(member.getUser_position().equals("T") && mypageService.updateTutor(tutor)>0) {
+			logger.info("upUser.do : updateTutor \ntutor : "+tutor);
+			return "redirect:myPage.do?user_id=" + member.getUser_id();
+		} else {
+			model.addAttribute("message", member.getUser_id() + "íšŒì›ì •ë³´ ìˆ˜ì • ì‹¤íŒ¨..");
+			return "common/error";
+		}
+	}
+
+	// ì±„íŒ… ëª©ë¡ ì¡°íšŒ ì»¨íŠ¸ë¡¤ëŸ¬
+	@RequestMapping("selectChattingList.do")
+	public String selectChattingList(Model model, @RequestParam("user_no") int user_no) {
+		ArrayList<UserChattingroomTutor> userchattingroomtutor = mypageService.selectChattingStudentList(user_no);
+		ArrayList<UserChattingroomStudent> userchattingroomstudent = mypageService.selectChattingTutorList(user_no);
+		
+		if (userchattingroomtutor.size() > 0) {
+			model.addAttribute("userchattingroomtutor", userchattingroomtutor);
+			return "mypage/chattingList";
+		} else if(userchattingroomstudent.size() > 0) {
+			model.addAttribute("userchattingroomstudent", userchattingroomstudent);
+			return "mypage/chattingList";
+		} else {
+			model.addAttribute("message", "ë“±ë¡ëœ ì±„íŒ…ëª©ë¡ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
+			return "common/error";
+		}
+	}
+}
