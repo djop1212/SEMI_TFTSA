@@ -9,7 +9,9 @@
 	</settings>
 	
 	<typeAliases>
+
 	<!-- mapper 에서 사용할 vo 클래스 등록과 줄임말 지정 (선택) -->
+
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.Chattingroom" alias="Chattingroom" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.Chatting" alias="Chatting" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserChattingStudent" alias="UserChattingStudent" />
@@ -38,6 +40,7 @@
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
+
 		
 		<typeAlias type="com.tftsa.itys.search.vo.Keyword" alias="Keyword" />
 		<typeAlias type="com.tftsa.itys.search.vo.Search" alias="Search" />
@@ -63,7 +66,7 @@
     <mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
-    <mapper resource="mappers/board-mapper.xml" />
+    	<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/reply-mapper.xml" />
 		<mapper resource="mappers/top10-mapper.xml" />
 		<mapper resource="mappers/subject-mapper.xml" />
