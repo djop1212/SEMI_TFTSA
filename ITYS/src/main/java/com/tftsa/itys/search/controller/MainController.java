@@ -41,37 +41,6 @@ public class MainController {
 	
 	@RequestMapping("top10.do")
 	public ModelAndView top10(ModelAndView mv){
-		/*
-		 * int currentPage = 1; if(page != null) { currentPage = Integer.parseInt(page);
-		 * 
-		 * }
-		 * 
-		 * //�럹�씠吏� 泥섎━ int limit = 10;
-		 * 
-		 * int listCount = boardService.selectListCount();
-		 * 
-		 * int maxPage = (int)((double)listCount/limit + 0.9);
-		 * 
-		 * int startPage = (int)((double)currentPage / 10 +0.9);
-		 * 
-		 * int endPage = startPage + 10 -1;
-		 * 
-		 * if(maxPage < endPage) { endPage = maxPage; }
-		 * 
-		 * 
-		 * int startRow = (currentPage-1) *limit +1; int endRow = startRow + limit -1;
-		 * Paging paging = new Paging(startRow, endRow);
-		 * 
-		 * ArrayList<Board> list = boardService.selectList(paging);
-		 * 
-		 * if(list != null && list.size() > 0) { mv.addObject("list", list);
-		 * mv.addObject("listCount", listCount); mv.addObject("maxPage", maxPage);
-		 * mv.addObject("currentPage", currentPage); mv.addObject("startPage",
-		 * startPage); mv.addObject("endPage", endPage); mv.addObject("limit", limit);
-		 * 
-		 * mv.setViewName("board/boardListView"); }else { mv.addObject("message",
-		 * currentPage+"�럹�씠吏� 紐⑸줉 議고쉶 �떎�뙣."); mv.setViewName("common/error"); }
-		 */
 		
 		ArrayList<Tutor> tutorList = searchService.selectTop10();
 		ArrayList<Subject> categoryList = searchService.selectCategory();
@@ -319,13 +288,13 @@ public class MainController {
 			detailSearch.setKeyword_list(keyword_list);
 			
 			for(int z = 0 ; z < l_grd_list.length ; z++) {
-				System.out.println("l_grd_list : "+l_grd_list[z]);
+				System.out.println("l_grd_list : " + l_grd_list[z]);
 			}
 			for(int z = 0 ; z < keyword_list.length ; z++) {
-				System.out.println("keyword_list : "+keyword_list[z]);
+				System.out.println("keyword_list : " + keyword_list[z]);
 			}
 			for(int z = 0 ; z < db_day_list.length ; z++) {
-				System.out.println("db_day_list : "+db_day_list[z]);
+				System.out.println("db_day_list : " + db_day_list[z]);
 			}
 			
 			detailSearch.setDb_day_list(db_day_list);

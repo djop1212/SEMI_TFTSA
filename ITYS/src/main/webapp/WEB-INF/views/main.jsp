@@ -9,6 +9,7 @@
 <html>
 <head>
 <title>과외찾기</title>
+
 <script type="text/javascript"
 	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js">
 </script>
@@ -18,22 +19,82 @@
 
 <style type="text/css">
 
+*{
+	font-family: "Malgun Gothic",gulim,dotum,sans-serif;
+}
+
+#detailOption_wrapper{
+	border : 1px solid gray;
+	border-radius: 20px;
+	background-color: #F4F4F4;
+}
+input[type=checkbox]{ 
+	display: none;
+}
+
+.doSearchBtn{
+    overflow: hidden;
+    padding: 0;
+    width: 104px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    height: 35px;
+    background: #3EA586;
+}
+
+.searchBtn{
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    height: 40px;
+    border-radius: 0 8px 8px 0;
+    color: #fff;
+    font-weight: normal;
+    text-align: center;
+    text-indent: 0;
+    background: #3C9376;
+}
+
+.doBtnSearch {
+    padding-left: 52px;
+    width: 70%;
+    height: 40px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 40px;
+}
+
+.inpSel select {
+    padding: 0 29px 1px 11px;
+    width: 100%;
+    height: 30px;
+    border: none;
+    box-sizing: border-box;
+    color: #444;
+    font-size: 13px;
+    letter-spacing: -1px;
+    line-height: 29px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .container {
 	display: flex;
 }
 
 .detailOption_box {
-    margin: 32px 0 24px;
+    margin: 0;
     /* position: static; */
-    margin-top: 24px;
+    margin-top: 20px;
     padding: 0 20px;
 }
 
 .searchBox {
 	margin: 0 auto;
 }
-
 
 
 ol, ul, li {
@@ -60,27 +121,26 @@ ol, ul, li {
     margin-right: 8px;
     margin-bottom: 8px;
 }
-
-
-
-
-/* .sri_check{
+.sri_check{
 	padding: 0 15px;
     height: 32px;
-    border: 1px solid #dedede;
+    border: 2px solid #dedede;
     border-radius: 20px;
     line-height: 29px;
     background: #fff;
     box-sizing: border-box;
-} */
-
-/* .inp_check{
-    clip: rect(1px, 1px, 1px, 1px);
-    position: absolute;
-    width: 1px;
-    height: 1px;
+    
+    -ms-user-select: none; 
+  	-moz-user-select: -moz-none;
+ 	-khtml-user-select: none;
+ 	-webkit-user-select: none;
+  	user-select: none;
+  	
+  	cursor:pointer
 }
- */
+
+
+
 .txt_check{
 	display: inline-block;
     padding: 0;
@@ -92,10 +152,10 @@ ol, ul, li {
 }
 
 
-.sri_check .on{
-   	border-color: #4876ef !important;
+.on{
+   	border-color: #5AE291 !important;
     color: #fff !important;
-    background-color: #4876ef !important;
+    background-color: #89E5AF !important;
 }
 
 .list_container{
@@ -123,7 +183,6 @@ ol, ul, li {
 <script type="text/javascript">
 
 function searchSend(){
-	
 	
 	
 	var l_grd_list = [];
@@ -173,7 +232,6 @@ function searchSend(){
 		
 			var day = $(this).val(); 
 			day_list.push(day);
-			
 		});
 		
 		if(day_list == ""){
@@ -294,16 +352,6 @@ $(function() {
 		'maxTime':'23:30'
 	});//etime 시간 기본 설정
 
-	
-	/* $("#detailOption_price_min" ).bind('keydown', function(e){
-		var rgx1 = /\D/g;	//문자를 잡아냄
-		var rgx2 = /(\d+)(\d{3})/;	//숫자가 하나 이상,세개 이상?
-		var num = this.value.replace(rgx1,"");
-		
-		while (rgx2.test(num)) num = num.replace(rgx2, '$1' + ',' + '$2');
-		this.value = num;
-	}); */
-	
 	$("#detailOption_education-1").on("click", function(){
 		if( $("#detailOption_education-1").prop("checked") ){
 			$(".edu").prop("checked", true);
@@ -333,12 +381,27 @@ $(function() {
 	$("#doBtn").click(function() {
 		$("#detailOption_wrapper").toggle();
 		
+		if( !($("#detailOption_wrapper").is(":hidden")) ){
 
+			$("#detailOption_wrapper").attr('style', 'width : 100%');
+			$("#detailOption_wrapper").attr('style', 'text-align : center');
+			$("#detailOption_wrapper").attr('style', 'float : left');
+		}
 	});
 	
-	$('.inp_check').click( function() {
-        $('.sri_check').toggleClass("on");
-	});
+	/* $('.inp_check').click( function() {
+        var i = $("input[name:'l_grd']").prop('checked',true);
+        i.toggleClass("on");
+	}); */
+
+	$(".inp_check").change(function(){
+        if($(".inp_check").is(":checked")){
+        	$(this).parent().addClass("on");
+        }else{
+
+        	$(this).parent().removeClass("on");
+        }
+    });
 	
 	$("#category").on('change', function(){
 		var category = $("#category option:selected").val();
@@ -383,7 +446,7 @@ $(function(){
 });
 
 var areaSelectMaker = function(target){
-    if(target == null || $(target).length == 0){
+    if(target == null || $(target).length == 0) {
         console.warn("Unkwon Area Tag");
         return;
     }
@@ -452,6 +515,7 @@ var areaSelectMaker = function(target){
                 var Region = a1.val();
                 var Do = $(this).val();
                 var keys = Object.keys(area[Region][Do]);
+                
                 keys.forEach(function(SiGunGu){
                     a3.append("<option value="+area[Region][Do][SiGunGu]+">"+area[Region][Do][SiGunGu]+"</option>");    
                 });
@@ -465,29 +529,37 @@ var areaSelectMaker = function(target){
         }
     }
 }
-</script>
-<body>
 
-	<c:import url="/WEB-INF/views/common/menubar.jsp" />
+
+</script>
+<body class="sub_page">
+
+	<div class="hero_area">
+
+		<c:import url="/WEB-INF/views/common/menubar.jsp" />
+
+	</div>
 	
 	<div class="container">
 		<div class="searchBox">
-			<div>
+			<div class="inpSel">
 				
-				<form name = "searchInfo" method="post" accept-charset="UTF-8">
-					<select name= "category" id="category">
+				<form name = "searchInfo" method="post" accept-charset="UTF-8"  style= "text-align : center;">
+					<div  style= "text-align : center; margin : 20px;">
+					<select name= "category" id="category" style = "width : 150px; display : inline-block; ">
 						<option>전체</option>
 						<c:forEach items="${ requestScope.categoryList }" var="c">
 							<option value="${ c.category }">${ c.category }</option>
 						</c:forEach>
 						
 					</select> 
-					<select name="sub_name" id="subject">
+					<select name="sub_name" id="subject" style = "width : 100px; display : inline-block; ">
 						<option>전체</option>
-					</select> 
-					<input name= "word" id = "searchWord" type="text" placeholder="검색어를 입력해주세요." />
+					</select>
+					<input style="width : 300px;" name= "word" class = "doBtnSearch" id = "searchWord" type="text" placeholder="검색어를 입력해주세요."/>
 					
-					<input type = "button" onclick = "searchSend()" value="검색">
+					<input  style="width : 100px;" type ="button" onclick = "searchSend()" value="검색" class="searchBtn">
+					</div>
 					<!--<button value="검색" id="search" onclick="searchSend()">검색</button> -->
 					
 					
@@ -495,23 +567,22 @@ var areaSelectMaker = function(target){
 
 			</div>
 
-
-			<div class="doBtnBox">
-				<button value="상세옵션" id="doBtn" style="width: 100%;">상세옵션</button>
+			<div class="doBtnBox" style="text-align : center;">
+				<button class="doSearchBtn" value="상세옵션" id="doBtn" style="width: 505px; position : relative; top : 15px;">상세옵션</button>
 			</div>
 
 			<div id="detailOption_wrapper" style="display: none;">
 			
-				<div class="detailOption_box">
-					<h2 class="option_title">학력</h2>
-					<ul class="option_check">
+				<div class="detailOption_box" style= "width : 100%; display : inline-block; margin-top: 42px;">
+					<h2 class="option_title" style="display : inline-block;">학력</h2>
+					<ul class="option_check" style="display : inline-block;">
 						<li><label class="sri_check" for="detailOption_education-1">
 								<input  type="checkbox" id="detailOption_education-1"
 								class="inp_check"> <span class="txt_check">상관없음</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-2">
 								<input name = "l_grd" type="checkbox" id="detailOption_education-2"
-								class="inp_check edu"  value="고등학교 졸업"> <span class="txt_check">고등학교 졸업</span>
+								class="inp_check edu"  value="고등학교 졸업" > <span class="txt_check">고등학교 졸업</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-3">
 								<input name = "l_grd" type="checkbox" id="detailOption_education-3"
@@ -533,20 +604,22 @@ var areaSelectMaker = function(target){
 
 
 				</div>
-				<div class="detailOption_box">
+				<hr>
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
 				<h2 class="option_title">지역</h2>
 					<ul class="option_check">
 						<li>
 							<label class="sri_check" for="">
-								<select name="addressRegion" id="addressRegion1"></select> 
-								<select name="addressDo" id="addressDo1"></select> 
-								<select name="addressSiGunGu" id="addressSiGunGu1"></select>
+								<select name="addressRegion" id="addressRegion1" style= "border : none;"></select> 
+								<select name="addressDo" id="addressDo1" style= "border : none;"></select> 
+								<select name="addressSiGunGu" id="addressSiGunGu1" style= "border : none;"></select>
 							</label>
 						</li>
 					</ul>
 				</div>
+				<hr>
 
-				<div class="detailOption_box">
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
 					<h2 class="option_title">키워드</h2>
 					<ul class="option_check">
 					
@@ -566,8 +639,9 @@ var areaSelectMaker = function(target){
 						</c:forEach>
 					</ul>
 				</div>
+				<hr>
 				
-				<div class="detailOption_box">
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
 					<h2 class="option_title">요일선택</h2>
 					<ul class="option_check">
 						<li><label class="sri_check" for="detailOption_week_all">
@@ -613,15 +687,17 @@ var areaSelectMaker = function(target){
 
 				</div>
 				
-				<div class="detailOption_box">
+				<hr>
+				
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
 					<h2 class="option_title">시간선택</h2>
 					
 					<ul class="option_check">
 						<li>
 							<div class="input-a margin-t-10">
-							<input type="text" id="stime" name="stime" value="" class="timePicker" placeholder="00:00">
+							<input type="text" id="stime" name="stime" value="" class="timePicker sri_check" placeholder="00:00">
 							~
-							<input type="text" id="etime" name="etime" value="" class="timePicker" placeholder="24:00">
+							<input type="text" id="etime" name="etime" value="" class="timePicker sri_check" placeholder="24:00">
 							</div>
 
 						</li>
@@ -629,18 +705,17 @@ var areaSelectMaker = function(target){
 
 
 				</div>
-				
-				<div class="detailOption_box">
+				<hr>
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
 					<h2 class="option_title">희망금액</h2>
 					
 					<ul class="option_check">
 						<li><label class="sri_check" for="detailOption_price_min">
 								<input type="text" id="detailOption_price_min"
-								class="inp_check"> <span class="txt_check"> </span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_price_max">
+								class="inp_check" style="height : 100%; border : none;"> <span class="txt_check"> </span>
+						</label> ~ <label class="sri_check" for="detailOption_price_max">
 								<input type="text" id="detailOption_price_max"
-								class="inp_check"> <span class="txt_check"> </span>
+								class="inp_check" style="height : 100%; border : none;"> <span class="txt_check"> </span>
 						</label></li>
 					</ul>
 
@@ -674,12 +749,19 @@ var areaSelectMaker = function(target){
 				<c:otherwise>
 					<c:forEach items="${ requestScope.tutorList }" var="t">
 						<li>
+						<a href="#">
 							<div class="list_container">
 								<div class="img_box">리스트1 이미지</div>
 								<div class="detail_info">
-									<h2>${ t.intro }</h2>
+									<h2>${ t.intro } |  ${ t.sub_name  }</h2>
+									<span class="tab">금액 : ${ t.min_pay }</span>
+									<span class="tab">지역 : ${ t.area }</span><br>
+									<span class="tab">요일 : ${ t.day }</span>
+									<span class="tab">시간 : ${ t.time }</span>
+									<span class="tab">스타일 : ${ t.style }</span>
 								</div>
 							</div>
+						</a>
 						</li>
 					</c:forEach>
 				</c:otherwise>
