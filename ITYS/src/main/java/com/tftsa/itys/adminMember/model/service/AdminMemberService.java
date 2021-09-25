@@ -10,5 +10,5 @@ public interface AdminMemberService {
 //	ArrayList<Member> selectLoggedInUser();
 	ArrayList<Member> selectAllStudents();
 	ArrayList<Member> selectAllTutors();
-//	int deleteMember(int mid);
+	int deleteMember(String mid);
 }

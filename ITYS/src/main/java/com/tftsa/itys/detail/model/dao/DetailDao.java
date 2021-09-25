@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.tftsa.itys.detail.model.vo.Detail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-import com.tftsa.itys.detail.model.vo.ReviewDetail;
+
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Repository("detailDao")
@@ -32,9 +32,7 @@ public class DetailDao {
 	}
 
 
-	public TutorDetail tutorProfile(int user_no) {
-		return sqlSession.selectOne("detailMapper.tutorProfile", user_no);
-	}
+
 
 
 	public ArrayList<TutorDetail> tutorPer(int user_no) {
@@ -93,6 +91,14 @@ public class DetailDao {
 
 	public int tutorSaveCancel(TutorLikes tlikes) {
 		return sqlSession.delete("detailMapper.tutorSaveCancel", tlikes);
+	}
+
+	public TutorLikes tutorSave(int student_no) {
+		return sqlSession.selectOne("detailMapper.tutorSave", student_no);
+	}
+
+	public Detail reviewPay(int student_no) {
+		return sqlSession.selectOne("detailMapper.reviewPay", student_no);
 	}
 
 	

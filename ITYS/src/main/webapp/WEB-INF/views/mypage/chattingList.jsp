@@ -143,8 +143,8 @@ img{
 						<div>
 							<ul id="wlist">
 								<li>
-								<c:if test="${ requestScope.userchattingroomtutor1 != null }">
-								<c:forEach items="${ requestScope.userchattingroomtutor1 }" var="ucrt">
+								<c:if test="${ requestScope.userchattingroomtutor != null }">
+								<c:forEach items="${ requestScope.userchattingroomtutor }" var="ucrt">
 								<table>
 									<tr>
 									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }'">
@@ -159,16 +159,16 @@ img{
 								</table><hr>
 								</c:forEach>
 								</c:if>
-								<c:if test="${ requestScope.userchattingroomtutor2 != null }">
-								<c:forEach items="${ requestScope.userchattingroomtutor2 }" var="ucrt">
+								<c:if test="${ requestScope.userchattingroomstudent != null }">
+								<c:forEach items="${ requestScope.userchattingroomstudent }" var="ucrt">
 								<table>
 									<tr>
 									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }'">
-										선생님이름 : ${ ucrt.tutor_name }<br>	
-										과외 한 줄 소개 : ${ ucrt.intro }<br>
-										전화번호 : ${ ucrt.user_phone }<br>
-										과목 : ${ ucrt.sub_name }<br>
-										지역 : ${ ucrt.area }<Br>
+										학생이름 : ${ ucrt.student_name }<br>	
+										학년 : ${ ucrt.stu_job }<br>
+										과외 가능 요일 : ${ ucrt.day }<br>
+										과외 가능 시간 : ${ ucrt.time }<br>
+										바라는 점 : ${ ucrt.stu_wish }<Br>
 									</td>
 									<td style="align: right;"><input type="checkbox"></td>
 									</tr>

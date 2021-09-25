@@ -56,34 +56,13 @@ public class HomeController {
 		return "common/contact"; // 내보낼 뷰파일명 리턴
 	}
 	
-//	@RequestMapping("event.do")
-//	public String eventViewForward() {
-//		return "common/event"; // 내보낼 뷰파일명 리턴
-//	}
-	
-	@RequestMapping("info.do")
-	public String infoViewForward() {
-		return "common/info"; // 내보낼 뷰파일명 리턴
+	@RequestMapping("event.do")
+	public String eventViewForward() {
+		return "common/event"; // 내보낼 뷰파일명 리턴
 	}
 	
 	@RequestMapping("login.do")
 	public String loginViewForward() {
 		return "common/login"; // 내보낼 뷰파일명 리턴
 	}
-
-	@RequestMapping("adminDashboard.do")
-	public String AdminDashViewForward() {
-		return "admin/adminDashboard"; // 내보낼 뷰파일명 리턴
-	}
-
-	@RequestMapping("adminDeposit.do")
-	public String AdminDepositViewForward() {
-		return "admin/adminDeposit"; // 내보낼 뷰파일명 리턴
-	}
-	
-	@RequestMapping("adminChatting.do")
-	public String AdminChattingViewForward() {
-		return "admin/adminChatting"; // 내보낼 뷰파일명 리턴
-	}
-	
 }

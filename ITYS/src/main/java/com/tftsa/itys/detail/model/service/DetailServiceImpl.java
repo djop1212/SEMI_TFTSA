@@ -9,7 +9,7 @@ import com.tftsa.itys.detail.model.dao.DetailDao;
 import com.tftsa.itys.detail.model.vo.Detail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-import com.tftsa.itys.detail.model.vo.ReviewDetail;
+
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Service("detailService")
@@ -86,5 +86,12 @@ public class DetailServiceImpl implements DetailService{
 		 return detailDao.tutorPic(user_no);
 	 }
 	
-
+	 @Override
+	 public TutorLikes tutorSave(int student_no){
+		 return detailDao.tutorSave(student_no);
+	 }
+	 @Override
+	 public Detail reviewPay(int student_no){
+		 return detailDao.reviewPay(student_no);
+	 }
 }

@@ -13,6 +13,7 @@ import com.tftsa.itys.mypage.model.vo.MyKeyword;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomStudent;
 import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 
 public interface MypageService {
@@ -41,4 +42,6 @@ public interface MypageService {
 	int insertKeyData(MyKeyData keydata);
 	String selectTypePer(int key_no);
 	int deleteKeyData(int user_no);
+	ArrayList<UserChattingroomStudent> selectChattingTutorList(int user_no);
+
 }

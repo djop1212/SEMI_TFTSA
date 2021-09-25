@@ -15,6 +15,7 @@
   <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
+  <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -38,16 +39,17 @@
               <li class="breadcrumb-item active" aria-current="page">입금관리</li>
             </ol>
           </div>
-
+          
+          <!-- Row -->
           <div class="row">
-            <div class="col-lg-12 mb-4">
-              <!-- Simple Tables -->
-              <div class="card">
+            <!-- Datatables -->
+            <div class="col-lg-12">
+              <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">입금관리</h6>
                 </div>
-                <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
+                <div class="table-responsive p-3">
+                  <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
                         <th>학생</th>
@@ -58,6 +60,16 @@
                         <th>금액</th>
                       </tr>
                     </thead>
+                    <tfoot>
+                      <tr>
+                        <th>학생</th>
+                        <th>선생님</th>
+                        <th>날짜</th>
+                        <th>결제방법</th>
+                        <th>상태</th>
+                        <th>금액</th>
+                      </tr>
+                    </tfoot>
                     <tbody>
                       <c:forEach items="${ requestScope.list }" var="adp">
                       <tr>
@@ -65,7 +77,18 @@
                         <td>${ adp.tutor_name }</td>
                         <td>${ adp.pay_datetm }</td>
                         <td>${ adp.pay_method }</td>
+                        <c:if test="${ adp.pay_status == 'COMPLETE' }">
                         <td><span class="badge badge-success">${ adp.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ adp.pay_status == 'WAITING' }">
+                        <td><span class="badge badge-info">${ adp.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ adp.pay_status == 'RETURN' }">
+                        <td><span class="badge badge-warning">${ adp.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ adp.pay_status == 'CANCEL' }">
+                        <td><span class="badge badge-danger">${ adp.pay_status }</span></td>
+                        </c:if>
                         <td><span class="btn btn-sm btn-primary">${ adp.pay_amount }</span></td>
                         <!-- warning, danger, info -->
                       </tr>
@@ -73,7 +96,6 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="card-footer"></div>
               </div>
             </div>
           </div>
@@ -104,6 +126,22 @@
         </div>
         <!---Container Fluid-->
       </div>
+      
+      <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+	  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	  <script src="${ pageContext.servletContext.contextPath }/admin_resources/js/ruang-admin.min.js"></script>
+	  <!-- Page level plugins -->
+	  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/jquery.dataTables.min.js"></script>
+	  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+      
+      <!-- Page level custom scripts -->
+	  <script>
+	    $(document).ready(function () {
+	      $('#dataTable').DataTable(); // ID From dataTable 
+	      $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+	    });
+	  </script>
       
 	<c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 

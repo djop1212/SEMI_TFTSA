@@ -17,6 +17,7 @@ import com.tftsa.itys.mypage.model.vo.MyKeyword;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.mypage.model.vo.UserChattingroomStudent;
 import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 
 @Service("mypageService")
@@ -111,16 +112,17 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-  public int deleteLikes(Likes likes) {
+	public int deleteLikes(Likes likes) {
 		return mypageDao.deleteLikes(likes);
 	}
 
+	@Override
 	public ArrayList<UserChattingroomTutor> selectChattingStudentList(int user_no) {
 		return mypageDao.selectChattingStudentList(user_no);
 	}
-
+	
 	@Override
-	public ArrayList<UserChattingroomTutor> selectChattingTutorList(int user_no) {
+	public ArrayList<UserChattingroomStudent> selectChattingTutorList(int user_no) {
 		return mypageDao.selectChattingTutorList(user_no);
 	}
 
