@@ -229,10 +229,15 @@ function deleteuser(){
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do?user_id=${loginMember.user_id }" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
-								<li><a href="">채팅목록</a></li>
+								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
+								<c:if test="${loginMember.user_position eq 'S' }">
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
 								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
-								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
+								</c:if>
+								<c:if test="${loginMember.user_position eq 'T' }">
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
+								</c:if>
+								<li><a href="mclass.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
 							</ul>
 						</div>
 			            <br><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">회원탈퇴</a>
@@ -378,6 +383,12 @@ function deleteuser(){
 										<c:if test="${ subject.sub_no eq 18}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 29}">${subject.category }<br></c:if>
 										<c:if test="${ subject.sub_no eq 42}">${subject.category }<br></c:if>
+										<c:if test="${ subject.sub_no eq 4}"><br></c:if>
+										<c:if test="${ subject.sub_no eq 15}"><br></c:if>
+										<c:if test="${ subject.sub_no eq 22}"><br></c:if>
+										<c:if test="${ subject.sub_no eq 33}"><br></c:if>
+										<c:if test="${ subject.sub_no eq 38}"><br></c:if>
+										<c:if test="${ subject.sub_no eq 47}"><br></c:if>
 											<input type="checkbox" name="sub_no" value="${subject.sub_no }"
 													<c:forTokens items="${tutor.sub_name }" delims=", " var="subject_name">
 													<c:if test="${subject.sub_name eq subject_name }">
@@ -555,6 +566,24 @@ function deleteuser(){
 								<Tr>
 									<td>과외 스타일</td>
 									<td><textarea name="style" rows="3" cols="40">${tutor.style }</textarea></td>
+								</Tr>
+								<Tr>
+									<td>성격</td>
+									<td>
+									<c:forEach items="${requestScope.keyList }" var="keyword">
+										<input type="checkbox" name="key_no" value="${keyword.key_no }"
+												<c:forTokens items="${tutor.key_name }" delims=", " var="keyword_name">
+													<c:if test="${keyword.type_per eq keyword_name }">
+													checked
+													</c:if>
+													</c:forTokens>
+												>${keyword.type_per }&nbsp;
+										<c:if test="${ keyword.key_no eq 6}"><br></c:if>
+										<c:if test="${ keyword.key_no eq 12}"><br></c:if>
+										<c:if test="${keyword.key_no eq 17 }"><br></c:if>
+										
+									</c:forEach>
+									</td>
 								</Tr>
 							</c:if>
 							</table>

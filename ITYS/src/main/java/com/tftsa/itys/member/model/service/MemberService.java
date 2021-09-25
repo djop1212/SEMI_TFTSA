@@ -7,7 +7,6 @@ import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 
 public interface MemberService {
-
 	int insertUser(Member member);
 	int deleteUser(String user_id);
 	Member selectUser(String user_id);

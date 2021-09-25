@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
@@ -32,6 +31,8 @@
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Subject" alias="Subject"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyClass" alias="MyClass"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.UserChattingroomTutor" alias="UserChattingroomTutor"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyKeyword" alias="MyKeyword"/>
+ 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyKeyData" alias="MyKeyData"/>
  		
  		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>

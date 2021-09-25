@@ -1,9 +1,12 @@
 package com.tftsa.itys.member.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.tftsa.itys.member.model.service.MemberService;
 import com.tftsa.itys.member.model.vo.Member;
+import com.tftsa.itys.member.model.vo.NaverLoginBO;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 
@@ -33,6 +38,89 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	
+	@Autowired
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }
+  
+  //네이버 로그인 성공시 callback호출 메소드
+    @RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+            throws IOException, ParseException {
+        logger.info("callback.do");
+        OAuth2AccessToken oauthToken;
+        logger.info("session : "+session);
+        logger.info("code : "+code);
+        logger.info("state : "+state);
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+        logger.info(apiResult.toString());
+        model.addAttribute("result", apiResult);
+        System.out.println("result"+apiResult);
+        /* 네이버 로그인 성공 페이지 View 호출 */
+//      JSONObject jsonobj = jsonparse.stringToJson(apiResult, "response");
+//      String snsId = jsonparse.JsonToString(jsonobj, "id");
+//
+// 
+//      String name = jsonparse.JsonToString(jsonobj, "name");
+//
+//      UserVO vo = new UserVO();
+//      vo.setUser_snsId(snsId);
+//      vo.setUser_name(name);
+//
+//      System.out.println(name);
+//      try {
+//          vo = service.naverLogin(vo);
+//      } catch (Exception e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//      }
+//
+//      session.setAttribute("login",vo);
+//      return new ModelAndView("user/loginPost", "result", vo);
+        
+//        JSONParser parser = new JSONParser();
+//        Object obj = parser.parse(apiResult);
+//        JSONObject jsonObj = (JSONObject) obj;
+//        //3. 데이터 파싱
+//        //Top레벨 단계 _response 파싱
+//        JSONObject response_obj = (JSONObject)jsonObj.get("response");
+//        //response의 nickname값 파싱
+//        String nickname = (String)response_obj.get("nickname");
+//        System.out.println(nickname);
+//        //4.파싱 닉네임 세션으로 저장
+//        session.setAttribute("sessionId",nickname); //세션 생성
+//        model.addAttribute("result", apiResult);
+        
+//        ObjectMapper objectMapper =new ObjectMapper();
+//		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
+//		
+//		Map<String, Object> naverConnectionCheck = memberService.naverConnectionCheck(apiJson);
+//		
+//		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
+//			
+//			model.addAttribute("email",apiJson.get("email"));
+//			model.addAttribute("password",apiJson.get("id"));
+//			model.addAttribute("phone",apiJson.get("mobile"));
+//			return "user/setNickname";
+//		}else if(naverConnectionCheck.get("NAVERLOGIN") == null && naverConnectionCheck.get("EMAIL") != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+//			userservice.setNaverConnection(apiJson);
+//			Map<String, Object> loginCheck = userservice.userNaverLoginPro(apiJson);
+//			session.setAttribute("userInfo", loginCheck);
+//		}else { //모두 연동 되어있을시
+//			Map<String, Object> loginCheck = userservice.userNaverLoginPro(apiJson);
+//			session.setAttribute("userInfo", loginCheck);
+//		}
+
+		return "redirect:main.do";
+        
+//        return "common/main";
+    }
+    
 	// 회원가입페이지로 이동
 	@RequestMapping("enrollPage.do")
 	public String moveEnrollPage() {
@@ -56,9 +144,20 @@ public class MemberController {
 	}
 
 	// 로그인페이지로 이동
-	@RequestMapping("loginPage.do")
-	public String moveLoginPage() {
-		return "member/loginPage";
+	@RequestMapping(value = "loginPage.do", method = { RequestMethod.GET, RequestMethod.POST})
+	public String moveLoginPage(Model model, HttpSession session) {
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+        
+        //https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=O1DNpjOo6U7RT1EEQ0Cw
+        //&redirect_uri=http%3A%2F%2Flocalhost%3A8087%2Fitys%2Fcallback.do&state=024d2a87-a3d2-4c22-91e0-17828c920786
+        System.out.println("네이버 : \n" + naverAuthUrl);
+        
+        //네이버 
+        model.addAttribute("url", naverAuthUrl);
+
+        /* 생성한 인증 URL을 View로 전달 */
+        return "member/loginPage";
 	}
 
 	// 로그인하기
@@ -77,7 +176,7 @@ public class MemberController {
 			// 세션 객체 생성 > 세션 안에 회원정보 저장
 			session.setAttribute("loginMember", loginMember);
 			status.setComplete(); // 요청 성공. 200 전송보냄
-			return "member/loginPage";
+			return "common/main";
 		} else {
 			model.addAttribute("message", "로그인 실패!");
 			return "common/error";

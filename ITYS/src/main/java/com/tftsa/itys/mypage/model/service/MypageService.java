@@ -1,12 +1,15 @@
 package com.tftsa.itys.mypage.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.Subject;
 
 import com.tftsa.itys.member.model.vo.Member;
 import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
+import com.tftsa.itys.mypage.model.vo.MyKeyData;
+import com.tftsa.itys.mypage.model.vo.MyKeyword;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -34,4 +37,8 @@ public interface MypageService {
 	int deleteLikes(Likes likes);
 	ArrayList<UserChattingroomTutor> selectChattingStudentList(int user_no);
 	ArrayList<UserChattingroomTutor> selectChattingTutorList(int user_no);
+	List<MyKeyword> selectKeywordList();
+	int insertKeyData(MyKeyData keydata);
+	String selectTypePer(int key_no);
+	int deleteKeyData(int user_no);
 }
