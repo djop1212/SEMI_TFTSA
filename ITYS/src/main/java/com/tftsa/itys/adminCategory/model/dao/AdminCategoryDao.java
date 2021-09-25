@@ -18,4 +18,8 @@ public class AdminCategoryDao {
 		List<Subject> list = sqlSession.selectList("admincategoryMapper.selectCategoryAll");
 		return (ArrayList<Subject>)list;
 	}
+	
+	public int deleteCategory(String sname){
+		return sqlSession.delete("admincategoryMapper.deleteCategory",sname);
+	}
 }

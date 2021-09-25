@@ -47,18 +47,6 @@ public class AdminMemberController {
 		}
 		
 		return "redirect:adminMember.do";
-
-//		if (memberService.deleteMember(member.getUser_id()) > 0) {
-//			// 글삭제 성공하면 저장폴더에 첨부파일도 삭제 처리
-//			if (member.getUser_id()!= null) {
-//				
-//			}
-//
-//			return "redirect:adminMember.do";
-//		} else {
-//			model.addAttribute("message", member.getUser_id() + " 회원 삭제 실패.");
-//			return "common/error";
-//		}
 	}
 	
 	

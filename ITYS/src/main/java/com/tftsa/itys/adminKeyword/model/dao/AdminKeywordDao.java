@@ -20,4 +20,9 @@ public class AdminKeywordDao {
 		return (ArrayList<AdminKeyword>)list;
 	}
 	
+	//키워드 삭제
+	public int deleteKeyword(String type_per) {
+		return sqlSession.delete("adminkeywordMapper.deleteKeyword", type_per);
+	}
+	
 }

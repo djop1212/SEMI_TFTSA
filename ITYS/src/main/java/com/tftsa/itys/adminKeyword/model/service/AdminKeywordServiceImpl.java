@@ -11,10 +11,15 @@ import com.tftsa.itys.adminKeyword.model.vo.AdminKeyword;
 @Service("adminKeywordService")
 public class AdminKeywordServiceImpl implements AdminKeywordService{
 	@Autowired
-	private AdminKeywordDao keywordDao;
+	private AdminKeywordDao adminkeywordDao;
 
 	@Override
 	public ArrayList<AdminKeyword> selectAllKeywords() {
-		return keywordDao.selectAllKeywords();
+		return adminkeywordDao.selectAllKeywords();
+	}
+	
+	@Override
+	public int deleteKeyword(String type_per) {
+		return adminkeywordDao.deleteKeyword(type_per);
 	}
 }

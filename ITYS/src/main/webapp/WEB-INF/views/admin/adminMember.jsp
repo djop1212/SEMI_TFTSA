@@ -16,7 +16,7 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
-<script src="/newspaper/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
 
 <style>
 /* Dropdown Button */
@@ -256,15 +256,8 @@ a {
         var delVal=confirm($('#clickedValue').val()+"를 회원에서 삭제하시겠습니까?");
         location.reload(true);
         console.log(chkArray);
-        /* if (delVal==true){
-        	 for(var i=0; i<=chkArray.length; i++){
-         	    deleteMember(chkArray.pop());
-         	    
-         	}
-        }
-        else {
-        	 document.write("취소를 누르셨군요"); 
-        }*/
+		
+        //
         $.ajax({
         	url:"deleteMember.do",
         	type:"post",
@@ -273,10 +266,9 @@ a {
         	    console.log('삭제를 성공했습니다!');
         	  }
         })
-        
-		//document     
+
 	}
-	
+
 	
 </script>
 </html>
