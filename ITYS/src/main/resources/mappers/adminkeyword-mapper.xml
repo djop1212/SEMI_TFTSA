@@ -13,4 +13,7 @@
 		select * from keyword
 	</select>
 	
+	<delete id="deleteKeyword" parameterType="String">
+		delete from keyword where type_per = #{ type_per } 
+	</delete>
 </mapper>

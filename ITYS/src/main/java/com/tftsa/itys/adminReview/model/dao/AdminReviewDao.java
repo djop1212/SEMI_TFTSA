@@ -18,4 +18,9 @@ public class AdminReviewDao {
 		List<AdminReview> list = sqlSession.selectList("adminreviewMapper.selectReviewAll");
 		return (ArrayList<AdminReview>)list;
 	}
+	
+	//리뷰 삭제
+	public int deleteReview(int review_no) {
+		return sqlSession.delete("adminreviewMapper.deleteReview", review_no);
+	}
 }

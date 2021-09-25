@@ -19,6 +19,10 @@
 		on (r.tutor_no = u.user_no)
 		left outer join tutor t
 		on (r.tutor_no = t.user_no) 
+		order by r.rev_no
 	</select>
 	
+	<delete id="deleteReview" parameterType="int">
+		delete from review where rev_no = #{ rev_no }
+	</delete>
 </mapper>

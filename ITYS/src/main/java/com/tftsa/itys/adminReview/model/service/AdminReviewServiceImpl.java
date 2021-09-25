@@ -18,4 +18,9 @@ public class AdminReviewServiceImpl implements AdminReviewService{
 	public ArrayList<AdminReview> selectReviewAll() {
 		return adminreviewDao.selectReviewAll();
 	}
+	
+	@Override
+	public int deleteReview(int review_no) {
+		return adminreviewDao.deleteReview(review_no);
+	}
 }

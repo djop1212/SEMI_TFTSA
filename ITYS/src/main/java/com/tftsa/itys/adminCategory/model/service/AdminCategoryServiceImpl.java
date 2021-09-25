@@ -18,4 +18,9 @@ public class AdminCategoryServiceImpl implements AdminCategoryService{
 	public ArrayList<Subject> selectCategoryAll() {
 		return admincategoryDao.selectCategoryAll();
 	}
+	
+	@Override
+	public int deleteCategory(String sname) {
+		return admincategoryDao.deleteCategory(sname);
+	}
 }

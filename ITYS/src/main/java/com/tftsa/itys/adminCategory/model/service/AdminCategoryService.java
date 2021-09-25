@@ -6,4 +6,5 @@ import com.tftsa.itys.mypage.model.vo.Subject;
 
 public interface AdminCategoryService {
 	ArrayList<Subject> selectCategoryAll();
+	int deleteCategory(String sname);
 }

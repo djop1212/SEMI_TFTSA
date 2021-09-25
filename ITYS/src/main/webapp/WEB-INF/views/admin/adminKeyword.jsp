@@ -15,31 +15,9 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script>
-	function searchFunction(){
-	$.ajax({
-		type: 'GET',
-		url : "/itys/adminMember",
-		data : $("form[name=navbar-search]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-}
-</script>
+<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
+
 <style>
 /* Dropdown Button */
 .btn btn-primary dropdown-toggle {
@@ -141,7 +119,7 @@ a {
                 </div>
                 
                 <div class="table-responsive p-3">
-                
+                <form action="deleteKeyword.do" method="post" id="multidelete">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
@@ -162,13 +140,15 @@ a {
 						<tr>
 							<td>${ k.key_no }</td>
 							<td>${ k.type_per }</td>
-							<td><input type="checkbox" value=${ k.key_no }></td>
+							<td><input type="checkbox" name="del_chk" value=${ k.type_per }></td>
 						</tr>
 					  </c:forEach>  
+					  <input type="hidden" name="clickedValue" id="clickedValue" value=""/>
                     </tbody>
                   </table>
+                  </form>
                   <div align="right" style=50px>
-                  <a href="#" class="btn btn-danger" >
+                  <a href="#" class="btn btn-danger" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
                	</div>
@@ -215,5 +195,58 @@ a {
 	</div>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
-
+<script>
+	/* function searchFunction(){
+	$.ajax({
+		type: 'GET',
+		url : "/itys/adminMember",
+		data : $("form[name=navbar-search]").serialize(),
+		success : function(result){
+			//테이블 초기화
+			$('#boardtable > tbody').empty();
+			if(result.length>=1){
+				result.forEach(function(item){
+					str='<tr>'
+					str += "<td>"+item.idx+"</td>";
+					str+="<td>"+item.writer+"</td>";
+					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
+					str+="<td>"+item.date+"</td>";
+					str+="<td>"+item.hit+"</td>";
+					str+="</tr>"
+					$('#boardtable').append(str);
+        		})				 
+			}
+		}
+	})
+} */
+	//삭제할 항목의 id 저장할 배열
+	var chkArray = new Array(); // 배열 선언
+	
+	function ClickedData(){
+		var obj = $("[name=del_chk]");
+		// 체크된 체크박스의 value 값을 배열에 저장.
+        $('input:checkbox[name=del_chk]:checked').each(function() { 
+            chkArray.push(this.value);
+        });
+        $('#clickedValue').val(chkArray);
+        var conVal=confirm("'"+$('#clickedValue').val()+"' 을 키워드에서 삭제하시겠습니까?");
+        if (conVal == true){
+	        location.reload(true);
+	        console.log(chkArray);
+ 
+	        $.ajax({
+	        	url:"deleteKeyword.do",
+	        	type:"post",
+	        	data : {'list': chkArray.join(',')},
+	        	  success : function(data){
+	        	    console.log('삭제를 성공했습니다!');
+	        	  }
+	        })
+        }
+        else if(conVal == false){
+        	alert("삭제를 취소했습니다.");
+        	location.reload(true);
+        }
+	}
+</script>
 </html>

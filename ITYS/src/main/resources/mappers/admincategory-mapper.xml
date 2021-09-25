@@ -14,4 +14,7 @@
 		select * from subject
 	</select>
 	
+	<delete id="deleteCategory" parameterType="String">
+		delete from subject where sub_name = #{ sub_name } 
+	</delete>
 </mapper>
