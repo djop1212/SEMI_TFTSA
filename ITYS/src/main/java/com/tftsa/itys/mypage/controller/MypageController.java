@@ -453,8 +453,8 @@ public class MypageController {
 	@RequestMapping("selectChattingList.do")
 	public String selectChattingList(Model model, @RequestParam("user_no") int user_no) {
 
-		ArrayList<UserChattingroomTutor> userchattingroomtutor1 = mypageService.selectChattingStudentList(user_no);
-		ArrayList<UserChattingroomTutor> userchattingroomtutor2 = mypageService.selectChattingTutorList(user_no);
+		ArrayList<UserChattingroomTutor> userchattingroomtutor = mypageService.selectChattingStudentList(user_no);
+       	 	ArrayList<UserChattingroomStudent> userchattingroomstudent = mypageService.selectChattingTutorList(user_no);
 		logger.info("selectChattingList.do");
 		
 		if(mypageService.selectPosition(user_no).equals("T")) {
