@@ -16,11 +16,12 @@ public class Tutor implements java.io.Serializable{
 	private String class_min;
 	private String class_times;
 	private String sub_name;
+	private String key_name;
 	
 	public Tutor () {}
 
 	public Tutor(int user_no, String pic, String min_pay, String online_ok, String area, String intro, String day,
-			String time, String style, String l_grd, String class_min, String class_times, String sub_name) {
+			String time, String style, String l_grd, String class_min, String class_times, String sub_name, String key_name) {
 		super();
 		this.user_no = user_no;
 		this.pic = pic;
@@ -35,6 +36,7 @@ public class Tutor implements java.io.Serializable{
 		this.class_min = class_min;
 		this.class_times = class_times;
 		this.sub_name = sub_name;
+		this.key_name = key_name;
 	}
 
 
@@ -146,12 +148,22 @@ public class Tutor implements java.io.Serializable{
 		this.sub_name = sub_name;
 	}
 
+	public String getKey_name() {
+		return key_name;
+	}
+
+	public void setKey_name(String key_name) {
+		this.key_name = key_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Tutor [user_no=" + user_no + ", pic=" + pic + ", min_pay=" + min_pay + ", online_ok=" + online_ok
 				+ ", area=" + area + ", intro=" + intro + ", day=" + day + ", time=" + time + ", style=" + style
 				+ ", l_grd=" + l_grd + ", class_min=" + class_min + ", class_times=" + class_times + ", sub_name="
-				+ sub_name + "]";
+				+ sub_name + ", key_name=" + key_name + "]";
 	}
+
+	
 
 }

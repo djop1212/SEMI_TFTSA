@@ -35,6 +35,9 @@
 		<beans:property name="maxUploadSize" value="10000000"></beans:property>
 	</beans:bean>
 	
+	<!-- 네이버 -->
+	<beans:bean id="NaverLoginBO" class="com.tftsa.itys.member.model.vo.NaverLoginBO"/>
+	
 	<context:component-scan base-package="com.tftsa.itys" />
 	
 	

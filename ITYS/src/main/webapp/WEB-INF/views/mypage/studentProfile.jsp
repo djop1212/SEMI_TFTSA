@@ -49,7 +49,7 @@ $(function () {
 				<br>
 					<table align="center">
 						<tr>
-							<th rowspan=2>프로필 사진</th>
+							<th>프로필 사진</th>
 							<td><input type="file" name="upfile" accept="image/*" ></td>
 						</tr>
 						<tr>
@@ -97,7 +97,7 @@ $(function () {
 					<Br>
 					<div align="center">
 						<button type="submit">추가하기</button>
-						<input type="button" value="취소" onclick="javascript:history.go(-1); return false;">
+						<input type="button" value="취소" onclick="javascript:window.close(); return false;">
 					</div>
 				</form>
 		</div>

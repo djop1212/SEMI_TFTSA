@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.tftsa.itys.member.model.vo.Member;
 import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
+import com.tftsa.itys.mypage.model.vo.MyKeyData;
+import com.tftsa.itys.mypage.model.vo.MyKeyword;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -104,5 +106,22 @@ public class MypageDao {
 	public ArrayList<UserChattingroomStudent> selectChattingTutorList(int user_no) {
 		List<UserChattingroomStudent> list = session.selectList("mypageMapper.selectChattingTutorList", user_no);
 		return (ArrayList<UserChattingroomStudent>)list;
+	}
+
+	public List<MyKeyword> selectKeywordList() {
+		List<MyKeyword> list = session.selectList("mypageMapper.selectKeywordList");
+		return (ArrayList<MyKeyword>)list;
+	}
+
+	public int insertKeyData(MyKeyData keydata){
+		return session.insert("mypageMapper.insertKeyData", keydata);
+	}
+
+	public String selectTypePer(int key_no) {
+		return session.selectOne("mypageMapper.selectTypePer", key_no);
+	}
+
+	public int deleteKeyData(int user_no) {
+		return session.delete("mypageMapper.deleteKeyData", user_no);
 	}
 }

@@ -27,6 +27,7 @@
 		<result property="class_min" column="class_min"/>
 		<result property="class_times" column="class_times"/>
 		<result property="sub_name" column="sub_name"/>
+		<result property="key_name" column="key_name"/>
 	</resultMap>
 	
 	<resultMap type="Likes" id="resultLikes">
@@ -121,6 +122,16 @@
 		<result property="sub_name" column="sub_name"/>
 	</resultMap>
 	
+	<resultMap type="MyKeyword" id="resultKeyword">
+		<id column="key_no" property="key_no" />
+		<result column="type_per" property="type_per" />
+	</resultMap>
+	
+	<resultMap type="MyKeyData" id="resultKeydata">
+		<result property="user_no" column="user_no"/>
+		<result property="key_no" column="key_no"/>
+  </resultMap>
+  
 	<resultMap type="UserChattingroomStudent" id="resultUserChattingroomStudent">
 		<id property="user_no" column="user_no"/>
 		<result property="chat_room_no" column="chat_room_no"/>
@@ -164,19 +175,31 @@
 		select * from subject
 	</select>
 	
+	<select id="selectKeywordList" resultMap="resultKeyword">
+		select * from keyword order by 1
+	</select>
+	
 	<!-- 선생님 프로필 추가 -->
 	<insert id="insertTutor" parameterType="Tutor">
-		insert into tutor (user_no, pic, min_pay, online_ok, area, intro, day, time, style, l_grd, class_min, class_times, sub_name) 
+		insert into tutor (user_no, pic, min_pay, online_ok, area, intro, day, time, style, l_grd, class_min, class_times, sub_name, key_name) 
 		values 
-		(#{user_no}, #{pic}, #{min_pay}, #{online_ok}, #{area}, #{intro}, #{day}, #{time}, #{style}, #{l_grd}, #{class_min}, #{class_times}, #{sub_name})
+		(#{user_no}, #{pic}, #{min_pay}, #{online_ok}, #{area}, #{intro}, #{day}, #{time}, #{style}, #{l_grd}, #{class_min}, #{class_times}, #{sub_name}, #{key_name})
 	</insert>
 	<insert id="insertSubData" parameterType="SubData">
 		insert into sub_data (user_no, sub_no)
 		values
 		(#{user_no}, #{sub_no})
 	</insert>
+	<insert id="insertKeyData" parameterType="MyKeyData">
+		insert into key_data (user_no, key_no)
+		values
+		(#{user_no}, #{key_no})
+	</insert>
 	<select id="selectSubName" parameterType="_int" resultType="String">
 		select sub_name from subject where sub_no = #{sub_no}
+	</select>
+	<select id="selectTypePer" parameterType="_int" resultType="String">
+		select type_per from keyword where key_no = #{key_no}
 	</select>
 	<update id="updateTutorPosition" parameterType="_int">
 		update user_info set user_position = 'T' where user_no = #{user_no}
@@ -226,6 +249,9 @@
 	
 	<delete id="deleteSubData" parameterType="_int">
 		delete sub_data where user_no = #{user_no}
+	</delete>
+	<delete id="deleteKeyData" parameterType="_int">
+		delete key_data where user_no = #{user_no}
 	</delete>
 	
 	<delete id="deleteLikes" parameterType="Likes">

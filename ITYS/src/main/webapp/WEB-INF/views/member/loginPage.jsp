@@ -10,7 +10,7 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 	//발급받은 키 중 javascript키를 사용해준다.
-	Kakao.init('');
+	Kakao.init('szd');
 	console.log(Kakao.isInitialized()); // sdk초기화여부판단
 	//카카오로그인
 	function kakaoLogin() {
@@ -32,6 +32,7 @@
 		})
 	}
 </script>
+
 </head>
 <body class="sub_page">
   <div class="hero_area">
@@ -64,7 +65,10 @@
               SNS 계정으로 로그인하기
             </p>
               <img src="${ pageContext.servletContext.contextPath }/resources/images/member/kakaoLogin.png"
-              	onclick="kakaoLogin();" style="cursor:pointer;">      
+              	 style="cursor:pointer;" onclick="kakaoLogin();">
+              <a href="${url }" target="_blank" style="background-color: rgba(0, 0, 0, 0); border: 0; padding:0;">
+              <img src="${ pageContext.servletContext.contextPath }/resources/images/member/naverLogin.png"
+              	style="cursor:pointer; width: 183px; height: 45px;" class="snsLogin"></a>     
           </div>
         </div>
         <div class="col-md-6">
