@@ -37,11 +37,10 @@ public interface MypageService {
 	int deleteSubData(int user_no);
 	int deleteLikes(Likes likes);
 	ArrayList<UserChattingroomTutor> selectChattingStudentList(int user_no);
-	ArrayList<UserChattingroomTutor> selectChattingTutorList(int user_no);
+	ArrayList<UserChattingroomStudent> selectChattingTutorList(int user_no);
 	List<MyKeyword> selectKeywordList();
 	int insertKeyData(MyKeyData keydata);
 	String selectTypePer(int key_no);
 	int deleteKeyData(int user_no);
-	ArrayList<UserChattingroomStudent> selectChattingTutorList(int user_no);
 
 }
