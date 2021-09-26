@@ -10,17 +10,21 @@
 <head>
 <title>과외찾기</title>
 
-<script type="text/javascript"
-	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js">
-</script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
 
 <style type="text/css">
-
+object-fit: cover;
 *{
 	font-family: "Malgun Gothic",gulim,dotum,sans-serif;
+}
+a:link { color: red; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: blue; text-decoration: underline;}
+
+.detail_info, .img_box{
+    background-color: #F4F4F4;
+}
+.detail_info:hover, .img_box:hover{
+    box-shadow : 2px 2px 5px #999;
 }
 
 #detailOption_wrapper{
@@ -40,7 +44,7 @@ input[type=checkbox]{
     color: #fff;
     font-size: 14px;
     height: 35px;
-    background: #3EA586;
+    background: #42acae;
 }
 
 .searchBtn{
@@ -53,7 +57,7 @@ input[type=checkbox]{
     font-weight: normal;
     text-align: center;
     text-indent: 0;
-    background: #3C9376;
+    background: #42acae;
 }
 
 .doBtnSearch {
@@ -65,9 +69,22 @@ input[type=checkbox]{
     line-height: 40px;
 }
 
-.inpSel select {
-    padding: 0 29px 1px 11px;
-    width: 100%;
+.adr_sel{
+ 	height: 25px;
+    border: none;
+    box-sizing: border-box;
+    color: #444;
+    font-size: 13px;
+    letter-spacing: -1px;
+    line-height: 29px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+select {
+    padding: 0 10px 1px 6px;
     height: 30px;
     border: none;
     box-sizing: border-box;
@@ -81,6 +98,24 @@ input[type=checkbox]{
     text-overflow: ellipsis;
 }
 
+.inpSel select {
+    padding: 0 29px 1px 11px;
+    width: 100%;
+    height: 40px;
+    border: none;
+    box-sizing: border-box;
+    color: #444;
+    font-size: 13px;
+    letter-spacing: -1px;
+    line-height: 29px;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: 1px solid gray;
+    border-radius: 20px;
+}
+
 .container {
 	display: flex;
 }
@@ -90,6 +125,7 @@ input[type=checkbox]{
     /* position: static; */
     margin-top: 20px;
     padding: 0 20px;
+    height :45px;
 }
 
 .searchBox {
@@ -166,19 +202,344 @@ ol, ul, li {
 .img_box{
 	width: 20%;
 	float: left;
-	border: 1px solid blue;
+	border: 1px solid gray;
 	height : 100%;
 }
 
 .detail_info{
 	width: 80%;
 	float: right;
-	border: 1px solid blue;
+	border: 1px solid gray;
 	height : 100%;
+	border-radius : 25px;
 }
 
 </style>
 
+
+<body class="sub_page">
+
+	<div class="hero_area">
+
+		<c:import url="/WEB-INF/views/common/menubar.jsp" />
+
+	</div>
+	
+	<div class="container">
+		<div class="searchBox">
+			<div class="inpSel">
+				
+				<form name = "searchInfo" method="post" accept-charset="UTF-8"  style= "text-align : center;">
+					<div  style= "text-align : center; margin : 20px;">
+					<select name= "category" id="category" style = "width : 150px; display : inline-block; ">
+						<option>전체</option>
+						<c:forEach items="${ requestScope.categoryList }" var="c">
+							<option value="${ c.category }">${ c.category }</option>
+						</c:forEach>
+						
+					</select> 
+					<select name="sub_name" id="subject" style = "width : 170px; display : inline-block; ">
+						<option>전체</option>
+					</select>
+					<input style="width : 300px;" name= "word" class = "doBtnSearch" id = "searchWord" type="text" placeholder="검색어를 입력해주세요."/>
+					
+					<input  style="width : 130px;" type ="button" onclick = "searchSend()" value="검색" class="searchBtn">
+					</div>
+					<!--<button value="검색" id="search" onclick="searchSend()">검색</button> -->
+					
+					
+				</form>
+
+			</div>
+
+			<div class="doBtnBox" style="text-align : center;">
+				<button class="doSearchBtn" value="상세옵션" id="doBtn" style="width: 505px; position : relative; top : 15px;">상세옵션</button>
+			</div>
+
+			<div id="detailOption_wrapper" style="display: none;">
+			
+				<div class="detailOption_box" style= "width : 100%; display : inline-block; margin-top: 42px;">
+					<h2 class="option_title" style="display : inline-block;">학력</h2>
+					<ul class="option_check" id = "ul_edu_all" style="display : inline-block;">
+						<li><label class="sri_check" for="detailOption_education-1">
+								<input  type="checkbox" id="detailOption_education-1"
+								class="inp_check"> <span class="txt_check">상관없음</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_education-2">
+								<input name = "l_grd" type="checkbox" id="detailOption_education-2"
+								class="inp_check edu"  value="고등학교 졸업" > <span class="txt_check">고등학교 졸업</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_education-3">
+								<input name = "l_grd" type="checkbox" id="detailOption_education-3"
+								class="inp_check edu"  value="전문대 재학"> <span class="txt_check">전문대 재학</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_education-4">
+								<input name = "l_grd" type="checkbox" id="detailOption_education-4"
+								class="inp_check edu" value="전문대 졸업"> <span class="txt_check">전문대 졸업</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_education-5">
+								<input name = "l_grd" type="checkbox" id="detailOption_education-5"
+								class="inp_check edu"  value="대학교 재학"> <span class="txt_check">4년제 재학</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_education-6">
+								<input name = "l_grd" type="checkbox" id="detailOption_education-6"
+								class="inp_check edu" value="4년제 졸업"> <span class="txt_check">4년제 졸업</span>
+						</label></li>
+					</ul>
+
+
+				</div>
+				<hr>
+				<div class="detailOption_box"  style= "width : 55%; display : inline-block;">
+				<h2 class="option_title">지역</h2>
+					<ul class="option_check" style="width : 370px;">
+						<li>
+							<label class="sri_check" for="">
+								<select class = "adr_sel" name="addressRegion" id="addressRegion1" style= "border : none;"></select> 
+								<select class = "adr_sel" name="addressDo" id="addressDo1" style= "border : none;"></select> 
+								<select class = "adr_sel" name="addressSiGunGu" id="addressSiGunGu1" style= "border : none;"></select>
+							</label>
+						</li>
+					</ul>
+				</div>
+				<div class="detailOption_box"  style= "width : 40%; display : inline-block; padding : 0px;">
+				<h2 class="option_title">대면 여부</h2>
+					<ul class="option_check"  id = "ul_online_all" style="width : 270px; display : inline-block; padding : 0px;">
+						<li><label class="sri_check" for="detailOption_online_all">
+								<input  type="checkbox" id="detailOption_online_all"
+								class="inp_check"> <span class="txt_check">전체</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_online_ok">
+								<input  type="checkbox" id="detailOption_online_ok"
+								class="inp_check"> <span class="txt_check">대면</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_online_no">
+								<input  type="checkbox" id="detailOption_online_no"
+								class="inp_check"> <span class="txt_check">비대면</span>
+						</label></li>
+					</ul>
+				</div>
+				<hr>
+
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block; height : 120px;">
+					<h2 class="option_title">키워드</h2>
+					<ul class="option_check" id = "ul_keyword_all">
+					
+						<li><label class="sri_check" for="detailOption_keyword_all">
+									<input type="checkbox" id="detailOption_keyword_all"
+									class="inp_check"> <span class="txt_check">상관없음 </span>
+							</label></li>
+						
+						<c:forEach items="${ requestScope.keywordList }" var="k">
+							<li>
+								<label class="sri_check" for="detailOption_keyword_${ k.key_no }">
+									<input name = "keyword" type="checkbox" id="detailOption_keyword_${ k.key_no }"
+									class="inp_check key" value=" ${ k.type_per }"> <span class="txt_check">${ k.type_per }
+								</span>
+								</label>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+				<hr>
+				
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
+					<h2 class="option_title">요일선택</h2>
+					<ul class="option_check" id = "ul_day_all">
+						<li><label class="sri_check" for="detailOption_week_all">
+								<input type="checkbox" id="detailOption_week_all"
+								class="inp_check"> <span class="txt_check">상관없음 </span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_mon">
+								<input name= "day" type="checkbox" id="detailOption_week_mon"
+								class="inp_check week" value="월" > <span class="txt_check">월 </span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_tue">
+								<input name= "day" type="checkbox" id="detailOption_week_tue"
+								class="inp_check week" value="화"> <span class="txt_check">화
+							</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_wed">
+								<input name= "day" type="checkbox" id="detailOption_week_wed"
+								class="inp_check week" value="수"> <span class="txt_check">수
+							</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_thu">
+								<input  name= "day"type="checkbox" id="detailOption_week_thu"
+								class="inp_check week" value="목"> <span class="txt_check">목
+							</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_fri">
+								<input name= "day" type="checkbox" id="detailOption_week_fri"
+								class="inp_check week" value="금"> <span class="txt_check">금
+							</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_sat">
+								<input name= "day" type="checkbox" id="detailOption_week_sat"
+								class="inp_check week" value="토"> <span class="txt_check">토
+							</span>
+						</label></li>
+						<li><label class="sri_check" for="detailOption_week_sun">
+								<input name= "day" type="checkbox" id="detailOption_week_sun"
+								class="inp_check week" value="일"> <span class="txt_check">일
+							</span>
+						</label></li>
+					</ul>
+
+
+				</div>
+				
+				<hr>
+				
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
+					<h2 class="option_title">시간선택</h2>
+					
+					<ul class="option_check">
+						<li>
+							<div class="input-a margin-t-10">
+							<input type="text" id="stime" name="stime" value="" class="timePicker sri_check" placeholder="00:00">
+							~
+							<input type="text" id="etime" name="etime" value="" class="timePicker sri_check" placeholder="24:00">
+							</div>
+
+						</li>
+					</ul>
+
+
+				</div>
+				<hr>
+				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
+					<h2 class="option_title">희망금액</h2>
+					
+					<ul class="option_check">
+						<li><label class="sri_check" for="detailOption_price_min">
+								<input type="text" id="detailOption_price_min"
+								class="inp_check" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
+						</label> ~ <label class="sri_check" for="detailOption_price_max">
+								<input type="text" id="detailOption_price_max"
+								class="inp_check" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
+						</label></li>
+					</ul>
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div>
+		
+		<div style = "text-align : center; margin-top : 30px;">
+			<ul>
+			<c:choose>
+				<c:when test="${ not empty searchTutor }">			
+					<c:forEach items="${ requestScope.searchTutor }" var="s">
+						<li>
+							<div class="list_container" style = "margin-top : 20px;">
+								<div class="img_box">리스트1 이미지</div>
+								<div class="detail_info">
+									<h2>${ s.intro }</h2>
+								</div>
+							</div>
+						</li>
+					</c:forEach>
+				
+				</c:when>
+				
+				<c:otherwise>
+					<c:forEach items="${ requestScope.tutorList }" var="t">
+						<li>
+						<a href="#">
+							<div class="list_container" style= "width: 1000px; height : 200px; display: inline-block; margin-top : 20px;">
+								<div class="img_box" style = "border-radius: 50%">
+									<img style = "border-radius: 50%; height: 198px; width : 198px;" alt="이미지" 
+									src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${t.pic}">
+								</div>
+								<div class="detail_info" style="text-align : left; padding : 10px;">
+									<h2>${ t.intro } |  ${ t.sub_name  }</h2>
+									<div>
+										<span class="tab">${ t.style }</span><br>
+										<span class="tab">지역 : ${ t.area }</span><br>
+										<span class="tab">요일 : ${ t.day }</span><br>
+										<span class="tab">시간 : ${ t.time }</span><br>
+										<span class="tab">금액 : ${ t.min_pay }</span>
+									</div>
+								</div>
+							</div>
+						</a>
+						</li>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+			
+			</ul>
+		</div>
+
+
+	</div>
+
+	<%-- 
+<div style="text-align:center;">
+<c:if test="${ currentPage <= 1 }">
+	[맨처음]&nbsp;
+</c:if>
+<c:if test="${ currentPage > 1 }">
+	<c:url var="ubl" value="/blist">
+		<c:param name="page" value="1" />
+	</c:url>
+	<a href="${ ubl }">[맨처음]</a>
+</c:if>
+<!-- 이전 그룹으로 이동 처리 -->
+<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
+	<c:url var="ubl2" value="/blist">
+		<c:param name="page" value="${ startPage - 10 }"/>
+	</c:url>
+	<a href="${ ubl2 }">[이전그룹]</a>
+</c:if>
+<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
+	[이전그룹]&nbsp;
+</c:if>
+<!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리 -->
+<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+	<c:if test="${ p eq currentPage }">	
+		<font color="red" size="4"><b>[${ p }]</b></font>
+	</c:if>
+	<c:if test="${ p ne currentPage }">
+		<c:url var="ubl3" value="/blist">
+			<c:param name="page" value="${ p }"/>
+		</c:url>
+		<a href="${ ubl3 }">${ p }</a>
+	</c:if>
+</c:forEach>
+<!-- 다음 그룹으로 이동 처리 -->
+<c:if test="${ (currentPage + 10) > endPage && (currentPage + 10) < maxPage }">
+	<c:url var="ubl4" value="/blist">
+		<c:param name="page" value="${ endPage + 10 }"/>
+	</c:url>
+	<a href="${ ubl4 }">[다음그룹]</a>
+</c:if>
+<c:if test="${ !((currentPage + 10) > endPage && (currentPage + 10) < maxPage) }">
+	[다음그룹]&nbsp;
+</c:if>
+<!-- 맨끝 페이지로 이동 처리 -->
+<c:if test="${ currentPage >= maxPage }">
+	[맨끝]&nbsp;
+</c:if>	
+<c:if test="${ currentPage < maxPage }">
+	<c:url var="ubl5" value="/blist">
+		<c:param name="page" value="${ maxPage }"/>
+	</c:url>
+	<a href="${ ubl5 }">[맨끝]</a>
+</c:if>
+</div> --%>
+
+
+		<c:import url="/WEB-INF/views/common/footer.jsp" />
+</body>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 <script type="text/javascript">
 
@@ -196,10 +557,10 @@ function searchSend(){
 	var stime = $("#stime").val();
 	var etime = $("#etime").val();
 	var time = stime+", "+etime;
+	
 	if(time == ", "){
 		time = "null";
 	}
-	
 	
 	
 	if( $("#detailOption_wrapper").is(":hidden")){
@@ -273,8 +634,6 @@ function searchSend(){
 		}
 	});
 		 
-		 
-		 
 		sfnm.submit();
 		
 	}
@@ -282,6 +641,24 @@ function searchSend(){
 
 $(function() {
 
+	
+	$("#detailOption_price_min").on('keyup change', function() {
+		var min = $("#detailOption_price_min").val();
+		var mi = min.replace(/[^0-9]/g,'');
+
+		$(this).val(mi+"만원"); 
+		
+	});
+	
+	$("#detailOption_price_max").on('keyup change', function() {
+		var max = $("#detailOption_price_max").val();
+		var ma = min.replace(/[^0-9]/g,'');
+
+		$(this).val(ma+"만원"); 
+		
+	});
+	
+	
 	$("#search").on('click', function(){
 		
 		var category = $("#category option:checked").text();
@@ -304,7 +681,6 @@ $(function() {
 
 						//string ==> json 객체로 바꿈
 						var json = JSON.parse(jsonStr);
-						
 						
 						var values = "";
 						
@@ -336,7 +712,7 @@ $(function() {
 		'minTime':'00:00',
 		'maxTime':'23:30',
 		'scrollDefaultNow': true
-	}).on('changeTime',function() {                           //stime 을 선택한 후 동작
+	}).on('changeTime',function() { //stime 을 선택한 후 동작
     var from_time = $("input[name='stime']").val(); //stime 값을 변수에 저장
     $('#etime').timepicker('option','minTime', from_time);//etime의 mintime 지정
 	    
@@ -359,6 +735,34 @@ $(function() {
 			$(".edu").prop("checked", false);
 		}
 	});
+	
+	$(".inp_check").change(function(){
+        if($(".inp_check").is(":checked")){
+       		if( $(this).attr('id') == "detailOption_education-1" ){
+       			$('#ul_edu_all').children().children('.sri_check').addClass("on");
+       		}else if( $(this).attr('id') == "detailOption_keyword_all" ) {
+       			$('#ul_keyword_all').children().children('.sri_check').addClass("on");
+       		}else if ( $(this).attr('id') == "detailOption_online_all" ){
+       			$('#ul_online_all').children().children('.sri_check').addClass("on");
+        	}else if( $(this).attr('id') == "detailOption_week_all" ){ 
+        		$('#ul_day_all').children().children('.sri_check').addClass("on");
+        	}else{
+        		$(this).parent('.sri_check').addClass("on");
+        	}
+        }else{
+        	if( $(this).attr('id') == "detailOption_education-1" ){
+        		$('#ul_edu_all').children().children('.sri_check').removeClass("on");
+        	}else if( $(this).attr('id') == "detailOption_keyword_all" ){
+        		$('#ul_keyword_all').children().children('.sri_check').removeClass("on");
+        	}else if( $(this).attr('id') == "detailOption_online_all" ){
+        		$('#ul_online_all').children().children('.sri_check').removeClass("on");
+        	}else if ( $(this).attr('id') == "detailOption_week_all" ){
+        		$('#ul_day_all').children().children('.sri_check').removeClass("on");
+        	}else{
+        		$(this).parent('.sri_check').removeClass("on");
+        	}
+        }
+    });
 	
 	$("#detailOption_keyword_all").on("click", function(){
 		if( $("#detailOption_keyword_all").prop("checked") ){
@@ -394,14 +798,22 @@ $(function() {
         i.toggleClass("on");
 	}); */
 
-	$(".inp_check").change(function(){
+	/* $(".inp_check").change(function(){
         if($(".inp_check").is(":checked")){
-        	$(this).parent().addClass("on");
+       		if( $(".inp_check:checked").attr('id') == "detailOption_education-1" ){
+       			
+       			$('#ul_edu_all').children().children('.sri_check').addClass("on");
+       		}else{
+        		$(this).parent().addClass("on");
+        	}
         }else{
-
-        	$(this).parent().removeClass("on");
+        	if( $(this).attr('id') == "detailOption_education-1" ){
+        		$('#ul_edu_all').children().children('.sri_check').removeClass("on");
+        	}else{
+        		$(this).parent('.sri_check').removeClass("on");
+        	}
         }
-    });
+    }); */
 	
 	$("#category").on('change', function(){
 		var category = $("#category option:selected").val();
@@ -532,302 +944,4 @@ var areaSelectMaker = function(target){
 
 
 </script>
-<body class="sub_page">
-
-	<div class="hero_area">
-
-		<c:import url="/WEB-INF/views/common/menubar.jsp" />
-
-	</div>
-	
-	<div class="container">
-		<div class="searchBox">
-			<div class="inpSel">
-				
-				<form name = "searchInfo" method="post" accept-charset="UTF-8"  style= "text-align : center;">
-					<div  style= "text-align : center; margin : 20px;">
-					<select name= "category" id="category" style = "width : 150px; display : inline-block; ">
-						<option>전체</option>
-						<c:forEach items="${ requestScope.categoryList }" var="c">
-							<option value="${ c.category }">${ c.category }</option>
-						</c:forEach>
-						
-					</select> 
-					<select name="sub_name" id="subject" style = "width : 100px; display : inline-block; ">
-						<option>전체</option>
-					</select>
-					<input style="width : 300px;" name= "word" class = "doBtnSearch" id = "searchWord" type="text" placeholder="검색어를 입력해주세요."/>
-					
-					<input  style="width : 100px;" type ="button" onclick = "searchSend()" value="검색" class="searchBtn">
-					</div>
-					<!--<button value="검색" id="search" onclick="searchSend()">검색</button> -->
-					
-					
-				</form>
-
-			</div>
-
-			<div class="doBtnBox" style="text-align : center;">
-				<button class="doSearchBtn" value="상세옵션" id="doBtn" style="width: 505px; position : relative; top : 15px;">상세옵션</button>
-			</div>
-
-			<div id="detailOption_wrapper" style="display: none;">
-			
-				<div class="detailOption_box" style= "width : 100%; display : inline-block; margin-top: 42px;">
-					<h2 class="option_title" style="display : inline-block;">학력</h2>
-					<ul class="option_check" style="display : inline-block;">
-						<li><label class="sri_check" for="detailOption_education-1">
-								<input  type="checkbox" id="detailOption_education-1"
-								class="inp_check"> <span class="txt_check">상관없음</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_education-2">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-2"
-								class="inp_check edu"  value="고등학교 졸업" > <span class="txt_check">고등학교 졸업</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_education-3">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-3"
-								class="inp_check edu"  value="전문대 재학"> <span class="txt_check">전문대 재학</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_education-4">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-4"
-								class="inp_check edu" value="전문대 졸업"> <span class="txt_check">전문대 졸업</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_education-5">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-5"
-								class="inp_check edu"  value="대학교 재학"> <span class="txt_check">4년제 재학</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_education-6">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-6"
-								class="inp_check edu" value="4년제 졸업"> <span class="txt_check">4년제 졸업</span>
-						</label></li>
-					</ul>
-
-
-				</div>
-				<hr>
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
-				<h2 class="option_title">지역</h2>
-					<ul class="option_check">
-						<li>
-							<label class="sri_check" for="">
-								<select name="addressRegion" id="addressRegion1" style= "border : none;"></select> 
-								<select name="addressDo" id="addressDo1" style= "border : none;"></select> 
-								<select name="addressSiGunGu" id="addressSiGunGu1" style= "border : none;"></select>
-							</label>
-						</li>
-					</ul>
-				</div>
-				<hr>
-
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
-					<h2 class="option_title">키워드</h2>
-					<ul class="option_check">
-					
-						<li><label class="sri_check" for="detailOption_keyword_all">
-									<input type="checkbox" id="detailOption_keyword_all"
-									class="inp_check"> <span class="txt_check">상관없음 </span>
-							</label></li>
-						
-						<c:forEach items="${ requestScope.keywordList }" var="k">
-							<li>
-								<label class="sri_check" for="detailOption_keyword_${ k.key_no }">
-									<input name = "keyword" type="checkbox" id="detailOption_keyword_${ k.key_no }"
-									class="inp_check key" value=" ${ k.type_per }"> <span class="txt_check">${ k.type_per }
-								</span>
-								</label>
-							</li>
-						</c:forEach>
-					</ul>
-				</div>
-				<hr>
-				
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
-					<h2 class="option_title">요일선택</h2>
-					<ul class="option_check">
-						<li><label class="sri_check" for="detailOption_week_all">
-								<input type="checkbox" id="detailOption_week_all"
-								class="inp_check"> <span class="txt_check">상관없음 </span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_mon">
-								<input name= "day" type="checkbox" id="detailOption_week_mon"
-								class="inp_check week" value="월" > <span class="txt_check">월 </span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_tue">
-								<input name= "day" type="checkbox" id="detailOption_week_tue"
-								class="inp_check week" value="화"> <span class="txt_check">화
-							</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_wed">
-								<input name= "day" type="checkbox" id="detailOption_week_wed"
-								class="inp_check week" value="수"> <span class="txt_check">수
-							</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_thu">
-								<input  name= "day"type="checkbox" id="detailOption_week_thu"
-								class="inp_check week" value="목"> <span class="txt_check">목
-							</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_fri">
-								<input name= "day" type="checkbox" id="detailOption_week_fri"
-								class="inp_check week" value="금"> <span class="txt_check">금
-							</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_sat">
-								<input name= "day" type="checkbox" id="detailOption_week_sat"
-								class="inp_check week" value="토"> <span class="txt_check">토
-							</span>
-						</label></li>
-						<li><label class="sri_check" for="detailOption_week_sun">
-								<input name= "day" type="checkbox" id="detailOption_week_sun"
-								class="inp_check week" value="일"> <span class="txt_check">일
-							</span>
-						</label></li>
-					</ul>
-
-
-				</div>
-				
-				<hr>
-				
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
-					<h2 class="option_title">시간선택</h2>
-					
-					<ul class="option_check">
-						<li>
-							<div class="input-a margin-t-10">
-							<input type="text" id="stime" name="stime" value="" class="timePicker sri_check" placeholder="00:00">
-							~
-							<input type="text" id="etime" name="etime" value="" class="timePicker sri_check" placeholder="24:00">
-							</div>
-
-						</li>
-					</ul>
-
-
-				</div>
-				<hr>
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
-					<h2 class="option_title">희망금액</h2>
-					
-					<ul class="option_check">
-						<li><label class="sri_check" for="detailOption_price_min">
-								<input type="text" id="detailOption_price_min"
-								class="inp_check" style="height : 100%; border : none;"> <span class="txt_check"> </span>
-						</label> ~ <label class="sri_check" for="detailOption_price_max">
-								<input type="text" id="detailOption_price_max"
-								class="inp_check" style="height : 100%; border : none;"> <span class="txt_check"> </span>
-						</label></li>
-					</ul>
-
-
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<div>
-		<button id = "online_ok_ok" name = "online_ok" value="ok">대면</button>
-		<button id = "online_ok_no" name= "online_ok" value="no">비대면</button>
-		<div>
-			<ul>
-			<c:choose>
-				<c:when test="${ not empty searchTutor }">			
-					<c:forEach items="${ requestScope.searchTutor }" var="s">
-						<li>
-							<div class="list_container">
-								<div class="img_box">리스트1 이미지</div>
-								<div class="detail_info">
-									<h2>${ s.intro }</h2>
-								</div>
-							</div>
-						</li>
-					</c:forEach>
-				
-				</c:when>
-				
-				<c:otherwise>
-					<c:forEach items="${ requestScope.tutorList }" var="t">
-						<li>
-						<a href="#">
-							<div class="list_container">
-								<div class="img_box">리스트1 이미지</div>
-								<div class="detail_info">
-									<h2>${ t.intro } |  ${ t.sub_name  }</h2>
-									<span class="tab">금액 : ${ t.min_pay }</span>
-									<span class="tab">지역 : ${ t.area }</span><br>
-									<span class="tab">요일 : ${ t.day }</span>
-									<span class="tab">시간 : ${ t.time }</span>
-									<span class="tab">스타일 : ${ t.style }</span>
-								</div>
-							</div>
-						</a>
-						</li>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-			
-			</ul>
-		</div>
-
-
-	</div>
-
-	<%-- 
-<div style="text-align:center;">
-<c:if test="${ currentPage <= 1 }">
-	[맨처음]&nbsp;
-</c:if>
-<c:if test="${ currentPage > 1 }">
-	<c:url var="ubl" value="/blist">
-		<c:param name="page" value="1" />
-	</c:url>
-	<a href="${ ubl }">[맨처음]</a>
-</c:if>
-<!-- 이전 그룹으로 이동 처리 -->
-<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
-	<c:url var="ubl2" value="/blist">
-		<c:param name="page" value="${ startPage - 10 }"/>
-	</c:url>
-	<a href="${ ubl2 }">[이전그룹]</a>
-</c:if>
-<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-	[이전그룹]&nbsp;
-</c:if>
-<!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리 -->
-<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
-	<c:if test="${ p eq currentPage }">	
-		<font color="red" size="4"><b>[${ p }]</b></font>
-	</c:if>
-	<c:if test="${ p ne currentPage }">
-		<c:url var="ubl3" value="/blist">
-			<c:param name="page" value="${ p }"/>
-		</c:url>
-		<a href="${ ubl3 }">${ p }</a>
-	</c:if>
-</c:forEach>
-<!-- 다음 그룹으로 이동 처리 -->
-<c:if test="${ (currentPage + 10) > endPage && (currentPage + 10) < maxPage }">
-	<c:url var="ubl4" value="/blist">
-		<c:param name="page" value="${ endPage + 10 }"/>
-	</c:url>
-	<a href="${ ubl4 }">[다음그룹]</a>
-</c:if>
-<c:if test="${ !((currentPage + 10) > endPage && (currentPage + 10) < maxPage) }">
-	[다음그룹]&nbsp;
-</c:if>
-<!-- 맨끝 페이지로 이동 처리 -->
-<c:if test="${ currentPage >= maxPage }">
-	[맨끝]&nbsp;
-</c:if>	
-<c:if test="${ currentPage < maxPage }">
-	<c:url var="ubl5" value="/blist">
-		<c:param name="page" value="${ maxPage }"/>
-	</c:url>
-	<a href="${ ubl5 }">[맨끝]</a>
-</c:if>
-</div> --%>
-
-
-</body>
 </html>

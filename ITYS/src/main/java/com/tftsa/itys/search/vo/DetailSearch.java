@@ -13,12 +13,15 @@ public class DetailSearch implements java.io.Serializable {
 	private String day_str;
 	private String db_day_str;
 	private String[] db_day_list;
+	private String stime;
+	private String etime;
+	private String price;
 	public DetailSearch() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public DetailSearch(int user_no, String[] l_grd_list, String area, String[] keyword_list, String day_str,
-			String db_day_str, String[] db_day_list) {
+			String db_day_str, String[] db_day_list, String stime, String etime, String price) {
 		super();
 		this.user_no = user_no;
 		this.l_grd_list = l_grd_list;
@@ -27,6 +30,9 @@ public class DetailSearch implements java.io.Serializable {
 		this.day_str = day_str;
 		this.db_day_str = db_day_str;
 		this.db_day_list = db_day_list;
+		this.stime = stime;
+		this.etime = etime;
+		this.price = price;
 	}
 	public int getUser_no() {
 		return user_no;
@@ -70,9 +76,29 @@ public class DetailSearch implements java.io.Serializable {
 	public void setDb_day_list(String[] db_day_list) {
 		this.db_day_list = db_day_list;
 	}
+	public String getStime() {
+		return stime;
+	}
+	public void setStime(String stime) {
+		this.stime = stime;
+	}
+	public String getEtime() {
+		return etime;
+	}
+	public void setEtime(String etime) {
+		this.etime = etime;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
 	
 	
 	
