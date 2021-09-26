@@ -14,8 +14,8 @@ public class AdminReviewDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public ArrayList<AdminReview> selectReviewAll(){
-		List<AdminReview> list = sqlSession.selectList("adminreviewMapper.selectReviewAll");
+	public ArrayList<AdminReview> selectReviewAll(String user_name){
+		List<AdminReview> list = sqlSession.selectList("adminreviewMapper.selectReviewAll", user_name);
 		return (ArrayList<AdminReview>)list;
 	}
 	

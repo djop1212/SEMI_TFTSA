@@ -30,8 +30,8 @@
             <h1 class="h3 mb-0 text-gray-800">리뷰관리</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
-              <li class="breadcrumb-item">Tables</li>
-              <li class="breadcrumb-item active" aria-current="page">DataTables</li>
+              <li class="breadcrumb-item"><a href="/itys/adminDashboard.do">관리자 페이지</a></li>
+              <li class="breadcrumb-item active" aria-current="page">회원관리</li>
             </ol>
           </div>
 
@@ -41,8 +41,23 @@
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 </div>
+                
+                 <div class="search-option" style="display:flex;">	
+                <form action="adminReview.do" method="POST" class="navbar-search">
+                  <div class="input-group" style="width:200px;float:right;margin-right:15px">
+                    <input type="text" name="searched_txt" class="form-control bg-light border-1 small" placeholder="Search a Tutor"
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                </div>
+                
                 <div class="table-responsive p-3">
-                <form action="deleteKeyword.do" method="post" id="multidelete">
+                <form action="deleteReview.do" method="post" id="multidelete">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
@@ -129,6 +144,17 @@
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 <script>
+	var searched_txt = $("#searched_txt").val();
+	function searchFunction(){	
+		$.ajax({
+			url : "/itys/adminReview",
+			type: 'POST',
+			data : {searched_txt : searched_txt},
+			success : function(data){
+						console.log("searched_txt",data);
+	        	}				 		
+		})
+	} 
 	//삭제할 항목의 id 저장할 배열
 	var chkArray = new Array(); // 배열 선언
 	

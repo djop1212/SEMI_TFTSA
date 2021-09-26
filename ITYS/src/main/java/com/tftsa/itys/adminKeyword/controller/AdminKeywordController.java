@@ -27,8 +27,8 @@ public class AdminKeywordController {
 	private AdminKeywordService keywordService;
 	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
 	@RequestMapping("adminKeyword.do")
-	public String keywordListViewMethod(Model model) {
-		ArrayList<AdminKeyword> list = keywordService.selectAllKeywords();
+	public String keywordListViewMethod(Model model,@RequestParam(value="searched_txt", required=false) String searched_txt) {
+		ArrayList<AdminKeyword> list = keywordService.selectAllKeywords(searched_txt);
 		
 		model.addAttribute("list", list);
 		return "admin/adminKeyword";

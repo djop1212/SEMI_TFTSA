@@ -15,8 +15,8 @@ public class AdminKeywordDao {
 	private SqlSessionTemplate sqlSession; 
 	
 	//모든 회원 조회
-	public ArrayList<AdminKeyword> selectAllKeywords(){
-		List<AdminKeyword> list = sqlSession.selectList("adminkeywordMapper.selectAllKeywords");
+	public ArrayList<AdminKeyword> selectAllKeywords(String tper){
+		List<AdminKeyword> list = sqlSession.selectList("adminkeywordMapper.selectAllKeywords",tper);
 		return (ArrayList<AdminKeyword>)list;
 	}
 	

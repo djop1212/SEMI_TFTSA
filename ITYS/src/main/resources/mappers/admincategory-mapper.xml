@@ -10,8 +10,12 @@
 		<result property="sub_name" column="sub_name" />
 	</resultMap>
 	
-	<select id="selectCategoryAll" resultMap="resultSubject">
+	<select id="selectCategoryAll" parameterType="String" resultMap="resultSubject">
 		select * from subject
+		<if test = "sub_name !=null">
+			where sub_name like '%' || #{ sub_name } || '%' 
+		</if>
+		order by sub_no
 	</select>
 	
 	<delete id="deleteCategory" parameterType="String">

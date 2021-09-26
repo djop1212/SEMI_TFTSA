@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/img/logo/logo.png" rel="icon">
-<title>Admin - 회원 관리</title>
+<title>Admin - 키워드 관리</title>
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
@@ -103,11 +103,10 @@ a {
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 </div>
                 
-                <div class="search-option" style="display:flex;">
-					
-                <form class="navbar-search">
+                <div class="search-option" style="display:flex;">	
+                <form action="adminKeyword.do" method="POST" class="navbar-search">
                   <div class="input-group" style="width:200px;float:right;margin-right:15px">
-                    <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
+                    <input type="text" name="searched_txt" class="form-control bg-light border-1 small" placeholder="Search a Keyword"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
@@ -196,29 +195,17 @@ a {
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 <script>
-	/* function searchFunction(){
-	$.ajax({
-		type: 'GET',
-		url : "/itys/adminMember",
-		data : $("form[name=navbar-search]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-} */
+	var searched_txt = $("#searched_txt").val();
+	function searchFunction(){	
+		$.ajax({
+			url : "/itys/adminKeyword",
+			type: 'POST',
+			data : {searched_txt : searched_txt},
+			success : function(data){
+						console.log("searched_txt",data);
+	        	}				 		
+		})
+	} 
 	//삭제할 항목의 id 저장할 배열
 	var chkArray = new Array(); // 배열 선언
 	
