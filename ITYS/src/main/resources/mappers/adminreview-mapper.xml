@@ -18,7 +18,10 @@
 		left outer join user_info u
 		on (r.tutor_no = u.user_no)
 		left outer join tutor t
-		on (r.tutor_no = t.user_no) 
+		on (r.tutor_no = t.user_no)
+		<if test = "type_per !=null">
+			where u.user_name like '%' || #{ user_name } || '%' 
+		</if> 
 		order by r.rev_no
 	</select>
 	

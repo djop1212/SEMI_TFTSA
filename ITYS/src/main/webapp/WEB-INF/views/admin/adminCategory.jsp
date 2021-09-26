@@ -103,14 +103,13 @@ a {
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 </div>
                 
-                <div class="search-option" style="display:flex;">
-					
-                <form class="navbar-search">
+                <div class="search-option" style="display:flex;">				
+                <form action="adminCategory.do" method="POST" class="navbar-search">
                   <div class="input-group" style="width:200px;float:right;margin-right:15px">
-                    <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
+                    <input type="text" name="searched_txt" class="form-control bg-light border-1 small" placeholder="Search a Subject"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary" type="submit">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
@@ -119,7 +118,7 @@ a {
                 </div>
                 
                 <div class="table-responsive p-3">
-                <form action="deleteMember.do" method="post" id="multidelete">
+                <form action="deleteCategory.do" method="post" id="multidelete">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
@@ -199,29 +198,17 @@ a {
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 <script>
-/* 	function searchFunction(){
-	$.ajax({
-		type: 'GET',
-		url : "/itys/adminMember",
-		data : $("form[name=navbar-search]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-} */
+	var searched_txt = $("#searched_txt").val();
+	function searchFunction(){	
+		$.ajax({
+			url : "/itys/adminCategory",
+			type: 'POST',
+			data : {searched_txt : searched_txt},
+			success : function(data){
+						console.log("searched_txt",data);
+	        	}				 		
+		})
+	} 
 	//삭제할 항목의 id 저장할 배열
 	var chkArray = new Array(); // 배열 선언
 	
@@ -232,18 +219,24 @@ a {
             chkArray.push(this.value);
         });
         $('#clickedValue').val(chkArray);
-        var delVal=confirm($('#clickedValue').val()+"를 과목에서 삭제하시겠습니까?");
-        location.reload(true);
-        console.log(chkArray);
-        //
-        $.ajax({
-        	url:"deleteCategory.do",
-        	type:"post",
-        	data : {'list': chkArray.join(',')},
-        	  success : function(data){
-        	    console.log('삭제를 성공했습니다!');
-        	  }
-        })
+        var conVal=confirm($('#clickedValue').val()+"를 과목에서 삭제하시겠습니까?");
+        if (conVal == true){
+	        location.reload(true);
+	        console.log(chkArray);
+	        //
+	        $.ajax({
+	        	url:"deleteCategory.do",
+	        	type:"post",
+	        	data : {'list': chkArray.join(',')},
+	        	  success : function(data){
+	        	    console.log('삭제를 성공했습니다!');
+	        	  }
+	        })
+        }
+        else if(conVal == false){
+        	alert("삭제를 취소했습니다.");
+        	location.reload(true);
+        }
 	}
 </script>
 </html>

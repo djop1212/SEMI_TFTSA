@@ -27,8 +27,8 @@ public class AdminReviewController {
 	private AdminReviewService reviewService;
 	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
 	@RequestMapping("adminReview.do")
-	public String reviewListViewMethod(Model model) {
-		ArrayList<AdminReview> list = reviewService.selectReviewAll();
+	public String reviewListViewMethod(Model model,@RequestParam(value="searched_txt", required=false) String searched_txt) {
+		ArrayList<AdminReview> list = reviewService.selectReviewAll(searched_txt);
 		
 		model.addAttribute("list", list);
 		return "admin/adminReview";

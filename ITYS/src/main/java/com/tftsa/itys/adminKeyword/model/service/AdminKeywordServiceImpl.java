@@ -14,8 +14,8 @@ public class AdminKeywordServiceImpl implements AdminKeywordService{
 	private AdminKeywordDao adminkeywordDao;
 
 	@Override
-	public ArrayList<AdminKeyword> selectAllKeywords() {
-		return adminkeywordDao.selectAllKeywords();
+	public ArrayList<AdminKeyword> selectAllKeywords(String type_per) {
+		return adminkeywordDao.selectAllKeywords(type_per);
 	}
 	
 	@Override

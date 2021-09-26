@@ -15,8 +15,8 @@ public class AdminCategoryServiceImpl implements AdminCategoryService{
 	private AdminCategoryDao admincategoryDao;
 	
 	@Override
-	public ArrayList<Subject> selectCategoryAll() {
-		return admincategoryDao.selectCategoryAll();
+	public ArrayList<Subject> selectCategoryAll(String sname) {
+		return admincategoryDao.selectCategoryAll(sname);
 	}
 	
 	@Override

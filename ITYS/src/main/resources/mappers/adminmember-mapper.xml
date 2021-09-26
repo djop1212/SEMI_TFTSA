@@ -16,8 +16,12 @@
 		<result property="login_ok" column="login_ok" />
 	</resultMap>
 	
-	<select id="selectAllList" resultMap="resultMember">
-		select * from user_info
+	<select id="selectAllList" parameterType="string" resultMap="resultMember">
+		select * from user_info 
+		<if test = "user_id !=null">
+			where user_id like '%' || #{ user_id } || '%' 
+		</if>
+		order by user_no
 	</select>
 	
 	<select id="selectAllStudents" resultMap="resultMember">
@@ -31,6 +35,10 @@
 	<delete id="deleteMember" parameterType="string">
 		delete from user_info where user_id = #{ user_id } 
 	</delete>
+	
+	<select id="selectMember" resultMap="resultMember" parameterType="string">
+		select * from user_info where user_id = #{ user_id } 
+	</select>
 </mapper>
 
 

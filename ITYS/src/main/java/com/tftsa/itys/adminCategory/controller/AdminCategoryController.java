@@ -22,13 +22,12 @@ public class AdminCategoryController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminCategoryController.class);
 
 //	@Autowired
-//	private CategoryService keywordService;
 	@Autowired // 자동 DI 처리됨
 	private AdminCategoryService categoryService;
 	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
 	@RequestMapping("adminCategory.do")
-	public String categoryListViewMethod(Model model) {
-		ArrayList<Subject> list = categoryService.selectCategoryAll();
+	public String categoryListViewMethod(Model model,@RequestParam(value="searched_txt", required=false) String searched_txt) {
+		ArrayList<Subject> list = categoryService.selectCategoryAll(searched_txt);
 		
 		model.addAttribute("list", list);
 		return "admin/adminCategory";

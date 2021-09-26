@@ -14,8 +14,8 @@ public class AdminCategoryDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public ArrayList<Subject> selectCategoryAll(){
-		List<Subject> list = sqlSession.selectList("admincategoryMapper.selectCategoryAll");
+	public ArrayList<Subject> selectCategoryAll(String sname){
+		List<Subject> list = sqlSession.selectList("admincategoryMapper.selectCategoryAll", sname);
 		return (ArrayList<Subject>)list;
 	}
 	
