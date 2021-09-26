@@ -39,7 +39,7 @@ public class ReplyDaoImpl implements ReplyDao{
 
 		public int deleteReply(Reply reply) {
 			return sql.delete("replyMapper.deleteReply", reply);
-
+		}
 
 		@Override
 		public Reply selectReply(int com_no) {
