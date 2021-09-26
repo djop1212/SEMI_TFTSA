@@ -54,10 +54,16 @@
 		SELECT * from tutor, subject, user_info
 		WHERE tutor.sub_name = subject.sub_name
 		AND tutor.user_no = user_info.user_no
-		AND (tutor.intro like '%' || #{ word } || '%'
-		OR user_info.user_name like '%' || #{ word } || '%')
-		AND subject.category = #{ category }
-		AND subject.sub_name = #{ sub_name }
+		<if test = "word != 'null'  ">
+			AND (tutor.intro like '%' || #{ word } || '%'
+			OR user_info.user_name like '%' || #{ word } || '%')
+		</if>
+		<if test = "category != 'null'  ">
+			AND subject.category = #{ category }
+		</if>
+		<if test = "sub_name != 'null'  ">
+			AND subject.sub_name = #{ sub_name }
+		</if>
 
 	</select>
 	
@@ -79,7 +85,10 @@
         
 	</select>
 	
+
+	
 	<select id="selectDetailSearch" parameterType="DetailSearch" resultMap="resultTutor">
+	
 		SELECT DISTINCT TUTOR.*
 		FROM tutor, key_data, keyword
 		WHERE tutor.user_no = key_data.user_no(+)
@@ -91,6 +100,7 @@
 				regexp_like(REPLACE(tutor.l_grd,' ',''), #{ item })
 			</foreach>
 		</if>
+		
 		<if test = "area != 'null'  ">
 			and area = #{ area }
 		</if>
@@ -105,7 +115,10 @@
 				#{ day_str } LIKE ('%' || #{ item } || '%')
 			</foreach>
 		</if>
-		
+		<if test='stime != "null"'>
+			AND SUBSTR(time,1,5) <![CDATA[>=]]>  #{ stime }
+       		AND SUBSTR(time,8,12) <![CDATA[<=]]> #{ etime }
+		</if>
         
 	</select>
 </mapper>
