@@ -38,10 +38,20 @@ public class ChattingServiceImpl implements ChattingService{
 	public Chattingroom selectChattingroom(int chat_room_no) {
 		return chattingDao.selectChattingroom(chat_room_no);
 	}
+	
+	@Override
+	public Likes selectLikes(Likes likes) {
+		return chattingDao.selectLikes(likes);
+	}
 
 	@Override
 	public int deleteChatting(int chat_room_no) {
 		return chattingDao.deleteChatting(chat_room_no);
+	}
+	
+	@Override
+	public int deleteLikes(Likes likes) {
+		return chattingDao.deleteLikes(likes);
 	}
 
 	@Override
