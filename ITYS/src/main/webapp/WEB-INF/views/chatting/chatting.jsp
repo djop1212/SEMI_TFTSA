@@ -61,6 +61,9 @@
     right: 0;
     bottom: 0;
     left: 0;
+    display:flex;
+    flex-direction: column-reverse;
+    overflow-y:auto;
 }
 
 .pad-all {
@@ -246,8 +249,18 @@ a.btn-layerClose:hover {
 								<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 							</c:url>
+							<c:url var="deleteLikes" value="deleteLikes.do">
+								<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+								<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
+								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
+							</c:url>
 							<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
-	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body" onclick="location.href='${ insertLikes }'"><i class="fa">찜하기</i></button>
+							<c:if test="${ requestScope.likes == null }">
+	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body" onclick="nextInsertLikes()"><i class="fa">찜하기</i></button>
+	    					</c:if>
+	    					<c:if test="${ requestScope.likes != null }">
+	    					<button class="btn btn-default" type="button" data-target="#demo-chat-body" onclick="nextDeleteLikes()"><i class="fa">찜하기</i></button>
+	    					</c:if>
 	    					</c:if>
 	    					<c:url var="deleteChatting" value="deleteChatting.do">
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
@@ -256,7 +269,12 @@ a.btn-layerClose:hover {
 	    				</div>
 	    			</div>
 	    			<div>
+	    				<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name } 선생님</h3>
+	    				</c:if>
+	    				<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingstudent.pic }" class="img-circle img-sm">${ requestScope.userchattingstudent.user_name } 학생</h3>
+	    				</c:if>
 	    			</div>	
 	    		</div>
 	    		<div class="row panel-heading">
@@ -288,7 +306,7 @@ a.btn-layerClose:hover {
 	    									<p class="speech-time">
 	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
 	    									</p>
-	    									<p class="speech-time">읽음</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
 	    								</div>
 	    							</div>
 	    						</li>
@@ -301,7 +319,7 @@ a.btn-layerClose:hover {
 	    									<p class="speech-time">
 	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
 	    									</p>
-	    									<p class="speech-time">읽음</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
 	    								</div>
 	    							</div>
 	    						</li>
@@ -325,7 +343,7 @@ a.btn-layerClose:hover {
 	    									<p class="speech-time">
 	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
 	    									</p>
-	    									<p class="speech-time">읽음</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
 	    								</div>
 	    							</div>
 	    						</li>
@@ -338,7 +356,7 @@ a.btn-layerClose:hover {
 	    									<p class="speech-time">
 	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
 	    									</p>
-	    									<p class="speech-time">읽음</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
 	    								</div>
 	    							</div>
 	    						</li>
@@ -359,6 +377,8 @@ a.btn-layerClose:hover {
 		    					<c:url var="insertChatting" value="insertChatting.do">
 									<c:param name="student_name" value="${ requestScope.userchattingstudent.user_name }"/>
 									<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
+									<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+									<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 									<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 									<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 										<c:param name="user_no" value="${ requestScope.userchattingstudent.user_no }"/>
@@ -391,6 +411,8 @@ a.btn-layerClose:hover {
 								<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
 								<c:param name="user_no" value="${ requestScope.userchattingtutor.user_no }"/>
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
+								<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+								<c:param name="tutor_no" value="${ requestScope.userchattingstudent.user_no }"/>
 							</c:url>
 	                	<a href="#" class="btn-layerClose" onclick="nextBlock()">확인</a>
 	                    <a href="#" class="btn-layerClose">취소</a>
@@ -433,6 +455,28 @@ a.btn-layerClose:hover {
 		 	{
 				var contents = document.getElementById("contents").value;
 		  		location.href="${ insertBlock }&contents=" + contents;
+		 	}
+		 	else
+		 	{
+		 		alert('취소하셨습니다.');
+		 	}
+		}
+		
+		function nextInsertLikes() {
+			if(confirm("선생님을 찜목록에 추가하시겠습니까?"))
+		 	{
+		  		location.href="${ insertLikes }";
+		 	}
+		 	else
+		 	{
+		 		alert('취소하셨습니다.');
+		 	}
+		}
+		
+		function nextDeleteLikes() {
+			if(confirm("선생님을 찜목록에서 제거하시겠습니까?"))
+		 	{
+		  		location.href="${ deleteLikes }";
 		 	}
 		 	else
 		 	{
@@ -542,7 +586,7 @@ a.btn-layerClose:hover {
 								+ "<p class='speech-time'>"
 									+ "<i class='fa fa-clock-o fa-fw'></i>" + timeString
 								+ "</p>"
-								+ "<p class='speech-time'>읽음</p>"
+								/* + "<p class='speech-time'>읽음</p>" */
 							+ "</div>"
 						+ "</div>"
 					+ "</li>");
@@ -586,7 +630,7 @@ a.btn-layerClose:hover {
 									+ "<p class='speech-time'>"
 									+ "<i class='fa fa-clock-o fa-fw'></i>" + timeString
 									+ "</p>"
-									+ "<p class='speech-time'>읽음</p>"
+									/* + "<p class='speech-time'>읽음</p>" */
 								+ "</div>"
 							+ "</div>"
 						+ "</li>");

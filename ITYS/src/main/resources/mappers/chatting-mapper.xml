@@ -86,7 +86,7 @@
 	</resultMap>
 	
 	<select id="selectChattingInfo" parameterType="Chatting" resultMap="resultChatting">
-		select * from chatting
+		select chat_no, chat_room_no, wrtn_datetm + (INTERVAL '9' HOUR) as wrtn_datetm, user_no, chat_content from chatting
 		where chat_room_no = #{ chat_room_no }
 		order by chat_no
 	</select>
@@ -111,10 +111,22 @@
 		select * from chatting_room
 		where chat_room_no = #{ chat_room_no }
 	</select>
+	
+	<select id="selectLikes" parameterType="_int" resultMap="resultLikes">
+		select * from likes
+		where tutor_no = #{ tutor_no }
+		and student_no = #{ student_no }
+	</select>
 
 	<delete id="deleteChatting" parameterType="_int">
 		delete from chatting_room
 		where chat_room_no = #{ chat_room_no }
+	</delete>
+	
+	<delete id="deleteLikes" parameterType="Likes">
+		delete from likes
+		where tutor_no = #{ tutor_no }
+		and student_no = #{ student_no }
 	</delete>
 	
 	<insert id="insertLikes" parameterType="Likes" >

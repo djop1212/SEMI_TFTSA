@@ -285,9 +285,18 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+    		<groupId>xerces</groupId>
+    		<artifactId>xercesImpl</artifactId>
+    		<version>2.9.1</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
+	
 		<plugins>
+		
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>
@@ -302,6 +311,7 @@
 					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -314,6 +324,7 @@
 					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -322,6 +333,7 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 </project>
