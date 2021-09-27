@@ -23,4 +23,14 @@ public class AdminCategoryServiceImpl implements AdminCategoryService{
 	public int deleteCategory(String sname) {
 		return admincategoryDao.deleteCategory(sname);
 	}
+	
+	@Override
+	public int insertSubject(Subject subject) {
+		return admincategoryDao.insertSubject(subject);
+	}
+	
+	@Override
+	public int cntSubject(String sname) {
+		return admincategoryDao.cntSubject(sname);
+	}
 }

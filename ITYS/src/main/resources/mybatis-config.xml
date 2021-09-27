@@ -65,7 +65,7 @@
 		<mapper resource="mappers/adminkeyword-mapper.xml"/>
 		<mapper resource="mappers/chatting-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
-    <mapper resource="mappers/member-mapper.xml"/>
+    	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
     	<mapper resource="mappers/board-mapper.xml" />

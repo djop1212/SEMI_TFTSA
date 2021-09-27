@@ -25,4 +25,12 @@ public class AdminKeywordDao {
 		return sqlSession.delete("adminkeywordMapper.deleteKeyword", type_per);
 	}
 	
+	//키워드 추가
+	public int insertKeyword(String type_per) {
+		return sqlSession.insert("adminkeywordMapper.insertKeyword", type_per);
+	}
+	
+	public int cntKeyword(String type_per) {
+		return sqlSession.selectOne("adminkeywordMapper.cntKeyword", type_per);
+	}
 }
