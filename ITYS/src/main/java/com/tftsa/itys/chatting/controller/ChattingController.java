@@ -34,9 +34,6 @@ public class ChattingController {
 		UserChattingTutor userchattingtutor = chattingService.selectTutor(chat_room_no);
 		ArrayList<Chatting> chat = chattingService.selectChattingInfo(chat_room_no);
 		
-		System.out.println(tutor_no);
-		System.out.println(student_no);
-		
 		likesList.setTutor_no(tutor_no);
 		likesList.setStudent_no(student_no);
 		
@@ -130,7 +127,8 @@ public class ChattingController {
 	public String insertChatting(Chatting chatting, Chattingroom chattingroom, Model model, 
 			@RequestParam("student_name") String student_name, @RequestParam("tutor_name") String tutor_name, 
 			@RequestParam("chat_room_no") int chat_room_no, @RequestParam("user_no") int user_no, 
-			@RequestParam("chat_content") String chat_content) {
+			@RequestParam("chat_content") String chat_content, @RequestParam("student_no") int student_no, 
+			@RequestParam("tutor_no") int tutor_no) {
 		logger.info("insertChatting.do : " + chattingroom);
 		logger.info("insertChatting.do : " + chatting);
 		
@@ -147,7 +145,7 @@ public class ChattingController {
 		chatting.setChat_content(chat_content);
 
 		if (chattingService.insertChatting(chatting) > 0) {
-			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no + "&user_no=" + user_no;
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no + "&student_no=" + student_no + "&tutor_no=" + tutor_no;
 		} else {
 			model.addAttribute("message", "채팅 내역 저장 실패!");
 			return "common/error";

@@ -377,6 +377,8 @@ a.btn-layerClose:hover {
 		    					<c:url var="insertChatting" value="insertChatting.do">
 									<c:param name="student_name" value="${ requestScope.userchattingstudent.user_name }"/>
 									<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
+									<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+									<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 									<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 									<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 										<c:param name="user_no" value="${ requestScope.userchattingstudent.user_no }"/>
