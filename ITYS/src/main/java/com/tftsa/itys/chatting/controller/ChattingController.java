@@ -28,10 +28,21 @@ public class ChattingController {
 	
 	// 채팅 조회 컨트롤러
 	@RequestMapping("selectChatting.do")
-	public ModelAndView selectChatting(ModelAndView mv, @RequestParam("chat_room_no") int chat_room_no) {
+	public ModelAndView selectChatting(Likes likesList, ModelAndView mv, @RequestParam("chat_room_no") int chat_room_no, 
+			@RequestParam("tutor_no") int tutor_no, @RequestParam("student_no") int student_no) {
 		UserChattingStudent userchattingstudent = chattingService.selectStudent(chat_room_no);
 		UserChattingTutor userchattingtutor = chattingService.selectTutor(chat_room_no);
 		ArrayList<Chatting> chat = chattingService.selectChattingInfo(chat_room_no);
+		
+		System.out.println(tutor_no);
+		System.out.println(student_no);
+		
+		likesList.setTutor_no(tutor_no);
+		likesList.setStudent_no(student_no);
+		
+		Likes likes = chattingService.selectLikes(likesList);
+		
+		mv.addObject("likes", likes);
 
 		if (userchattingstudent != null && userchattingtutor != null && chat.size() > 0) {
 			mv.addObject("userchattingstudent", userchattingstudent);
@@ -57,12 +68,30 @@ public class ChattingController {
 		}
 	}
 	
+	// 찜목록 삭제 컨트롤러
+	@RequestMapping("deleteLikes.do")
+	public String deleteLikes(Likes likes, Model model, @RequestParam("student_no") int student_no,
+			@RequestParam("tutor_no") int tutor_no, @RequestParam("chat_room_no") int chat_room_no) {
+		logger.info("deleteLikes.do : " + likes);
+
+		likes.setStudent_no(student_no);
+		likes.setTutor_no(tutor_no);
+
+		if (chattingService.deleteLikes(likes) > 0) {
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no + "&student_no=" + student_no + "&tutor_no=" + tutor_no;
+		} else {
+			model.addAttribute("message", "찜목록 삭제 실패!");
+			return "common/error";
+		}
+	}
+	
 	// 신고하기 컨트롤러
 	@RequestMapping("insertBlock.do")
 	public String insertBlock(Chattingblock chattingblock, Model model, 
 			@RequestParam("student_name") String student_name, @RequestParam("tutor_name") String tutor_name, 
 			@RequestParam("contents") String contents, @RequestParam("user_no") int user_no, 
-			@RequestParam("chat_room_no") int chat_room_no) {
+			@RequestParam("chat_room_no") int chat_room_no, @RequestParam("student_no") int student_no, 
+			@RequestParam("tutor_no") int tutor_no) {
 		logger.info("insertBlock.do : " + chattingblock);
 
 		chattingblock.setStudent_name(student_name);
@@ -72,7 +101,7 @@ public class ChattingController {
 		chattingblock.setUser_name(student_name);
 		
 		if (chattingService.insertBlock(chattingblock) > 0) {
-			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no;
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no + "&student_no=" + student_no + "&tutor_no=" + tutor_no;
 		} else {
 			model.addAttribute("message", "신고하기 실패!");
 			return "common/error";
@@ -89,7 +118,7 @@ public class ChattingController {
 		likes.setTutor_no(tutor_no);
 
 		if (chattingService.insertLikes(likes) > 0) {
-			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no;
+			return "redirect:selectChatting.do?chat_room_no=" + chat_room_no + "&student_no=" + student_no + "&tutor_no=" + tutor_no;
 		} else {
 			model.addAttribute("message", "찜목록 추가 실패!");
 			return "common/error";

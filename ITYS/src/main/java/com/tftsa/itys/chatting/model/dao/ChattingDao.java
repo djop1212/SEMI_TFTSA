@@ -36,9 +36,17 @@ public class ChattingDao {
 	public Chattingroom selectChattingroom(int chat_room_no) {
 		return sqlSession.selectOne("chattingMapper.selectChattingroom", chat_room_no);
 	}
+	
+	public Likes selectLikes(Likes likes) {
+		return sqlSession.selectOne("chattingMapper.selectLikes", likes);
+	}
 
 	public int deleteChatting(int chat_room_no) {
 		return sqlSession.delete("chattingMapper.deleteChatting", chat_room_no);
+	}
+	
+	public int deleteLikes(Likes likes) {
+		return sqlSession.delete("chattingMapper.deleteLikes", likes);
 	}
 
 	public int insertBlock(Chattingblock chattingblock) {
