@@ -1,5 +1,6 @@
 package com.tftsa.itys.adminKeyword.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.adminKeyword.model.service.AdminKeywordService;
 import com.tftsa.itys.adminKeyword.model.vo.AdminKeyword;
@@ -44,5 +47,31 @@ public class AdminKeywordController {
 		}
 		
 		return "redirect:adminKeyword.do";
+	}
+	
+	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
+	@RequestMapping("addKeyword.do")
+	public String keywordAddViewMethod(Model model) {
+		
+		return "admin/addKeyword";
+	}
+
+	
+	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
+	@RequestMapping(value="confirmKeyword.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int keywordconfirmViewMethod(@RequestParam(value="newKeyword", required=false) String newKeyword ) {
+		int cnt = -1;
+		if (newKeyword!=null) {
+			cnt = keywordService.cntKeyword(newKeyword);
+			if (cnt==0) {
+				keywordService.insertKeyword(newKeyword);
+				System.out.println("새로 추가된 키워드: "+newKeyword);		
+			}
+			else if (cnt==1) {
+				System.out.println("중복된 키워드: "+newKeyword);
+			}
+		}
+		return cnt;
 	}
 }

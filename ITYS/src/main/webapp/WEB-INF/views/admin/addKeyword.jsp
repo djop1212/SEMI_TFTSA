@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,11 +26,19 @@ a {
   text-decoration-line: none;
   text-align : center;
   }
-
+#submitBtn {
+  margin-left:0px;
+  height: 43px;
+  margin-top: 0px;
+}
+#addKeyword{
+	padding: 25px 20px;
+	margin-top: 20px;
+	width:400px;
+}
 </style> 
 </head>
 <body id="page-top">
-
 	<div id="wrapper">
 		<c:import url="/WEB-INF/views/admin/common/sidebar.jsp" />
 
@@ -47,62 +58,24 @@ a {
           <!-- Row -->
           <div class="row">
             <div class="col-lg-12">
-              <div class="card mb-4">
-              
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                </div>
+              <!-- Form Basic -->
+              <div class="card mb-4" style="padding: 20px 100px 20px 100px"><!--top,right,bottom,left-->
                 
-                <div class="search-option" style="display:flex;">	
-                <form action="adminKeyword.do" method="POST" class="navbar-search">
-                  <div class="input-group" style="width:200px;float:right;margin-right:15px">
-                    <input type="text" name="searched_txt" class="form-control bg-light border-1 small" placeholder="Search a Keyword"
-                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
+                <div class="card-body">
+                  <form name="add-btn">
+                  <div class="row">
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" >
+                  <h6 class="m-0 font-weight-bold text-primary" style="padding-bottom: 20px;" >키워드 추가</h6>
+                </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="newKeyword" id="newKeyword" placeholder="Enter keyword"> 
                     </div>
-                  </div>
-                </form>
-                </div>
-                
-                <div class="table-responsive p-3">
-                <form action="deleteKeyword.do" method="post" id="multidelete">
-                  <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                    <thead class="thead-light">
-                      <tr>
-                      	<th>키워드번호</th>
-                        <th>성격내용</th>
-                        <th>삭제선택</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr>
-                      	<th>키워드번호</th>
-                        <th>성격내용</th>
-                        <th>삭제선택</th>
-                      </tr>
-                    </tfoot>
-                    <tbody>
-                       <c:forEach items="${ requestScope.list }" var="k">
-						<tr>
-							<td>${ k.key_no }</td>
-							<td>${ k.type_per }</td>
-							<td><input type="checkbox" name="del_chk" value=${ k.type_per }></td>
-						</tr>
-					  </c:forEach>  
-					  <input type="hidden" name="clickedValue" id="clickedValue" value=""/>
-                    </tbody>
-                  </table>
+                    
+                    <button type="submit" id="submitBtn" class="btn btn-primary" onclick="InsertKeyword();">Submit</button>
+                    </div>
                   </form>
-                  <div align="right" style=50px>
-                  <button type="button" class="btn btn-success mb-1" onclick="location.href='/itys/addKeyword.do'" >성격 추가</button>
-                  <a href="#" class="btn btn-danger" style="margin:0px 0px 4px" onclick="ClickedData();">
-                    <i class="fas fa-trash" ></i>
-                  </a>
-               	</div>
+                </div>
               </div>
-            </div>
           </div>
           <!--Row-->
 
@@ -145,47 +118,35 @@ a {
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 <script>
-	var searched_txt = $("#searched_txt").val();
-	function searchFunction(){	
-		$.ajax({
-			url : "/itys/adminKeyword",
-			type: 'POST',
-			data : {searched_txt : searched_txt},
-			success : function(data){
-						console.log("searched_txt",data);
-	        	}				 		
-		})
-	} 
-	//삭제할 항목의 id 저장할 배열
-	var chkArray = new Array(); // 배열 선언
 	
-	function ClickedData(){
-		var obj = $("[name=del_chk]");
-		// 체크된 체크박스의 value 값을 배열에 저장.
-        $('input:checkbox[name=del_chk]:checked').each(function() { 
-            chkArray.push(this.value);
-        });
-        $('#clickedValue').val(chkArray);
-        var conVal=confirm("'"+$('#clickedValue').val()+"' 을 키워드에서 삭제하시겠습니까?");
-        if (conVal == true){
-	        location.reload(true);
-	        console.log(chkArray);
- 
-	        $.ajax({
-	        	url:"deleteKeyword.do",
+	var newKeyword = null;
+	
+	function InsertKeyword(){
+		newKeyword=$('#newKeyword').val();
+		var conVal=confirm("'"+newKeyword+"' 을 키워드에 추가하시겠습니까?");
+		if (conVal == true){
+			document.forms["add-btn"].submit();		
+			$.ajax({
+	        	url:"confirmKeyword.do",
 	        	type:"post",
-	        	data : {'list': chkArray.join(',')},
-	        	  success : function(data){
-	        	    console.log('삭제를 성공했습니다!');
-	        	  }
-	        })
-        }
-        else if(conVal == false){
-        	alert("삭제를 취소했습니다.");
-        	location.reload(true);
-        }
+	        	data : {'newKeyword': newKeyword},
+	        	success : function(cnt){
+	        		if(cnt==0){
+	        			alert("키워드를 입력했습니다.");
+	        			document.location.href="addKeyword.do";
+	        		}
+	        		else if (cnt==1) {
+	        			alert("중복된 키워드입니다.");
+	        			document.location.href="addKeyword.do";
+	        		}
+	        	}
+	        })  
+		}
+		else {
+			alert("추가를 취소했습니다.");
+			location.reload(true);	
+		}			
 	}
-
-
+	
 </script>
 </html>

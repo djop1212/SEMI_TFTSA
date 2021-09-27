@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tftsa.itys.adminCategory.model.service.AdminCategoryService;
 import com.tftsa.itys.mypage.model.vo.Subject;
@@ -43,5 +44,29 @@ public class AdminCategoryController {
 		}
 		
 		return "redirect:adminCategory.do";
+	}
+	
+	@RequestMapping("addSubject.do")
+	public String categoryAddViewMethod(Model model ) {
+		
+		return "admin/addSubject";
+	}
+	
+	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
+	@RequestMapping(value="confirmSubject.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int subjectconfirmViewMethod(Subject subject,Model model) {
+		int cnt = -1;
+		if (subject.getSub_name()!=null) {
+			cnt = categoryService.cntSubject(subject.getSub_name());
+			if (cnt==0) {
+				categoryService.insertSubject(subject);
+				System.out.println("새로 추가된 키워드: "+subject.getSub_name());		
+			}
+			else if (cnt==1) {
+				System.out.println("중복된 키워드: "+subject.getSub_name());
+			}
+		}
+		return cnt;
 	}
 }
