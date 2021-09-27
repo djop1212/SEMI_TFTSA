@@ -5,5 +5,6 @@ import java.util.ArrayList;
 import com.tftsa.itys.adminKeyword.model.vo.AdminKeyword;
 
 public interface AdminKeywordService {
-	ArrayList<AdminKeyword> selectAllKeywords();
+	ArrayList<AdminKeyword> selectAllKeywords(String type_per);
+	int deleteKeyword(String type_per);
 }

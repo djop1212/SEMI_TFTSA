@@ -9,8 +9,15 @@
 		<result property="type_per" column="type_per" />
 	</resultMap>
 	
-	<select id="selectAllKeywords" resultMap="resultKeyword">
+	<select id="selectAllKeywords" parameterType="string" resultMap="resultKeyword">
 		select * from keyword
+		<if test = "type_per !=null">
+			where type_per like '%' || #{ type_per } || '%' 
+		</if>
+		order by key_no
 	</select>
 	
+	<delete id="deleteKeyword" parameterType="String">
+		delete from keyword where type_per = #{ type_per } 
+	</delete>
 </mapper>

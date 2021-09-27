@@ -60,7 +60,6 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return id;
 		}
-
 	}
 
 	// 이메일 발송

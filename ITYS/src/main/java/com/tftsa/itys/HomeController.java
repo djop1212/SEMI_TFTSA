@@ -66,10 +66,10 @@ public class HomeController {
 		return "common/info"; // 내보낼 뷰파일명 리턴
 	}
 	
-	@RequestMapping("login.do")
-	public String loginViewForward() {
-		return "common/login"; // 내보낼 뷰파일명 리턴
-	}
+//	@RequestMapping("login.do")
+//	public String loginViewForward() {
+//		return "common/login"; // 내보낼 뷰파일명 리턴
+//	}
 
 	@RequestMapping("adminDashboard.do")
 	public String AdminDashViewForward() {

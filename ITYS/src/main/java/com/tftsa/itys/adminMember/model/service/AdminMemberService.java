@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import com.tftsa.itys.member.model.vo.Member;
 
 public interface AdminMemberService {
-//	Member selectMember(int mid);
-	ArrayList<Member> selectAllList();
+//	Member selectMember(String mid);
+	ArrayList<Member> selectAllList(String mid);
 //	ArrayList<Member> selectLoggedInUser();
 	ArrayList<Member> selectAllStudents();
 	ArrayList<Member> selectAllTutors();
-//	int deleteMember(int mid);
+	int deleteMember(String mid);
 }

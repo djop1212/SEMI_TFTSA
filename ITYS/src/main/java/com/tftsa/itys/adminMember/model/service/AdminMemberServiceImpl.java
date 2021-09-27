@@ -14,19 +14,19 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	private AdminMemberDao memberDao;
 
 	@Override
-	public ArrayList<Member> selectAllList() {
-		return memberDao.selectAllList();
+	public ArrayList<Member> selectAllList(String mid) {
+		return memberDao.selectAllList(mid);
 	}
 
 //	@Override
-//	public Member selectMember(int mid) {
+//	public Member selectMember(String mid) {
 //		return memberDao.selectMember(mid);
 //	}
-//	
-//	@Override
-//	public int deleteMember(int mid) {
-//		return 0;
-//	}
+	
+	@Override
+	public int deleteMember(String mid) {
+		return memberDao.deleteMember(mid);
+	}
 //
 //	@Override
 //	public ArrayList<Member> selectLoggedInUser() {

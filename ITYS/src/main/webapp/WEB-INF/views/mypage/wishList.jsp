@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isErrorPage="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -144,7 +144,7 @@ img{
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
 							</ul>
 						</div>
-						<div style="color:#969ca2;"><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">탈퇴하기</a></div>
+						<div><a style="color:#969ca2;" href="#" onclick="deleteuser(); return false;">회원탈퇴</a></div>
 					</div>
 					<div id="right">
 						<div>
@@ -176,6 +176,12 @@ img{
 								</table><hr>
 								<%-- <c:if test="${list. }"></c:if> --%>
 								</c:forEach>
+								
+								<c:set var="e" value="<%= exception %>" />
+								<c:if test="${ empty e }">
+								<h5> ${ message }</h5>
+								</c:if>
+								<br>
 								</li>
 								
 							</ul>

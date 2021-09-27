@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>회원가입</title>
 <style type="text/css">
 .loginForm{

@@ -36,7 +36,8 @@ public class ReplyDaoImpl implements ReplyDao{
 		// 댓글 삭제
 		@Override
 		public int deleteReply(Reply reply) {
-			return sql.delete("replyMapper.deleteReply", reply); 
+			return sql.delete("replyMapper.deleteReply", reply);
+
 		}
 
 		//댓글 수정 페이지 댓글 조회

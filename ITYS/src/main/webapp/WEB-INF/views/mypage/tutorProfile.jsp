@@ -265,11 +265,22 @@ $(function () {
 								<textarea rows="3" cols="26" name="style" maxlength="33"></textarea>
 							</td>
 						</tr>
+						<tr>
+							<th>성격</th>
+							<td>
+								<c:forEach items="${requestScope.keyList }" var="keyword">
+									<input type="checkbox" name="key_no" value="${keyword.key_no }">
+										${keyword.type_per }&nbsp;
+									<c:if test="${ keyword.key_no eq 7}"><br></c:if>
+									<c:if test="${ keyword.key_no eq 14}"><br></c:if>
+								</c:forEach>
+							</td>
+						</tr>
 					</table>
 					<Br>
 					<div align="center">
 						<button type="submit">추가하기</button>
-						<input type="button" value="취소" onclick="javascript:history.go(-1); return false;">
+						<input type="button" value="취소" onclick="javascript:window.close(); return false;">
 					</div>
 				</form>
 		</div>
