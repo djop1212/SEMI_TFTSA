@@ -14,7 +14,7 @@ public class ReplyDaoImpl implements ReplyDao{
 	
 	@Inject SqlSession sql;
 	
-	// 댓글 조회
+		// 댓글 조회
 		@Override
 		public List<Reply> readReply(int board_no) {
 			return sql.selectList("replyMapper.readReply", board_no);
@@ -31,16 +31,15 @@ public class ReplyDaoImpl implements ReplyDao{
 
 		public int updateReply(Reply reply) {
 			return sql.update("replyMapper.updateReply", reply);
-
 		}
 		
 		// 댓글 삭제
 		@Override
-
 		public int deleteReply(Reply reply) {
-			return sql.delete("replyMapper.deleteReply", reply);
+			return sql.delete("replyMapper.deleteReply", reply); 
+		}
 
-
+		//댓글 수정 페이지 댓글 조회
 		@Override
 		public Reply selectReply(int com_no) {
 			return sql.selectOne("replyMapper.selectReply", com_no);

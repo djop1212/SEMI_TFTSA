@@ -6,13 +6,19 @@ import com.tftsa.itys.board.model.vo.Reply;
 
 public interface ReplyService {
 
+	// 댓글 조회
 	public List<Reply> readReply(int board_no);
-//	public List<Reply> readReplyNo(int board_no);
-	public void writeReply(Reply reply);
 
+	// 댓글 작성
+	public void writeReply(Reply reply);
+	
+	// 댓글 수정
 	public int updateReply(Reply reply);
+	
+	// 댓글 삭제
 	public int deleteReply(Reply reply);
 
+	//댓글 수정 페이지 댓글 조회
 	public Reply selectReply(int com_no);
 
 }

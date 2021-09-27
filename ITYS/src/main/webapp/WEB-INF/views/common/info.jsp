@@ -88,22 +88,7 @@ dl.faq button[aria-expanded="true"]::before {
         </p>
       </div>
       
-      <div class="event_container">
-      
-        <div class="box">
-          <div class="img-box">
-            <img src="${ pageContext.servletContext.contextPath }/resources/images/event-img.jpg" alt="" />
-          </div>
-          <div class="detail-box" >
-            <h4>
-              공지사항
-            </h4>
-            <h6>
-            	필독해주세요!!
-            </h6>
-          </div>
-        </div>
-    
+      <div class="event_container">   
         
 <!-- 아코디언 메뉴 -->
 <h5>공지사항</h5>
