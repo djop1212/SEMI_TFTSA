@@ -15,31 +15,20 @@
 		<result column="view_cnt" property="view_cnt" />
 	</resultMap>
 
-	<!-- 비교연산자를 쿼리문에 그냥 사용하면 
-		태그 앨리먼트 꺽쇠괄호 등(<, >, &)과 혼동하는 문제가 발생할 수 있음.
-		이 문제를 미연에 방지하기 위해 xml 코드 중 xml parser 에 의해
-		해석하지 말고, 문장 그대로 해석하라는 뜻으로
-		<![CDATA[ 쿼리문장 ]]> 사용함
-	 -->
-
 	<!-- 전체 목록갯수 조회 -->
 	<select id="selectListCount" resultType="_int">
 		select count(*) from board
 	</select>	
 	
-
 	<!-- 페이지 단위로 게시글 조회 -->
-	<select id="selectList" 
-	parameterType="Paging" resultMap="resultBoard">
-		
+	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
 			SELECT *  
 			FROM (SELECT ROWNUM RNUM, BOARD_NO, BOARD_TITLE, BOARD_WRITER,   
 			               BOARD_CONTENT, BOARD_DATE,  
 			               BOARD_ORIGINAL_FILENAME, BOARD_RENAME_FILENAME, VIEW_CNT 
 			       FROM (SELECT * FROM BOARD 
 			              ORDER BY BOARD_NO DESC))
-			<![CDATA[where rnum >= #{startRow} and rnum <= #{endRow}]]>		
-		
+			<![CDATA[where rnum >= #{startRow} and rnum <= #{endRow}]]>	
 	</select>
 
 	<!-- 게시글 작성 -->
@@ -64,69 +53,13 @@
 		select * from board 
 		where board_no = #{board_no}
 	</select>	
-	
-<!-- 	<update id="updateReplySeq1" parameterType="Board" >
-		update board 
-		set board_reply_seq = board_reply_seq + 1 
-		where board_ref = #{board_ref} 
-		and board_level = #{board_level}		
-	</update>
-	
-	<update id="updateReplySeq2" parameterType="Board" >
-		update board 
-		set board_reply_seq = board_reply_seq + 1 
-		where board_ref = #{board_ref} 
-		and board_level = #{board_level} 
-		and board_reply_ref = 	#{board_reply_ref}
-	</update> -->
-	
-<!-- 	<insert id="insertReply1" parameterType="Board">
-		insert into board (board_num, board_title, board_writer,
-				board_content, board_original_filename, 
-				board_rename_filename, board_date, 
-				board_level, board_ref, board_reply_ref,
-				board_reply_seq, board_readcount)
-		values ((select max(board_num) + 1 from board), 
-				#{board_title}, #{board_writer}, #{board_content}, 
-				null, null, sysdate, 2, #{board_ref}, 
-				(select max(board_num) + 1 from board), 
-				#{board_reply_seq}, default)		
-	</insert>
-	
-	<insert id="insertReply2" parameterType="Board">
-		insert into board (board_num, board_title, board_writer,
-				board_content, board_original_filename, 
-				board_rename_filename, board_date, 
-				board_level, board_ref, board_reply_ref,
-				board_reply_seq, board_readcount)
-		values ((select max(board_num) + 1 from board), 
-				#{board_title}, #{board_writer}, #{board_content}, 
-				null, null, sysdate, 3, #{board_ref}, 
-				#{board_reply_ref}, #{board_reply_seq}, default)
-	</insert> -->
 
 	<!-- 게시글 삭제 -->
 	<delete id="deleteBoard" parameterType="Board">
 		delete from board
 		where board_no = #{board_no} 
-		<!-- <if test="board_level == 1">
-			where board_ref = #{board_no}
-		</if>
-		<if test="board_level == 2">
-			where board_reply_ref = #{board_no}
-		</if>
-		<if test="board_level == 3">
-			where board_no = #{board_no}
-		</if>		 -->
 	</delete>
-	
- <!-- <update id="updateReply" parameterType="Board">
-		update board 
-		set board_title = #{board_title}, 
-			board_content = #{board_content}
-		where board_no = #{board_no}						
-	</update>  -->
-	
+
 	<!-- 게시글 수정 -->
 	<update id="updateOrigin" parameterType="Board">
 		update board 
