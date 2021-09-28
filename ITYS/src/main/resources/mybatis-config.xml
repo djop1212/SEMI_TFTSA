@@ -22,6 +22,7 @@
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
 		<typeAlias type="com.tftsa.itys.adminReview.model.vo.AdminReview" alias="AdminReview" />
+		<typeAlias type="com.tftsa.itys.payment.model.vo.UserStudent" alias="UserStudent"/>
 		
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
