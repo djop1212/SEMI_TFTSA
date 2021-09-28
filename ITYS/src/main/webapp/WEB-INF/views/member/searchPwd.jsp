@@ -80,7 +80,7 @@ $(function(){
 							</div>
 							<button type="submit" id="findBtn">비밀번호 찾기</button>
 						<Br>
-						<a href="findPwdPage.do">비밀번호찾기</a> | <a href="loginPage.do">로그인하기</a> | <a href="enrollPage.do">회원가입</a>
+						<a href="findIdPage.do">아이디찾기</a> | <a href="loginPage.do">로그인하기</a> | <a href="enrollPage.do">회원가입</a>
 					</div>
 				</div>
 			</center>

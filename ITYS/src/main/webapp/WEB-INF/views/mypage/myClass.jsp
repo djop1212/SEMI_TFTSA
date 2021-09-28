@@ -11,7 +11,7 @@
 
 function deleteuser(){
 	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
-		location.href="deleteUser.do?user_id=${member.user_id}";	
+		location.href="deleteUser.do?user_no=${loginMember.user_no}";	
 	}else{
 		return;
 	}
@@ -123,7 +123,7 @@ img{
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
+								<li><a href="myPage.do?user_no=${loginMember.user_no }">프로필</a></li>
 								<c:if test="${position eq 'S' }">
 								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
 								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>

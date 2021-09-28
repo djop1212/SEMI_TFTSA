@@ -71,10 +71,10 @@ public class HomeController {
 //		return "common/login"; // 내보낼 뷰파일명 리턴
 //	}
 
-	@RequestMapping("adminDashboard.do")
-	public String AdminDashViewForward() {
-		return "admin/adminDashboard"; // 내보낼 뷰파일명 리턴
-	}
+//	@RequestMapping("adminDashboard.do")
+//	public String AdminDashViewForward() {
+//		return "admin/adminDashboard"; // 내보낼 뷰파일명 리턴
+//	}
 
 	@RequestMapping("adminDeposit.do")
 	public String AdminDepositViewForward() {
