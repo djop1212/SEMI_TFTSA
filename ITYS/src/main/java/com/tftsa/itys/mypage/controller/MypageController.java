@@ -66,10 +66,10 @@ public class MypageController {
 		if(!mfile.isEmpty()) {
 			String originFileName = mfile.getOriginalFilename();
 			if(originFileName!= null && originFileName.length()>0) {
-				logger.info(savePath);
-				logger.info("upsprofile.do : "+originFileName);
-				logger.info("getSize() : "+mfile.getSize());
-				logger.info("getInputStream() : "+mfile.getInputStream());
+//				logger.info(savePath);
+//				logger.info("upsprofile.do : "+originFileName);
+//				logger.info("getSize() : "+mfile.getSize());
+//				logger.info("getInputStream() : "+mfile.getInputStream());
 				try {
 					mfile.transferTo(new File(savePath+"\\"+originFileName));
 					
@@ -142,11 +142,11 @@ public class MypageController {
 			@RequestParam(name="upfile") MultipartFile mfile, @RequestParam("sub_no") String arr_sub_no, 
 			@RequestParam(name="stime") String stime, @RequestParam(name="etime") String etime, 
 			@RequestParam(name="city") String city, @RequestParam(name="country") String country, @RequestParam(name="key_no") String arr_key_no) throws IOException {
-		logger.info("stime : "+stime);
-		logger.info("etime : "+etime);
-		logger.info("city : "+city);
-		logger.info("country : "+country);
-		logger.info("sub_no : "+arr_sub_no);
+//		logger.info("stime : "+stime);
+//		logger.info("etime : "+etime);
+//		logger.info("city : "+city);
+//		logger.info("country : "+country);
+//		logger.info("sub_no : "+arr_sub_no);
 		
 		tutor.setTime(stime+", "+etime);
 		tutor.setArea(city+" "+country);
@@ -173,7 +173,7 @@ public class MypageController {
 		String key_name="";
 		// 선생님 성격 key_data 에 저장, tutor 테이블 key_name 
 		for(int i=0;i<array2.length;i++) {
-			logger.info("array["+i+"] : "+array2[i]);
+			//logger.info("array["+i+"] : "+array2[i]);
 			int key_no = Integer.parseInt(array2[i]);
 			keydata.setKey_no(key_no);
 			if(mypageService.insertKeyData(keydata)>0) {
@@ -184,7 +184,7 @@ public class MypageController {
 				}
 			}
 		}
-		logger.info("insertSub_data cnt : " + cnt);
+		//logger.info("insertSub_data cnt : " + cnt);
 		tutor.setSub_name(sub_name);
 		tutor.setKey_name(key_name);
 		tutor.setTime(stime + ", " + etime);
@@ -295,6 +295,24 @@ public class MypageController {
 		return "redirect:selectChattingList.do?user_no=" + user_no;
 	}
 	
+	// 채팅 목록 삭제
+	@RequestMapping(value="delclist.do", method=RequestMethod.POST)
+	public String deleteChattingList(@RequestParam("chk") String checkedList, @RequestParam("user_no") int user_no) {
+		//logger.info("delclist.do : "+checkedList);
+		//logger.info("user_no : "+user_no);
+		
+		String[] array = checkedList.split(",");
+	    for(int i=0 ;i<array.length; i++) {
+	    	//logger.info(array[i]);
+	    	
+	    	if(mypageService.deleteChattingRoom(Integer.parseInt(array[i]))>0) {
+	    		//logger.info("delclist.do delete["+i+"] : "+array[i]);
+	    	}
+	    }
+		
+		return "redirect:clist.do?user_no="+user_no;
+	}
+	
 	// 내 수업 목록 조회
 	@RequestMapping("mclass.do")
 	public String moveMyClass(@RequestParam("user_no") int user_no, Model model) {
@@ -311,7 +329,7 @@ public class MypageController {
 		model.addAttribute("position", position);
 		
 		if(list.size()>0) {
-			logger.info("myclassList : "+list.toString());
+			//logger.info("myclassList : "+list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 수업목록이 없습니다");
@@ -321,9 +339,10 @@ public class MypageController {
 	
 	// 수정페이지로 이동
 	@RequestMapping("upUserPage.do")
-	public ModelAndView moveUpdateUserView(@RequestParam("user_id") String user_id, ModelAndView mv) {
+	public ModelAndView moveUpdateUserView(@RequestParam("user_no") int user_no, ModelAndView mv) {
 		logger.info("upUserPage.do");
-		Member member = mypageService.selectUser(user_id);
+		//Member member = mypageService.selectUser(user_no);
+		Member member = mypageService.selectUserNo(user_no);
 		Student student = mypageService.selectStudent(member.getUser_no());
 		Tutor tutor = mypageService.selectTutor(member.getUser_no());
 				
@@ -353,7 +372,7 @@ public class MypageController {
 			mv.addObject("member", member);
 			mv.setViewName("mypage/updateProfile");
 		}else {
-			mv.addObject("message", member.getUser_id() + "님 회원 정보 수정페이지로 이동 실패..");
+			mv.addObject("message", member.getUser_no() + "님 회원 정보 수정페이지로 이동 실패..");
 			mv.setViewName("common/error");
 		}
 		return mv;
@@ -364,10 +383,10 @@ public class MypageController {
 	public String updateUser(Member member, Student student, Tutor tutor, SubData subdata, MyKeyData keydata, Model model,
 			@RequestParam("origin_userpwd") String originUserpwd, @RequestParam("stime") String stime, @RequestParam("etime") String etime,
 			@RequestParam("city") String city, @RequestParam("country") String country,
-			@RequestParam("sub_no") String arr_sub_no, @RequestParam("key_no")String arr_key_no) throws IOException {
-		logger.info("upUser.do - member : " + member);
-		logger.info("upUser.do - student : " + student);
-		logger.info("upUser.do - tutor : " + tutor);
+			@RequestParam("sub_no") String arr_sub_no, @RequestParam("key_no") String arr_key_no) throws IOException {
+//		logger.info("upUser.do - member : " + member);
+//		logger.info("upUser.do - student : " + student);
+//		logger.info("upUser.do - tutor : " + tutor);
 //		logger.info("opwd : " + originUserpwd);
 //		logger.info("stime : "+stime);
 //		logger.info("etime : "+etime);
@@ -382,10 +401,10 @@ public class MypageController {
 		String sub_name="";
 		// 과목번호 subdata에 저장, tutor 테이블 subname 
 		if (mypageService.deleteSubData(member.getUser_no()) > 0) {
-			logger.info("upUser.do : deleteSubData");
+			//logger.info("upUser.do : deleteSubData");
 		}
 		for (int i = 0; i < array.length; i++) {
-			logger.info("array[" + i + "] : " + array[i]);
+			//logger.info("array[" + i + "] : " + array[i]);
 			int sub_no = Integer.parseInt(array[i]);
 			subdata.setSub_no(sub_no);
 			if (mypageService.insertSubData(subdata) > 0) {
@@ -399,25 +418,26 @@ public class MypageController {
 		String[] array2 = arr_key_no.split(",");
 		String key_name="";
 		if(mypageService.deleteKeyData(member.getUser_no())>0) {
-			logger.info(key_name);
+			//logger.info(key_name);
 		}
 		// 선생님 성격 key_data 에 저장, tutor 테이블 key_name 
 		for(int i=0;i<array2.length;i++) {
-			logger.info("array["+i+"] : "+array2[i]);
+			//logger.info("array["+i+"] : "+array2[i]);
 			int key_no = Integer.parseInt(array2[i]);
 			keydata.setKey_no(key_no);
 			if(mypageService.insertKeyData(keydata)>0) {
 				if(i == 0) {
+					logger.info(mypageService.selectTypePer(key_no));
 					key_name += mypageService.selectTypePer(key_no);
 				}else {
 					key_name += (", "+ mypageService.selectTypePer(key_no));
 				}
-			}
+			}//logger.info("key_name : "+key_name);
 		}
 		
 		tutor.setSub_name(sub_name);
 		tutor.setKey_name(key_name);
-		logger.info("uptprofile.do : "+tutor);
+		//logger.info("uptprofile.do : "+tutor);
 
 		// 새로운 암호가 전송이 왔다면
 		String user_pwd = member.getUser_pwd().trim();
@@ -436,15 +456,15 @@ public class MypageController {
 		
 		if(member.getUser_position().equals("U") && mypageService.updateMember(member)>0) {
 			logger.info("upUser.do : updateUser \nmember : "+member);
-			return "redirect:myPage.do?user_id=" + member.getUser_id();
+			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		}else if(member.getUser_position().equals("S") && mypageService.updateStudent(student)>0) {
 			logger.info("upUser.do : updateStudent \nstudent : "+student);
-			return "redirect:myPage.do?user_id=" + member.getUser_id();
+			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		}else if(member.getUser_position().equals("T") && mypageService.updateTutor(tutor)>0) {
 			logger.info("upUser.do : updateTutor \ntutor : "+tutor);
-			return "redirect:myPage.do?user_id=" + member.getUser_id();
+			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		} else {
-			model.addAttribute("message", member.getUser_id() + "회원정보 수정 실패..");
+			model.addAttribute("message", member.getUser_name() + "님 회원정보 수정 실패..");
 			return "common/error";
 		}
 	}

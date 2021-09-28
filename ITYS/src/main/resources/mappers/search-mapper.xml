@@ -54,10 +54,16 @@
 		SELECT * from tutor, subject, user_info
 		WHERE tutor.sub_name = subject.sub_name
 		AND tutor.user_no = user_info.user_no
-		AND (tutor.intro like '%' || #{ word } || '%'
-		OR user_info.user_name like '%' || #{ word } || '%')
-		AND subject.category = #{ category }
-		AND subject.sub_name = #{ sub_name }
+		<if test = "word != 'null'  ">
+			AND (tutor.intro like '%' || #{ word } || '%'
+			OR user_info.user_name like '%' || #{ word } || '%')
+		</if>
+		<if test = "category != 'null'  ">
+			AND subject.category = #{ category }
+		</if>
+		<if test = "sub_name != 'null'  ">
+			AND subject.sub_name = #{ sub_name }
+		</if>
 
 	</select>
 	
@@ -79,7 +85,10 @@
         
 	</select>
 	
+
+	
 	<select id="selectDetailSearch" parameterType="DetailSearch" resultMap="resultTutor">
+	
 		SELECT DISTINCT TUTOR.*
 		FROM tutor, key_data, keyword
 		WHERE tutor.user_no = key_data.user_no(+)
@@ -96,6 +105,7 @@
 			online_ok = #{ item }
 			</foreach>
 		</if>
+		
 		<if test = "area != 'null'  ">
 			and area = #{ area }
 		</if>
@@ -110,9 +120,6 @@
 				#{ day_str } LIKE ('%' || #{ item } || '%')
 			</foreach>
 		</if>
-<<<<<<< Updated upstream
-		
-=======
 		<if test='stime != "null"'>
 			AND SUBSTR(time,1,5) <![CDATA[>=]]>  #{ stime }
 		</if>	
@@ -120,7 +127,6 @@
 		<if test='etime != "null"'>
        		AND SUBSTR(time,8,12) <![CDATA[<=]]> #{ etime }
 		</if>
->>>>>>> Stashed changes
         
         <if test='min_price != ""'>
 			AND ( TO_NUMBER( replace(#{ min_price }, '만원', ''), '999999' ) <![CDATA[<=]]> TO_NUMBER(replace(min_pay, '만원', ''), '999999'))

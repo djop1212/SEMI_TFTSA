@@ -22,12 +22,13 @@
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
 		<typeAlias type="com.tftsa.itys.adminReview.model.vo.AdminReview" alias="AdminReview" />
+		<typeAlias type="com.tftsa.itys.payment.model.vo.UserStudent" alias="UserStudent"/>
 		
-    <typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
+    	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
 
-    <typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
+    	<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
 
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
@@ -42,6 +43,9 @@
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
+    <typeAlias type="com.tftsa.itys.detail.model.vo.AfterPay" alias="AfterPay"/>
+    
+
 
 		
 		<typeAlias type="com.tftsa.itys.search.vo.Keyword" alias="Keyword" />
@@ -49,8 +53,8 @@
 		<typeAlias type="com.tftsa.itys.search.vo.DaySearch" alias="DaySearch" />
 		<typeAlias type="com.tftsa.itys.search.vo.DetailSearch" alias="DetailSearch" />
     <typeAlias type="com.tftsa.itys.search.vo.User_info" alias="User_info" />
-    	
     <typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
+
 
 		<typeAlias type="com.tftsa.itys.common.Paging" alias="Paging" />
 		<typeAlias type="com.tftsa.itys.board.model.vo.Reply" alias="Reply" />
@@ -65,7 +69,7 @@
 		<mapper resource="mappers/adminkeyword-mapper.xml"/>
 		<mapper resource="mappers/chatting-mapper.xml" />
 		<mapper resource="mappers/payment-mapper.xml" />
-    <mapper resource="mappers/member-mapper.xml"/>
+    	<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/mypage-mapper.xml"/>
 		<mapper resource="mappers/detail-mapper.xml" />
     	<mapper resource="mappers/board-mapper.xml" />

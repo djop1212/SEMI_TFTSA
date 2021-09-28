@@ -14,7 +14,9 @@ public interface ChattingService {
 	UserChattingStudent selectStudent(int chat_room_no);
 	UserChattingTutor selectTutor(int chat_room_no);
 	Chattingroom selectChattingroom(int chat_room_no);
+	Likes selectLikes(Likes likes);
 	int deleteChatting(int chat_room_no);
+	int deleteLikes(Likes likes);
 	int insertBlock(Chattingblock chattingblock);
 	int insertLikes(Likes likes);
 	int insertChatting(Chatting chatting);

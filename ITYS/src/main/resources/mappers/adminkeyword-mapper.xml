@@ -20,4 +20,12 @@
 	<delete id="deleteKeyword" parameterType="String">
 		delete from keyword where type_per = #{ type_per } 
 	</delete>
+	
+	<insert id="insertKeyword" parameterType="String">
+		insert into keyword (key_no, type_per) values(keyword_seq.nextval, #{type_per}) 
+	</insert>
+	
+	<select id="cntKeyword" parameterType="String" resultType="_int">
+		select count(type_per) from keyword where type_per = #{type_per}
+	</select>
 </mapper>

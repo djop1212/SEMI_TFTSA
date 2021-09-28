@@ -7,16 +7,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-<<<<<<< Updated upstream
-=======
 import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
->>>>>>> Stashed changes
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
-import com.tftsa.itys.search.vo.Subject;
-import com.tftsa.itys.search.vo.Tutor;
 import com.tftsa.itys.search.vo.Search;
 
 
@@ -32,7 +27,6 @@ public class SearchDao {
 	}
 	
 	public ArrayList<Subject> selectCategory() {
-<<<<<<< Updated upstream
 		List<Subject> list = sqlSession.selectList("subjectMapper.selectCategory");
 		return (ArrayList<Subject>) list;
 	}
@@ -40,15 +34,14 @@ public class SearchDao {
 	public ArrayList<Subject> selectSubject(String category) {
 		List<Subject> list = sqlSession.selectList("subjectMapper.selectSubject", category);
 		return (ArrayList<Subject>) list;
-=======
+	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectCategory() {
 		List<com.tftsa.itys.mypage.model.vo.Subject> list = sqlSession.selectList("subjectMapper.selectCategory");
 		return (ArrayList<com.tftsa.itys.mypage.model.vo.Subject>) list;
 	}
 	
-	public ArrayList<Subject> selectSubject(String category) {
+	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectSubject(String category) {
 		List<com.tftsa.itys.mypage.model.vo.Subject> list = sqlSession.selectList("subjectMapper.selectSubject", category);
 		return (ArrayList<com.tftsa.itys.mypage.model.vo.Subject>) list;
->>>>>>> Stashed changes
 	}
 	
 	public ArrayList<Keyword> selectKeyword() {

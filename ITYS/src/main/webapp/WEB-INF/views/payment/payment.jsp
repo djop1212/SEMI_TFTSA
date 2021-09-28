@@ -115,7 +115,12 @@
 
 	</div>
 
-	<form action="kakaoPay.do" method="post" id="contactForm" novalidate="novalidate">
+	<c:url var="kakaoPay" value="kakaoPay.do">
+		<c:param name="user_name" value="${ requestScope.userstudent.user_name }"/>
+		<c:param name="pay_no" value="${ requestScope.payment.pay_no }"/>
+		<c:param name="sub_name" value="${ requestScope.tutor.sub_name }"/>
+	</c:url>
+	<form action="${ kakaoPay }" method="post" id="contactForm" novalidate="novalidate">
 		<div class="row upper">
 			<div class="row">
 				<div class="col-md-7">
@@ -196,7 +201,7 @@
 						</div>
 					</div>
 					<br>
-					<div class="left border">
+					<!-- <div class="left border">
 						<div class="row">
 							<div class="col-3">
 								<p>
@@ -226,27 +231,27 @@
 							<div class="col-3"></div>
 						</div>
 					</div>
-					<br>
+					<br> -->
 					<div class="left border">
 						<p>
 							<b>결제방법</b>
 						</p>
 						<div class="row">
 							<div class="col-2">
-								<input class="input-payment" type="radio" name="payment" id="creditcard" checked>신용카드
+								<input class="input-payment" type="radio" name="payment" value="creditcard">신용카드
 							</div>
 							<div class="col-3">
-								<input class="input-payment" type="radio" name="payment" id="transfer">실시간
+								<input class="input-payment" type="radio" name="payment" value="transfer">실시간
 								계좌이체
 							</div>
 							<div class="col-3">
-								<input class="input-payment" type="radio" name="payment" id="nopassbook">무통장입금
+								<input class="input-payment" type="radio" name="payment" value="nopassbook">무통장입금
 							</div>
 							<div class="col-2">
-								<input class="input-payment" type="radio" name="payment" id="phone">휴대폰
+								<input class="input-payment" type="radio" name="payment" value="phone">휴대폰
 							</div>
 							<div class="col-2">
-								<input class="input-payment" type="radio" name="payment" id="kakao">카카오페이
+								<input class="input-payment" type="radio" name="payment" value="kakaopay" checked>카카오페이
 							</div>
 						</div>
 					</div>
@@ -267,23 +272,23 @@
 					<div class="right-payment border">
 						<div class="row lower-payment">
 							<div class="col text-left">총 서비스 금액</div>
-							<div class="col text-right">500,000원</div>
+							<div class="col text-right">${ requestScope.tutor.min_pay }</div>
 						</div>
-						<div class="row lower-payment">
+						<!-- <div class="row lower-payment">
 							<div class="col text-left">쿠폰 할인</div>
 							<div class="col text-right">0원</div>
 						</div>
 						<div class="row lower-payment">
 							<div class="col text-left">포인트 사용</div>
 							<div class="col text-right">0원</div>
-						</div>
+						</div> -->
 						<hr>
 						<div class="row lower-payment">
 							<div class="col text-left">
 								<b>총 결제금액</b>
 							</div>
 							<div class="col text-right">
-								<b>500,000원</b>
+								<b>${ requestScope.tutor.min_pay }</b>
 							</div>
 						</div>
 						<br>
@@ -296,7 +301,7 @@
 								</p>
 							</div>
 						</div>
-						<button class="btn-payment" type="submit">결제하기</button>
+						<button class="btn-payment" type="submit" id="paymentdo">결제하기</button>
 						<p class="text-muted text-center">서비스 제공이 완료된 이후에 전문가에게 결제 대금이
 							전달됩니다.</p>
 					</div>
@@ -319,8 +324,8 @@
 			var position = $(window).scrollTop();
 			var scrollTop = position + currentPosition;
 			
-			if (scrollTop > 795){
-				scrollTop = 795
+			if (scrollTop > 590){
+				scrollTop = 590
 			}
 			
 			$(".quickmenu").stop().animate({
@@ -386,6 +391,18 @@
 			$("input[name=tosCheck]").prop("checked", false);
 		}
 	}
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('input[name=payment]').change(function(){
+			if($("input[name=payment]:checked").val() == "kakaopay"){
+	            $("#paymentdo").attr("disabled", false);
+	        }else{
+	        	$("#paymentdo").attr("disabled", true);
+	        }
+		});	
+	});
 </script>
 
 </html>

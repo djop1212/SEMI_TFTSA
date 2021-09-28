@@ -2,11 +2,11 @@ package com.tftsa.itys.detail.model.service;
 
 import java.util.ArrayList;
 
+import com.tftsa.itys.detail.model.vo.AfterPay;
 import com.tftsa.itys.detail.model.vo.Detail;
+import com.tftsa.itys.detail.model.vo.TutorDetail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-
-import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 public interface DetailService {
 
@@ -26,7 +26,7 @@ public interface DetailService {
 	ArrayList<TutorDetail> tutorPic(int user_no);
 	int tutorSaveCancel(TutorLikes tlikes);
 	TutorLikes tutorSave(int student_no);
-	Detail reviewPay(int student_no);
+	AfterPay reviewPay(String user_name);
 
 
 }

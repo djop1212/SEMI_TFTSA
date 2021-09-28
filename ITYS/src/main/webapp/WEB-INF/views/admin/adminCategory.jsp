@@ -19,62 +19,11 @@
 <script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
 
 <style>
-/* Dropdown Button */
-.btn btn-primary dropdown-toggle {
-  background-color: #6777EF;
-  color: white;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  border-radius: .25rem;
-  border-color: #6777EF;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  min-width: 147px;
-  border-radius: .25rem;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-	background-color: #e3e6f0;
-	text-decoration: none;
-	color: black;
-	}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-	display: block;
-	}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .btn btn-primary dropdown-toggle {background-color: #394eea;}
-
 a {
   text-decoration-line: none;
   text-align : center;
   }
+
 
 </style> 
 </head>
@@ -150,9 +99,11 @@ a {
                   </table>
                   </form>
                   <div align="right" style=50px>
-                  <a href="#" class="btn btn-danger" onclick="ClickedData();">
+                  <button type="button" class="btn btn-success mb-1" onclick="location.href='/itys/addSubject.do'">과목 추가</button>
+                  <a href="#" class="btn btn-danger" style="margin:0px 0px 4px" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
+                  
                	</div>
               </div>
             </div>

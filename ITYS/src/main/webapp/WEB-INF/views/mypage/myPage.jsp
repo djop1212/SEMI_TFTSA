@@ -22,7 +22,7 @@ function Click(){
 }
 function deleteuser(){
 	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
-		location.href="deleteUser.do?user_id=${member.user_id}";	
+		location.href="deleteUser.do?user_no=${member.user_no}";	
 	}else{
 		return;
 	}
@@ -122,7 +122,7 @@ img{
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do?user_id=${loginMember.user_id }" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
+								<li><a href="myPage.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
 								<c:if test="${member.user_position eq 'S' }">
 								<li><a href="clist.do?user_no=${student.user_no }">채팅목록</a></li>
 								<li><a href="wishl.do?user_no=${student.user_no }">찜 목록</a></li>
@@ -253,7 +253,7 @@ img{
 							</table>
 						</div>
 						<div class="btn-box" align="center">
-							<a href="upUserPage.do?user_id=${ requestScope.member.user_id }">수정 페이지로 이동</a>
+							<a href="upUserPage.do?user_no=${ requestScope.member.user_no }">수정 페이지로 이동</a>
 						</div>
 					</div>
 				</div>

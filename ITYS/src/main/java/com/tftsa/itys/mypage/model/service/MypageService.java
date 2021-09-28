@@ -42,5 +42,7 @@ public interface MypageService {
 	int insertKeyData(MyKeyData keydata);
 	String selectTypePer(int key_no);
 	int deleteKeyData(int user_no);
+	int deleteChattingRoom(int parseInt);
+	Member selectUserNo(int user_no);
 
 }
