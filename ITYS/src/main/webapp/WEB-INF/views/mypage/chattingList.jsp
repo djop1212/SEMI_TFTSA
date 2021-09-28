@@ -163,7 +163,7 @@ img{
 										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
 										width="75px" height="75px" style="margin-top:5px" />
 									</td>
-									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }'">
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }&tutor_no=${ ucrt.tutor_no }&student_no=${ ucrt.student_no }'">
 										선생님이름 : ${ ucrt.tutor_name }<br>	
 										과외 한 줄 소개 : ${ ucrt.intro }<br>
 										전화번호 : ${ ucrt.user_phone }<br>
@@ -179,7 +179,7 @@ img{
 								<c:forEach items="${ requestScope.userchattingroomstudent }" var="ucrt">
 								<table>
 									<tr>
-									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }'">
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }&tutor_no=${ ucrt.tutor_no }&student_no=${ ucrt.student_no }'">
 										학생이름 : ${ ucrt.student_name }<br>	
 										학년 : ${ ucrt.stu_job }<br>
 										과외 가능 요일 : ${ ucrt.day }<br>
