@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.search.dao.SearchDao;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
 import com.tftsa.itys.search.vo.Search;
-import com.tftsa.itys.search.vo.Subject;
 
 @Service("searchService")
 public class SearchServiceImpl implements SearchService{

@@ -2,6 +2,7 @@ package com.tftsa.itys.search.service;
 
 import java.util.ArrayList;
 
+import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
