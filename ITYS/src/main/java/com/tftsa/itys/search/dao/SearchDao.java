@@ -27,19 +27,11 @@ public class SearchDao {
 	}
 	
 	public ArrayList<Subject> selectCategory() {
-		List<Subject> list = sqlSession.selectList("subjectMapper.selectCategory");
-		return (ArrayList<Subject>) list;
-	}
-	
-	public ArrayList<Subject> selectSubject(String category) {
-		List<Subject> list = sqlSession.selectList("subjectMapper.selectSubject", category);
-		return (ArrayList<Subject>) list;
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectCategory() {
 		List<com.tftsa.itys.mypage.model.vo.Subject> list = sqlSession.selectList("subjectMapper.selectCategory");
 		return (ArrayList<com.tftsa.itys.mypage.model.vo.Subject>) list;
 	}
 	
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectSubject(String category) {
+	public ArrayList<Subject> selectSubject(String category) {
 		List<com.tftsa.itys.mypage.model.vo.Subject> list = sqlSession.selectList("subjectMapper.selectSubject", category);
 		return (ArrayList<com.tftsa.itys.mypage.model.vo.Subject>) list;
 	}
