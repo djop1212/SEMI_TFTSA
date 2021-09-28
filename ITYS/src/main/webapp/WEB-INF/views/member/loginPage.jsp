@@ -85,7 +85,7 @@
               </div>
               <button type="submit">로그인</button>
             </form>
-            <c:if test="${!empty loginMember and loginMember.login_ok eq 'Y'}">
+            <%-- <c:if test="${!empty loginMember and loginMember.login_ok eq 'Y'}">
 	            <c:url var="callMypage" value="myPage.do">
 	            	<c:param name="user_no" value="${loginMember.user_no }"/>
 	            </c:url>
@@ -95,7 +95,7 @@
 	            	<c:param name="user_id" value="${loginMember.user_id }"/>
 	            </c:url>
 	            <br><a href="${udelete }">회원탈퇴</a>
-            </c:if>
+            </c:if> --%>
             <br><a href="findIdPage.do">아이디찾기</a> | <a href="findPwdPage.do">비밀번호찾기</a>
           </div>
         </div>

@@ -141,6 +141,7 @@ img{
 					</div>
 					<div id="right">
 					<form action="upUser.do" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="user_no" value="${member.user_no}">
 						<!-- <div>
 						<table>
 							<tr>
