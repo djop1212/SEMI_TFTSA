@@ -115,7 +115,12 @@
 
 	</div>
 
-	<form action="kakaoPay.do" method="post" id="contactForm" novalidate="novalidate">
+	<c:url var="kakaoPay" value="kakaoPay.do">
+		<c:param name="user_name" value="${ requestScope.userstudent.user_name }"/>
+		<c:param name="pay_no" value="${ requestScope.payment.pay_no }"/>
+		<c:param name="sub_name" value="${ requestScope.tutor.sub_name }"/>
+	</c:url>
+	<form action="${ kakaoPay }" method="post" id="contactForm" novalidate="novalidate">
 		<div class="row upper">
 			<div class="row">
 				<div class="col-md-7">
