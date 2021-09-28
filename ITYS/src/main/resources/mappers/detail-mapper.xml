@@ -47,6 +47,14 @@
 
 	</resultMap>
 	
+	<resultMap id="resultAfterPay" type="AfterPay">
+		<id property="pay_no" column="pay_no" />
+		<result property="user_name" column="user_name" />
+
+	</resultMap>
+	
+	
+	
 	<insert id="reviewInsert" parameterType="Detail">
 		insert into review values ((review_seq.nextval), #{pay_no}, sysdate, #{score}, #{rev_content}, #{tutor_no}, #{student_no} ) 
 
@@ -87,6 +95,7 @@
 	left join payment using (pay_no)
 	left join tutor on (user_no = tutor_no )
 	where user_no = #{ user_no }
+	order by rev_datetm desc
 	</select>
 	
 	<select id="reviewOne" resultType="Detail">
@@ -133,7 +142,11 @@
 	where student_no = #{ student_no }
 	</select>
 	
-	<select id="reviewPay" parameterType="Detail" resultMap="resultDetail">
-	 select * from review where student_no = #{ student_no }
+	<select id="reviewPay" parameterType="AfterPay" resultMap="resultAfterPay">
+	select pay_no from payment
+	left join user_info on (user_name = student_name)
+	left join review using(pay_no)
+	where user_name = #{ user_name }
 	</select>
+	
 </mapper>
