@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tftsa.itys.adminPayment.model.vo.Payment;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.payment.model.service.PaymentService;
+import com.tftsa.itys.payment.model.vo.UserStudent;
 
 @Controller
 public class PaymentController {
@@ -32,15 +34,30 @@ public class PaymentController {
 	
 	// 결제 페이지로 이동
 	@RequestMapping("payment.do")
-	public ModelAndView paymentViewForward(ModelAndView mv, @RequestParam("user_no") int user_no) {
+	public ModelAndView paymentViewForward(Payment paymentList, ModelAndView mv, @RequestParam("tutor_no") int tutor_no, 
+			@RequestParam("student_no") int student_no, @RequestParam("student_name") String student_name, 
+			@RequestParam("tutor_name") String tutor_name, @RequestParam("pay_amount") String pay_amount) {
 		
-		Tutor tutor = paymentService.selectTutor(user_no);
+		Tutor tutor = paymentService.selectTutor(tutor_no);
+		UserStudent userstudent = paymentService.selectUserStudent(student_no);
+		
+		paymentList.setStudent_name(student_name);
+		paymentList.setTutor_name(tutor_name);
+		paymentList.setPay_amount(pay_amount);
+		
+		Payment payment = paymentService.selectPayment(paymentList);
+		
+		if (payment == null) {
+			paymentService.insertPayment(paymentList);
+		}
 		
 		if (tutor != null) {
 			mv.addObject("tutor", tutor);
+			mv.addObject("userstudent", userstudent);
+			mv.addObject("payment", payment);
 			mv.setViewName("payment/payment");
 		}else {
-			mv.addObject("message", user_no + "번 선생님 조회 실패.");
+			mv.addObject("message", tutor_no + "번 선생님 조회 실패.");
 			mv.setViewName("common/error");
 		}
 		
@@ -48,7 +65,8 @@ public class PaymentController {
     }
 
 	@RequestMapping("kakaoPay.do")
-	public String kakaoPay() throws ParseException {
+	public String kakaoPay(@RequestParam("user_name") String user_name, @RequestParam("pay_no") int pay_no, 
+			@RequestParam("sub_name") String sub_name) throws ParseException {
 		try {
 			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -60,13 +78,13 @@ public class PaymentController {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("cid", "TC0ONETIME");
-			params.put("partner_order_id", "1001");
-			params.put("partner_user_id", "gorany");
-			params.put("item_name", "초코파이");
+			params.put("partner_order_id", Integer.toString(pay_no));
+			params.put("partner_user_id", user_name);
+			params.put("item_name", sub_name);
 			params.put("quantity", "1");
 			params.put("total_amount", "1");
 			params.put("tax_free_amount", "0");
-			params.put("approval_url", "http://localhost:8080/itys/kakaoPaySuccess.do");
+			params.put("approval_url", "http://localhost:8080/itys/kakaoPaySuccess.do?pay_no=" + pay_no);
 			params.put("fail_url", "http://localhost:8080/itys/kakaoPaySuccessFail.do");
 			params.put("cancel_url", "http://localhost:8080/itys/payment.do?user_no=2");
 			
@@ -94,7 +112,9 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("kakaoPaySuccess.do")
-	public String kakaoPaySuccess() {
+	public String kakaoPaySuccess(@RequestParam("pay_no") int pay_no) {
+		paymentService.updatePayment(pay_no);
+		
 		return "payment/kakaoPaySuccess"; // 내보낼 뷰파일명 리턴
 	}
 	

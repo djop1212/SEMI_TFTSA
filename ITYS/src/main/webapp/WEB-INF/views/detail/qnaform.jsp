@@ -35,7 +35,7 @@
               질문 작성하기 
             </h5>
             <form action="qnaanswer.do" method="post">
-             <input type="hidden" name="tutor_no" value="4">
+             <input type="hidden" name="tutor_no" value="${ loginMember.user_no }">
             <br>
 	<h5>Q. 서비스가 시작되기 전 어떤 절차로 진행하나요?</h5>
 

@@ -141,11 +141,11 @@
         		
 
                    선생님 이름  ${ tprofile[0].user_name } ${tpic[0].user_name } ${td2[0].user_name}
-                
+                 <c:if test="${ loginMember.user_position eq 'S' }">
                    <c:url var="ts" value="/tsave.do">
 					<c:param name="student_no" value="${ loginMember.user_no }" />
-					<c:param name="tutor_no" value="2"/>
-					<c:param name="user_no" value="2"/>
+					<c:param name="tutor_no" value="4"/>
+					 <c:param name="user_no" value="4"/>
 				</c:url> 
 				 <c:if test="${ empty requestScope.tlikes.student_no }"> 
 				 <a href="${ ts }" class="tsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_off.png" class="select-heart"  style="maring-left:10px" ></a>
@@ -153,13 +153,14 @@
 				 
 				 <c:url var="cts" value="/ctsave.do">
 					<c:param name="student_no" value="${ loginMember.user_no }" />
-					<c:param name="tutor_no" value="2"/>
-					<c:param name="user_no" value="2"/>
+					<c:param name="tutor_no" value="4"/>
+					 <c:param name="user_no" value="4"/> 
 					</c:url>
-				 <c:if test="${ !empty requestScope.tlikes.student_no }">
+				 <c:if test="${ !empty requestScope.tlikes.student_no }"> <!-- 메인페이지에서 tutor_no 가져오기 -->
 				 <a href="${ cts }" class="ctsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_on.png" class="select-heart"  style="maring-left:10px" ></a>
 				</c:if>
-          		<%-- <c:if test="${ td.user_position eq 'S'  &&  td.student_no }"/> --%>
+          		
+          		</c:if>
           		</div>
 
           		
@@ -192,12 +193,22 @@
               <span class="place" style="width:30px; height:30px; margin-left:10px;">
                            지역 ${ tprofile[0].area } ${tpic[0].area } ${td2[0].area}
              	</span>
-             	<button onclick="moveChatting();"style="margin:0;width:100px;height:50px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#20c997; color:white">채팅하기</button>
-              <script>
-              function moveChatting(){
-              location.href = "${ pageContext.servletContext.contextPath }/openChatting.do";
-              }
-              </script>
+             	<div>
+             	
+             	
+             	
+             	<c:if test="${ loginMember.user_position eq 'S' }">
+             	 <c:url var="openchat" value="/selectChatting.do">
+					<c:param name="chat_room_no" value="1"/>
+					<c:param name="student_no" value="${ loginMember.user_no }"/>
+					<c:param name="tutor_no" value="2"/>
+					</c:url>
+					
+             	<button onclick="location.href='${ openchat }'"class="chat_num"style="width:100px;height:50px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#20c997; color:white;">채팅하기</button>
+      </c:if>
+              </div>
+              
+            
 
              </div>
              </div>
@@ -205,7 +216,7 @@
              <div class="stitle">
                <div class="sstitle">
              <div class="review">
-                <ul class="Star1">
+              <ul class="Star1">
                   <c:choose>
               			  				
               			  		        <c:when test = "${ avgScore == 1 }">
@@ -334,7 +345,8 @@
                 	  <span calss="reviewcount" style="font-size:13px;"> ${ reviewCount } (개)</span>
                 	 
                 </ul>
-                
+         
+          
              </div>
                </div>
              </div>
@@ -344,33 +356,91 @@
         
           <div class="detail-box">
         
-                <ul class="menus">
+                <ul class="menus"><c:if test="${ loginMember.user_position eq 'T' }">
+                <c:url var="tp" value="/tprofilet.do">
+					<c:param name="user_no" value="${loginMember.user_no }" />
+					
+								</c:url>
+                	<li class="d-d"  id="d-d"><a href="${ tp }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">프로필</a></li>
+					</c:if>
+					
+					
+                <c:if test="${ loginMember.user_position eq 'S' }">
                 <c:url var="tp" value="/tprofile.do">
-					<c:param name="user_no" value="2" />
+					<c:param name="user_no" value="4" />
 					 <c:param name="student_no" value="${loginMember.user_no }"/>
 								</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tp }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">프로필</a></li>
-
+					</c:if>
+					
+					<c:if test="${ loginMember.user_position eq 'T' }">
+                	 <c:url var="tv" value="/tpict.do">
+					<c:param name="user_no" value="${ loginMember.user_no }" />
+				
+				</c:url>
+                	<li class="d-d"  id="d-d"><a href="${ tv }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">사진</a></li>
+					</c:if>
+					
+					<c:if test="${ loginMember.user_position eq 'S' }">
                 	 <c:url var="tv" value="/tpic.do">
 					<c:param name="user_no" value="2" />
 					<c:param name="student_no" value="${ loginMember.user_no }"/>
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tv }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">사진</a></li>
-
-                	<c:url var="tr" value="/treview.do">
+					</c:if>
+					
+					
+			<c:if test="${ loginMember.user_position eq 'T' }">
+                	<c:url var="trt" value="/treviewt.do">
+					<c:param name="user_no" value="${ loginMember.user_no }" />
+			</c:url>
+                	<li class="d-d"  id="d-d"><a href="${ trt }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;" >리뷰</a></li>
+						</c:if>
+						
+						<c:if test="${ loginMember.user_position eq 'S' }">
+						<c:url var="tr" value="/treview.do">
 					<c:param name="user_no" value="2" />
 					<c:param name="student_no" value="${ loginMember.user_no }"/>
+					<c:param name="user_name" value="${ loginMember.user_name }"/>
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tr }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;" >리뷰</a></li>
+						</c:if>
 
-                	<c:url var="tq" value="/tqna.do">
-					<c:param name="tutor_no" value="4" />
+				<c:if test="${ loginMember.user_position eq 'T' && !empty requestScope.tutorqna}">
+                	<c:url var="tq" value="/tqnat.do">
+					<c:param name="tutor_no" value="${loginMember.user_no }" />
+					</c:url>
+                	<li class="d-d"  id="d-d"><a href="${ tq }"  style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">질문/답변</a></li>
+
+                </c:if>
+                
+                <c:if test="${ loginMember.user_position eq 'T' && empty requestScope.tutorqna}">
+                	<c:url var="tq" value="/qnaform.do">
+					<c:param name="tutor_no" value="${loginMember.user_no }" />
+					</c:url>
+                	<li class="d-d"  id="d-d"><a href="javascript:callFunction();" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">질문/답변</a></li>
+ 				<script>
+               function callFunction(){
+
+              	 if (confirm("작성된 글이 없습니다. 작성 하시 겠습니까? ") == true){    //확인
+
+              	     location.href="${ tq }";
+
+              	 }else{   //취소
+         	     return;
+					 }
+				 }
+               </script>
+                </c:if>
+                
+                <c:if test="${ loginMember.user_position eq 'S' }">
+                <c:url var="tq" value="/tqna.do">
+					<c:param name="tutor_no" value="2" />
 					<c:param name="student_no" value="${ loginMember.user_no }"/>
 					
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tq }"  style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">질문/답변</a></li>
-
-                
+                </c:if>
                   </ul>
       
              </div>
@@ -473,14 +543,35 @@
               <hr>
               <br>
               
+               <h5>온라인 가능</h5>
+              <Br>
+              <table class="intro" style="width:960px;height:50px; margin:0px; padding:0px;">
 
+               	
+               	<tr><td>${ tprofile[0].online_ok }</td></tr>
+            
+
+              </table>
+              <hr>
+              <br>
               
+              <h5> 1회당 수업시간(분) 및 수업 횟수(월)</h5>
+              <Br>
+              <table class="intro" style="width:960px;height:50px; margin:0px; padding:0px;">
+
+               	
+               	<tr><td>${ tprofile[0].class_min }분 / ${ tprofile[0].class_times }회 </td></tr>
+            
+
+              </table>
+              <hr>
+              <br>
               
               
              </div>
           </c:if>
              </div>
-          
+
          <Br><Br>
         
             <c:if test="${ !empty requestScope.tpic }">
@@ -508,7 +599,7 @@
              </c:if>
              <c:if test="${ !empty requestScope.rl }">
 
-              <div class="dreview" style="width:960px; height:1800px; margin:0px; padding:0px">
+              <div class="dreview" style="width:960px; height:800px; margin:0px; padding:0px">
         	
         	
              <div class="reviews">
@@ -516,7 +607,18 @@
                 
                 
       <c:choose>
-              			  				
+              			  				<c:when test = "${ avgScore == 0 }">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  		        </c:when>
               			  		        <c:when test = "${ avgScore == 1 }">
               			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/star.png"class="emptyStar">
               			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
@@ -659,7 +761,18 @@
               			  
               			  <tr><td>${ rl.rev_datetm }</td></tr>
               			  <tr><td> <c:choose>
-              			  				
+              			  				<c:when test = "${ rl.score == 0 }">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
+              			  		        </c:when>
               			  		        <c:when test = "${ rl.score == 1 }">
               			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/star.png"class="emptyStar">
               			  				<img src="${ pageContext.servletContext.contextPath }/resources/images/emptyStar.png"class="emptyStar">
@@ -798,14 +911,28 @@
                 			
               			</table>
      
-              			<c:if test="${ !empty sessionScope.loginMember }">
+              			<c:if test="${ !empty sessionScope.loginMember && loginMember.user_position eq 'S' }">
               			<c:if test="${ rl.student_no eq loginMember.user_no }"> 
                <c:url var="vdel" value="/vdelete.do">
 	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
 	    	<c:param name="rev_no" value="${ rl.rev_no }"/>
 	    	</c:url>
-	         <a href="${ vdel }" style="margin:0;width:80px;height:30px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#fff; color:#20c997; font-size:15px;">리뷰 삭제</a>	
+	         <button onclick="deleteReview();" style="margin:0;width:80px;height:30px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#fff; color:#20c997; font-size:15px;">리뷰 삭제</button>	
+               <script>
+               function deleteReview(){
+
+              	 if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+
+              	     location.href="${ vdel }";
+
+              	 }else{   //취소
+         	     return;
+  		 }
+  		 }
+               </script>
+               </script>
                </c:if>
+               
              </c:if>
               		</li>
                </ul>
@@ -819,53 +946,20 @@
 	    	<c:param name="tutor_no" value="2"/>
 	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
 	   		</c:url>
-               <a href="${ rform }"style="margin:0;width:550px;height:550px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#fff; color:#20c997; font-size:20px">리뷰 달기</a>
-             </c:if>
+               <button onclick="location.href='${ rform }'"style="margin:0;width:100px;height:50px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#20c997; color:white">리뷰 달기</button>
+            </c:if>
              
              </div>
              
              </c:if>
              
              <c:if test="${ !empty requestScope.tutorqna }">
-              <div class="tqna" style="width:960px; height:1800px; margin:0px; padding:0px">
+              <div class="tqna" style="width:960px; height:600px; margin:0px; padding:0px">
          
-        	    <%-- <c:if test="${ member.user_position eq 'T' }"> --%>
+        	 
               <h5>질문답변</h5>
               <Br> 
-              <%-- <c:forEach items="${requestScope.tutorqna }" var="a">
-              <h5>Q. 서비스가 시작되기 전 어떤 절차로 진행하나요?</h5>
-              <table class="qna" style="width:960px;height:50px; margin:0px; padding:0px;">
-             
-				<tr><td></td></tr>
-           
-              </table>
-               <hr>
-               <br>
-               
-                <h5>Q. 어떤 서비스를 전문적으로 제공하나요?</h5>
-              <table class="qna" style="width:960px;height:50px; margin:0px; padding:0px;">
-               	<tr><td></td></tr>
-              </table>
-               <hr>
-               <br>
-               
-                <h5>Q. 서비스의 견적은 어떤 방식으로 산정 되나요?</h5>
-              <table class="qna" style="width:960px;height:50px; margin:0px; padding:0px;">
-               	<tr><td></td></tr>
-              </table>
-               <hr>
-               <br>
-               
-                <h5>Q. A/S 또는 환불 규정은 어떻게 되나요?</h5>
-              <table class="qna" style="width:960px;height:50px; margin:0px; padding:0px;">
-               	<tr><td></td></tr>
-               	   
-              </table>
-           
-               <hr>
-               <br>
-               </c:if>
-             --%>
+              
               <h5>Q. 서비스가 시작되기 전 어떤 절차로 진행하나요?</h5>
               <table class="qna" style="width:960px;height:50px; margin:0px; padding:0px;">
              
@@ -897,24 +991,18 @@
            
                <hr>
                <br>
-          
+          <c:if test="${ loginMember.user_position eq 'T' }"> 
 	    <c:if test="${ !empty tutorqna.answer1 || !empty tutorqna.answer2 || !empty tutorqna.answer3 || !empty tutorqna.answer4}">
 	       <c:url var="uqna" value="/uqnaform.do">
-	    	<c:param name="tutor_no" value="4"/>
+	    	<c:param name="tutor_no" value="${ loginMember.user_no }"/>
+	    	<%-- <c:param name="student_no" value="${ loginMember.user_no }"/> --%>
 	    	
 	    </c:url>
-	    <a href="${ uqna }"style="margin:0;width:180px;height:50px;margin-left:40%; border: none;border-radius:4px;text-decoration: none;background-color:#20c997; color:white">수정 하기</a>
+	    <button onclick="location.href='${ uqna }'"style="margin:0;width:100px;height:50px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#20c997; color:white">수정 하기</button>
 	    </c:if>
 	    
-	    <c:if test="${ empty tutorqna.answer1 && empty tutorqna.answer2 && empty tutorqna.answer3 && empty tutorqna.answer4  }">
-	       <c:url var="qnaf" value="/qnaform.do">
-	    	<c:param name="tutor_no" value="4"/>
-	    	
-	    </c:url>
-	    
-	    <a href="${ qnaf }"style="margin:0;width:180px;height:50px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#20c997; color:white">질문 작성</a>
-            </c:if>  <!--  <button onclick="moveQnaForm();"style="margin:0;width:180px;height:50px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#20c997; color:white">질문 작성및 수정하기</button> -->
-           
+	   
+           </c:if>
             <%-- </c:if> --%>
               
        
@@ -922,6 +1010,14 @@
              </div>
              
              </c:if>
+             <%--    <c:if test="${ empty requestScope.tutorqna && loginMember.user_position eq 'T'}">
+	       <c:url var="qnaf" value="/qnaform.do">
+	    	<c:param name="tutor_no" value="${ loginMember.user_no }"/>
+	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
+	    </c:url>
+	    
+	    <button onclick="location.href='${ qnaf }'"style="margin:0;width:100px;height:50px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#20c997; color:white">질문 작성</button>
+            </c:if> --%>
             </div>
       
           </div>

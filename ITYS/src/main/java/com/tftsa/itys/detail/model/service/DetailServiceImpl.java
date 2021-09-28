@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.detail.model.dao.DetailDao;
+import com.tftsa.itys.detail.model.vo.AfterPay;
 import com.tftsa.itys.detail.model.vo.Detail;
+import com.tftsa.itys.detail.model.vo.TutorDetail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-
-import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Service("detailService")
 public class DetailServiceImpl implements DetailService{
@@ -91,7 +91,7 @@ public class DetailServiceImpl implements DetailService{
 		 return detailDao.tutorSave(student_no);
 	 }
 	 @Override
-	 public Detail reviewPay(int student_no){
-		 return detailDao.reviewPay(student_no);
+	 public AfterPay reviewPay(String user_name){
+		 return detailDao.reviewPay(user_name);
 	 }
 }

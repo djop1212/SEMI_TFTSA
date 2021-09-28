@@ -7,12 +7,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.tftsa.itys.detail.model.vo.AfterPay;
 import com.tftsa.itys.detail.model.vo.Detail;
+import com.tftsa.itys.detail.model.vo.TutorDetail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-
-import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Repository("detailDao")
 public class DetailDao {
@@ -97,8 +96,8 @@ public class DetailDao {
 		return sqlSession.selectOne("detailMapper.tutorSave", student_no);
 	}
 
-	public Detail reviewPay(int student_no) {
-		return sqlSession.selectOne("detailMapper.reviewPay", student_no);
+	public AfterPay reviewPay(String user_name) {
+		return sqlSession.selectOne("detailMapper.reviewPay", user_name);
 	}
 
 	

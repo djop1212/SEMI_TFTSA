@@ -284,7 +284,11 @@ a.btn-layerClose:hover {
 	    			</div>
 	    			<div class="col-6">
 	    				<c:url var="payment" value="payment.do">
-							<c:param name="user_no" value="${ requestScope.userchattingtutor.user_no }"/>
+							<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
+							<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+							<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
+							<c:param name="student_name" value="${ requestScope.userchattingstudent.user_name }"/>
+							<c:param name="pay_amount" value="${ requestScope.userchattingtutor.min_pay }"/>
 						</c:url>
 	    				<input class="btn btn-primary btn-block" type="button" value="과외성사" onclick="nextPayment()">
 	    			</div>
