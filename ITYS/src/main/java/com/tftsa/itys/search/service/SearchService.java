@@ -2,6 +2,11 @@ package com.tftsa.itys.search.service;
 
 import java.util.ArrayList;
 
+<<<<<<< Updated upstream
+=======
+import com.tftsa.itys.mypage.model.vo.Subject;
+import com.tftsa.itys.mypage.model.vo.Tutor;
+>>>>>>> Stashed changes
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
