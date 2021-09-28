@@ -12,8 +12,8 @@ import com.tftsa.itys.search.vo.Search;
 public interface SearchService {
 
 	ArrayList<Tutor> selectTop10();
-	ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectCategory();
-	ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectSubject(String category);
+	ArrayList<Subject> selectCategory();
+	ArrayList<Subject> selectSubject(String category);
 	ArrayList<Keyword> selectKeyword();
 	ArrayList<Tutor> selectSearch(Search search);
 	String selectDay(int user_no);

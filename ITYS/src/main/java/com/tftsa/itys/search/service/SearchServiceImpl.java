@@ -25,12 +25,12 @@ public class SearchServiceImpl implements SearchService{
 	}
 	
 	@Override
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectCategory(){
+	public ArrayList<Subject> selectCategory(){
 		return searchDao.selectCategory();
 	}
 	
 	@Override
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectSubject(String category){
+	public ArrayList<Subject> selectSubject(String category){
 		return searchDao.selectSubject(category);
 	}
 	
