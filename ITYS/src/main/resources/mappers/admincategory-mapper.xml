@@ -10,8 +10,24 @@
 		<result property="sub_name" column="sub_name" />
 	</resultMap>
 	
-	<select id="selectCategoryAll" resultMap="resultSubject">
+	<select id="selectCategoryAll" parameterType="String" resultMap="resultSubject">
 		select * from subject
+		<if test = "sub_name !=null">
+			where sub_name like '%' || #{ sub_name } || '%' 
+		</if>
+		order by sub_no
 	</select>
 	
+	<delete id="deleteCategory" parameterType="String">
+		delete from subject where sub_name = #{ sub_name } 
+	</delete>
+	
+	<insert id="insertSubject" parameterType="Subject">
+		insert into subject (sub_no, category, sub_name) values 
+		(subject_seq.nextval, #{category}, #{sub_name})
+	</insert>
+	
+	<select id="cntSubject" parameterType="String" resultType="_int">
+		select count(*) from subject where sub_name = #{ sub_name }
+	</select>
 </mapper>

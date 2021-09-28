@@ -15,26 +15,31 @@ public class ReplyServiceImpl implements ReplyService {
 	@Inject
 	private ReplyDao rdao;
 	
+	// 댓글 조회
 	@Override
 	public List<Reply> readReply(int board_no) {
 		return rdao.readReply(board_no);
 	}
 
+	// 댓글 작성
 	@Override
 	public void writeReply(Reply reply) {
 		rdao.writeReply(reply);
 	}
 	
+	// 댓글 수정
 	@Override
-	public void updateReply(Reply reply) {
-		rdao.updateReply(reply);
+	public int updateReply(Reply reply) {
+		return rdao.updateReply(reply);
 	}
 	
+	// 댓글 삭제
 	@Override
-	public void deleteReply(Reply reply) {
-		rdao.deleteReply(reply);
+	public int deleteReply(Reply reply) {
+		return rdao.deleteReply(reply);
 	}
 
+	//댓글 수정 페이지 댓글 조회
 	@Override
 	public Reply selectReply(int com_no) {
 		return rdao.selectReply(com_no);

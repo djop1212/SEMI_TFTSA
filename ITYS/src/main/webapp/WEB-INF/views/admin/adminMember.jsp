@@ -15,31 +15,9 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script>
-	function searchFunction(){
-	$.ajax({
-		type: 'GET',
-		url : "/itys/adminMember",
-		data : $("form[name=navbar-search]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-}
-</script>
+<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
+
 <style>
 /* Dropdown Button */
 .btn btn-primary dropdown-toggle {
@@ -98,6 +76,10 @@ a {
   text-align : center;
   }
 
+#dropdownbtn {
+  margin-left:8px;
+}
+
 </style> 
 </head>
 <body id="page-top">
@@ -126,30 +108,34 @@ a {
                 </div>
                 
                 <div class="search-option" style="display:flex;">
+                <div class="col-sm-12 col-md-6">
 					<div class="dropdown">
-					  <button class="btn btn-primary dropdown-toggle" style="height:43px;"> 회원 조회 선택 </button>
+					  <button id="dropdownbtn" class="btn btn-primary dropdown-toggle" style="height:43px;"> 회원 조회 선택 </button>
 					  <div class="dropdown-content">
 					    <a href="/itys/adminMember.do"> 전체 회원 </a>
 					    <a href="/itys/adminStudent.do"> 학생 </a>
 					    <a href="/itys/adminTutor.do"> 선생님 </a>
 					  </div>
 					</div>
-                <form class="navbar-search">
-                  <div class="input-group" style="width:200px;float:right;margin-right:15px">
-                    <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
+					</div>
+					<div class="col-sm-12 col-md-6">
+                <form action="adminMember.do" method="POST" class="navbar-search">
+                  <div class="input-group" style="width:300px;float:right;margin-right:15px;margin-left:15px">
+                    <input type="text" name="user_id" class="form-control bg-light border-1 small" placeholder="Search an user ID"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary" type="submit">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
                   </div>
                 </form>
                 </div>
+                </div>
                 
                 <div class="table-responsive p-3">
-                
-                  <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                <form action="deleteMember.do" method="post" id="multidelete">
+                  <table id="memberTable" class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
                       	<th>권한</th>
@@ -187,13 +173,15 @@ a {
 							<td>${ m.user_phone }</td>
 							<td>${ m.user_email }</td>
 							<td>${ m.login_ok }</td>
-							<td><input type="checkbox" value=${ m.user_no }></td>
+							<td><input type="checkbox" name="del_chk" value=${ m.user_id }></td>
 						</tr>
-					  </c:forEach>  
+					  </c:forEach>
+					  <input type="hidden" name="clickedValue" id="clickedValue" value=""/>
                     </tbody>
                   </table>
+                  </form>
                   <div align="right" style=50px>
-                  <a href="#" class="btn btn-danger" >
+                  <a href="#" class="btn btn-danger" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
                	</div>
@@ -240,5 +228,63 @@ a {
 	</div>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
+<script>
+	var user_id = $("#user_id").val();
+	function searchFunction(){	
+		$.ajax({
+			url : "/itys/adminMember",
+			type: 'POST',
+			data : {user_id : user_id},
+			success : function(data){
+	/* 			//테이블 초기화
+				$('#memberTable > tbody').empty();
+				if(data.length>=1){
+					function(data){
+						str='<tr>'
+						str+="<td>"+item.user_position+"</td>";
+						str+="<td>"+item.user_no+"</td>";
+						str+="<td>"+item.user_id+"</td>"; 
+						str+="<td>"+item.title+"</td>";
+						str+="<td>"+item.date+"</td>";
+						str+="<td>"+item.hit+"</td>";
+						str+="</tr>"
+						$('#memberTable').append(str); */
+						console.log("user_id",data);
+	        		}				 
+				}
+				else {
+					
+				}
+			}
+		})
+	} 
+	var chkArray = new Array(); // 배열 선언
+	
+	function ClickedData(){
+		var obj = $("[name=del_chk]");
 
+        $('input:checkbox[name=del_chk]:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.
+            chkArray.push(this.value);
+        });
+        $('#clickedValue').val(chkArray);
+        var conVal=confirm($('#clickedValue').val()+"를 회원에서 삭제하시겠습니까?");
+        if (conVal == true){
+	        location.reload(true);
+	        console.log(chkArray);
+			
+	        $.ajax({
+	        	url:"deleteMember.do",
+	        	type:"post",
+	        	data : {'list': chkArray.join(',')},
+	        	  success : function(data){
+	        	    console.log('삭제를 성공했습니다!');
+	        	  }
+	        })
+        }
+        else if(conVal == false){
+        	alert("삭제를 취소했습니다.");
+        	location.reload(true);
+        }
+	}
+</script>
 </html>

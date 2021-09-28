@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" isErrorPage="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -111,27 +111,30 @@ img{
 						<div>
 							<c:choose>
 								<c:when test="${student.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+									<img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 								</c:when>
 								<c:when test="${tutor.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+									<img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 								</c:when>
 								<c:otherwise>
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+									<img src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 								</c:otherwise>
 							</c:choose>
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
 								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
+								<c:if test="${position eq 'S' }">
 								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
-								<c:if test="${loginMember.user_position eq 'S' }">
 								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
+								</c:if>
+								<c:if test="${position eq 'T' }">
+								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
 								</c:if>
 								<li><a href="mclass.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
 							</ul>
 						</div>
-						<div style="color:#969ca2;"><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">탈퇴하기</a></div>
+						<div><a style="color:#969ca2;" href="#" onclick="deleteuser(); return false;">회원탈퇴</a></div>
 					</div>
 					<div id="right">
 						<div>
@@ -162,6 +165,12 @@ img{
 								</table><hr>
 								</c:forEach>
 								</li>
+								
+								<c:set var="e" value="<%= exception %>" />
+								<c:if test="${ empty e }">
+								<h5> ${ message }</h5>
+								</c:if>
+								<br>
 							</ul>
 						</div>
 					</div>

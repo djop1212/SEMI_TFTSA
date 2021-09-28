@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="searchMapper">
+	
+	<resultMap type="DaySearch" id="resultDaySearch">
+		<result column="user_no" property="user_no" />
+		<result column="day_str" property="day_str" />
+		<result column="db_day_str" property="db_day_str" />
+	</resultMap>
+	
+
+	<resultMap type="Search" id="resultSearch">
+		<result column="category" property="category" />
+		<result column="sub_name" property="sub_name" />
+		<result column="word" property="word" />
+	</resultMap>
+	
+	<resultMap type="User_info" id="resultUser_info">
+		<id column="user_no" property="user_no" />
+		<result column="user_ssn" property="user_ssn" />
+		<result column="user_name" property="user_name" />
+		<result column="user_phone" property="user_phone" />
+		<result column="user_id" property="user_id" />
+		<result column="user_pwd" property="user_pwd" />
+		<result column="user_email" property="user_email" />
+		<result column="user_position" property="user_position" />
+		<result column="login_ok" property="login_ok" />
+	</resultMap>
+	
+	<resultMap type="Tutor" id="resultTutor">
+		<id column="user_no" property="user_no" />
+		<result column="pic" property="pic" />
+		<result column="min_pay" property="min_pay" />
+		<result column="online_ok" property="online_ok" />
+		<result column="area" property="area" />
+		<result column="intro" property="intro" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="style" property="style" />
+		<result column="l_grd" property="l_grd" />
+		<result column="class_min" property="class_min" />
+		<result column="class_times" property="class_times" />
+		<result column="sub_name" property="sub_name" />
+	</resultMap>
+
+	<!-- 비교연산자를 쿼리문에 그냥 사용하면 태그 앨리먼트 꺽쇠괄호 등(<, >, &)과 혼동하는 문제가 발생할 수 있음. 이 문제를 
+		미연에 방지하기 위해 xml 코드 중 xml parser 에 의해 해석하지 말고, 문장 그대로 해석하라는 뜻으로 <![CDATA[ 
+		쿼리문장 ]]> 사용함 -->
+
+	<select id="selectSearch" parameterType="Search" resultMap="resultTutor">
+
+		SELECT * from tutor, subject, user_info
+		WHERE tutor.sub_name = subject.sub_name
+		AND tutor.user_no = user_info.user_no
+		<if test = "word != 'null'  ">
+			AND (tutor.intro like '%' || #{ word } || '%'
+			OR user_info.user_name like '%' || #{ word } || '%')
+		</if>
+		<if test = "category != 'null'  ">
+			AND subject.category = #{ category }
+		</if>
+		<if test = "sub_name != 'null'  ">
+			AND subject.sub_name = #{ sub_name }
+		</if>
+
+	</select>
+	
+
+	<select id="selectDay" parameterType="int" resultType="String">
+		SELECT day
+		FROM TUTOR
+		WHERE user_no = #{ user_no }
+	</select>
+	
+	<select id="selectDaySearch" parameterType="DaySearch" resultMap="resultTutor">
+		SELECT *
+		FROM TUTOR
+		WHERE user_no = #{ user_no }
+		
+		<foreach collection="db_day_list" item="item" open="and" close="" separator="and" >
+		#{ day_str } LIKE ('%' || #{ item } || '%')
+		</foreach>
+        
+	</select>
+	
+
+	
+	<select id="selectDetailSearch" parameterType="DetailSearch" resultMap="resultTutor">
+	
+		SELECT DISTINCT TUTOR.*
+		FROM tutor, key_data, keyword
+		WHERE tutor.user_no = key_data.user_no(+)
+		AND key_data.key_no = keyword.key_no(+)
+		AND tutor.user_no = #{ user_no }
+		
+		<if test = "l_grd_list[0] != 'null'  ">
+			<foreach collection="l_grd_list" item="item" open="and(" close=")" separator="or" >
+				regexp_like(REPLACE(tutor.l_grd,' ',''), #{ item })
+			</foreach>
+		</if>
+		
+		<if test = "area != 'null'  ">
+			and area = #{ area }
+		</if>
+		
+		<if test = "keyword_list[0] != 'null' ">
+			<foreach collection="keyword_list" item="item" open="and(" close=")" separator="or" >
+				regexp_like(keyword.type_per, #{ item })
+			</foreach>
+		</if>
+		<if test='day_str != "null, "'>
+			<foreach collection="db_day_list" item="item" open="and" close="" separator="and" >
+				#{ day_str } LIKE ('%' || #{ item } || '%')
+			</foreach>
+		</if>
+		<if test='stime != "null"'>
+			AND SUBSTR(time,1,5) <![CDATA[>=]]>  #{ stime }
+       		AND SUBSTR(time,8,12) <![CDATA[<=]]> #{ etime }
+		</if>
+        
+	</select>
+</mapper>
+

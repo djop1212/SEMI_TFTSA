@@ -12,7 +12,7 @@ function Click(){
 	if($("input:radio[id='student']").is(":checked")==true){
 		console.log("student");
 		window.name = "studentForm";
-		window.open("upSPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=550, height=650, status=no, menubar=no, toolbar=no, resizable=no");
+		window.open("upSPage.do?user_no=${member.user_no}", "new", "top=100, left=300, width=550, height=500, status=no, menubar=no, toolbar=no, resizable=no");
 	}else{
 		console.log("tutor");
 		window.name = "tutorForm";
@@ -123,14 +123,17 @@ img{
 						<div style="padding-top: 5px;">
 							<ul id="bar">
 								<li><a href="myPage.do?user_id=${loginMember.user_id }" style="color:white; background: #42acae; border-radius:3px;">프로필</a></li>
-								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
-								<c:if test="${loginMember.user_position eq 'S' }">
-								<li><a href="wishl.do?user_no=${loginMember.user_no }">찜 목록</a></li>
+								<c:if test="${member.user_position eq 'S' }">
+								<li><a href="clist.do?user_no=${student.user_no }">채팅목록</a></li>
+								<li><a href="wishl.do?user_no=${student.user_no }">찜 목록</a></li>
+								</c:if>
+								<c:if test="${member.user_position eq 'T' }">
+								<li><a href="clist.do?user_no=${tutor.user_no }">채팅목록</a></li>
 								</c:if>
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
 							</ul>
 						</div>
-			            <br><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">회원탈퇴</a>
+			            <br><a style="color:#969ca2;" href="#" onclick="deleteuser(); return false;">회원탈퇴</a>
 					</div>
 					<div id="right">
 						<div>
@@ -242,6 +245,10 @@ img{
 									<td>과외 스타일</td>
 									<td>${tutor.style }</td>
 								</Tr>
+								<tr>
+									<td>성격</td>
+									<td>${tutor.key_name }</td>
+								</tr>
 							</c:if>
 							</table>
 						</div>

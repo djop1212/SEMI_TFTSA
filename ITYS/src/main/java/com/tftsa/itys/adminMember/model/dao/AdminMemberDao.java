@@ -15,21 +15,21 @@ public class AdminMemberDao {
 	private SqlSessionTemplate sqlSession; 
 	
 	//모든 회원 조회
-	public ArrayList<Member> selectAllList(){
-		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllList");
+	public ArrayList<Member> selectAllList(String mid){
+		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllList", mid);
 		return (ArrayList<Member>)list;
 	}
 	
-	//회원 검색
-	public Member selectMember(String memberNo) {
-		return sqlSession.selectOne("adminmemberMapper.selectMember", memberNo);
+//	//회원 검색
+//	public Member selectMember(String mid) {
+//		return sqlSession.selectOne("adminmemberMapper.selectMember", mid);
+//	}
+	
+	//회원 삭제
+	public int deleteMember(String mid) {
+		return sqlSession.delete("adminmemberMapper.deleteMember", mid);
 	}
 	
-//	//회원 삭제
-//	public int deleteMember(int memberNo) {
-//		return sqlSession.delete("memberMapper.deleteMember", memberNo);
-//	}
-//	
 //	//로그인한 사용자만 출력
 //	public ArrayList<Member> selectLoggedInUser() {
 //		List<Member> list = sqlSession.selectList("memberMapper.selectLoggedInUser");

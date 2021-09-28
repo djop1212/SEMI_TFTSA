@@ -8,7 +8,6 @@
 <c:set var="currentPage" value="${ requestScope.currentPage }" />
 <c:set var="board_no" value="${ requestScope.board_no }" />
 <c:set var="com_no" value="${ requestScope.com_no }" />     
-
    
 <!DOCTYPE html>
 <html>
@@ -17,21 +16,23 @@
 <title></title>
 
 
-
-
-
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <hr>
+
 <h2 align="center">${ requestScope.board.board_no } 번 게시글 상세보기</h2>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" 
-cellpadding="5">
+
+<!-- 게시글 상세보기 -->
+<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
 <tr><th width="120">제 목</th><td>${ board.board_title }</td></tr>
+
 <tr><th>작성자</th><td>${ board.board_writer }</td></tr>
+
 <tr><th>등록날짜</th>
 <td><fmt:formatDate value="${ board.board_date }" type="date" pattern="yyyy/MM/dd" /></td></tr>
+
 <tr>
 	<th>첨부파일</th>
 	<td>
@@ -47,7 +48,10 @@ cellpadding="5">
 		</c:if>
 	</td>
 </tr>
+
 <tr><th>내 용</th><td>${ board.board_content }</td></tr>
+
+<!-- 게시글 수정/삭제, 댓글달기 -->
 <tr><th colspan="2">
 <c:if test="${ !empty sessionScope.loginMember }">
 	<c:if test="${ loginMember.user_id eq board.board_writer }">
@@ -55,28 +59,29 @@ cellpadding="5">
 	    	<c:param name="board_no" value="${ board.board_no }"/>
 	    	<c:param name="page" value="${ currentPage }"/>
 	    </c:url>
-	    <a href="${ ubup }">[수정페이지로 이동]</a>
+	    <a href="${ ubup }">[게시글 수정]</a>
 	    &nbsp; &nbsp; 
+	    
 	    <c:url var="ubd" value="/bdelete.do">
 	    	<c:param name="board_no" value="${ board.board_no }"/>
-	    	<%-- <c:param name="board_level" value="${ board.board_level }"/> --%>
 	    	<c:param name="board_rename_filename" value="${ board.board_rename_filename }"/>
 	    </c:url>
-	    <a href="${ ubd }">[글삭제]</a>
+	    <a href="${ ubd }">[게시글 삭제]</a>
 	    &nbsp; &nbsp; 
    </c:if>
+   
   <c:if test="${ loginMember.user_id ne board.board_writer or loginMember.user_id eq board.board_writer }"> 
    		<c:url var="brf" value="/breplyform.do">
    			<c:param name="bnum" value="${ board.board_no }"/>
    			<c:param name="page" value="${ currentPage }"/>
    		</c:url>
-		<a href="${ brf }">[댓글달기]</a>
+		<a href="${ brf }">[댓글 달기]</a>
 		<hr>
 </c:if>
 </c:if>		
 
 
-		<!-- 댓글 -->
+<!-- 댓글 상세보기 -->
 <div id="reply">
   <ol class="replyList">
     <c:forEach items="${replyList}" var="replyList">
@@ -84,11 +89,12 @@ cellpadding="5">
         <p>
         작성자 : ${replyList.com_writer}<br />
         작성 날짜 :  <fmt:formatDate value="${replyList.com_date}"  pattern="yyyy-MM-dd"/>
-        <fmt:parseDate value='${list.trading_day}' var='trading_day' pattern='yyyymmdd'/>
-		<fmt:formatDate value="${trading_day}" pattern="yyyy.mm.dd"/>
+        				<fmt:parseDate value='${list.trading_day}' var='trading_day' pattern='yyyymmdd'/>
+						<fmt:formatDate value="${trading_day}" pattern="yyyy.mm.dd"/>
         </p>
         <p>${replyList.com_content}</p>
         
+<!-- 댓글 수정/삭제 -->
  <c:if test="${ !empty sessionScope.loginMember }">
 	<c:if test="${ loginMember.user_id eq replyList.com_writer }">
  		<c:url var="ubup" value="/rupview.do">
@@ -101,20 +107,17 @@ cellpadding="5">
 	    	<c:param name="com_no" value="${ replyList.com_no }"/>
 	    	<c:param name="board_no" value="${ replyList.board_no }"/>
 	    	<c:param name="page" value="${ currentPage }"/>
-	    	<%-- <c:param name="board_level" value="${ board.board_level }"/> --%>
+
 	    </c:url>
 	    <a href="${ ubd }">[댓글 삭제]</a>
      </c:if></c:if>
-	         
-   
+
      </li>
   </c:forEach>    
  </ol> 
 </div>
-		<!-- 댓글 -->
-		
-		
-	
+
+<!-- 목록 돌아가기 -->	
 &nbsp; &nbsp; 
 <c:url var="ubl" value="/blist.do">  	
   	<c:param name="page" value="${ currentPage }"/>

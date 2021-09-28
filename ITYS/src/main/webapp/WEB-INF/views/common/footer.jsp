@@ -18,7 +18,8 @@
               메뉴
             </h5>
             <ul class="navbar-nav  ">
-              <li class="nav-item active">
+            <c:if test="${ sessionScope.loginMember eq null}">
+              <li class="nav-item active">             
                 <a class="nav-link" href="main.do">메인 <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
@@ -32,13 +33,8 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="info.do"> 고객센터 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.do">회원가입</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="login.do">로그인</a>
-              </li>
+              </li>       
+              </c:if>
             </ul>
           </div>
         </div>

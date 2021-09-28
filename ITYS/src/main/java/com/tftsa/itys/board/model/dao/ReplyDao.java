@@ -13,11 +13,12 @@ public interface ReplyDao {
 		public void writeReply(Reply reply);
 
 		// 댓글 수정
-		public void updateReply(Reply reply);
+		public int updateReply(Reply reply);
 		
 		// 댓글 삭제
-		public void deleteReply(Reply reply);
+		public int deleteReply(Reply reply);
 
+		//댓글 수정 페이지 댓글 조회
 		public Reply selectReply(int com_no);
 
 

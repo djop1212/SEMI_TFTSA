@@ -10,89 +10,15 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/img/logo/logo.png" rel="icon">
-<title>Admin - 회원 관리</title>
+<title>Admin - 키워드 관리</title>
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script>
-	function searchFunction(){
-	$.ajax({
-		type: 'GET',
-		url : "/itys/adminMember",
-		data : $("form[name=navbar-search]").serialize(),
-		success : function(result){
-			//테이블 초기화
-			$('#boardtable > tbody').empty();
-			if(result.length>=1){
-				result.forEach(function(item){
-					str='<tr>'
-					str += "<td>"+item.idx+"</td>";
-					str+="<td>"+item.writer+"</td>";
-					str+="<td><a href = '/board/detail?idx=" + item.idx + "'>" + item.title + "</a></td>";
-					str+="<td>"+item.date+"</td>";
-					str+="<td>"+item.hit+"</td>";
-					str+="</tr>"
-					$('#boardtable').append(str);
-        		})				 
-			}
-		}
-	})
-}
-</script>
+<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
+
 <style>
-/* Dropdown Button */
-.btn btn-primary dropdown-toggle {
-  background-color: #6777EF;
-  color: white;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  border-radius: .25rem;
-  border-color: #6777EF;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  min-width: 147px;
-  border-radius: .25rem;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-	background-color: #e3e6f0;
-	text-decoration: none;
-	color: black;
-	}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-	display: block;
-	}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .btn btn-primary dropdown-toggle {background-color: #394eea;}
-
 a {
   text-decoration-line: none;
   text-align : center;
@@ -101,6 +27,7 @@ a {
 </style> 
 </head>
 <body id="page-top">
+
 	<div id="wrapper">
 		<c:import url="/WEB-INF/views/admin/common/sidebar.jsp" />
 
@@ -125,11 +52,10 @@ a {
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 </div>
                 
-                <div class="search-option" style="display:flex;">
-					
-                <form class="navbar-search">
+                <div class="search-option" style="display:flex;">	
+                <form action="adminKeyword.do" method="POST" class="navbar-search">
                   <div class="input-group" style="width:200px;float:right;margin-right:15px">
-                    <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
+                    <input type="text" name="searched_txt" class="form-control bg-light border-1 small" placeholder="Search a Keyword"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
@@ -141,7 +67,7 @@ a {
                 </div>
                 
                 <div class="table-responsive p-3">
-                
+                <form action="deleteKeyword.do" method="post" id="multidelete">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
@@ -162,13 +88,16 @@ a {
 						<tr>
 							<td>${ k.key_no }</td>
 							<td>${ k.type_per }</td>
-							<td><input type="checkbox" value=${ k.key_no }></td>
+							<td><input type="checkbox" name="del_chk" value=${ k.type_per }></td>
 						</tr>
 					  </c:forEach>  
+					  <input type="hidden" name="clickedValue" id="clickedValue" value=""/>
                     </tbody>
                   </table>
+                  </form>
                   <div align="right" style=50px>
-                  <a href="#" class="btn btn-danger" >
+                  <button type="button" class="btn btn-success mb-1" onclick="location.href='/itys/addKeyword.do'" >성격 추가</button>
+                  <a href="#" class="btn btn-danger" style="margin:0px 0px 4px" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
                	</div>
@@ -215,5 +144,48 @@ a {
 	</div>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
+<script>
+	var searched_txt = $("#searched_txt").val();
+	function searchFunction(){	
+		$.ajax({
+			url : "/itys/adminKeyword",
+			type: 'POST',
+			data : {searched_txt : searched_txt},
+			success : function(data){
+						console.log("searched_txt",data);
+	        	}				 		
+		})
+	} 
+	//삭제할 항목의 id 저장할 배열
+	var chkArray = new Array(); // 배열 선언
+	
+	function ClickedData(){
+		var obj = $("[name=del_chk]");
+		// 체크된 체크박스의 value 값을 배열에 저장.
+        $('input:checkbox[name=del_chk]:checked').each(function() { 
+            chkArray.push(this.value);
+        });
+        $('#clickedValue').val(chkArray);
+        var conVal=confirm("'"+$('#clickedValue').val()+"' 을 키워드에서 삭제하시겠습니까?");
+        if (conVal == true){
+	        location.reload(true);
+	        console.log(chkArray);
+ 
+	        $.ajax({
+	        	url:"deleteKeyword.do",
+	        	type:"post",
+	        	data : {'list': chkArray.join(',')},
+	        	  success : function(data){
+	        	    console.log('삭제를 성공했습니다!');
+	        	  }
+	        })
+        }
+        else if(conVal == false){
+        	alert("삭제를 취소했습니다.");
+        	location.reload(true);
+        }
+	}
 
+
+</script>
 </html>

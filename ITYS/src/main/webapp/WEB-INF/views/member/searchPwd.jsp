@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>아이디찾기</title>
 <style type="text/css">
 .loginForm{
