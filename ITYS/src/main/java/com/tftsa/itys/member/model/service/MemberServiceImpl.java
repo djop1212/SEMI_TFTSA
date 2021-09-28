@@ -64,8 +64,9 @@ public class MemberServiceImpl implements MemberService {
 
 	// 이메일 발송
 	@Override
-	public void send_mail(Member member, String div) throws Exception {
+	public void send_mail(Member member) throws Exception {
 		// Mail Server 설정
+		System.out.println("send_mail");
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
 		String hostSMTPid = "jooo9898@naver.com";
@@ -125,11 +126,12 @@ public class MemberServiceImpl implements MemberService {
 			for (int i = 0; i < 12; i++) {
 				pw += (char) ((Math.random() * 26) + 97);
 			}
+			System.out.println("pw : "+pw);
 			member.setUser_pwd(pw);
 			// 비밀번호 변경
 			memberDao.updateUserPwd(member);
 			// 비밀번호 변경 메일 발송
-			send_mail(member, "find_pw");
+			send_mail(member);
 			
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();

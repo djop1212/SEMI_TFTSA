@@ -277,7 +277,7 @@ public class MemberController {
 		memberService.findUserPwd(response, member);
 
 		member.setUser_pwd(bcryptPasswordEncoder.encode(member.getUser_pwd()));
-		// logger.info("member: "+member);
+		logger.info("member: "+member);
 		memberService.updateUserPwd(member);
 	}
 
