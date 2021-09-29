@@ -50,11 +50,8 @@
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/main.jsp' }">active</c:if>">
                 <a class="nav-link" href="main.do">메인 <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/about.jsp' }">active</c:if>">
-                <a class="nav-link" href="about.do"> 과외찾기 </a>
-              </li>
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/course.jsp' }">active</c:if>">
-                <a class="nav-link" href="course.do"> 선생님 찾기 </a>
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/search/tutor_search.jsp' }">active</c:if>">
+                <a class="nav-link" href="top10.do"> 과외찾기 </a>
               </li>
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/event.jsp' }">active</c:if>">
                 <a class="nav-link" href="${ pageContext.servletContext.contextPath }/blist.do?page=1"> 질문하기 </a>   

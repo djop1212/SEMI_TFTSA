@@ -56,7 +56,7 @@ public class MainController {
 			mv.addObject("tutorList", tutorList);
 			mv.addObject("keywordList", keywordList);
 			
-			mv.setViewName("main");
+			mv.setViewName("search/tutor_search");
 		}
 		
 		return mv;
@@ -186,7 +186,7 @@ public class MainController {
 			mv.addObject("tutorList", tutorList);
 			mv.addObject("keywordList", keywordList);
 
-			mv.setViewName("main");
+			mv.setViewName("search/tutor_search");
 		}
 		
 		return mv;
@@ -357,7 +357,7 @@ public class MainController {
 			mv.addObject("tutorList", detailSearchTutor);
 			
 		}
-		mv.setViewName("main");
+		mv.setViewName("search/tutor_search");
 		
 		return mv;
 	}
