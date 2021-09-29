@@ -153,7 +153,7 @@ img{
 						<div>
 							<h4>💬 채팅 목록</h4>
 						</div><br>
-						<form action="delclist.do" method="post">
+						<form action="delclist.do" method="post" onsubmit="confirm('채팅 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="user_no" value="${loginMember.user_no }">
 						<div>
 						

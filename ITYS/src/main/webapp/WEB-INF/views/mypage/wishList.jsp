@@ -152,7 +152,7 @@ img{
 						
 							<h4>❤ 찜 목록</h4>
 						</div><br>
-						<form action="delwlist.do" method="post">
+						<form action="delwlist.do" method="post" onsubmit="confirm('찜 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="student_no" value="${loginMember.user_no}">
 						<div>
 							<ul id="wlist">
