@@ -9,6 +9,8 @@ import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.dao.ChattingDao;
 import com.tftsa.itys.chatting.model.vo.Chatting;
 import com.tftsa.itys.chatting.model.vo.Chattingroom;
+import com.tftsa.itys.chatting.model.vo.StudentChattingroom;
+import com.tftsa.itys.chatting.model.vo.TutorChattingroom;
 import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
 import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
@@ -47,6 +49,19 @@ public class ChattingServiceImpl implements ChattingService{
 	@Override
 	public Likes selectLikes(Likes likes) {
 		return chattingDao.selectLikes(likes);
+	}
+	
+	// 학생 채팅방 정보 조회 ServiceImpl
+	@Override
+	public StudentChattingroom selectStudentChattingroom(int chat_room_no) {
+		return chattingDao.selectStudentChattingroom(chat_room_no);
+	}
+
+	// 선생님 채팅방 정보 조회 ServiceImpl
+	@Override
+	public TutorChattingroom selectTutorChattingroom(int chat_room_no) {
+		// TODO Auto-generated method stub
+		return chattingDao.selectTutorChattingroom(chat_room_no);
 	}
 
 	// 채팅 정보 삭제 ServiceImpl

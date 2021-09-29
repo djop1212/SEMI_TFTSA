@@ -16,6 +16,8 @@
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.Chatting" alias="Chatting" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserChattingStudent" alias="UserChattingStudent" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserChattingTutor" alias="UserChattingTutor" />
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.StudentChattingroom" alias="StudentChattingroom" />
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.TutorChattingroom" alias="TutorChattingroom" />
 		<typeAlias type="com.tftsa.itys.adminPayment.model.vo.Payment" alias="Payment" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.UserChatting" alias="UserChatting" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Chattingblock" alias="Chattingblock" />
