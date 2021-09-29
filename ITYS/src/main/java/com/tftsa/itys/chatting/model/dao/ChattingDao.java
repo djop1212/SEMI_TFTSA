@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.vo.Chatting;
 import com.tftsa.itys.chatting.model.vo.Chattingroom;
+import com.tftsa.itys.chatting.model.vo.StudentChattingroom;
+import com.tftsa.itys.chatting.model.vo.TutorChattingroom;
 import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
 import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
@@ -44,6 +46,16 @@ public class ChattingDao {
 	// 찜목록 정보 조회 Dao
 	public Likes selectLikes(Likes likes) {
 		return sqlSession.selectOne("chattingMapper.selectLikes", likes);
+	}
+	
+	// 학생 채팅방 정보 조회 Dao
+	public StudentChattingroom selectStudentChattingroom(int chat_room_no) {
+		return sqlSession.selectOne("chattingMapper.selectStudentChattingroom", chat_room_no);
+	}
+	
+	// 선생님 채팅방 정보 조회 Dao
+	public TutorChattingroom selectTutorChattingroom(int chat_room_no) {
+		return sqlSession.selectOne("chattingMapper.selectTutorChattingroom", chat_room_no);
 	}
 
 	// 채팅 정보 삭제 Dao
