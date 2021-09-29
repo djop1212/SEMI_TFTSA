@@ -341,8 +341,8 @@ a.btn-layerClose:hover {
 	    			<div class="nano has-scrollbar" style="height:380px;">
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
 	    					<ul class="list-unstyled media-block" id="messageWindow">
-	    						<c:if test="${ requestScope.chat != null }">
 	    						<c:forEach items="${ requestScope.chat }" var="ch">
+	    						<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 	    						<c:if test="${ ch.user_no eq requestScope.userchattingstudent.user_no }">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-right">
@@ -369,8 +369,36 @@ a.btn-layerClose:hover {
 	    							</div>
 	    						</li>
 	    						</c:if>
-	    						</c:forEach>
 	    						</c:if>
+	    						<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+	    						<c:if test="${ ch.user_no eq requestScope.studentchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-right">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						<c:if test="${ ch.user_no eq requestScope.tutorchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-left">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						</c:if>
+	    						</c:forEach>
 	    					</ul>
 	    				</div>
 	    			<div class="nano-pane"><div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div></div></div>
@@ -380,8 +408,8 @@ a.btn-layerClose:hover {
 	    			<div class="nano has-scrollbar" style="height:380px">
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
 	    					<ul class="list-unstyled media-block" id="messageWindow">
-	    						<c:if test="${ requestScope.chat != null }">
 	    						<c:forEach items="${ requestScope.chat }" var="ch">
+	    						<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 	    						<c:if test="${ ch.user_no eq requestScope.userchattingtutor.user_no }">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-right">
@@ -408,8 +436,36 @@ a.btn-layerClose:hover {
 	    							</div>
 	    						</li>
 	    						</c:if>
-	    						</c:forEach>
 	    						</c:if>
+	    						<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+	    						<c:if test="${ ch.user_no eq requestScope.tutorchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-right">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						<c:if test="${ ch.user_no eq requestScope.studentchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-left">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						</c:if>
+	    						</c:forEach>
 	    					</ul>
 	    				</div>
 	    			<div class="nano-pane"><div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div></div></div>
@@ -646,9 +702,18 @@ a.btn-layerClose:hover {
 		//보내기 버튼 클릭시 실행되는 send() 함수 작성
 		function send(){
 			var today = new Date();
-			var hours = today.getHours();
+			var hours = today.getHours() % 12;
 			var minutes = today.getMinutes();
-			var timeString = hours + ' : ' + minutes
+			
+			if (hours < 10){
+				hours = '0' + hours;
+			}
+			
+			if (minutes < 10){
+				minutes = '0' + minutes;
+			}
+			
+			var timeString = hours + ':' + minutes;
 			var message;
 			
 			//메세지가 입력된 경우

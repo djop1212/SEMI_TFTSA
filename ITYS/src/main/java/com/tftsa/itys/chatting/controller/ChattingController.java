@@ -52,6 +52,7 @@ public class ChattingController {
 		} else if (studentchattingroom != null && tutorchattingroom != null){
 			mv.addObject("studentchattingroom", studentchattingroom);
 			mv.addObject("tutorchattingroom", tutorchattingroom);
+			mv.addObject("chat", chat);
 			mv.setViewName("chatting/chatting");
 		} else {
 			mv.addObject("message", chat_room_no + "번 채팅방 조회 실패.");
