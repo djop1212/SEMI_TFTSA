@@ -607,7 +607,7 @@ function validate() {
 
 function deleteuser(){
 	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
-		location.href="deleteUser.do?user_id=${member.user_id}";	
+		location.href="deleteUser.do?user_no=${member.user_no}";	
 	}else{
 		return;
 	}
