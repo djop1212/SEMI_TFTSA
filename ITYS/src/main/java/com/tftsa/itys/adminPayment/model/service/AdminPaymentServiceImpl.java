@@ -14,6 +14,7 @@ public class AdminPaymentServiceImpl implements AdminPaymentService{
 	@Autowired
 	private AdminPaymentDao adminpaymentDao;
 	
+	// 결제 내역 조회 ServiceImpl
 	@Override
 	public ArrayList<Payment> selectPaymentAll() {
 		return adminpaymentDao.selectPaymentAll();

@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.service.ChattingService;
 import com.tftsa.itys.chatting.model.vo.Chatting;
-import com.tftsa.itys.chatting.model.vo.Chattingroom;
 import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
 import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
@@ -124,22 +123,12 @@ public class ChattingController {
 	
 	// 채팅 내역 저장 컨트롤러
 	@RequestMapping("insertChatting.do")
-	public String insertChatting(Chatting chatting, Chattingroom chattingroom, Model model, 
-			@RequestParam("student_name") String student_name, @RequestParam("tutor_name") String tutor_name, 
+	public String insertChatting(Chatting chatting, Model model,  
 			@RequestParam("chat_room_no") int chat_room_no, @RequestParam("user_no") int user_no, 
 			@RequestParam("chat_content") String chat_content, @RequestParam("student_no") int student_no, 
 			@RequestParam("tutor_no") int tutor_no) {
-		logger.info("insertChatting.do : " + chattingroom);
 		logger.info("insertChatting.do : " + chatting);
 		
-		Chattingroom chatroom = chattingService.selectChattingroom(chat_room_no);
-		
-		if (chatroom == null) {
-			chattingroom.setStudent_name(student_name);
-			chattingroom.setTutor_name(tutor_name);
-			
-			chattingService.insertChattingroom(chattingroom);
-		}
 		chatting.setChat_room_no(chat_room_no);
 		chatting.setUser_no(user_no);
 		chatting.setChat_content(chat_content);

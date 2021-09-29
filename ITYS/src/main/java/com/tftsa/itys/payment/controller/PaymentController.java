@@ -32,7 +32,7 @@ public class PaymentController {
 	@Autowired
 	PaymentService paymentService;
 	
-	// 결제 페이지로 이동
+	// 결제 페이지 컨트롤러
 	@RequestMapping("payment.do")
 	public ModelAndView paymentViewForward(Payment paymentList, ModelAndView mv, @RequestParam("tutor_no") int tutor_no, 
 			@RequestParam("student_no") int student_no, @RequestParam("student_name") String student_name, 
@@ -64,6 +64,7 @@ public class PaymentController {
 		return mv;
     }
 
+	// 카카오페이 컨트롤러
 	@RequestMapping("kakaoPay.do")
 	public String kakaoPay(@RequestParam("user_name") String user_name, @RequestParam("pay_no") int pay_no, 
 			@RequestParam("sub_name") String sub_name) throws ParseException {
@@ -111,6 +112,7 @@ public class PaymentController {
 		return "payment/payment";
 	}
 	
+	// 카카오페이 성공 컨트롤러
 	@RequestMapping("kakaoPaySuccess.do")
 	public String kakaoPaySuccess(@RequestParam("pay_no") int pay_no) {
 		paymentService.updatePayment(pay_no);
@@ -118,6 +120,7 @@ public class PaymentController {
 		return "payment/kakaoPaySuccess"; // 내보낼 뷰파일명 리턴
 	}
 	
+	// 카카오페이 실패 컨트롤러
 	@RequestMapping("kakaoPaySuccessFail.do")
 	public String kakaoPaySuccessFail() {
 		return "payment/kakaoPaySuccessFail"; // 내보낼 뷰파일명 리턴

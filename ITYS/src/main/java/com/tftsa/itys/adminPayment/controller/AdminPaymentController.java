@@ -16,6 +16,7 @@ public class AdminPaymentController {
 	@Autowired
 	private AdminPaymentService adminpaymentService;
 	
+	// 결제 내역 조회 컨트롤러
 	@RequestMapping("selectpaymentall.do")
 	public String selectPaymentAll(Model model) {
 		ArrayList<Payment> list = adminpaymentService.selectPaymentAll();
