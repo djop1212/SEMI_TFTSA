@@ -30,6 +30,7 @@ import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.MyKeyData;
 import com.tftsa.itys.mypage.model.vo.MyKeyword;
+import com.tftsa.itys.mypage.model.vo.MyStudent;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -313,23 +314,43 @@ public class MypageController {
 		return "redirect:clist.do?user_no="+user_no;
 	}
 	
-	// 내 수업 목록 조회
+	// 학생이 내 수업 목록 조회
 	@RequestMapping("mclass.do")
 	public String moveMyClass(@RequestParam("user_no") int user_no, Model model) {
 		logger.info("mclass.do");
-		ArrayList<MyClass> list = mypageService.selectMyclassList(user_no);
-		if(mypageService.selectPosition(user_no).equals("T")) {
-			Tutor tutor = mypageService.selectTutor(user_no);
-			model.addAttribute("tutor", tutor);
-		}else if(mypageService.selectPosition(user_no).equals("S")) {
-			Student student = mypageService.selectStudent(user_no);
-			model.addAttribute("student", student);
-		}		
+		ArrayList<MyClass> list = mypageService.selectMyTutorclassList(user_no);
+		
+		Student student = mypageService.selectStudent(user_no);
+		model.addAttribute("student", student);
+		logger.info("student list : "+list);
 		String position = mypageService.selectPosition(user_no);
 		model.addAttribute("position", position);
+		logger.info("list : "+list);
 		
 		if(list.size()>0) {
-			//logger.info("myclassList : "+list.toString());
+			logger.info("mytutorclassList : "+list.toString());
+			model.addAttribute("list", list);
+		}else {
+			model.addAttribute("message", "등록된 수업목록이 없습니다");
+		}
+		return "mypage/myClass";
+	}
+	
+	// 선생님이 수업목록 조회
+	@RequestMapping("msclass.do")
+	public String moveMyStudentClass(@RequestParam("user_no") int user_no, Model model) {
+		logger.info("msclass.do");
+		ArrayList<MyStudent> list = mypageService.selectMyclassList(user_no); 
+		
+		Tutor tutor = mypageService.selectTutor(user_no);
+		model.addAttribute("tutor", tutor);	
+		logger.info("tutor : "+tutor);
+		String position = mypageService.selectPosition(user_no);
+		model.addAttribute("position", position);
+		logger.info("list : "+list);
+			
+		if(list.size()>0) {
+			logger.info("myclassList : "+list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 수업목록이 없습니다");

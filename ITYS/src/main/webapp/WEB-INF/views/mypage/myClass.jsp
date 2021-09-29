@@ -8,7 +8,6 @@
 <title>마이페이지</title>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-
 function deleteuser(){
 	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
 		location.href="deleteUser.do?user_no=${loginMember.user_no}";	
@@ -131,7 +130,12 @@ img{
 								<c:if test="${position eq 'T' }">
 								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
 								</c:if>
+								<c:if test="${position eq 'S' }">
 								<li><a href="mclass.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>
+								</c:if>
+								<c:if test="${position eq 'T' }">
+								<li><a href="msclass.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">내 강의 내역</a></li>	
+								</c:if>
 							</ul>
 						</div>
 						<div><a style="color:#969ca2;" href="#" onclick="deleteuser(); return false;">회원탈퇴</a></div>
@@ -147,19 +151,53 @@ img{
 								<table>
 									<tr>
 									<td valign="top">
-										<img
-										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" style="margin-top:5px" />
+										<c:if test="${c.pic eq null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										<c:if test="${c.pic ne null and position eq 'S' }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${c.pic }"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										<c:if test="${c.pic ne null and position eq 'T' }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${c.pic }"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
 									</td>
-									<td style="width:475px; padding-left:15px">
-										선생님이름 : ${c.user_name }<br>	
-										과외 한 줄 소개 : ${c.intro }<br>
-										전화번호 : ${c.user_phone }<br>
-										과목 : ${c.sub_name }<br>
-										지역 : ${c.area }<Br>
-										과외시간 : ${c.time }<br>
-										수업료 : ${c.pay_amount }<br>
-										온라인 가능여부 : ${c.online_ok }<br>
+									<c:choose>
+										<c:when test="${position eq 'S' }">
+											<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${c.user_no}&student_no=${loginMember.user_no }&tutor_no=${c.user_no }'">
+										</c:when>
+										<c:when test="${position eq 'T' }">
+											<td style="width:475px; padding-left:15px;">
+										</c:when>
+										<c:otherwise><td style="width:475px; padding-left:15px; cursor: pointer;">
+										</c:otherwise>
+									</c:choose>
+										<c:if test="${position eq 'S' }">
+											선생님이름 : ${c.user_name }<br>	
+											과외 한 줄 소개 : ${c.intro }<br>
+											전화번호 : ${c.user_phone }<br>
+											과목 : ${c.sub_name }<br>
+											지역 : ${c.area }<Br>
+											과외시간 : ${c.time }<br>
+											수업료 : ${c.pay_amount }<br>
+											온라인 가능여부 : ${c.online_ok }<br>
+										</c:if>
+										<c:if test="${position eq 'T' }">
+											학생이름 : ${c.student_name }<br>	
+											전화번호 : ${c.user_phone }<br>
+											이메일 : ${c.user_email }<br>
+											학년 : ${c.stu_job}<Br>
+											과외 가능 요일 :${c.day}<br>
+											과외 가능 시간 : ${c.time}<br>
+											선생님께 바라는 점 : ${c.stu_wish}<br>
+											수업료 : ${c.pay_amount }<br>
+											결제상태 : ${c.pay_status }<br>
+										</c:if>
 									</td>
 									</tr>
 								</table><hr>
