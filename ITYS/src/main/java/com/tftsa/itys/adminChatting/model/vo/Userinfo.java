@@ -1,8 +1,8 @@
 package com.tftsa.itys.adminChatting.model.vo;
 
-public class Userinfo implements java.io.Serializable {
+public class Userinfo implements java.io.Serializable { // 사용자 클래스
 
-	private static final long serialVersionUID = 2008L;
+	private static final long serialVersionUID = 2006L;
 	
 	private int user_no;
 	private String user_ssn;

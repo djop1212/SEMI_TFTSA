@@ -270,10 +270,10 @@ a.btn-layerClose:hover {
 	    			</div>
 	    			<div>
 	    				<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
-	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name } 선생님</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name } 선생님</h3>
 	    				</c:if>
 	    				<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
-	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingstudent.pic }" class="img-circle img-sm">${ requestScope.userchattingstudent.user_name } 학생</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${ requestScope.userchattingstudent.pic }" class="img-circle img-sm">${ requestScope.userchattingstudent.user_name } 학생</h3>
 	    				</c:if>
 	    			</div>	
 	    		</div>
@@ -375,7 +375,7 @@ a.btn-layerClose:hover {
 	    			<div class="panel-footer">
 	    				<div class="row">
 	    					<div class="col-9">
-	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input" id="inputMessage" onkeyup="enterKey();">
+	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input" id="inputMessage" onkeydown="enterKey();">
 	    					</div>
 	    					<div class="col-3">
 		    					<c:url var="insertChatting" value="insertChatting.do">

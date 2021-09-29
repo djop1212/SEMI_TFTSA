@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chattingMapper">
 
+	<!-- 채팅방 resultMap -->
 	<resultMap type="Chattingroom" id="resultChattingroom">
 		<id column="chat_room_no" property="chat_room_no" />
 		<result column="student_no" property="student_no" />
@@ -12,6 +13,7 @@
 		<result column="tutor_name" property="tutor_name" />
 	</resultMap>
 	
+	<!-- 채팅 resultMap -->
 	<resultMap type="Chatting" id="resultChatting">
 		<id column="chat_no" property="chat_no"/>
 		<result column="chat_room_no" property="chat_room_no" />
@@ -20,12 +22,14 @@
 		<result column="chat_content" property="chat_content" />
 	</resultMap>
 
+	<!-- 찜목록 resultMap -->
 	<resultMap type="Likes" id="resultLikes">
 		<id column="like_no" property="like_no" />
 		<result column="student_no" property="student_no" />
 		<result column="tutor_no" property="tutor_no" />
 	</resultMap>
 	
+	<!-- 채팅 신고 resultMap -->
 	<resultMap type="Chattingblock" id="resultChattingblock">
 		<id column="block_no" property="block_no" />
 		<result column="student_name" property="student_name" />
@@ -36,6 +40,7 @@
 		<result column="user_name" property="user_name" />
 	</resultMap>
 	
+	<!-- 사용자 채팅 학생 resultMap -->
 	<resultMap type="UserChattingStudent" id="resultUserChattingStudent">
 		<id column="user_no" property="user_no" />
 		<result column="pic" property="pic" />
@@ -57,6 +62,7 @@
 		<result column="login_ok" property="login_ok" />
 	</resultMap>
 	
+	<!-- 사용자 채팅 선생님 resultMap -->
 	<resultMap type="UserChattingTutor" id="resultUserChattingTutor">
 		<id column="user_no" property="user_no" />
 		<result column="pic" property="pic" />
@@ -85,12 +91,14 @@
 		<result column="login_ok" property="login_ok" />
 	</resultMap>
 	
+	<!-- 채팅 정보 조회 SQL -->
 	<select id="selectChattingInfo" parameterType="Chatting" resultMap="resultChatting">
 		select chat_no, chat_room_no, wrtn_datetm + (INTERVAL '9' HOUR) as wrtn_datetm, user_no, chat_content from chatting
 		where chat_room_no = #{ chat_room_no }
 		order by chat_no
 	</select>
 	
+	<!-- 학생 정보 조회 SQL -->
 	<select id="selectStudent" parameterType="_int" resultMap="resultUserChattingStudent">
 		select * from student
 		join chatting using(user_no)
@@ -99,6 +107,7 @@
 		and rownum = 1
 	</select>
 	
+	<!-- 선생님 정보 조회 SQL -->
 	<select id="selectTutor" parameterType="_int" resultMap="resultUserChattingTutor">
 		select * from tutor
 		join chatting using(user_no)
@@ -107,43 +116,51 @@
 		and rownum = 1
 	</select>
 	
+	<!-- 채팅방 정보 조회 SQL -->
 	<select id="selectChattingroom" parameterType="_int" resultMap="resultChattingroom">
 		select * from chatting_room
 		where chat_room_no = #{ chat_room_no }
 	</select>
 	
+	<!-- 찜목록 정보 조회 SQL -->
 	<select id="selectLikes" parameterType="_int" resultMap="resultLikes">
 		select * from likes
 		where tutor_no = #{ tutor_no }
 		and student_no = #{ student_no }
 	</select>
 
+	<!-- 채팅 정보 삭제 SQL -->
 	<delete id="deleteChatting" parameterType="_int">
 		delete from chatting_room
 		where chat_room_no = #{ chat_room_no }
 	</delete>
 	
+	<!-- 찜목록 정보 삭제 SQL -->
 	<delete id="deleteLikes" parameterType="Likes">
 		delete from likes
 		where tutor_no = #{ tutor_no }
 		and student_no = #{ student_no }
 	</delete>
 	
+	<!-- 찜목록 정보 추가 SQL -->
 	<insert id="insertLikes" parameterType="Likes" >
 		insert into likes (like_no, student_no, tutor_no)
 		values (likes_seq.nextval, #{ student_no }, #{ tutor_no })
 	</insert>
 	
+	<!-- 채팅 신고 정보 추가 SQL -->
 	<insert id="insertBlock" parameterType="Chattingblock">
 		insert into chatting_block
 		values (chatting_block_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, #{ contents }, #{ user_no }, #{ student_name })
 	</insert>
 	
+	<!-- 채팅 정보 추가 SQL -->
 	<insert id="insertChatting" parameterType="Chatting">
 		insert into chatting
 		values (chatting_seq.nextval, #{ chat_room_no }, systimestamp, #{ user_no }, #{ chat_content })
 	</insert>
 	
+	<!-- 채팅방 정보 추가 SQL -->
 	<insert id="insertChattingroom" parameterType="Chattingroom">
 		insert into chatting_room
 		values (chatting_room_seq.nextval, #{ student_name }, #{ tutor_name })

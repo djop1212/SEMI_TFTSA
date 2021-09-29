@@ -19,56 +19,67 @@ public class ChattingServiceImpl implements ChattingService{
 	@Autowired
 	private ChattingDao chattingDao;
 	
+	// 채팅 정보 조회 ServiceImpl
 	@Override
 	public ArrayList<Chatting> selectChattingInfo(int chat_room_no) {
 		return chattingDao.selectChattingInfo(chat_room_no);
 	}
 	
+	// 학생 채팅 정보 조회 ServiceImpl
 	@Override
 	public UserChattingStudent selectStudent(int chat_room_no) {
 		return chattingDao.selectStudent(chat_room_no);
 	}
 
+	// 선생님 채팅 정보 조회 ServiceImpl
 	@Override
 	public UserChattingTutor selectTutor(int chat_room_no) {
 		return chattingDao.selectTutor(chat_room_no);
 	}
 	
+	// 채팅방 정보 조회 ServiceImpl
 	@Override
 	public Chattingroom selectChattingroom(int chat_room_no) {
 		return chattingDao.selectChattingroom(chat_room_no);
 	}
 	
+	// 찜목록 정보 조회 ServiceImpl
 	@Override
 	public Likes selectLikes(Likes likes) {
 		return chattingDao.selectLikes(likes);
 	}
 
+	// 채팅 정보 삭제 ServiceImpl
 	@Override
 	public int deleteChatting(int chat_room_no) {
 		return chattingDao.deleteChatting(chat_room_no);
 	}
 	
+	// 찜목록 정보 삭제 ServiceImpl
 	@Override
 	public int deleteLikes(Likes likes) {
 		return chattingDao.deleteLikes(likes);
 	}
 
+	// 신고 정보 추가 ServiceImpl
 	@Override
 	public int insertBlock(Chattingblock chattingblock) {
 		return chattingDao.insertBlock(chattingblock);
 	}
 
+	// 찜목록 정보 추가 ServiceImpl
 	@Override
 	public int insertLikes(Likes likes) {
 		return chattingDao.insertLikes(likes);
 	}
 
+	// 채팅 정보 추가 ServiceImpl
 	@Override
 	public int insertChatting(Chatting chatting) {
 		return chattingDao.insertChatting(chatting);
 	}
 
+	// 채팅방 정보 추가 ServiceImpl
 	@Override
 	public int insertChattingroom(Chattingroom chattingroom) {
 		return chattingDao.insertChattingroom(chattingroom);

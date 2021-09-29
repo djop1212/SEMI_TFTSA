@@ -15,6 +15,7 @@ public class AdminPaymentDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// 결제 내역 조회 Dao
 	public ArrayList<Payment> selectPaymentAll() {
 		List<Payment> list = sqlSession.selectList("adminpaymentMapper.selectPaymentAll");
 		return (ArrayList<Payment>)list;
