@@ -18,10 +18,12 @@
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.UserChattingTutor" alias="UserChattingTutor" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.StudentChattingroom" alias="StudentChattingroom" />
 		<typeAlias type="com.tftsa.itys.chatting.model.vo.TutorChattingroom" alias="TutorChattingroom" />
+		<typeAlias type="com.tftsa.itys.payment.model.vo.UserStudent" alias="UserStudent" />
 		<typeAlias type="com.tftsa.itys.adminPayment.model.vo.Payment" alias="Payment" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.UserChatting" alias="UserChatting" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Chattingblock" alias="Chattingblock" />
 		<typeAlias type="com.tftsa.itys.adminChatting.model.vo.Userinfo" alias="Userinfo" />
+		
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
 		<typeAlias type="com.tftsa.itys.adminReview.model.vo.AdminReview" alias="AdminReview" />
 		<typeAlias type="com.tftsa.itys.payment.model.vo.UserStudent" alias="UserStudent"/>
@@ -49,7 +51,6 @@
 		<typeAlias type="com.tftsa.itys.detail.model.vo.LikesCheck" alias="LikesCheck"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.RoomNo" alias="RoomNo"/>
 
-		
 		<typeAlias type="com.tftsa.itys.search.vo.Keyword" alias="Keyword" />
 		<typeAlias type="com.tftsa.itys.search.vo.Search" alias="Search" />
 		<typeAlias type="com.tftsa.itys.search.vo.DaySearch" alias="DaySearch" />
@@ -57,7 +58,6 @@
     	<typeAlias type="com.tftsa.itys.search.vo.User_info" alias="User_info" />
 
     	<typeAlias type="com.tftsa.itys.board.model.vo.Board" alias="Board" />
-
 		<typeAlias type="com.tftsa.itys.common.Paging" alias="Paging" />
 		<typeAlias type="com.tftsa.itys.board.model.vo.Reply" alias="Reply" />
 	</typeAliases>
