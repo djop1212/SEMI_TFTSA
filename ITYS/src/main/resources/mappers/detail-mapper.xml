@@ -49,11 +49,25 @@
 	
 	<resultMap id="resultAfterPay" type="AfterPay">
 		<id property="pay_no" column="pay_no" />
-		<result property="user_name" column="user_name" />
+		<result property="student_name" column="student_name" />
+		<result property="tutor_name" column="tutor_name" />
 
 	</resultMap>
 	
+	<resultMap id="resultOpenChat" type="OpenChat">
+		<id property="chat_room_no" column="chat_room_no" />
+		<result property="student_no" column="student_no" />
+		<result property="tutor_no" column="tutor_no" />
+		<result property="student_name" column="student_name" />
+		<result property="tutor_name" column="tutor_name" />
+
+	</resultMap>
+	<resultMap id="resultRoomNo" type="RoomNO">
+
+		<result property="student_no" column="student_no" />
+		<result property="tutor_no" column="tutor_no" />
 	
+	</resultMap>
 	
 	<insert id="reviewInsert" parameterType="Detail">
 		insert into review values ((review_seq.nextval), #{pay_no}, sysdate, #{score}, #{rev_content}, #{tutor_no}, #{student_no} ) 
@@ -136,17 +150,42 @@
 		where user_no = #{ user_no }
 	</select>
 	
-	<select id="tutorSave" parameterType="TutorLikes" resultMap="resultTutorLikes">
+	<select id="tutorSave" parameterType="LikesCheck" resultMap="resultTutorLikes">
 	select * from likes
-	join  user_info on (user_no = student_no)
-	where student_no = #{ student_no }
+	where student_no = #{ student_no } and tutor_no = #{ tutor_no }
 	</select>
 	
 	<select id="reviewPay" parameterType="AfterPay" resultMap="resultAfterPay">
-	select pay_no from payment
-	left join user_info on (user_name = student_name)
+	 select pay_no, tutor_name from payment
+	left join user_info on (user_name = tutor_name)
 	left join review using(pay_no)
-	where user_name = #{ user_name }
+	where student_name = #{ student_name }
+	group by pay_no, tutor_name
 	</select>
 	
+	<select id="tutorNo" parameterType="TutorDetail" resultMap="resultTutorDetail">
+	select user_no, user_name from user_info
+		left join tutor using (user_no)
+		left join sub_data using (user_no)
+        left join subject using(sub_no)
+	
+		where user_no = #{ user_no }
+		group by user_no,user_name
+	</select>
+	
+	<insert id="openChattingInsert" parameterType="OpenChat" >
+	
+	insert into chatting_room values( (chatting_room_seq.nextval), #{ student_no }, #{ tutor_no }, #{ student_name }, #{ tutor_name } )
+	
+	</insert>
+	
+	<select id="roomNo" parameterType="RoomNo" resultMap="resultRoomNo">
+	select * from chatting_room
+	where tutor_no = #{ tutor_no } and student_no = #{ student_no }
+	</select>
+	
+	<select id="findRoom" parameterType="RoomNo" resultMap="resultRoomNo">
+	select * from chatting_room
+	where chat_room_no = # { chat_room_no } 
+	</select>
 </mapper>
