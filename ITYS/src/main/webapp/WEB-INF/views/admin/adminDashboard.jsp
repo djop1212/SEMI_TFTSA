@@ -16,6 +16,9 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
+<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
+
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -62,7 +65,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Sales</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">650</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.month_sales}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
                         <span>Since last years</span>
@@ -82,7 +85,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">New User</div>
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
+                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${requestScope.total_users}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
                         <span>Since last month</span>
@@ -102,7 +105,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.potential}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
                         <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
                         <span>Since yesterday</span>
@@ -121,20 +124,7 @@
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">매출그래프</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
+                  
                 </div>
                 <div class="card-body">
                   <div class="chart-area">
@@ -144,7 +134,7 @@
               </div>
             </div>
             <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-xl-4 col-lg-7">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Products Sold</h6>
@@ -165,55 +155,55 @@
                 </div>
                 <div class="card-body">
                   <div class="mb-3">
-                    <div class="small text-gray-500">Oblong T-Shirt
+                    <div class="medium text-gray-500">Oblong T-Shirt
                       <div class="small float-right"><b>600 of 800 Items</b></div>
                     </div>
-                    <div class="progress" style="height: 12px;">
+                    <div class="progress" style="height: 20px;">
                       <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                   <div class="mb-3">
-                    <div class="small text-gray-500">Gundam 90'Editions
+                    <div class="medium text-gray-500">Gundam 90'Editions
                       <div class="small float-right"><b>500 of 800 Items</b></div>
                     </div>
-                    <div class="progress" style="height: 12px;">
+                    <div class="progress" style="height: 20px;">
                       <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="70"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                   <div class="mb-3">
-                    <div class="small text-gray-500">Rounded Hat
+                    <div class="medium text-gray-500">Rounded Hat
                       <div class="small float-right"><b>455 of 800 Items</b></div>
                     </div>
-                    <div class="progress" style="height: 12px;">
+                    <div class="progress" style="height: 20px;">
                       <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                   <div class="mb-3">
-                    <div class="small text-gray-500">Indomie Goreng
+                    <div class="medium text-gray-500">Indomie Goreng
                       <div class="small float-right"><b>400 of 800 Items</b></div>
                     </div>
-                    <div class="progress" style="height: 12px;">
+                    <div class="progress" style="height: 20px;">
                       <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                   <div class="mb-3">
-                    <div class="small text-gray-500">Remote Control Car Racing
+                    <div class="medium text-gray-500">Remote Control Car Racing
                       <div class="small float-right"><b>200 of 800 Items</b></div>
                     </div>
-                    <div class="progress" style="height: 12px;">
+                    <div class="progress" style="height: 20px;">
                       <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
                         aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
-                <div class="card-footer text-center">
-                  <a class="m-0 small text-primary card-link" href="#">View More <i
+                <!-- <div class="card-footer text-center">
+                  <a class="m-0 small text-primary card-link" href="/itys/adminDeposit.do">View More <i
                       class="fas fa-chevron-right"></i></a>
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- Invoice Example -->
@@ -221,56 +211,44 @@
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
-                  <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
+                  <a class="m-0 float-right btn btn-danger btn-sm" href="/itys/selectpaymentall.do">View More <i
                       class="fas fa-chevron-right"></i></a>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Item</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th>학생</th>
+                        <th>선생님</th>
+                        <th>날짜</th>
+                        <th>결제방법</th>
+                        <th>상태</th>
+                        <th>금액</th>
                       </tr>
                     </thead>
-                    <tbody>
+                      <tbody>
+                      <c:forEach items="${ requestScope.pay_list }" var="p">
                       <tr>
-                        <td><a href="#">RA0449</a></td>
-                        <td>Udin Wayang</td>
-                        <td>Nasi Padang</td>
-                        <td><span class="badge badge-success">Delivered</span></td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                        <td>${ p.student_name }</td>
+                        <td>${ p.tutor_name }</td>
+                        <td>${ p.pay_datetm }</td>
+                        <td>${ p.pay_method }</td>
+                        <c:if test="${ p.pay_status == 'COMPLETE' }">
+                        	<td><span class="badge badge-success">${ p.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ p.pay_status == 'WAITING' }">
+                        	<td><span class="badge badge-info">${ p.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ p.pay_status == 'RETURN' }">
+                        	<td><span class="badge badge-warning">${ p.pay_status }</span></td>
+                        </c:if>
+                        <c:if test="${ p.pay_status == 'CANCEL' }">
+                        	<td><span class="badge badge-danger">${ p.pay_status }</span></td>
+                        </c:if>
+                        <td><span class="btn btn-sm btn-primary">${ p.pay_amount }</span></td>
+                        <!-- warning, danger, info -->
                       </tr>
-                      <tr>
-                        <td><a href="#">RA5324</a></td>
-                        <td>Jaenab Bajigur</td>
-                        <td>Gundam 90' Edition</td>
-                        <td><span class="badge badge-warning">Shipping</span></td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">RA8568</a></td>
-                        <td>Rivat Mahesa</td>
-                        <td>Oblong T-Shirt</td>
-                        <td><span class="badge badge-danger">Pending</span></td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">RA1453</a></td>
-                        <td>Indri Junanda</td>
-                        <td>Hat Rounded</td>
-                        <td><span class="badge badge-info">Processing</span></td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">RA1998</a></td>
-                        <td>Udin Cilok</td>
-                        <td>Baby Powder</td>
-                        <td><span class="badge badge-success">Delivered</span></td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                      </tr>
+                      </c:forEach>
                     </tbody>
                   </table>
                 </div>
@@ -281,40 +259,20 @@
             <div class="col-xl-4 col-lg-5 ">
               <div class="card">
                 <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light">Message From Customer</h6>
+                  <h6 class="m-0 font-weight-bold text-light">Newly Posted</h6>
                 </div>
                 <div>
-                  <div class="customer-message align-items-center">
-                    <a class="font-weight-bold" href="#">
-                      <div class="text-truncate message-title">Hi there! I am wondering if you can help me with a
-                        problem I've been having.</div>
-                      <div class="small text-gray-500 message-time font-weight-bold">Udin Cilok · 58m</div>
+                <c:forEach items="${ requestScope.board_list }" var="b">
+                  <div class="customer-message align-items-center" style="height:60px">
+                    <a class="font-weight-bold" href="/itys/bdetail.do?board_no=${b.board_no}&page=1">
+                      <div class="text-truncate message-title">${b.board_content}</div>
+                      <div class="medium text-gray-500 message-time font-weight-bold" style="float:left;">${b.board_writer}</div>
+                      <div class="small text-gray-500 message-time font-weight-bold" style="float:right;"><fmt:formatDate value="${b.board_date}" pattern="yyyy-MM-dd HH:ss"/></div>
                     </a>
                   </div>
-                  <div class="customer-message align-items-center">
-                    <a href="#">
-                      <div class="text-truncate message-title">But I must explain to you how all this mistaken idea
-                      </div>
-                      <div class="small text-gray-500 message-time">Nana Haminah · 58m</div>
-                    </a>
-                  </div>
-                  <div class="customer-message align-items-center">
-                    <a class="font-weight-bold" href="#">
-                      <div class="text-truncate message-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                      </div>
-                      <div class="small text-gray-500 message-time font-weight-bold">Jajang Cincau · 25m</div>
-                    </a>
-                  </div>
-                  <div class="customer-message align-items-center">
-                    <a class="font-weight-bold" href="#">
-                      <div class="text-truncate message-title">At vero eos et accusamus et iusto odio dignissimos
-                        ducimus qui blanditiis
-                      </div>
-                      <div class="small text-gray-500 message-time font-weight-bold">Udin Wayang · 54m</div>
-                    </a>
-                  </div>
+                  </c:forEach>
                   <div class="card-footer text-center">
-                    <a class="m-0 small text-primary card-link" href="#">View More <i
+                    <a class="m-0 small text-primary card-link" href="/itys/blist.do?page=1">View More <i
                         class="fas fa-chevron-right"></i></a>
                   </div>
                 </div>
@@ -355,10 +313,112 @@
         </div>
         <!---Container Fluid-->
 			</div>
-			
-		</div>
-	</div>
+	
+	<script src="${ pageContext.servletContext.contextPath }/admin_resources/js/demo/chart-area-demo.js"></script>
+	<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+	<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="${ pageContext.servletContext.contextPath }/admin_resources/js/ruang-admin.min.js"></script>
+	<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/chart.js/Chart.min.js"></script>
+	
+	<c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 </body>
-<c:import url="/WEB-INF/views/admin/common/footer.jsp" />
+
+<script>
+	//Area Chart Example
+	var ctx = document.getElementById("myAreaChart");
+	var axis_array = ${ requestScope.month };
+	var data_array = ${ requestScope.earning };
+	console.log(axis_array);
+	var myLineChart = new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		//x축 : 
+	    labels: axis_array,
+	    datasets: [{
+	      label: "Earnings",
+	      lineTension: 0.3,
+	      backgroundColor: "rgba(78, 115, 223, 0.5)",
+	      borderColor: "rgba(78, 115, 223, 1)",
+	      pointRadius: 3,
+	      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+	      pointBorderColor: "rgba(78, 115, 223, 1)",
+	      pointHoverRadius: 3,
+	      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+	      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+	      pointHitRadius: 10,
+	      pointBorderWidth: 2,
+	      data: data_array
+	    }],
+	  },
+	  options: {
+	    maintainAspectRatio: false,
+	    layout: {
+	      padding: {
+	        left: 10,
+	        right: 25,
+	        top: 25,
+	        bottom: 0
+	      }
+	    },
+	    scales: {
+	      xAxes: [{
+	        time: {
+	          unit: 'date'
+	        },
+	        gridLines: {
+	          display: false,
+	          drawBorder: false
+	        },
+	        ticks: {
+	          maxTicksLimit: 7
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          maxTicksLimit: 5,
+	          padding: 10,
+	          // Include a dollar sign in the ticks
+	          callback: function(value, index, values) {
+	            return  number_format(value)+'원';
+	          }
+	        },
+	        gridLines: {
+	          color: "rgb(234, 236, 244)",
+	          zeroLineColor: "rgb(234, 236, 244)",
+	          drawBorder: false,
+	          borderDash: [2],
+	          zeroLineBorderDash: [2]
+	        }
+	      }],
+	    },
+	    legend: {
+	      display: false
+	    },
+	    tooltips: {
+	      backgroundColor: "rgb(255,255,255)",
+	      bodyFontColor: "#858796",
+	      titleMarginBottom: 10,
+	      titleFontColor: '#6e707e',
+	      titleFontSize: 14,
+	      borderColor: '#dddfeb',
+	      borderWidth: 1,
+	      xPadding: 15,
+	      yPadding: 15,
+	      displayColors: false,
+	      intersect: false,
+	      mode: 'index',
+	      caretPadding: 10,
+	      callbacks: {
+	        label: function(tooltipItem, chart) {
+	          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+	          return datasetLabel + ': ' + number_format(tooltipItem.yLabel)+'원';
+	        }
+	      }
+	    }
+	  }
+	});
+</script>
+
 
 </html>

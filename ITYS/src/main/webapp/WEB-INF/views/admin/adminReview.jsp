@@ -42,11 +42,12 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 </div>
                 
-                 <div class="search-option" style="display:flex;">	
+                 <div class="search-option" style="display:flex;position:relative; left: 900px; ">	
                 <form action="adminReview.do" method="POST" class="navbar-search">
-                  <div class="input-group" style="width:200px;float:right;margin-right:15px">
+               
+                  <div class="input-group" style="width:200px;">
                     <input type="text" name="searched_txt" class="form-control bg-light border-1 small" placeholder="Search a Tutor"
-                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5; float:right">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -58,8 +59,8 @@
                 
                 <div class="table-responsive p-3">
                 <form action="deleteReview.do" method="post" id="multidelete">
-                  <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                    <thead class="thead-light">
+                  <table class="table align-items-center table-flush table-hover" id="dataTableHover" >
+                    <thead class="thead-light" >
                       <tr>
                       	<th>번호</th>
                         <th>선생님성함</th>
@@ -138,8 +139,7 @@
         </div>
         <!---Container Fluid-->
       </div>
-			</div>
-		</div>
+			
 	</div>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
