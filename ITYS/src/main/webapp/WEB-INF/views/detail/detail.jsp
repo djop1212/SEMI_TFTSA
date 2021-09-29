@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isErrorPage="true"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <c:set var="reviewCount" value="${ requestScope.reviewCount }" />
 <c:set var="avgScore" value="${ requestScope.avgScore }" />
-
+<c:set var="pd" value="${requestScope.pd }"/>
 <html>
 
 <head>
@@ -142,24 +142,73 @@
 
                    선생님 이름  ${ tprofile[0].user_name } ${tpic[0].user_name } ${td2[0].user_name}
                  <c:if test="${ loginMember.user_position eq 'S' }">
-                   <c:url var="ts" value="/tsave.do">
+                   <%-- <c:url var="ts" value="/tsave.do">
 					<c:param name="student_no" value="${ loginMember.user_no }" />
-					<c:param name="tutor_no" value="4"/>
-					 <c:param name="user_no" value="4"/>
-				</c:url> 
-				 <c:if test="${ empty requestScope.tlikes.student_no }"> 
-				 <a href="${ ts }" class="tsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_off.png" class="select-heart"  style="maring-left:10px" ></a>
-				 </c:if> 
+					<c:param name="tutor_no" value="8"/>
+					 <c:param name="user_no" value="8"/>
+				</c:url>  --%>
+				  <c:if test="${ empty requestScope.tlikes.student_no }">
+				 <a href="javascript:void(0);" onclick="callFunction();" class="tsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_off.png" class="select-heart"  style="maring-left:10px" ></a>
+				 </c:if>
+				 <script type="text/javascript">
+				 function callFunction(){ 
+	 $.ajax({
+			url: "tsave.do",
+			type: "get",
+			data: {student_no: ${ loginMember.user_no }, tutor_no: ${ tutorno.user_no }, user_no: ${ tutorno.user_no }},
+			success: function(data){
+				console.log("success : " + data);
+				
+					alert("찜을 하였습니다.");
+					
+					location.href="detail.do?user_no="+ ${tutorno.user_no} + "&" +"student_no=" + ${loginMember.user_no} +"&" +"tutor_no=" + ${tutorno.user_no} ;
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("error : " + jqXHR + ", " 
+						+ textStatus + ", " + errorThrown);
+			}
+		});
+	
+	}
+ 
+
+ </script>   
 				 
-				 <c:url var="cts" value="/ctsave.do">
+				 
+				<%--  <c:url var="cts" value="/ctsave.do">
 					<c:param name="student_no" value="${ loginMember.user_no }" />
-					<c:param name="tutor_no" value="4"/>
-					 <c:param name="user_no" value="4"/> 
-					</c:url>
-				 <c:if test="${ !empty requestScope.tlikes.student_no }"> <!-- 메인페이지에서 tutor_no 가져오기 -->
-				 <a href="${ cts }" class="ctsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_on.png" class="select-heart"  style="maring-left:10px" ></a>
+					<c:param name="tutor_no" value="${tutorno.user_no }"/>
+					  
+					</c:url> --%>
+					
+				 <c:if test="${ requestScope.tlikes.tutor_no eq requestScope.tutorno.user_no }"> 
+				 <a href="javascript:void(0);" onclick="callFunction1();"class="ctsave"><img src="${ pageContext.servletContext.contextPath }/resources/images/select_on.png" class="select-heart"  style="maring-left:10px" ></a>
 				</c:if>
-          		
+				 <script type="text/javascript">
+          		 function callFunction1(){ 
+	 $.ajax({
+			url: "ctsave.do",
+			type: "get",
+			data: {student_no: ${ loginMember.user_no }, tutor_no: ${ tutorno.user_no }, user_no: ${ tutorno.user_no }},
+			success: function(data){
+				console.log("success : " + data);
+				
+					alert("찜을 취소하였습니다.");
+					
+					location.href="detail.do?user_no="+ ${tutorno.user_no} + "&" +"student_no=" + ${loginMember.user_no} + "&" +"tutor_no=" + ${tutorno.user_no} ;
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("error : " + jqXHR + ", " 
+						+ textStatus + ", " + errorThrown);
+			}
+		});
+	
+	}
+ 
+
+ </script>  
           		</c:if>
           		</div>
 
@@ -197,18 +246,31 @@
              	
              	
              	
-             	<c:if test="${ loginMember.user_position eq 'S' }">
-             	 <c:url var="openchat" value="/selectChatting.do">
-					<c:param name="chat_room_no" value="1"/>
-					<c:param name="student_no" value="${ loginMember.user_no }"/>
-					<c:param name="tutor_no" value="2"/>
+             	<c:if test="${ loginMember.user_position eq 'S' && empty searchRoom }">
+             	 <c:url var="openchat" value="/openchatting.do">
+				<c:param name="student_no" value="${ loginMember.user_no }"/>
+				<c:param name="tutor_no" value="${tutorno.user_no }"/>
+				 <c:param name="tutor_name" value="${tutorno.user_name }"/>
+				 <c:param name="student_name" value="${ loginMember.user_name }"/>
+							
 					</c:url>
-					
+			
              	<button onclick="location.href='${ openchat }'"class="chat_num"style="width:100px;height:50px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#20c997; color:white;">채팅하기</button>
       </c:if>
+      
+    <c:if test="${ loginMember.user_position eq 'S' && searchRoom.tutor_no eq tutorno.user_no  && searchRoom.student_no eq loginMember.user_no}">
+             	 <c:url var="openchat" value="/selectChatting.do">
+             	 <c:param name="chat_room_no" value="${searchRoom.chat_room_no }"/>
+				<c:param name="student_no" value="${ loginMember.user_no }"/>
+				<c:param name="tutor_no" value="${tutorno.user_no }"/>
+				
+					</c:url>
+			
+             	<button onclick="location.href='${ openchat }'"class="chat_num"style="width:100px;height:50px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#20c997; color:white;">채팅하기</button>
+      </c:if> 
               </div>
               
-            
+          
 
              </div>
              </div>
@@ -366,12 +428,16 @@
 					
 					
                 <c:if test="${ loginMember.user_position eq 'S' }">
-                <c:url var="tp" value="/tprofile.do">
-					<c:param name="user_no" value="4" />
+               <c:url var="tp" value="/tprofile.do">
+					<c:param name="user_no" value="${tutorno.user_no }" />
+					<c:param name="tutor_no" value="${tutorno.user_no }" />
 					 <c:param name="student_no" value="${loginMember.user_no }"/>
 								</c:url>
-                	<li class="d-d"  id="d-d"><a href="${ tp }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">프로필</a></li>
-					</c:if>
+                	<li class="d-d"  id="d-d"><a href="${tp }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">프로필</a></li>
+		
+				 
+				</c:if>
+				
 					
 					<c:if test="${ loginMember.user_position eq 'T' }">
                 	 <c:url var="tv" value="/tpict.do">
@@ -383,8 +449,9 @@
 					
 					<c:if test="${ loginMember.user_position eq 'S' }">
                 	 <c:url var="tv" value="/tpic.do">
-					<c:param name="user_no" value="2" />
+					<c:param name="user_no" value="${tutorno.user_no }" />
 					<c:param name="student_no" value="${ loginMember.user_no }"/>
+					<c:param name="tutor_no" value="${tutorno.user_no }"/>
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tv }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">사진</a></li>
 					</c:if>
@@ -399,9 +466,10 @@
 						
 						<c:if test="${ loginMember.user_position eq 'S' }">
 						<c:url var="tr" value="/treview.do">
-					<c:param name="user_no" value="2" />
+					<c:param name="user_no" value="${tutorno.user_no }" />
 					<c:param name="student_no" value="${ loginMember.user_no }"/>
 					<c:param name="user_name" value="${ loginMember.user_name }"/>
+					<c:param name="tutor_no" value="${tutorno.user_no }"/>
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tr }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;" >리뷰</a></li>
 						</c:if>
@@ -435,8 +503,9 @@
                 
                 <c:if test="${ loginMember.user_position eq 'S' }">
                 <c:url var="tq" value="/tqna.do">
-					<c:param name="tutor_no" value="2" />
+					<c:param name="tutor_no" value="${tutorno.user_no }" />
 					<c:param name="student_no" value="${ loginMember.user_no }"/>
+					<c:param name="user_no" value="${tutorno.user_no }"/>
 					
 				</c:url>
                 	<li class="d-d"  id="d-d"><a href="${ tq }"  style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;">질문/답변</a></li>
@@ -492,7 +561,7 @@
                <c:forEach items="${ requestScope.pd }" var="pd">
                	<tr><td>${ pd.type_per }</td></tr>
               </c:forEach> 	
-
+				<tr><td>${ tprofile[0].key_name }</td></tr>
               </table>
               <hr>
               <br>
@@ -916,6 +985,7 @@
                <c:url var="vdel" value="/vdelete.do">
 	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
 	    	<c:param name="rev_no" value="${ rl.rev_no }"/>
+	    	<c:param name="user_no" value="${ tutorno.user_no }"/>
 	    	</c:url>
 	         <button onclick="deleteReview();" style="margin:0;width:80px;height:30px;margin-left:525px; border: none;border-radius:10px;text-decoration: none;background-color:#fff; color:#20c997; font-size:15px;">리뷰 삭제</button>	
                <script>
@@ -930,7 +1000,7 @@
   		 }
   		 }
                </script>
-               </script>
+               
                </c:if>
                
              </c:if>
@@ -941,10 +1011,11 @@
               </div>
                <hr>
                <br>
-               <c:if test="${ !empty reviewPay.pay_no }">
+               <c:if test="${ !empty reviewPay.pay_no  && tutorno.user_name eq reviewPay.tutor_name}">
               <c:url var="rform" value="/reviewform.do">
-	    	<c:param name="tutor_no" value="2"/>
+	    	<c:param name="user_no" value="${ tutorno.user_no }"/>
 	    	<c:param name="student_no" value="${ loginMember.user_no }"/>
+	    	<c:param name="pay_no" value="${reviewPay.pay_no }"/>
 	   		</c:url>
                <button onclick="location.href='${ rform }'"style="margin:0;width:100px;height:50px;margin-left:40%; border: none;border-radius:20px;text-decoration: none;background-color:#20c997; color:white">리뷰 달기</button>
             </c:if>
@@ -952,7 +1023,8 @@
              </div>
              
              </c:if>
-             
+           
+     
              <c:if test="${ !empty requestScope.tutorqna }">
               <div class="tqna" style="width:960px; height:600px; margin:0px; padding:0px">
          
@@ -1010,6 +1082,11 @@
              </div>
              
              </c:if>
+             
+                   <c:set var="e" value="<%= exception %>" />
+								<c:if test="${ empty e }">
+								<h5> ${ message }</h5>
+								</c:if>
              <%--    <c:if test="${ empty requestScope.tutorqna && loginMember.user_position eq 'T'}">
 	       <c:url var="qnaf" value="/qnaform.do">
 	    	<c:param name="tutor_no" value="${ loginMember.user_no }"/>
