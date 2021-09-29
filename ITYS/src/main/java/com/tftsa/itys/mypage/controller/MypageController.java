@@ -107,7 +107,7 @@ public class MypageController {
 		}// 첨부 파일 있음
 		
 		student.setTime(stime+", "+etime);
-		logger.info("upsprofile.do : "+student);
+		//logger.info("upsprofile.do : "+student);
 		
 		if((mypageService.insertStudent(student) & mypageService.updateStudentPosition(student.getUser_no()))>0) {
 			PrintWriter out = response.getWriter();
@@ -128,7 +128,7 @@ public class MypageController {
 	@RequestMapping(value = "upTPage.do")
 	public ModelAndView moveTutorPage(@RequestParam("user_no") int user_no, ModelAndView mv) {
 		List<MyKeyword> keyList = mypageService.selectKeywordList();
-		logger.info("upTPage.do");
+		//logger.info("upTPage.do");
 		
 		mv.addObject("keyList", keyList);
 		mv.addObject("user_no", user_no);
@@ -233,7 +233,7 @@ public class MypageController {
 				// tutor.setOriginal_filename(originFileName);
 		} // 첨부 파일 있음
 
-		logger.info("upsprofile.do : " + tutor);
+		//logger.info("upsprofile.do : " + tutor);
 
 		if((mypageService.insertTutor(tutor) & mypageService.updateTutorPosition(tutor.getUser_no()))>0) {
 			PrintWriter out = response.getWriter();
@@ -263,7 +263,7 @@ public class MypageController {
 			model.addAttribute("student", student);
 		}
 		if (list.size() > 0) {
-			logger.info("wishList : " + list.toString());
+			//logger.info("wishList : " + list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 찜이 없습니다");
@@ -275,7 +275,7 @@ public class MypageController {
 	@RequestMapping("delwlist.do")
 	public String deleteWishList(@RequestParam("chk") String checkedList, Likes likes) {
 		//logger.info("delwlist.do : "+checkedList);
-		logger.info("delwlist.do likes : "+likes.toString());
+		//logger.info("delwlist.do likes : "+likes.toString());
 		
 		String[] array = checkedList.split(",");
 	    for(int i=0 ;i<array.length; i++) {
@@ -322,13 +322,13 @@ public class MypageController {
 		
 		Student student = mypageService.selectStudent(user_no);
 		model.addAttribute("student", student);
-		logger.info("student list : "+list);
+		//logger.info("student list : "+list);
 		String position = mypageService.selectPosition(user_no);
 		model.addAttribute("position", position);
-		logger.info("list : "+list);
+		//logger.info("list : "+list);
 		
 		if(list.size()>0) {
-			logger.info("mytutorclassList : "+list.toString());
+			//logger.info("mytutorclassList : "+list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 수업목록이 없습니다");
@@ -344,13 +344,13 @@ public class MypageController {
 		
 		Tutor tutor = mypageService.selectTutor(user_no);
 		model.addAttribute("tutor", tutor);	
-		logger.info("tutor : "+tutor);
+		//logger.info("tutor : "+tutor);
 		String position = mypageService.selectPosition(user_no);
 		model.addAttribute("position", position);
-		logger.info("list : "+list);
+		//logger.info("list : "+list);
 			
 		if(list.size()>0) {
-			logger.info("myclassList : "+list.toString());
+			//logger.info("myclassList : "+list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 수업목록이 없습니다");
@@ -473,16 +473,16 @@ public class MypageController {
 		}
 		
 		member.setUser_position(mypageService.selectPosition(member.getUser_no()));
-		logger.info("after : " + member);
+		//logger.info("after : " + member);
 		
 		if(member.getUser_position().equals("U") && mypageService.updateMember(member)>0) {
-			logger.info("upUser.do : updateUser \nmember : "+member);
+			//logger.info("upUser.do : updateUser \nmember : "+member);
 			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		}else if(member.getUser_position().equals("S") && mypageService.updateStudent(student)>0) {
-			logger.info("upUser.do : updateStudent \nstudent : "+student);
+			//logger.info("upUser.do : updateStudent \nstudent : "+student);
 			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		}else if(member.getUser_position().equals("T") && mypageService.updateTutor(tutor)>0) {
-			logger.info("upUser.do : updateTutor \ntutor : "+tutor);
+			//logger.info("upUser.do : updateTutor \ntutor : "+tutor);
 			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		} else {
 			model.addAttribute("message", member.getUser_name() + "님 회원정보 수정 실패..");
