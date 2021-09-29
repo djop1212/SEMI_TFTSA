@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.detail.model.dao.DetailDao;
+import com.tftsa.itys.detail.model.vo.AfterPay;
 import com.tftsa.itys.detail.model.vo.Detail;
+import com.tftsa.itys.detail.model.vo.LikesCheck;
+import com.tftsa.itys.detail.model.vo.OpenChat;
+import com.tftsa.itys.detail.model.vo.RoomNo;
+import com.tftsa.itys.detail.model.vo.TutorDetail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-
-import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Service("detailService")
 public class DetailServiceImpl implements DetailService{
@@ -87,11 +90,29 @@ public class DetailServiceImpl implements DetailService{
 	 }
 	
 	 @Override
-	 public TutorLikes tutorSave(int student_no){
-		 return detailDao.tutorSave(student_no);
+	 public TutorLikes tutorSave(LikesCheck lc){
+		 return detailDao.tutorSave(lc);
 	 }
 	 @Override
-	 public Detail reviewPay(int student_no){
-		 return detailDao.reviewPay(student_no);
+	 public AfterPay reviewPay(String user_name){
+		 return detailDao.reviewPay(user_name);
+	 }
+	 
+	 @Override
+	 public TutorDetail tutorNo(int user_no){
+		 return detailDao.tutorNo(user_no);
+	 }
+	 
+	 @Override
+	 public int openChattingInsert(OpenChat oc){
+		 return detailDao.openChattingInsert(oc);
+	 }
+	 @Override
+	 public RoomNo roomNo(RoomNo rn){
+		 return detailDao.roomNo(rn);
+	 }
+	 @Override
+	 public RoomNo findRoom(int chat_room_no){
+		 return detailDao.findRoom(chat_room_no);
 	 }
 }

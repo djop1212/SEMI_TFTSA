@@ -42,6 +42,10 @@
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
+		<typeAlias type="com.tftsa.itys.detail.model.vo.AfterPay" alias="AfterPay"/>
+		<typeAlias type="com.tftsa.itys.detail.model.vo.OpenChat" alias="OpenChat"/>
+		<typeAlias type="com.tftsa.itys.detail.model.vo.LikesCheck" alias="LikesCheck"/>
+		<typeAlias type="com.tftsa.itys.detail.model.vo.RoomNo" alias="RoomNo"/>
 
 		
 		<typeAlias type="com.tftsa.itys.search.vo.Keyword" alias="Keyword" />

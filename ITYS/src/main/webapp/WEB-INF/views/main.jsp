@@ -450,7 +450,13 @@ ol, ul, li {
 				<c:otherwise>
 					<c:forEach items="${ requestScope.tutorList }" var="t">
 						<li>
-						<a href="#">
+						<c:url var="detail" value="/detail.do">
+						<c:param name="user_no" value="${t.user_no }" />
+						<c:param name="student_no" value="${loginMember.user_no }"/>
+						<c:param name="tutor_no" value="${t.user_no }"/>
+						</c:url>
+						<a href="${detail}">
+						
 							<div class="list_container" style= "width: 1000px; height : 200px; display: inline-block; margin-top : 20px;">
 								<div class="img_box" style = "border-radius: 50%">
 									<img style = "border-radius: 50%; height: 198px; width : 198px;" alt="이미지" 
