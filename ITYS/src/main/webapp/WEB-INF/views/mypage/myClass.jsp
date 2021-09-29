@@ -169,7 +169,7 @@ img{
 									</td>
 									<c:choose>
 										<c:when test="${position eq 'S' }">
-											<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${c.user_no}&student_no=${loginMember.user_no }'">
+											<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${c.user_no}&student_no=${loginMember.user_no }&tutor_no=${c.user_no }'">
 										</c:when>
 										<c:when test="${position eq 'T' }">
 											<td style="width:475px; padding-left:15px;">

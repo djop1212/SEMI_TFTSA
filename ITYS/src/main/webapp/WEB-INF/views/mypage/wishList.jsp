@@ -172,7 +172,7 @@ img{
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>
 									</td>
-									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${w.user_no}&student_no=${loginMember.user_no }'">
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${w.user_no}&student_no=${loginMember.user_no }&tutor_no=${w.user_no }'">
 										선생님이름 : ${w.user_name }<br>	
 										과외 한 줄 소개 : ${w.intro }<br>
 										전화번호 : ${w.user_phone }<br>
