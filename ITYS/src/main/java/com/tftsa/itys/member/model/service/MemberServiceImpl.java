@@ -69,11 +69,11 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("send_mail");
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "jooo9898@naver.com";
-		String hostSMTPpwd = "locus0704@@";
+		String hostSMTPid = "locus0704@naver.com";
+		String hostSMTPpwd = "sktjstodsjgkrtod";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "jooo9898@naver.com";
+		String fromEmail = "locus0704@naver.com";
 		String fromName = "난 선생이고, 넌 학생이야";
 		String subject = "itys 임시 비밀번호 발송";
 		String msg = "";

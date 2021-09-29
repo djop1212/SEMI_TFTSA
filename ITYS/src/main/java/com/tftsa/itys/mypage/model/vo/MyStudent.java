@@ -1,7 +1,7 @@
 package com.tftsa.itys.mypage.model.vo;
 
-public class MyClass implements java.io.Serializable{
-	private static final long serialVersionUID = 118L;
+public class MyStudent implements java.io.Serializable{
+	private static final long serialVersionUID = 123L;
 	
 	private int pay_no;
 	private String student_name;
@@ -11,30 +11,25 @@ public class MyClass implements java.io.Serializable{
 	private String pay_amount;
 	private String pay_status;
 	private int user_no;
+	private String user_ssn;
 	private String user_name;
 	private String user_phone;
 	private String user_email;
 	private String user_position;
 	private String pic;
-	private String min_pay;
-	private String online_ok;
-	private String area;
-	private String intro;
+	private String stu_job;
 	private String day;
 	private String time;
-	private String style;
-	private String l_grd;
-	private String class_min;
-	private String class_times;
-	private String sub_name;
+	private String stu_wish;
 	
-	public MyClass () {}
+	public MyStudent() {}
 
-	public MyClass(int pay_no, String student_name, String tutor_name, String pay_datetm, String pay_method,
-			String pay_amount, String pay_status, int user_no, String user_name, String user_phone,
-			String user_email, String user_position, String pic, String min_pay, String online_ok, String area,
-			String intro, String day, String time, String style, String l_grd, String class_min, String class_times,
-			String sub_name) {
+	
+
+	public MyStudent(int pay_no, String student_name, String tutor_name, String pay_datetm, String pay_method,
+			String pay_amount, String pay_status, int user_no, String user_ssn, String user_name, String user_phone,
+			String user_email, String user_position, String pic, String stu_job, String day, String time,
+			String stu_wish) {
 		super();
 		this.pay_no = pay_no;
 		this.student_name = student_name;
@@ -44,23 +39,31 @@ public class MyClass implements java.io.Serializable{
 		this.pay_amount = pay_amount;
 		this.pay_status = pay_status;
 		this.user_no = user_no;
+		this.user_ssn = user_ssn;
 		this.user_name = user_name;
 		this.user_phone = user_phone;
 		this.user_email = user_email;
 		this.user_position = user_position;
 		this.pic = pic;
-		this.min_pay = min_pay;
-		this.online_ok = online_ok;
-		this.area = area;
-		this.intro = intro;
+		this.stu_job = stu_job;
 		this.day = day;
 		this.time = time;
-		this.style = style;
-		this.l_grd = l_grd;
-		this.class_min = class_min;
-		this.class_times = class_times;
-		this.sub_name = sub_name;
+		this.stu_wish = stu_wish;
 	}
+
+
+
+	public String getStu_job() {
+		return stu_job;
+	}
+
+
+
+	public void setStu_job(String stu_job) {
+		this.stu_job = stu_job;
+	}
+
+
 
 	public int getPay_no() {
 		return pay_no;
@@ -126,6 +129,14 @@ public class MyClass implements java.io.Serializable{
 		this.user_no = user_no;
 	}
 
+	public String getUser_ssn() {
+		return user_ssn;
+	}
+
+	public void setUser_ssn(String user_ssn) {
+		this.user_ssn = user_ssn;
+	}
+
 	public String getUser_name() {
 		return user_name;
 	}
@@ -166,38 +177,6 @@ public class MyClass implements java.io.Serializable{
 		this.pic = pic;
 	}
 
-	public String getMin_pay() {
-		return min_pay;
-	}
-
-	public void setMin_pay(String min_pay) {
-		this.min_pay = min_pay;
-	}
-
-	public String getOnline_ok() {
-		return online_ok;
-	}
-
-	public void setOnline_ok(String online_ok) {
-		this.online_ok = online_ok;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
-
-	public String getIntro() {
-		return intro;
-	}
-
-	public void setIntro(String intro) {
-		this.intro = intro;
-	}
-
 	public String getDay() {
 		return day;
 	}
@@ -214,44 +193,12 @@ public class MyClass implements java.io.Serializable{
 		this.time = time;
 	}
 
-	public String getStyle() {
-		return style;
+	public String getStu_wish() {
+		return stu_wish;
 	}
 
-	public void setStyle(String style) {
-		this.style = style;
-	}
-
-	public String getL_grd() {
-		return l_grd;
-	}
-
-	public void setL_grd(String l_grd) {
-		this.l_grd = l_grd;
-	}
-
-	public String getClass_min() {
-		return class_min;
-	}
-
-	public void setClass_min(String class_min) {
-		this.class_min = class_min;
-	}
-
-	public String getClass_time() {
-		return class_times;
-	}
-
-	public void setClass_time(String class_times) {
-		this.class_times = class_times;
-	}
-
-	public String getSub_name() {
-		return sub_name;
-	}
-
-	public void setSub_name(String sub_name) {
-		this.sub_name = sub_name;
+	public void setStu_wish(String stu_wish) {
+		this.stu_wish = stu_wish;
 	}
 
 	public static long getSerialversionuid() {
@@ -260,15 +207,14 @@ public class MyClass implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "MyClass [pay_no=" + pay_no + ", student_name=" + student_name + ", tutor_name=" + tutor_name
+		return "MyStudent [pay_no=" + pay_no + ", student_name=" + student_name + ", tutor_name=" + tutor_name
 				+ ", pay_datetm=" + pay_datetm + ", pay_method=" + pay_method + ", pay_amount=" + pay_amount
-				+ ", pay_status=" + pay_status + ", user_no=" + user_no + ", user_name=" + user_name + ", user_phone="
-				+ user_phone + ", user_email=" + user_email + ", user_position=" + user_position + ", pic=" + pic
-				+ ", min_pay=" + min_pay + ", online_ok=" + online_ok + ", area=" + area + ", intro=" + intro + ", day="
-				+ day + ", time=" + time + ", style=" + style + ", l_grd=" + l_grd + ", class_min=" + class_min
-				+ ", class_times=" + class_times + ", sub_name=" + sub_name + "]";
+				+ ", pay_status=" + pay_status + ", user_no=" + user_no + ", user_ssn=" + user_ssn + ", user_name="
+				+ user_name + ", user_phone=" + user_phone + ", user_email=" + user_email + ", user_position="
+				+ user_position + ", pic=" + pic + ", stu_job=" + stu_job + ", day=" + day + ", time=" + time
+				+ ", stu_wish=" + stu_wish + "]";
 	}
-
+	
 	
 
 }

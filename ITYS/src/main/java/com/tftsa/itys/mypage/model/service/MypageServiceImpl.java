@@ -14,6 +14,7 @@ import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.MyKeyData;
 import com.tftsa.itys.mypage.model.vo.MyKeyword;
+import com.tftsa.itys.mypage.model.vo.MyStudent;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -32,9 +33,14 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public ArrayList<MyClass> selectMyclassList(int user_no) {
+	public ArrayList<MyStudent> selectMyclassList(int user_no) {
 		return mypageDao.selectMyclassList(user_no);
 	}
+	
+	@Override
+	public ArrayList<MyClass> selectMyTutorclassList(int user_no) {
+		return mypageDao.selectMyTutorClassList(user_no);
+	}	
 	
 	@Override
 	public int insertTutor(Tutor tutor) {
@@ -155,5 +161,7 @@ public class MypageServiceImpl implements MypageService{
 	public Member selectUserNo(int user_no) {
 		return mypageDao.selectUserNo(user_no);
 	}
+
+
 	
 }

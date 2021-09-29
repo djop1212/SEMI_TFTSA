@@ -92,6 +92,24 @@
 		<result column="class_times" property="class_times" />
 		<result column="sub_name" property="sub_name" />
 	</resultMap>
+  <resultMap type="MyStudent" id="resultMyStudent">
+		<id column="pay_no" property="pay_no" />
+		<result column="user_phone" property="user_phone" />
+		<result column="user_email" property="user_email" />
+		<result column="user_position" property="user_position" />
+		<result column="user_no" property="user_no" />
+		<result column="student_name" property="student_name" />
+		<result column="tutor_name" property="tutor_name" />
+		<result column="pay_datetm" property="pay_datetm" />
+		<result column="pay_method" property="pay_method" />
+		<result column="pay_amount" property="pay_amount" />
+		<result column="pay_status" property="pay_status" />
+		<result column="pic" property="pic" />
+		<result column="user_name" property="user_name" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="stu_wish" property="stu_wish" />
+	</resultMap>	
   
 	<resultMap type="UserChattingroomTutor" id="resultUserChattingroomTutor">
 		<id property="user_no" column="user_no"/>
@@ -170,12 +188,19 @@
 		(select tutor_no from likes where student_no = #{user_no})
 	</select>
 	
-	<!-- 내 수업 조회 -->
-	<select id="selectMyClassList" parameterType="_int" resultMap="resultMyClass">
+	<!-- 학생이 수업 조회 -->
+	<select id="selectMyTutorClassList" parameterType="_int" resultMap="resultMyClass">
 		select * from payment p, user_info u, tutor t
 		where p.tutor_name = u.user_name and u.user_no = t.user_no
 		and p.student_name = (select user_name from user_info where user_no = ${user_no})
 		and pay_status = 'COMPLETE'
+		order by pay_no
+	</select>
+	<!-- 선생님이 학생 목록 조회 -->
+	<select id="selectMyClassList" parameterType="_int" resultMap="resultMyStudent">
+		select * from payment p, user_info u, student s
+		where p.student_name = u.user_name and u.user_no = s.user_no
+		and p.tutor_name = (select user_name from user_info where user_no = ${user_no})
 		order by pay_no
 	</select>
 	

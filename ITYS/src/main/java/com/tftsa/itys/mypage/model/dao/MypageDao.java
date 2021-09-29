@@ -14,6 +14,7 @@ import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.MyKeyData;
 import com.tftsa.itys.mypage.model.vo.MyKeyword;
+import com.tftsa.itys.mypage.model.vo.MyStudent;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -30,11 +31,15 @@ public class MypageDao {
 		return (ArrayList<Likes>)list;
 	}
 	
-	public ArrayList<MyClass> selectMyclassList(int user_no){
-		List<MyClass> list = session.selectList("mypageMapper.selectMyClassList", user_no);
+	public ArrayList<MyStudent> selectMyclassList(int user_no){
+		List<MyStudent> list = session.selectList("mypageMapper.selectMyClassList", user_no);
+		return (ArrayList<MyStudent>)list;
+	}
+	public ArrayList<MyClass> selectMyTutorClassList(int user_no) {
+		List<MyClass> list = session.selectList("mypageMapper.selectMyTutorClassList", user_no);
 		return (ArrayList<MyClass>)list;
 	}
-
+	
 	public int insertTutor(Tutor tutor) {
 		return session.insert("mypageMapper.insertTutor", tutor);
 	}
@@ -132,4 +137,5 @@ public class MypageDao {
 	public Member selectUserNo(int user_no) {
 		return session.selectOne("memberMapper.selectUserNo", user_no);
 	}
+
 }
