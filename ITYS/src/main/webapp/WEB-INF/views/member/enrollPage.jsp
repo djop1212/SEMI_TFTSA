@@ -132,7 +132,7 @@
 									<td><input type="password" name="user_pwd" id="userpwd" placeholder="비밀번호" required/></td>
 								</tr>
 								<tr><th>* 비밀번호 확인 </th>
-									<td><input type="password" id="userpwd2" placeholder="비밀번호 확인" required/></td>
+									<td><input type="password" id="userpwd2" placeholder="비밀번호 확인" required onblur="validate();"/></td>
 								</tr>
 								<tr><th>* 주민번호</th>
 									<td><input type="text" name="user_ssn" placeholder="예) 940725-1234567" pattern="\d{6}-\d{7}" required/></td>
