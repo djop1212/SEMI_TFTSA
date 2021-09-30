@@ -154,6 +154,9 @@ img{
 						</div><br>
 						<form action="delwlist.do" method="post" onsubmit="confirm('찜 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="student_no" value="${loginMember.user_no}">
+						<c:if test="${chk eq null }">
+							<input type="hidden" name="chk" value="0">
+						</c:if>
 						<div>
 							<ul id="wlist">
 								<li>
@@ -180,6 +183,7 @@ img{
 										지역 : ${w.area }<Br>
 									</td>
 									<td style="align: right;"><input type="checkbox" name="chk" value="${w.user_no }"></td>
+										
 									</tr>
 								</table><hr>
 								

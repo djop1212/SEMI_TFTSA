@@ -155,8 +155,10 @@ img{
 						</div><br>
 						<form action="delclist.do" method="post" onsubmit="confirm('채팅 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="user_no" value="${loginMember.user_no }">
+						<c:if test="${chk eq null }">
+							<input type="hidden" name="chk" value="0">
+						</c:if>
 						<div>
-						
 							<ul id="wlist">
 								<li>
 								<c:if test="${ requestScope.userchattingroomtutor != null }">
