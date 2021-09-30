@@ -49,7 +49,7 @@ public class AdminKeywordController {
 		return "redirect:adminKeyword.do";
 	}
 	
-	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
+	// 키워드 추가 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
 	@RequestMapping("addKeyword.do")
 	public String keywordAddViewMethod(Model model) {
 		

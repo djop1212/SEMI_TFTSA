@@ -99,7 +99,7 @@ a {
                   </table>
                   </form>
                   <div align="right" style=50px>
-                  <button type="button" class="btn btn-success mb-1" onclick="location.href='/itys/addSubject.do'">과목 추가</button>
+                  <button type="button" class="btn btn-success mb-1" onclick="location.href='/itys/addSubject.do';">과목 추가</button>
                   <a href="#" class="btn btn-danger" style="margin:0px 0px 4px" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
@@ -108,40 +108,7 @@ a {
               </div>
             </div>
           </div>
-          <!--Row-->
-
-          <!-- Documentation Link -->
-          <div class="row">
-            <div class="col-lg-12">
-              <p>DataTables is a third party plugin that is used to generate the demo table below. For more information
-                about DataTables, please visit the official <a href="https://datatables.net/" target="_blank">DataTables
-                  documentation.</a></p>
-            </div>
-          </div>
-
-          <!-- Modal Logout -->
-          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Are you sure you want to logout?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                  <a href="login.html" class="btn btn-primary">Logout</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-        <!---Container Fluid-->
       </div>
 			
 		</div>
@@ -168,17 +135,18 @@ a {
             chkArray.push(this.value);
         });
         $('#clickedValue').val(chkArray);
-        var conVal=confirm($('#clickedValue').val()+"를 과목에서 삭제하시겠습니까?");
+        var conVal=confirm("'"+$('#clickedValue').val()+"'를 강제로 탈퇴시키겠습니까?");
         if (conVal == true){
 	        location.reload(true);
-	        console.log(chkArray);
-	        //
+	        console.log(chkArray); 
+	        
 	        $.ajax({
 	        	url:"deleteCategory.do",
 	        	type:"post",
 	        	data : {'list': chkArray.join(',')},
 	        	  success : function(data){
 	        	    console.log('삭제를 성공했습니다!');
+	        	    location.reload(true);
 	        	  }
 	        })
         }
@@ -187,7 +155,7 @@ a {
         	location.reload(true);
         }
 	}
-</script>
+	</script>
 	<c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 </body>
 

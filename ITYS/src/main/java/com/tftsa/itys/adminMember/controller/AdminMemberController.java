@@ -52,17 +52,19 @@ public class AdminMemberController {
 	
 
 	@RequestMapping("adminStudent.do")
-	public String memberStudentsViewMethod(Model model) {
-		ArrayList<Member> list = memberService.selectAllStudents();
-		
+	public String memberStudentsViewMethod(Model model,@RequestParam(value="user_id", required=false) String user_id) {
+		ArrayList<Member> list = memberService.selectAllStudents(user_id);
+		System.out.printf("\nuser id: "+user_id);
+		System.out.printf("\nlist: "+list);
 		model.addAttribute("list", list);
 		return "admin/adminStudent";
 	}
 	
 	@RequestMapping("adminTutor.do")
-	public String memberTutorsViewMethod(Model model) {
-		ArrayList<Member> list = memberService.selectAllTutors();
-		
+	public String memberTutorsViewMethod(Model model,@RequestParam(value="user_id", required=false) String user_id) {
+		ArrayList<Member> list = memberService.selectAllTutors(user_id);
+		System.out.printf("\nuser id: "+user_id);
+		System.out.printf("\nlist: "+list);
 		model.addAttribute("list", list);
 		return "admin/adminTutor";
 	}

@@ -182,8 +182,7 @@ a {
                     </tbody>
                   </table>
                   </form>
-                  <div align="right" style=50px>
-                  
+                  <div align="right" style=50px>  
                   <a href="#" class="btn btn-danger" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
@@ -192,90 +191,42 @@ a {
             </div>
           </div>
           <!--Row-->
-
-          <!-- Documentation Link -->
-          <div class="row">
-            <div class="col-lg-12">
-              <p>DataTables is a third party plugin that is used to generate the demo table below. For more information
-                about DataTables, please visit the official <a href="https://datatables.net/" target="_blank">DataTables
-                  documentation.</a></p>
-            </div>
-          </div>
-
-          <!-- Modal Logout -->
-          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Are you sure you want to logout?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                  <a href="login.html" class="btn btn-primary">Logout</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <!---Container Fluid-->
       </div>
 	</div>
-</body>
-<c:import url="/WEB-INF/views/admin/common/footer.jsp" />
-  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script>
-	var user_id = $("#user_id").val();
-	function searchFunction(){	
-		$.ajax({
-			url : "/itys/adminMember",
-			type: 'POST',
-			data : {user_id : user_id},
-			success : function(data){
-
-						console.log("user_id",data);
-	        		}				 
-				}
-				else {
-					
-				}
-			}
-		})
-	} 
+	<script>
+	//삭제할 항목의 id 저장할 배열
 	var chkArray = new Array(); // 배열 선언
 	
 	function ClickedData(){
 		var obj = $("[name=del_chk]");
-
-        $('input:checkbox[name=del_chk]:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.
+		// 체크된 체크박스의 value 값을 배열에 저장.
+        $('input:checkbox[name=del_chk]:checked').each(function() { 
             chkArray.push(this.value);
         });
         $('#clickedValue').val(chkArray);
-        var conVal=confirm($('#clickedValue').val()+"를 회원에서 삭제하시겠습니까?");
+        var conVal=confirm("'"+$('#clickedValue').val()+"'를 강제로 탈퇴시키겠습니까?");
         if (conVal == true){
 	        location.reload(true);
-	        console.log(chkArray);
-			
+	        console.log(chkArray); 
+	        
 	        $.ajax({
 	        	url:"deleteMember.do",
 	        	type:"post",
 	        	data : {'list': chkArray.join(',')},
 	        	  success : function(data){
-	        	    console.log('삭제를 성공했습니다!');
+	        	    console.log('강제 탈퇴를 성공했습니다!');
+	        	    location.reload(true);
 	        	  }
 	        })
         }
         else if(conVal == false){
-        	alert("삭제를 취소했습니다.");
+        	alert("강제 탈퇴를 취소했습니다.");
         	location.reload(true);
         }
 	}
-</script>
+	</script>	
+	
+</body>
 </html>

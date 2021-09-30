@@ -17,11 +17,8 @@
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/css/ruang-admin.min.css" rel="stylesheet">
 <link href="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<%-- <sctipt>
-	function searchFunction(){
-		request.open("Post","")
-		}
-</sctipt>--%>
+<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>
+<script src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
 <style>
 /* Dropdown Button */
 .btn btn-primary dropdown-toggle {
@@ -122,12 +119,12 @@ a {
 					</div>
 					</div>
                 <div class="col-sm-12 col-md-6">
-                <form action="adminMember.do" method="POST" class="navbar-search">
+                <form action="adminTutor.do" method="POST" class="navbar-search">
                   <div class="input-group" style="width:200px;float:right;margin-right:15px">
-                    <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
+                    <input type="text" name="user_id" class="form-control bg-light border-1 small" placeholder="Search an user"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary" type="submit">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
@@ -137,7 +134,7 @@ a {
                 </div>
                 
                 <div class="table-responsive p-3">
-                
+                <form action="deleteMember.do" method="post" id="multidelete">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
@@ -173,13 +170,15 @@ a {
 							<td>${ m.user_phone }</td>
 							<td>${ m.user_email }</td>
 							<td>${ m.login_ok }</td>
-							<td><input type="checkbox" value=${ m.user_no }></td>
+							<td><input type="checkbox" name="del_chk" value=${ m.user_id }></td>
 						</tr>
-					  </c:forEach>  
+					  </c:forEach> 
+					  <input type="hidden" name="clickedValue" id="clickedValue" value=""/> 
                     </tbody>
                   </table>
+                  </form>
                   <div align="right" style=50px>
-                  <a href="#" class="btn btn-danger" >
+                  <a href="#" class="btn btn-danger" onclick="ClickedData();" >
                     <i class="fas fa-trash" ></i>
                   </a>
                	</div>
@@ -187,43 +186,44 @@ a {
             </div>
           </div>
           <!--Row-->
-
-          <!-- Documentation Link -->
-          <div class="row">
-            <div class="col-lg-12">
-              <p>DataTables is a third party plugin that is used to generate the demo table below. For more information
-                about DataTables, please visit the official <a href="https://datatables.net/" target="_blank">DataTables
-                  documentation.</a></p>
-            </div>
-          </div>
-
-          <!-- Modal Logout -->
-          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Are you sure you want to logout?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                  <a href="login.html" class="btn btn-primary">Logout</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <!---Container Fluid-->
       </div>
 			</div>
 		</div>
 	</div>
+	<script>
+	//삭제할 항목의 id 저장할 배열
+	var chkArray = new Array(); // 배열 선언
+	
+	function ClickedData(){
+		var obj = $("[name=del_chk]");
+		// 체크된 체크박스의 value 값을 배열에 저장.
+        $('input:checkbox[name=del_chk]:checked').each(function() { 
+            chkArray.push(this.value);
+        });
+        $('#clickedValue').val(chkArray);
+        var conVal=confirm("'"+$('#clickedValue').val()+"'를 강제로 탈퇴시키겠습니까?");
+        if (conVal == true){
+	        location.reload(true);
+	        console.log(chkArray); 
+	        
+	        $.ajax({
+	        	url:"deleteMember.do",
+	        	type:"post",
+	        	data : {'list': chkArray.join(',')},
+	        	  success : function(data){
+	        	    console.log('강제 탈퇴를 성공했습니다!');
+	        	    location.reload(true);
+	        	  }
+	        })
+        }
+        else if(conVal == false){
+        	alert("강제 탈퇴를 취소했습니다.");
+        	location.reload(true);
+        }
+	}
+	</script>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
 

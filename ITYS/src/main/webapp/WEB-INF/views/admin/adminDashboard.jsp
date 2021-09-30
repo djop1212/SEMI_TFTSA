@@ -44,11 +44,10 @@
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Earnings (Today)</div>
+                      <div class="text-xs font-weight-bold text-uppercase mb-1">Earnings</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"> ${requestScope.today_earning}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                        <span>Since last month</span>
+                        <span>For Today</span>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -67,8 +66,7 @@
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Sales</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.month_sales}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                        <span>Since last years</span>
+                        <span>For Today</span>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -84,11 +82,10 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">New User</div>
+                      <div class="text-xs font-weight-bold text-uppercase mb-1">Total User</div>
                       <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${requestScope.total_users}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
-                        <span>Since last month</span>
+                        <span>For whole Period</span>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -107,8 +104,7 @@
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Requests</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.potential}</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
-                        <span>Since yesterday</span>
+                        <span>For whole Period</span>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -243,26 +239,7 @@
           </div>
 
           <!-- Modal Logout -->
-          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Are you sure you want to logout?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                  <a href="login.html" class="btn btn-primary">Logout</a>
-                </div>
-              </div>
-           </div>
-        </div>
+          
         <!---Container Fluid-->
 			
 	

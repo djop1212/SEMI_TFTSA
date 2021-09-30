@@ -8,7 +8,7 @@ public interface AdminMemberService {
 //	Member selectMember(String mid);
 	ArrayList<Member> selectAllList(String mid);
 //	ArrayList<Member> selectLoggedInUser();
-	ArrayList<Member> selectAllStudents();
-	ArrayList<Member> selectAllTutors();
+	ArrayList<Member> selectAllStudents(String s_id);
+	ArrayList<Member> selectAllTutors(String t_id);
 	int deleteMember(String mid);
 }
