@@ -85,7 +85,7 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
-img{
+.img_size{
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
@@ -114,13 +114,13 @@ img{
 						<div>
 							<c:choose>
 								<c:when test="${student.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 								</c:when>
 								<c:when test="${tutor.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 								</c:when>
 								<c:otherwise>
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 								</c:otherwise>
 							</c:choose>
 						</div>
