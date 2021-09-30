@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.adminDashboard.model.service.AdminDashboardService;
 import com.tftsa.itys.adminDashboard.model.vo.BarData;
+import com.tftsa.itys.adminDashboard.model.vo.PieData;
 import com.tftsa.itys.adminPayment.model.vo.Payment;
 import com.tftsa.itys.board.model.vo.Board;
 
@@ -32,14 +33,24 @@ public class AdminDashboardController {
 		ArrayList<Payment> pay_list = admindashboardService.fiveRecentPayments();
 		ArrayList<BarData> bar_data = admindashboardService.oneYearEarning();
 		ArrayList<Board> board_list = admindashboardService.fiveNewlyPosted();
+		ArrayList<PieData> pie_data = admindashboardService.categorySaleRate();
 		
 		List<String> month = new ArrayList<String>();
 		List<Integer> earning = new ArrayList<>(bar_data.size());
+		List<String> category = new ArrayList<String>();
+		List<Integer> cnt = new ArrayList<>(pie_data.size());
 		
 		for (int i=0;i<bar_data.size();i++) {
 			month.add("'"+bar_data.get(i).getMonth()+"'");
 			earning.add(bar_data.get(i).getEarning());
 		}
+		
+		for (int i=0;i<pie_data.size();i++) {
+			category.add("'"+pie_data.get(i).getCategory()+"'");
+			cnt.add(pie_data.get(i).getCnt());
+		}
+	
+		System.out.println(category);
 		
 		mv.addObject("today_earning",today_earning);
 		mv.addObject("month_sales",month_sales);
@@ -50,6 +61,8 @@ public class AdminDashboardController {
 		mv.addObject("month", month);
 		mv.addObject("earning", earning);
 		mv.addObject("board_list",board_list);
+		mv.addObject("category", category);
+		mv.addObject("cnt", cnt);
 		
 		mv.setViewName("admin/adminDashboard"); // 내보낼 뷰파일명 리턴
 		return mv;

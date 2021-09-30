@@ -376,13 +376,15 @@
 	Chart.defaults.global.defaultFontColor = '#858796';
 
 	// Pie Chart Example
-	var ctx = document.getElementById("myPieChart");
-	var myPieChart = new Chart(ctx, {
+	var ctx2 = document.getElementById("myPieChart");
+	var axis_array1 = ${ requestScope.category };
+	var data_array1 = ${ requestScope.cnt };
+	var myPieChart = new Chart(ctx2, {
 	  type: 'doughnut',
 	  data: {
-	    labels: ["Direct", "Referral", "Social"],
+	    labels: axis_array1,
 	    datasets: [{
-	      data: [55, 30, 15],
+	      data: data_array1,
 	      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
 	      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
 	      hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -401,7 +403,7 @@
 	      caretPadding: 10,
 	    },
 	    legend: {
-	      display: false
+	      display: true
 	    },
 	    cutoutPercentage: 80,
 	  },
