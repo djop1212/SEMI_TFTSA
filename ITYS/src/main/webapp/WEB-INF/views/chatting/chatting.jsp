@@ -758,7 +758,20 @@ a.btn-layerClose:hover {
 			var today = new Date();
 			var hours = today.getHours();
 			var minutes = today.getMinutes();
-			var timeString = hours + ' : ' + minutes
+			
+			if (hours > 12){
+				hours = hours % 12
+			}
+			
+			if (hours < 10){
+				hours = '0' + hours;
+			}
+			
+			if (minutes < 10){
+				minutes = '0' + minutes;
+			}
+			
+			var timeString = hours + ':' + minutes
 			
 			//전송온 메세지가 비었거나, 보낸사람이 내가 연결한
 			//사람이 아닐 경우 아무 내용도 실행하지 않는다.
