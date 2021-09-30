@@ -139,8 +139,7 @@ a {
         </div>
         <!---Container Fluid-->
       </div>
-			</div>
-		</div>
+		
 	</div>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />

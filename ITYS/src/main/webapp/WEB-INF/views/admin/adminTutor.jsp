@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,7 +169,7 @@ a {
 							<td>${ m.user_no }</td>
 							<td>${ m.user_id }</td>
 							<td>${ m.user_name }</td>
-							<td>${ m.user_ssn }</td>
+							<td><c:out value="${fn:substring(m.user_ssn, 0, fn:length(m.user_ssn) - 6)}"/>******</td>
 							<td>${ m.user_phone }</td>
 							<td>${ m.user_email }</td>
 							<td>${ m.login_ok }</td>
