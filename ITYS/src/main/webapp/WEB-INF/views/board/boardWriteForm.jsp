@@ -9,9 +9,11 @@
 
 
 </head>
-<body>
-<c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+<body class="sub_page">
+  <div class="hero_area">    
+    <c:import url="/WEB-INF/views/common/menubar.jsp" />    
+  </div>
+  <hr>
 <h1 align="center">게시글 등록 페이지</h1>
 
 <form action="binsert.do" method="post" enctype="multipart/form-data">
@@ -38,5 +40,7 @@
 </th></tr>
 </table>
 </form>
+<hr>
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

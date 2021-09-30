@@ -47,14 +47,8 @@
 <%--   		<c:if test="${ sessionScope.loginMember eq null}"> --%>
           <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
             <ul class="navbar-nav  ml-auto">
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/main.jsp' }">active</c:if>">
-                <a class="nav-link" href="main.do">메인 <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/about.jsp' }">active</c:if>">
-                <a class="nav-link" href="about.do"> 과외찾기 </a>
-              </li>
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/course.jsp' }">active</c:if>">
-                <a class="nav-link" href="course.do"> 선생님 찾기 </a>
+                <a class="nav-link" href="top10.do"> 선생님 찾기 </a>
               </li>
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/event.jsp' }">active</c:if>">
                 <a class="nav-link" href="${ pageContext.servletContext.contextPath }/blist.do?page=1"> 질문하기 </a>   
@@ -87,7 +81,7 @@
               </li>
               </c:if>
             </ul>
-<%--           </c:if> --%>
+<%-- </c:if> --%>
 
             <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
               <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>

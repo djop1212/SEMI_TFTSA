@@ -14,9 +14,11 @@
 <title></title>
 
 </head>
-<body>
-<c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+<body class="sub_page">
+  <div class="hero_area">    
+    <c:import url="/WEB-INF/views/common/menubar.jsp" />    
+  </div>
+  <hr>
 
 <h1 align="center">${ board_no } 번글 댓글 달기 페이지</h1>
 <form action="breply.do" method="post" >
@@ -41,5 +43,7 @@
 </th></tr>
 </table>
 </form>
+<hr>
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

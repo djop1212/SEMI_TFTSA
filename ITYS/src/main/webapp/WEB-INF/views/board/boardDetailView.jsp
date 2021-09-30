@@ -17,25 +17,24 @@
 
 
 </head>
-<body>
-<c:import url="/WEB-INF/views/common/menubar.jsp"/>
+<body class="sub_page">
+  <div class="hero_area">    
+    <c:import url="/WEB-INF/views/common/menubar.jsp" />    
+  </div>
 <hr>
-
 <h2 align="center">${ requestScope.board.board_no } 번 게시글 상세보기</h2>
 <br>
 
 <!-- 게시글 상세보기 -->
 <table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
-<tr><th width="120">제 목</th><td>${ board.board_title }</td></tr>
+<tr><th width="120">제&nbsp;&nbsp;&nbsp;&nbsp;목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;${ board.board_title }</tr>
 
-<tr><th>작성자</th><td>${ board.board_writer }</td></tr>
+<tr><th>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;${ board.board_writer }</tr>
 
-<tr><th>등록날짜</th>
-<td><fmt:formatDate value="${ board.board_date }" type="date" pattern="yyyy/MM/dd" /></td></tr>
+<tr><th>등록날짜&nbsp;&nbsp;: &nbsp;<fmt:formatDate value="${ board.board_date }" type="date" pattern="yyyy/MM/dd" /></tr>
 
 <tr>
-	<th>첨부파일</th>
-	<td>
+	<th>첨부파일&nbsp;&nbsp;: &nbsp;
 		<c:if test="${ !empty board.board_original_filename }">
 			<c:url var="ubf" value="/bfdown.do">
 				<c:param name="ofile" value="${ board.board_original_filename }"/>
@@ -46,10 +45,10 @@
 		<c:if test="${ empty board.board_original_filename }">
 		&nbsp;
 		</c:if>
-	</td>
+
 </tr>
 
-<tr><th>내 용</th><td>${ board.board_content }</td></tr>
+<tr><th height="150">${ board.board_content }</tr>
 
 <!-- 게시글 수정/삭제, 댓글달기 -->
 <tr><th colspan="2">
@@ -125,7 +124,8 @@
 <button onclick="javascript:location.href='${ ubl }'">목록</button>
 </th></tr>
 </table>
-
+<hr>
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
 

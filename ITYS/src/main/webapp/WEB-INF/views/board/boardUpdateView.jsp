@@ -11,9 +11,11 @@
 
 
 </head>
-<body>
-<c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+<body class="sub_page">
+  <div class="hero_area">    
+    <c:import url="/WEB-INF/views/common/menubar.jsp" />    
+  </div>
+  <hr>
 <h1 align="center">${ requestScope.board.board_no } 번 게시글 수정 페이지</h1>
 
 <!-- 원글 수정 폼 -->
@@ -55,7 +57,8 @@
 	</table>
 	</form>
 </c:if>
-
+<hr>
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
 
