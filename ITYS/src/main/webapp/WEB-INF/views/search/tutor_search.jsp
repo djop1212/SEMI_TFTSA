@@ -9,111 +9,204 @@
 <html>
 <head>
 <title>과외찾기</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/ec0d746c97.js" crossorigin="anonymous"></script>
 
 
 <style type="text/css">
-object-fit: cover;
-*{
-	font-family: "Malgun Gothic",gulim,dotum,sans-serif;
-}
-a:link { color: red; text-decoration: none;}
-a:visited { color: black; text-decoration: none;}
-a:hover { color: blue; text-decoration: underline;}
-
-.detail_info, .img_box{
-    background-color: #F4F4F4;
-}
-.detail_info:hover, .img_box:hover{
-    box-shadow : 2px 2px 5px #999;
+object-fit: cover ; * {
+	font-family: "Malgun Gothic", gulim, dotum, sans-serif;
 }
 
-#detailOption_wrapper{
-	border : 1px solid gray;
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.heading_container2 {
+	display: block;
+}
+
+h2 {
+	font-size: 15px;
+}
+
+.search-icon {
+	display: inline-block;
+	width: 350px;
+	text-align: center;
+	border: 1px solid gray;
 	border-radius: 20px;
+}
+
+.star-rating {
+	width: 83px;;
+}
+
+
+.star-rating {
+	width: 83px;
 	background-color: #F4F4F4;
 }
-input[type=checkbox]{ 
+
+.star-rating, .star-rating span {
+	display: inline-block;
+	height: 15px;
+	overflow: hidden;
+	background : url(resources/images/search/star.png) no-repeat ;
+}
+
+.star-rating span {
+	background-position: left bottom;
+	line-height: 0;
+	vertical-align: top;
+}
+
+.heading_container2 h3::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 2px;
+	width: 1px;
+	height: 65px;
+	background-color: #4bc5b8;
+	-webkit-transform: translateY(-50%) rotate(20deg);
+	transform: translateY(-50%) rotate(20deg);
+}
+
+.heading_container2 h3 {
+	font-weight: bold;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.detail_info, .img_box {
+	background-color: #F4F4F4;
+}
+
+.detail_info:hover, .img_box:hover {
+	box-shadow: 2px 2px 5px #999;
+}
+
+#detailOption_wrapper {
+	border: 1px solid gray;
+	border-radius: 20px;
+	background-color: #F4F4F4;
+	animation: fadein 0.5s;
+	animation-name: slidein;
+}
+ 
+@keyframes slidein {
+
+	from {
+	
+    border: 1px solid gray;
+	border-radius: 20px;
+	background-color: #F4F4F4;
+	opacity: 0;
+    
+  }
+
+  to {
+  
+    opacity: 1;
+    
+  }
+}
+
+input[type=checkbox] {
 	display: none;
 }
 
-.doSearchBtn{
-    overflow: hidden;
-    padding: 0;
-    width: 104px;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 14px;
-    height: 35px;
-    background: #42acae;
+.doSearchBtn {
+	overflow: hidden;
+	padding: 0;
+	width: 104px;
+	border-radius: 8px;
+	color: #fff;
+	font-size: 14px;
+	height: 35px;
+	background: #42acae;
+	z-index: 1;
 }
 
-.searchBtn{
-    margin: 0;
-    padding: 0;
-    width: 20%;
-    height: 40px;
-    border-radius: 0 8px 8px 0;
-    color: #fff;
-    font-weight: normal;
-    text-align: center;
-    text-indent: 0;
-    background: #42acae;
+.searchBtn {
+	margin: 0;
+	padding: 0;
+	width: 20%;
+	height: 40px;
+	border-radius: 0 8px 8px 0;
+	color: #fff;
+	font-weight: normal;
+	text-align: center;
+	text-indent: 0;
+	background: #42acae;
 }
 
-.doBtnSearch {
-    padding-left: 52px;
-    width: 70%;
-    height: 40px;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 40px;
+.doBtnSearch { /* 
+	padding-left: 52px; */
+	width: 70%;
+	height: 40px;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 40px;
 }
 
-.adr_sel{
- 	height: 25px;
-    border: none;
-    box-sizing: border-box;
-    color: #444;
-    font-size: 13px;
-    letter-spacing: -1px;
-    line-height: 29px;
-    text-align: left;
-    vertical-align: top;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.adr_sel {
+	height: 25px;
+	border: none;
+	box-sizing: border-box;
+	color: #444;
+	font-size: 13px;
+	letter-spacing: -1px;
+	line-height: 29px;
+	text-align: left;
+	vertical-align: top;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 select {
-    padding: 0 10px 1px 6px;
-    height: 30px;
-    border: none;
-    box-sizing: border-box;
-    color: #444;
-    font-size: 13px;
-    letter-spacing: -1px;
-    line-height: 29px;
-    text-align: left;
-    vertical-align: top;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	padding: 0 10px 1px 6px;
+	height: 30px;
+	border: none;
+	box-sizing: border-box;
+	color: #444;
+	font-size: 13px;
+	letter-spacing: -1px;
+	line-height: 29px;
+	text-align: left;
+	vertical-align: top;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .inpSel select {
-    padding: 0 29px 1px 11px;
-    width: 100%;
-    height: 40px;
-    border: none;
-    box-sizing: border-box;
-    color: #444;
-    font-size: 13px;
-    letter-spacing: -1px;
-    line-height: 29px;
-    text-align: left;
-    vertical-align: top;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    border: 1px solid gray;
-    border-radius: 20px;
+	padding: 0 29px 1px 11px;
+	width: 100%;
+	height: 40px;
+	border: none;
+	box-sizing: border-box;
+	color: #444;
+	font-size: 13px;
+	letter-spacing: -1px;
+	line-height: 29px;
+	text-align: left;
+	vertical-align: top;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	border: 1px solid gray;
+	border-radius: 20px;
 }
 
 .container {
@@ -121,99 +214,93 @@ select {
 }
 
 .detailOption_box {
-    margin: 0;
-    /* position: static; */
-    margin-top: 20px;
-    padding: 0 20px;
-    height :45px;
+	margin: 0;
+	/* position: static; */
+	margin-top: 20px;
+	padding: 0 20px;
+	height: 45px;
 }
 
 .searchBox {
 	margin: 0 auto;
 }
 
-
 ol, ul, li {
-    list-style: none;
+	list-style: none;
 }
 
-.option_title{
-    float: left;
-    width: 86px;
-    color: #444;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: -1px;
-    line-height: 32px;
+.option_title {
+	float: left;
+	width: 86px;
+	color: #444;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	line-height: 32px;
 }
 
-.option_check{
+.option_check {
 	float: left;
 	width: 822px;
 }
 
-.option_check li{
+.option_check li {
 	float: left;
-    margin-right: 8px;
-    margin-bottom: 8px;
+	margin-right: 8px;
+	margin-bottom: 8px;
 }
-.sri_check{
+
+.sri_check {
 	padding: 0 15px;
-    height: 32px;
-    border: 2px solid #dedede;
-    border-radius: 20px;
-    line-height: 29px;
-    background: #fff;
-    box-sizing: border-box;
-    
-    -ms-user-select: none; 
-  	-moz-user-select: -moz-none;
- 	-khtml-user-select: none;
- 	-webkit-user-select: none;
-  	user-select: none;
-  	
-  	cursor:pointer
+	height: 32px;
+	border: 2px solid #dedede;
+	border-radius: 20px;
+	line-height: 29px;
+	background: #fff;
+	box-sizing: border-box;
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	cursor: pointer
 }
 
-
-
-.txt_check{
+.txt_check {
 	display: inline-block;
-    padding: 0;
-    color: #4d4d4d;
-    font-size: 13px;
-    line-height: 29px;
-    background: none;
-    vertical-align: top;
+	padding: 0;
+	color: #4d4d4d;
+	font-size: 13px;
+	line-height: 29px;
+	background: none;
+	vertical-align: top;
 }
 
-
-.on{
-   	border-color: #5AE291 !important;
-    color: #fff !important;
-    background-color: #89E5AF !important;
+.on {
+	border-color: #5AE291 !important;
+	color: #fff !important;
+	background-color: #89E5AF !important;
 }
 
-.list_container{
+.list_container {
 	width: 100%;
-	height : 100px;
+	height: 100px;
 }
 
-.img_box{
+.img_box {
 	width: 20%;
 	float: left;
 	border: 1px solid gray;
-	height : 100%;
+	height: 100%;
 }
 
-.detail_info{
+.detail_info {
 	width: 80%;
 	float: right;
 	border: 1px solid gray;
-	height : 100%;
-	border-radius : 25px;
+	height: 100%;
+	border-radius: 25px;
 }
-
 </style>
 
 
@@ -224,192 +311,223 @@ ol, ul, li {
 		<c:import url="/WEB-INF/views/common/menubar.jsp" />
 
 	</div>
-	
+
+	<section class="event_section layout_padding">
+	<div class="container">
+		<div class="heading_container2">
+			<h3>과외찾기</h3>
+
+			
+		</div>
+	</div>
 	<div class="container">
 		<div class="searchBox">
 			<div class="inpSel">
-				
-				<form name = "searchInfo" method="post" accept-charset="UTF-8"  style= "text-align : center;">
-					<div  style= "text-align : center; margin : 20px;">
-					<select name= "category" id="category" style = "width : 150px; display : inline-block; ">
-						<option>전체</option>
-						<c:forEach items="${ requestScope.categoryList }" var="c">
-							<option value="${ c.category }">${ c.category }</option>
-						</c:forEach>
+
+				<form name="searchInfo" method="post" accept-charset="UTF-8"
+					style="text-align: center;">
+					<div style="text-align: center; margin: 20px;">
+						<select name="category" id="category"
+							style="width: 150px; display: inline-block;">
+							<option>전체</option>
+							<c:forEach items="${ requestScope.categoryList }" var="c">
+								<option value="${ c.category }">${ c.category }</option>
+							</c:forEach>
+
+						</select> <select name="sub_name" id="subject"
+							style="width: 170px; display: inline-block;">
+							<option>전체</option>
+						</select> 
 						
-					</select> 
-					<select name="sub_name" id="subject" style = "width : 170px; display : inline-block; ">
-						<option>전체</option>
-					</select>
-					<input style="width : 300px;" name= "word" class = "doBtnSearch" id = "searchWord" type="text" placeholder="검색어를 입력해주세요."/>
-					
-					<input  style="width : 130px;" type ="button" onclick = "searchSend()" value="검색" class="searchBtn">
-					
-					<input type="hidden" name = "l_grd_list">
-					<input type="hidden" name = "stime">
-					<input type="hidden" name = "etime">
-					<input type="hidden" name = "keyword_list">
-					<input type="hidden" name = "day_list">
-					<input type="hidden" name = "area">
-					<input type="hidden" name = "online_ok_list">
-					<input type="hidden" name = "min_price">
-					<input type="hidden" name = "max_price">
-					
+						<div class = "search-icon" >
+						
+						<i class="fas fa-search"></i>						
+						<input style="width: 300px; border: none;" name="word" class="doBtnSearch"
+							id="searchWord" type="text" placeholder="검색어를 입력해주세요."/> 
+						</div>
+							<input
+							style="width: 130px;" type="button" onclick="searchSend()"
+							value="검색" class="searchBtn"> <input type="hidden"
+							name="l_grd_list"> <input type="hidden" name="stime">
+						<input type="hidden" name="etime"> <input type="hidden"
+							name="keyword_list"> <input type="hidden" name="day_list">
+						<input type="hidden" name="area"> <input type="hidden"
+							name="online_ok_list"> <input type="hidden"
+							name="min_price"> <input type="hidden" name="max_price">
+
 					</div>
 					<!--<button value="검색" id="search" onclick="searchSend()">검색</button> -->
-					
+
 				</form>
 
 			</div>
 
-			<div class="doBtnBox" style="text-align : center;">
-				<button class="doSearchBtn" value="상세옵션" id="doBtn" style="width: 505px; position : relative; top : 15px;">상세옵션</button>
+			<div class="doBtnBox" style="text-align: center;">
+				<button class="doSearchBtn" value="상세옵션" id="doBtn"
+					style="width: 505px; position: relative; top: 15px;">상세옵션</button>
 			</div>
-
 			<div id="detailOption_wrapper" style="display: none;">
-			
-				<div class="detailOption_box" style= "width : 100%; display : inline-block; margin-top: 42px;">
-					<h2 class="option_title" style="display : inline-block;">학력</h2>
-					<ul class="option_check" id = "ul_edu_all" style="display : inline-block;">
+
+				<div class="detailOption_box"
+					style="width: 100%; display: inline-block; margin-top: 42px;">
+					<h2 class="option_title" style="display: inline-block;">학력</h2>
+					<ul class="option_check" id="ul_edu_all"
+						style="display: inline-block;">
 						<li><label class="sri_check" for="detailOption_education-1">
-								<input  type="checkbox" id="detailOption_education-1"
+								<input type="checkbox" id="detailOption_education-1"
 								class="inp_check"> <span class="txt_check">상관없음</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-2">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-2"
-								class="inp_check edu"  value="고등학교 졸업" > <span class="txt_check">고등학교 졸업</span>
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-2" class="inp_check edu"
+								value="고등학교 졸업"> <span class="txt_check">고등학교 졸업</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-3">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-3"
-								class="inp_check edu"  value="전문대 재학"> <span class="txt_check">전문대 재학</span>
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-3" class="inp_check edu"
+								value="전문대 재학"> <span class="txt_check">전문대 재학</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-4">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-4"
-								class="inp_check edu" value="전문대 졸업"> <span class="txt_check">전문대 졸업</span>
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-4" class="inp_check edu"
+								value="전문대 졸업"> <span class="txt_check">전문대 졸업</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-5">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-5"
-								class="inp_check edu"  value="대학교 재학"> <span class="txt_check">4년제 재학</span>
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-5" class="inp_check edu"
+								value="대학교 재학"> <span class="txt_check">4년제 재학</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_education-6">
-								<input name = "l_grd" type="checkbox" id="detailOption_education-6"
-								class="inp_check edu" value="4년제 졸업"> <span class="txt_check">4년제 졸업</span>
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-6" class="inp_check edu"
+								value="4년제 졸업"> <span class="txt_check">4년제 졸업</span>
 						</label></li>
 					</ul>
 
 
 				</div>
 				<hr>
-				<div class="detailOption_box"  style= "width : 55%; display : inline-block;">
-				<h2 class="option_title">지역</h2>
-					<ul class="option_check" style="width : 370px;">
-						<li>
-							<label class="sri_check" for="">
-								<select class = "adr_sel" name="addressRegion" id="addressRegion1" style= "border : none;"></select> 
-								<select class = "adr_sel" name="addressDo" id="addressDo1" style= "border : none;"></select> 
-								<select class = "adr_sel" name="addressSiGunGu" id="addressSiGunGu1" style= "border : none;"></select>
-							</label>
-						</li>
+				<div class="detailOption_box"
+					style="width: 55%; display: inline-block;">
+					<h2 class="option_title">지역</h2>
+					<ul class="option_check" style="width: 370px;">
+						<li><label class="sri_check" for=""> <select
+								class="adr_sel" name="addressRegion" id="addressRegion1"
+								style="border: none;"></select> <select class="adr_sel"
+								name="addressDo" id="addressDo1" style="border: none;"></select>
+								<select class="adr_sel" name="addressSiGunGu"
+								id="addressSiGunGu1" style="border: none;"></select>
+						</label></li>
 					</ul>
 				</div>
-				<div class="detailOption_box"  style= "width : 40%; display : inline-block; padding : 0px;">
-				<h2 class="option_title">대면 여부</h2>
-					<ul class="option_check"  id = "ul_online_all" style="width : 270px; display : inline-block; padding : 0px;">
+				<div class="detailOption_box"
+					style="width: 40%; display: inline-block; padding: 0px;">
+					<h2 class="option_title">대면 여부</h2>
+					<ul class="option_check" id="ul_online_all"
+						style="width: 270px; display: inline-block; padding: 0px;">
 						<li><label class="sri_check" for="detailOption_online_all">
-								<input  type="checkbox" id="detailOption_online_all"
-								class="inp_check online_ok"  name= "online_ok" value="all"> <span class="txt_check">전체</span>
+								<input type="checkbox" id="detailOption_online_all"
+								class="inp_check online_ok" name="online_ok" value="all">
+								<span class="txt_check">전체</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_online_ok">
-								<input  type="checkbox" id="detailOption_online_ok"
-								class="inp_check online_ok"  name= "online_ok" value="Y"> <span class="txt_check">대면</span>
+								<input type="checkbox" id="detailOption_online_ok"
+								class="inp_check online_ok" name="online_ok" value="Y">
+								<span class="txt_check">대면</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_online_no">
-								<input  type="checkbox" id="detailOption_online_no"
-								class="inp_check online_ok"  name= "online_ok" value="N"> <span class="txt_check">비대면</span>
+								<input type="checkbox" id="detailOption_online_no"
+								class="inp_check online_ok" name="online_ok" value="N">
+								<span class="txt_check">비대면</span>
 						</label></li>
 					</ul>
 				</div>
 				<hr>
 
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block; height : 120px;">
+				<div class="detailOption_box"
+					style="width: 100%; display: inline-block; height: 120px;">
 					<h2 class="option_title">키워드</h2>
-					<ul class="option_check" id = "ul_keyword_all">
-					
+					<ul class="option_check" id="ul_keyword_all">
+
 						<li><label class="sri_check" for="detailOption_keyword_all">
-									<input type="checkbox" id="detailOption_keyword_all"
-									class="inp_check"> <span class="txt_check">상관없음 </span>
-							</label></li>
-						
+								<input type="checkbox" id="detailOption_keyword_all"
+								class="inp_check"> <span class="txt_check">상관없음 </span>
+						</label></li>
+
 						<c:forEach items="${ requestScope.keywordList }" var="k">
-							<li>
-								<label class="sri_check" for="detailOption_keyword_${ k.key_no }">
-									<input name = "keyword" type="checkbox" id="detailOption_keyword_${ k.key_no }"
-									class="inp_check key" value=" ${ k.type_per }"> <span class="txt_check">${ k.type_per }
+							<li><label class="sri_check"
+								for="detailOption_keyword_${ k.key_no }"> <input
+									name="keyword" type="checkbox"
+									id="detailOption_keyword_${ k.key_no }" class="inp_check key"
+									value=" ${ k.type_per }"> <span class="txt_check">${ k.type_per }
 								</span>
-								</label>
-							</li>
+							</label></li>
 						</c:forEach>
 					</ul>
 				</div>
 				<hr>
-				
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
+
+				<div class="detailOption_box"
+					style="width: 100%; display: inline-block;">
 					<h2 class="option_title">요일선택</h2>
-					<ul class="option_check" id = "ul_day_all">
+					<ul class="option_check" id="ul_day_all">
 						<li><label class="sri_check" for="detailOption_week_all">
 								<input type="checkbox" id="detailOption_week_all"
 								class="inp_check"> <span class="txt_check">상관없음 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_mon">
-								<input name= "day" type="checkbox" id="detailOption_week_mon"
-								class="inp_check week" value="월" > <span class="txt_check">월 </span>
+								<input name="day" type="checkbox" id="detailOption_week_mon"
+								class="inp_check week" value="월"> <span
+								class="txt_check">월 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_tue">
-								<input name= "day" type="checkbox" id="detailOption_week_tue"
-								class="inp_check week" value="화"> <span class="txt_check">화
-							</span>
+								<input name="day" type="checkbox" id="detailOption_week_tue"
+								class="inp_check week" value="화"> <span
+								class="txt_check">화 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_wed">
-								<input name= "day" type="checkbox" id="detailOption_week_wed"
-								class="inp_check week" value="수"> <span class="txt_check">수
-							</span>
+								<input name="day" type="checkbox" id="detailOption_week_wed"
+								class="inp_check week" value="수"> <span
+								class="txt_check">수 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_thu">
-								<input  name= "day"type="checkbox" id="detailOption_week_thu"
-								class="inp_check week" value="목"> <span class="txt_check">목
-							</span>
+								<input name="day" type="checkbox" id="detailOption_week_thu"
+								class="inp_check week" value="목"> <span
+								class="txt_check">목 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_fri">
-								<input name= "day" type="checkbox" id="detailOption_week_fri"
-								class="inp_check week" value="금"> <span class="txt_check">금
-							</span>
+								<input name="day" type="checkbox" id="detailOption_week_fri"
+								class="inp_check week" value="금"> <span
+								class="txt_check">금 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_sat">
-								<input name= "day" type="checkbox" id="detailOption_week_sat"
-								class="inp_check week" value="토"> <span class="txt_check">토
-							</span>
+								<input name="day" type="checkbox" id="detailOption_week_sat"
+								class="inp_check week" value="토"> <span
+								class="txt_check">토 </span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_week_sun">
-								<input name= "day" type="checkbox" id="detailOption_week_sun"
-								class="inp_check week" value="일"> <span class="txt_check">일
-							</span>
+								<input name="day" type="checkbox" id="detailOption_week_sun"
+								class="inp_check week" value="일"> <span
+								class="txt_check">일 </span>
 						</label></li>
 					</ul>
 
 
 				</div>
-				
+
 				<hr>
-				
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
+
+				<div class="detailOption_box"
+					style="width: 100%; display: inline-block;">
 					<h2 class="option_title">시간선택</h2>
-					
+
 					<ul class="option_check">
 						<li>
 							<div class="input-a margin-t-10">
-							<input type="text" id="stime" name="stime" value="" class="timePicker sri_check" placeholder="00:00">
-							~
-							<input type="text" id="etime" name="etime" value="" class="timePicker sri_check" placeholder="24:00">
+								<input type="text" id="stime" name="stime" value=""
+									class="timePicker sri_check" placeholder="00:00"> ~ <input
+									type="text" id="etime" name="etime" value=""
+									class="timePicker sri_check" placeholder="24:00">
 							</div>
 
 						</li>
@@ -418,16 +536,21 @@ ol, ul, li {
 
 				</div>
 				<hr>
-				<div class="detailOption_box"  style= "width : 100%; display : inline-block;">
+				<div class="detailOption_box"
+					style="width: 100%; display: inline-block;">
 					<h2 class="option_title">희망금액</h2>
-					
+
 					<ul class="option_check">
 						<li><label class="sri_check" for="detailOption_price_min">
 								<input type="text" id="detailOption_price_min"
-								class="inp_check min_price" name = "min_price" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
+								class="inp_check min_price" name="min_price"
+								style="height: 100%; border: none; text-align: right;"
+								placeholder="만원"> <span class="txt_check"> </span>
 						</label> ~ <label class="sri_check" for="detailOption_price_max">
 								<input type="text" id="detailOption_price_max"
-								class="inp_check max_price" name = "max_price" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
+								class="inp_check max_price" name="max_price"
+								style="height: 100%; border: none; text-align: right;"
+								placeholder="만원"> <span class="txt_check"> </span>
 						</label></li>
 					</ul>
 
@@ -437,55 +560,155 @@ ol, ul, li {
 			</div>
 		</div>
 	</div>
-
-	<div>
-		
-		<div style = "text-align : center; margin-top : 30px;">
+	
+	</section>
+		<hr>
+	<div class="container">
+	<h5>선생님 top 10</h5>
+	</div>
+	
+	<div class="container">
+		<div style="text-align: center; margin-top: 30px;">
 			<ul>
-			<c:choose>
-				<c:when test="${ not empty searchTutor }">			
-					<c:forEach items="${ requestScope.searchTutor }" var="s">
-						<li>
-							<div class="list_container" style = "margin-top : 20px;">
-								<div class="img_box">리스트1 이미지</div>
-								<div class="detail_info">
-									<h2>${ s.intro }</h2>
-								</div>
-							</div>
-						</li>
-					</c:forEach>
-				
-				</c:when>
-				
-				<c:otherwise>
-					<c:forEach items="${ requestScope.tutorList }" var="t">
-						<li>
-						<a href="#">
-							<div class="list_container" style= "width: 1000px; height : 200px; display: inline-block; margin-top : 20px;">
-								<div class="img_box" style = "border-radius: 50%">
-									<img style = "border-radius: 50%; height: 198px; width : 198px;" alt="이미지" 
-									src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${t.pic}">
-								</div>
-								<div class="detail_info" style="text-align : left; padding : 10px;">
-									<h2>${ t.intro } |  ${ t.sub_name  }</h2>
-									<div>
-										<span class="tab">${ t.style }</span><br>
-										<span class="tab">지역 : ${ t.area }</span><br>
-										<span class="tab">요일 : ${ t.day }</span><br>
-										<span class="tab">시간 : ${ t.time }</span><br>
-										<span class="tab">금액 : ${ t.min_pay }</span>
+				<c:choose>
+					<c:when test="${ not empty searchTutor }">
+						<c:forEach items="${ requestScope.searchTutor }" var="s" varStatus="statusST">
+						<li><a href="#">
+								<div class="list_container"
+									style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
+
+									<div
+										style="display: inline-block; margin-left: auto; margin-right: auto; text-align: center; height: 200px; width: 200px; position: relative;">
+
+										<div class="img_box"
+											style="border-radius: 50%; height: 150px; width: 150px; text-align: center; position: absolute; top: 25px; left: 25px;">
+
+											<img style="border-radius: 50%; height: 100%; width: 100%;"
+												alt="이미지"
+												src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${s.pic}">
+										</div>
+									</div>
+
+									<div class="detail_info"
+										style="text-align: left; padding: 20px 15px 20px 20px; display: inline-block; height: 100%">
+										<h4>${ s.intro }|${ s.sub_name  }</h4>
+										<div style="width: 100%; height: 70%;">
+											<div
+												style="width: 80%; display: inline-block; height: 100%; float: left;">
+												<span class="tab">${ s.style }</span><br> <span
+													class="tab">지역 : ${ s.area }</span><br> <span
+													class="tab">요일 : ${ s.day }</span><br> <span
+													class="tab">시간 : ${ s.time }</span><br> <span
+													class="tab">금액 : ${ s.min_pay }</span>
+											</div>
+											<div style="width: 10%; display: inline-block; height: 100%;  position:relative; float:right;">
+											
+														<c:forEach items="${ requestScope.avgList }" var="al" varStatus="status">
+															<c:if test="${ al.user_no  eq  s.user_no }">
+														
+												<div style="display: inline-block; position:absolute; bottom:15px;">
+												
+																<input type="hidden" class="star_width"
+																	value= "${ al.avg }"/>${ al.avg }
+												</div>	
+												<div style="display: inline-block;">
+													<div class='star-rating' style="display : inline; position:absolute; bottom:0px;">
+												
+
+														<span class="star_wid" style= "width : ${ al.avg *20}%"></span>
+													</div>
+												</div>
+															</c:if>
+														</c:forEach>
+													<!-- <ul>
+														<li>
+															<span class="fa-li">
+																<i class="fas fa-star"></i>
+															</span>
+														</li>
+													</ul> -->
+												
+											</div>
+										</div>
+
 									</div>
 								</div>
-							</div>
-						</a>
-						</li>
+						</a></li>
 					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-			
+
+					</c:when>
+
+					<c:otherwise>
+						<c:forEach items="${ requestScope.tutorList }" var="t" varStatus="statusTL">
+							<li><a href="#">
+									<div class="list_container"
+										style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
+
+										<div
+											style="display: inline-block; margin-left: auto; margin-right: auto; text-align: center; height: 200px; width: 200px; position: relative;">
+
+											<div class="img_box"
+												style="border-radius: 50%; height: 150px; width: 150px; text-align: center; position: absolute; top: 25px; left: 25px;">
+
+												<img style="border-radius: 50%; height: 100%; width: 100%;"
+													alt="이미지"
+													src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${t.pic}">
+											</div>
+										</div>
+
+										<div class="detail_info"
+										style="text-align: left; padding: 20px 15px 20px 20px; display: inline-block; height: 100%">
+											
+											<h4>${ t.intro }|${ t.sub_name  }</h4>
+											
+											<div style="width: 100%; height: 70%;">
+											<div
+												style="width: 80%; display: inline-block; height: 100%; float: left;">
+												<span class="tab">${ t.style }</span><br> <span
+													class="tab">지역 : ${ t.area }</span><br> <span
+													class="tab">요일 : ${ t.day }</span><br> <span
+													class="tab">시간 : ${ t.time }</span><br> <span
+													class="tab">금액 : ${ t.min_pay }</span>
+											</div>
+											<div style="width: 10%; display: inline-block; height: 100%;  position:relative; float:right;">
+											
+														<c:forEach items="${ requestScope.avgList }" var="al" varStatus="status">
+															<c:if test="${ al.user_no  eq  t.user_no }">
+														
+												<div style="display: inline-block; position:absolute; bottom:15px;">
+												
+																<input type="hidden" class="star_width"
+																	value= "${ al.avg }"/>${ al.avg }
+												</div>	
+												<div style="display: inline-block;">
+													<div class='star-rating' style="display : inline; position:absolute; bottom:0px;">
+												
+
+														<span class="star_wid" style= "width : ${ al.avg *20}%"></span>
+													</div>
+												</div>
+															</c:if>
+														</c:forEach>
+													<!-- <ul>
+														<li>
+															<span class="fa-li">
+																<i class="fas fa-star"></i>
+															</span>
+														</li>
+													</ul> -->
+												
+											</div>
+										</div>
+
+										</div>
+									</div>
+							</a></li>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+
 			</ul>
 		</div>
-
 
 	</div>
 
@@ -878,6 +1101,9 @@ $(function() {
 		}); //ajax
 		
 	 });
+    
+
+    
 });
 
 
@@ -969,6 +1195,8 @@ var areaSelectMaker = function(target){
         }
     }
 }
+
+
 
 
 </script>

@@ -21,6 +21,11 @@
 		
 	</resultMap>
 	
+	<resultMap type="Avg" id="resultAvg">
+		<result column="user_no" property="user_no" />
+		<result column="SA" property="avg" />
+		
+	</resultMap>
 	
 	
 
@@ -38,6 +43,15 @@
     		FROM REVIEW, TUTOR
             WHERE tutor_no = tutor.user_no
     		GROUP BY TUTOR_NO,intro, USER_NO, PIC, MIN_PAY, ONLINE_OK, AREA, DAY, TIME, STYLE, L_GRD, sub_name)
+
+	</select>
+	
+	<select id="selectAvg" resultMap="resultAvg">
+
+		SELECT USER_NO , round(AVG(SCORE),2) SA
+		FROM REVIEW, TUTOR
+		WHERE tutor_no(+) = tutor.user_no
+		GROUP BY USER_NO
 
 	</select>
 

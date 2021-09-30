@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.search.vo.Avg;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
@@ -24,6 +25,11 @@ public class SearchDao {
 	public ArrayList<Tutor> selectTop10() {
 		List<Tutor> list = sqlSession.selectList("top10Mapper.selectTop10");
 		return (ArrayList<Tutor>) list;
+	}
+	
+	public ArrayList<Avg> selectAvg() {
+		List<Avg> list = sqlSession.selectList("top10Mapper.selectAvg");
+		return (ArrayList<Avg>) list;
 	}
 	
 	public ArrayList<Subject> selectCategory() {
