@@ -64,6 +64,10 @@ dl.faq button[aria-expanded="true"]::before {
 .aa {
  color:black;
 }
+
+
+th {padding:20px;}
+
 </style>
 
 
@@ -80,7 +84,7 @@ dl.faq button[aria-expanded="true"]::before {
   <section class="event_section layout_padding">
     <div class="container">
       <div class="heading_container">
-        <h3>
+        <h3 id="top">
           고객센터
         </h3>
         <p>
@@ -88,10 +92,52 @@ dl.faq button[aria-expanded="true"]::before {
         </p>
       </div>
       
+      <!-- 메뉴 -->
+<div class="container">
+  <section class="section knowledge-base">
+    <section class="categories blocks">
+    
+    <table align="center">
+    	<th>
+    	<a href='#info01' class="blocks-item-link">
+                <img src="https://soomgo-marketing.s3.ap-northeast-2.amazonaws.com/zendesk/360002081551.png" class="list-img">
+                <h5 class="blocks-item-title">공지사항</h5>
+                <p class="blocks-item-description"></p>
+              </a>
+    	</th>
+    	
+    	<th>
+    	<a href='#info02' class="blocks-item-link">
+                <img src="https://soomgo-marketing.s3.ap-northeast-2.amazonaws.com/zendesk/115001218027.png" class="list-img">
+                <h5 class="blocks-item-title">선생님 가이드</h5>
+                <p class="blocks-item-description"></p>
+              </a>
+    	</th>
+    	<th>
+    	<a href='#info03' class="blocks-item-link">
+                <img src="https://soomgo-marketing.s3.ap-northeast-2.amazonaws.com/zendesk/115001217927.png" class="list-img">
+                <h5 class="blocks-item-title">고객 가이드</h5>
+                <p class="blocks-item-description"></p>
+              </a>
+    	</th>
+    	<th>
+    	<a href='#info04' class="blocks-item-link">
+                <img src="https://soomgo-marketing.s3.ap-northeast-2.amazonaws.com/zendesk/115001218047.png" class="list-img">
+                <h5 class="blocks-item-title">사이트 첫걸음</h5>
+                <p class="blocks-item-description"></p>
+              </a>
+    	</th>
+    </table>
+  </section></section></div>
+  <hr>
+      <!-- 메뉴 -->
+      
+      
+      
       <div class="event_container">   
         
 <!-- 아코디언 메뉴 -->
-<h5>공지사항</h5>
+<h5 id="info01">[공지사항]</h5>
 <dl class="faq">
    <dt>
     <button aria-expanded="false" aria-controls="faq1_desc">
@@ -158,10 +204,11 @@ dl.faq button[aria-expanded="true"]::before {
     </p>
   </dd>
 </dl>
+<a href="#top">맨 위로 이동</a>
 <hr>
 
 
-<h5>선생님 가이드</h5>
+<h5 id="info02">[선생님 가이드]</h5>
 <dl class="faq">
    <dt>
     <button aria-expanded="false" aria-controls="faq5_desc">
@@ -268,9 +315,10 @@ dl.faq button[aria-expanded="true"]::before {
     </p>
   </dd> 
 </dl>
+<a href="#top">맨 위로 이동</a>
 <hr>
 
-<h5>고객 가이드</h5>
+<h5 id="info03">[고객 가이드]</h5>
 <dl class="faq">
    <dt>
     <button aria-expanded="false" aria-controls="faq13_desc">
@@ -356,9 +404,10 @@ dl.faq button[aria-expanded="true"]::before {
     </p>
   </dd> 
  </dl>
+ <a href="#top">맨 위로 이동</a>
  <hr>
 
-<h5>사이트 첫걸음</h5>
+<h5 id="info04">[사이트 첫걸음]</h5>
 <dl class="faq">
    <dt>
     <button aria-expanded="false" aria-controls="faq20_desc">
@@ -470,6 +519,7 @@ dl.faq button[aria-expanded="true"]::before {
     </p>
   </dd>  
 </dl>
+<a href="#top">맨 위로 이동</a>
 <hr>
   
 
