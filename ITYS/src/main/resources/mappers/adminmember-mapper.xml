@@ -24,15 +24,23 @@
 		order by user_no
 	</select>
 	
-	<select id="selectAllStudents" resultMap="resultMember">
+	<select id="selectAllStudents" parameterType="String" resultMap="resultMember">
 		select * from user_info where user_position='S'
+		<if test = "user_id !=null">
+			 and user_id like '%' || #{ user_id } || '%' 
+		</if>
+		order by user_no
 	</select>
 	
-	<select id="selectAllTutors" resultMap="resultMember">
+	<select id="selectAllTutors" parameterType="String" resultMap="resultMember">
 		select * from user_info where user_position='T'
+		<if test = "user_id !=null">
+			 and user_id like '%' || #{ user_id } || '%' 
+		</if>
+		order by user_no
 	</select>
 	
-	<delete id="deleteMember" parameterType="string">
+	<delete id="deleteMember" parameterType="String">
 		delete from user_info where user_id = #{ user_id } 
 	</delete>
 	

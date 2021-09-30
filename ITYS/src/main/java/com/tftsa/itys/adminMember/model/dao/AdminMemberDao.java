@@ -19,12 +19,6 @@ public class AdminMemberDao {
 		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllList", mid);
 		return (ArrayList<Member>)list;
 	}
-	
-//	//회원 검색
-//	public Member selectMember(String mid) {
-//		return sqlSession.selectOne("adminmemberMapper.selectMember", mid);
-//	}
-	
 	//회원 삭제
 	public int deleteMember(String mid) {
 		return sqlSession.delete("adminmemberMapper.deleteMember", mid);
@@ -37,14 +31,14 @@ public class AdminMemberDao {
 //	}
 	
 	//학생 검색
-	public ArrayList<Member> selectAllStudents() {
-		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllStudents");
+	public ArrayList<Member> selectAllStudents(String sid) {
+		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllStudents",sid);
 		return (ArrayList<Member>)list;
 	}
 	
 	//선생님 검색
-	public ArrayList<Member> selectAllTutors() {
-		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllTutors");
+	public ArrayList<Member> selectAllTutors(String tid) {
+		List<Member> list = sqlSession.selectList("adminmemberMapper.selectAllTutors",tid);
 		return (ArrayList<Member>)list;
 	}	
 }

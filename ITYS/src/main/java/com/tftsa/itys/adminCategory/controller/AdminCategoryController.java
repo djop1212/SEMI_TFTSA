@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.tftsa.itys.adminCategory.model.service.AdminCategoryService;
 import com.tftsa.itys.mypage.model.vo.Subject;
@@ -55,7 +56,7 @@ public class AdminCategoryController {
 	// 뷰 페이지 이동 처리용 메소드 ----------------------------------------------
 	@RequestMapping(value="confirmSubject.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int subjectconfirmViewMethod(Subject subject,Model model) {
+	public int subjectconfirmViewMethod(Subject subject) {
 		int cnt = -1;
 		if (subject.getSub_name()!=null) {
 			cnt = categoryService.cntSubject(subject.getSub_name());
@@ -69,4 +70,5 @@ public class AdminCategoryController {
 		}
 		return cnt;
 	}
+
 }

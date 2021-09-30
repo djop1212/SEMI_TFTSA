@@ -85,7 +85,7 @@
 
 		
 	<select id="fiveNewlyPosted" resultMap="resultBoard">
-		select board_writer, board_content, board_date
+		select board_writer, board_content, board_date, board_no
 		from (select * from board order by board_date desc)
 		where rownum <![CDATA[<=]]> 5
 	</select>

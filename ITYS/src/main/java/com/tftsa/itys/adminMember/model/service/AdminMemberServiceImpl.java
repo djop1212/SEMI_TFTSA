@@ -34,12 +34,12 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 //	}
 
 	@Override
-	public ArrayList<Member> selectAllStudents() {
-		return memberDao.selectAllStudents();
+	public ArrayList<Member> selectAllStudents(String sid) {
+		return memberDao.selectAllStudents(sid);
 	}
 
 	@Override
-	public ArrayList<Member> selectAllTutors() {
-		return memberDao.selectAllTutors();
+	public ArrayList<Member> selectAllTutors(String tid) {
+		return memberDao.selectAllTutors(tid);
 	}
 }
