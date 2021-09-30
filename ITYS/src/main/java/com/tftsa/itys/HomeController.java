@@ -39,15 +39,12 @@ public class HomeController {
 	@RequestMapping("main.do")
 	public String mainViewForward() {
 		return "redirect:/top10.do"; // 내보낼 뷰파일명 리턴
-	}
-	
+	}	
 	
 	@RequestMapping("info.do")
 	public String infoViewForward() {
 		return "common/info"; // 내보낼 뷰파일명 리턴
 	}
-
-
 
 	@RequestMapping("adminDeposit.do")
 	public String AdminDepositViewForward() {

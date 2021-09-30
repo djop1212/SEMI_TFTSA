@@ -43,6 +43,7 @@
 	<resultMap type="Payment" id="resultPayment">
 		<id column="pay_no" property="pay_no" />
 		<result column="stuent_name" property="stuent_name" />
+		<result column="tutor_no" property="tutor_no" />
 		<result column="tutor_name" property="tutor_name" />
 		<result column="pay_datetm" property="pay_datetm" />
 		<result column="pay_method" property="pay_method" />
@@ -72,7 +73,7 @@
 	
 	<!-- 결제 정보 추가 SQL -->
 	<insert id="insertPayment" parameterType="Payment" >
-		insert into payment
+		insert into payment (pay_no, student_name, tutor_name, pay_datetm, pay_method, pay_amount, pay_status)
 		values (payment_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, default, #{ pay_amount }, default)
 	</insert>
 	

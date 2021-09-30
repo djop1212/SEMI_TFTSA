@@ -87,9 +87,9 @@ public class PaymentController {
 			params.put("quantity", "1");
 			params.put("total_amount", "1");
 			params.put("tax_free_amount", "0");
-			params.put("approval_url", "http://localhost:8080/itys/kakaoPaySuccess.do?pay_no=" + pay_no);
-			params.put("fail_url", "http://localhost:8080/itys/kakaoPaySuccessFail.do");
-			params.put("cancel_url", "http://localhost:8080/itys/payment.do?tutor_no=" + tutor_no + "%26student_no=" + student_no + "%26tutor_name=" + tutor_name + "%26student_name=" + user_name + "%26pay_amount=" + pay_amount);
+			params.put("approval_url", "http://localhost:8087/itys/kakaoPaySuccess.do?pay_no=" + pay_no);
+			params.put("fail_url", "http://localhost:8087/itys/kakaoPaySuccessFail.do");
+			params.put("cancel_url", "http://localhost:8087/itys/payment.do?tutor_no=" + tutor_no + "%26student_no=" + student_no + "%26tutor_name=" + tutor_name + "%26student_name=" + user_name + "%26pay_amount=" + pay_amount);
 			
 			String string_params = new String();
 			for (Map.Entry<String, String> elem : params.entrySet()) {
