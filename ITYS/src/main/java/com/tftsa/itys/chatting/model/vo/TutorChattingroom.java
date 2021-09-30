@@ -1,54 +1,97 @@
-package com.tftsa.itys.detail.model.vo;
+package com.tftsa.itys.chatting.model.vo;
 
-public class TutorDetail {
-	private static final long serialVersionUID = 4442L;
+public class TutorChattingroom implements java.io.Serializable {
 
+	private static final long serialVersionUID = 2011L;
+	
+	private int chat_room_no;
+	private int student_no;
+	private int tutor_no;
+	private String student_name;
+	private String tutor_name;
 	private int user_no;
 	private String pic;
 	private String min_pay;
 	private String online_ok;
+	private String area;
 	private String intro;
 	private String day;
 	private String time;
 	private String style;
-	private String area;
 	private String l_grd;
 	private String class_min;
 	private String class_times;
 	private String sub_name;
-	private String user_name;
-	private String user_phone;
-	private String user_email;
-	private String user_position;
-	private String type_per;
 	private String key_name;
+	
+	public TutorChattingroom() {
+		super();
+	}
 
-	public TutorDetail() {}
-
-	public TutorDetail(int user_no, String pic, String min_pay, String online_ok, String intro, String day, String time,
-			String style, String area, String l_grd, String class_min, String class_times, String sub_name,
-			String user_name, String user_phone, String user_email, String user_position, String type_per,
+	public TutorChattingroom(int chat_room_no, int student_no, int tutor_no, String student_name, String tutor_name,
+			int user_no, String pic, String min_pay, String online_ok, String area, String intro, String day,
+			String time, String style, String l_grd, String class_min, String class_times, String sub_name,
 			String key_name) {
 		super();
+		this.chat_room_no = chat_room_no;
+		this.student_no = student_no;
+		this.tutor_no = tutor_no;
+		this.student_name = student_name;
+		this.tutor_name = tutor_name;
 		this.user_no = user_no;
 		this.pic = pic;
 		this.min_pay = min_pay;
 		this.online_ok = online_ok;
+		this.area = area;
 		this.intro = intro;
 		this.day = day;
 		this.time = time;
 		this.style = style;
-		this.area = area;
 		this.l_grd = l_grd;
 		this.class_min = class_min;
 		this.class_times = class_times;
 		this.sub_name = sub_name;
-		this.user_name = user_name;
-		this.user_phone = user_phone;
-		this.user_email = user_email;
-		this.user_position = user_position;
-		this.type_per = type_per;
 		this.key_name = key_name;
+	}
+
+	public int getChat_room_no() {
+		return chat_room_no;
+	}
+
+	public void setChat_room_no(int chat_room_no) {
+		this.chat_room_no = chat_room_no;
+	}
+
+	public int getStudent_no() {
+		return student_no;
+	}
+
+	public void setStudent_no(int student_no) {
+		this.student_no = student_no;
+	}
+
+	public int getTutor_no() {
+		return tutor_no;
+	}
+
+	public void setTutor_no(int tutor_no) {
+		this.tutor_no = tutor_no;
+	}
+
+	public String getStudent_name() {
+		return student_name;
+	}
+
+	public void setStudent_name(String student_name) {
+		this.student_name = student_name;
+	}
+
+	public String getTutor_name() {
+		return tutor_name;
+	}
+
+	public void setTutor_name(String tutor_name) {
+		this.tutor_name = tutor_name;
 	}
 
 	public int getUser_no() {
@@ -83,6 +126,14 @@ public class TutorDetail {
 		this.online_ok = online_ok;
 	}
 
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
 	public String getIntro() {
 		return intro;
 	}
@@ -113,14 +164,6 @@ public class TutorDetail {
 
 	public void setStyle(String style) {
 		this.style = style;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
 	}
 
 	public String getL_grd() {
@@ -155,46 +198,6 @@ public class TutorDetail {
 		this.sub_name = sub_name;
 	}
 
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
-	public String getUser_phone() {
-		return user_phone;
-	}
-
-	public void setUser_phone(String user_phone) {
-		this.user_phone = user_phone;
-	}
-
-	public String getUser_email() {
-		return user_email;
-	}
-
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
-	}
-
-	public String getUser_position() {
-		return user_position;
-	}
-
-	public void setUser_position(String user_position) {
-		this.user_position = user_position;
-	}
-
-	public String getType_per() {
-		return type_per;
-	}
-
-	public void setType_per(String type_per) {
-		this.type_per = type_per;
-	}
-
 	public String getKey_name() {
 		return key_name;
 	}
@@ -209,11 +212,11 @@ public class TutorDetail {
 
 	@Override
 	public String toString() {
-		return "TutorDetail [user_no=" + user_no + ", pic=" + pic + ", min_pay=" + min_pay + ", online_ok=" + online_ok
-				+ ", intro=" + intro + ", day=" + day + ", time=" + time + ", style=" + style + ", area=" + area
-				+ ", l_grd=" + l_grd + ", class_min=" + class_min + ", class_times=" + class_times + ", sub_name="
-				+ sub_name + ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_email=" + user_email
-				+ ", user_position=" + user_position + ", type_per=" + type_per + ", key_name=" + key_name + "]";
+		return "TutorChattingroom [chat_room_no=" + chat_room_no + ", student_no=" + student_no + ", tutor_no="
+				+ tutor_no + ", student_name=" + student_name + ", tutor_name=" + tutor_name + ", user_no=" + user_no
+				+ ", pic=" + pic + ", min_pay=" + min_pay + ", online_ok=" + online_ok + ", area=" + area + ", intro="
+				+ intro + ", day=" + day + ", time=" + time + ", style=" + style + ", l_grd=" + l_grd + ", class_min="
+				+ class_min + ", class_times=" + class_times + ", sub_name=" + sub_name + ", key_name=" + key_name
+				+ "]";
 	}
-   
 }
