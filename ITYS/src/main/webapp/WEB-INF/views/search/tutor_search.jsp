@@ -568,6 +568,7 @@ ol, ul, li {
 	<div class="container">
 		<div style="text-align: center; margin-top: 30px;">
 			<ul>
+
 				<c:choose>
 					<c:when test="${ not empty searchTutor }">
 						<div class="container">
@@ -639,6 +640,7 @@ ol, ul, li {
 												
 											</div>
 										</div>
+
 
 									</div>
 								</div>

@@ -74,8 +74,8 @@ public class DetailDao {
 		return (ArrayList<TutorQna>)list;
 	}
 
-	public int qnaAnswerInsert(TutorQna tq) {
-		return sqlSession.insert("detailMapper.qnaAnswerInsert", tq);
+	public int qnaAnswerInsert(TutorQna tutoqna) {
+		return sqlSession.insert("detailMapper.qnaAnswerInsert", tutoqna);
 	}
 
 	public TutorQna qnaOne(int tutor_no) {
