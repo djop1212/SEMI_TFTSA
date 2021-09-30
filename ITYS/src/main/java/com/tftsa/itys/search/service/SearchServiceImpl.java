@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.search.dao.SearchDao;
+import com.tftsa.itys.search.vo.Avg;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
@@ -22,6 +23,11 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public ArrayList<Tutor> selectTop10(){
 		return searchDao.selectTop10();
+	}
+	
+	@Override
+	public ArrayList<Avg> selectAvg(){
+		return searchDao.selectAvg();
 	}
 	
 	@Override
