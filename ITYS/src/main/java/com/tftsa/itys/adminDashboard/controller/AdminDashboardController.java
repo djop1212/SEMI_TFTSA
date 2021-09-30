@@ -24,7 +24,6 @@ public class AdminDashboardController {
 
 	@RequestMapping(value ="adminDashboard.do")
 	public ModelAndView AdminDashView(ModelAndView mv) {
-		
 		int today_earning = admindashboardService.todayEarning();
 		int month_sales = admindashboardService.monthSales();
 		int total_users = admindashboardService.totalUsers();
@@ -32,17 +31,16 @@ public class AdminDashboardController {
 		int potential = admindashboardService.potential();
 		ArrayList<Payment> pay_list = admindashboardService.fiveRecentPayments();
 		ArrayList<BarData> bar_data = admindashboardService.oneYearEarning();
-		List<String> month = new ArrayList<String>();
-		List<Integer> earning = new ArrayList<>(bar_data.size());
 		ArrayList<Board> board_list = admindashboardService.fiveNewlyPosted();
 		
-		//object list 값 각각 리스트에 담기
+		List<String> month = new ArrayList<String>();
+		List<Integer> earning = new ArrayList<>(bar_data.size());
+		
 		for (int i=0;i<bar_data.size();i++) {
 			month.add("'"+bar_data.get(i).getMonth()+"'");
 			earning.add(bar_data.get(i).getEarning());
 		}
 		
-		//view에 전송할 데이터
 		mv.addObject("today_earning",today_earning);
 		mv.addObject("month_sales",month_sales);
 		mv.addObject("total_users",total_users);

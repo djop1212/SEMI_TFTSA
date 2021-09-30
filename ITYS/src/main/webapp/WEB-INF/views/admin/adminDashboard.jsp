@@ -307,12 +307,10 @@
                   <a href="login.html" class="btn btn-primary">Logout</a>
                 </div>
               </div>
-            </div>
-          </div>
-
+           </div>
         </div>
         <!---Container Fluid-->
-			</div>
+			
 	
 	<script src="${ pageContext.servletContext.contextPath }/admin_resources/js/demo/chart-area-demo.js"></script>
 	<script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/jquery/jquery.min.js"></script>

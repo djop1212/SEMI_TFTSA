@@ -239,19 +239,7 @@ a {
 			type: 'POST',
 			data : {user_id : user_id},
 			success : function(data){
-	/* 			//테이블 초기화
-				$('#memberTable > tbody').empty();
-				if(data.length>=1){
-					function(data){
-						str='<tr>'
-						str+="<td>"+item.user_position+"</td>";
-						str+="<td>"+item.user_no+"</td>";
-						str+="<td>"+item.user_id+"</td>"; 
-						str+="<td>"+item.title+"</td>";
-						str+="<td>"+item.date+"</td>";
-						str+="<td>"+item.hit+"</td>";
-						str+="</tr>"
-						$('#memberTable').append(str); */
+
 						console.log("user_id",data);
 	        		}				 
 				}
