@@ -67,7 +67,9 @@ public class PaymentController {
 	// 카카오페이 컨트롤러
 	@RequestMapping("kakaoPay.do")
 	public String kakaoPay(@RequestParam("user_name") String user_name, @RequestParam("pay_no") int pay_no, 
-			@RequestParam("sub_name") String sub_name) throws ParseException {
+			@RequestParam("sub_name") String sub_name, @RequestParam("tutor_no") int tutor_no, 
+			@RequestParam("student_no") int student_no, @RequestParam("pay_amount") String pay_amount, 
+			@RequestParam("tutor_name") String tutor_name) throws ParseException {
 		try {
 			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -87,7 +89,7 @@ public class PaymentController {
 			params.put("tax_free_amount", "0");
 			params.put("approval_url", "http://localhost:8080/itys/kakaoPaySuccess.do?pay_no=" + pay_no);
 			params.put("fail_url", "http://localhost:8080/itys/kakaoPaySuccessFail.do");
-			params.put("cancel_url", "http://localhost:8080/itys/payment.do?user_no=2");
+			params.put("cancel_url", "http://localhost:8080/itys/payment.do?tutor_no=" + tutor_no + "%26student_no=" + student_no + "%26tutor_name=" + tutor_name + "%26student_name=" + user_name + "%26pay_amount=" + pay_amount);
 			
 			String string_params = new String();
 			for (Map.Entry<String, String> elem : params.entrySet()) {

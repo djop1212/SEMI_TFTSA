@@ -702,8 +702,12 @@ a.btn-layerClose:hover {
 		//보내기 버튼 클릭시 실행되는 send() 함수 작성
 		function send(){
 			var today = new Date();
-			var hours = today.getHours() % 12;
+			var hours = today.getHours();
 			var minutes = today.getMinutes();
+			
+			if (hours > 12){
+				hours = hours % 12
+			}
 			
 			if (hours < 10){
 				hours = '0' + hours;
