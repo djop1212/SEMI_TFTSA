@@ -34,10 +34,7 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a  class="navbar-brand" href="top10.do">
-            <h3>
-              Joson
-            </h3>
-            <span> college</span>
+            <img src="${ pageContext.servletContext.contextPath }/resources/images/logo.png" width="154" height="70">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
