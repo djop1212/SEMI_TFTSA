@@ -17,9 +17,11 @@
 
 
 </head>
-<body>
-<c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+<body class="sub_page">
+  <div class="hero_area">    
+    <c:import url="/WEB-INF/views/common/menubar.jsp" />    
+  </div>
+  <hr>
 <h1 align="center">${ requestScope.reply.com_no } 번 댓글 수정 페이지</h1>
 
 <!-- 원글 수정 폼 -->
@@ -43,5 +45,7 @@
 	</th></tr>
 	</table>
 	</form>
+	<hr>
+	<c:import url="/WEB-INF/views/common/footer.jsp" />
 	</body>
 </html>
