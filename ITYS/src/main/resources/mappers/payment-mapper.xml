@@ -43,7 +43,6 @@
 	<resultMap type="Payment" id="resultPayment">
 		<id column="pay_no" property="pay_no" />
 		<result column="stuent_name" property="stuent_name" />
-		<result column="tutor_no" property="tutor_no" />
 		<result column="tutor_name" property="tutor_name" />
 		<result column="pay_datetm" property="pay_datetm" />
 		<result column="pay_method" property="pay_method" />
