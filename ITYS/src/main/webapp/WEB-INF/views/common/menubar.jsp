@@ -17,6 +17,14 @@
 
   <title></title>
 
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.css" />
   <!-- fonts style -->
@@ -25,7 +33,26 @@
   <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive.css" rel="stylesheet" />
+  
+  <style type="text/css">
+  
+@font-face {
+    font-family: 'KoPubDotumMedium';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/KoPubDotumMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+img{
+	object-fit: cover ; 
+}
+
+* {
+	font-family: 'KoPubDotumMedium', gulim, dotum, sans-serif;
+}
+  
+  </style>
 </head>
+
 
 <body>
 

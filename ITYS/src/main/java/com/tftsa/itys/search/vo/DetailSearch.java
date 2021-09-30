@@ -26,13 +26,16 @@ public class DetailSearch implements java.io.Serializable {
 	private String min_price;
 	private String max_price;
 	
+	private int startRow;
+	private int endRow;
 	public DetailSearch() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public DetailSearch(int user_no, String category, String sub_name, String word, String[] l_grd_list, String area,
 			String[] keyword_list, String[] day_list, String day_str, String db_day_str, String[] db_day_list,
-			String stime, String etime, String price, String[] online_ok_list, String min_price, String max_price) {
+			String stime, String etime, String price, String[] online_ok_list, String min_price, String max_price,
+			int startRow, int endRow) {
 		super();
 		this.user_no = user_no;
 		this.category = category;
@@ -51,6 +54,8 @@ public class DetailSearch implements java.io.Serializable {
 		this.online_ok_list = online_ok_list;
 		this.min_price = min_price;
 		this.max_price = max_price;
+		this.startRow = startRow;
+		this.endRow = endRow;
 	}
 	public int getUser_no() {
 		return user_no;
@@ -154,9 +159,22 @@ public class DetailSearch implements java.io.Serializable {
 	public void setMax_price(String max_price) {
 		this.max_price = max_price;
 	}
+	public int getStartRow() {
+		return startRow;
+	}
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+	public int getEndRow() {
+		return endRow;
+	}
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	
 	
 }

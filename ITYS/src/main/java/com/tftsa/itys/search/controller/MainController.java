@@ -11,14 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,9 +47,6 @@ public class MainController {
 		ArrayList<Avg> avgList_origin = searchService.selectAvg();
 		ArrayList<Avg> avgList = new ArrayList<Avg>();
 		
-		System.out.println(tutorList.get(0).getUser_no());
-		System.out.println(avgList_origin.get(0).getAvg());
-		System.out.println( Math.round( (avgList_origin.get(0).getAvg()/2.0 *100)) / 100.0 );
 		
 		for(int i = 0 ; i < avgList_origin.size() ; i++) {
 			String a = avgList_origin.get(i).getUser_no();
@@ -191,16 +186,11 @@ public class MainController {
 		System.out.println("워드 : " + search.getWord());
 		
 		ArrayList<Tutor> searchTutor = searchService.selectSearch(search);
-		ArrayList<Tutor> tutorList = searchService.selectTop10();
 		ArrayList<Subject> categoryList = searchService.selectCategory();
 		ArrayList<Keyword> keywordList = searchService.selectKeyword();
 		
 		ArrayList<Avg> avgList_origin = searchService.selectAvg();
 		ArrayList<Avg> avgList = new ArrayList<Avg>();
-		
-		System.out.println(tutorList.get(0).getUser_no());
-		System.out.println(avgList_origin.get(0).getAvg());
-		System.out.println( Math.round( (avgList_origin.get(0).getAvg()/2.0 *100)) / 100.0 );
 		
 		for(int i = 0 ; i < avgList_origin.size() ; i++) {
 			String a = avgList_origin.get(i).getUser_no();
@@ -309,10 +299,11 @@ public class MainController {
 			// 해당 튜터들의 요일들 출력
 			String db_day_str = searchService.selectDay(searchTutor.get(tutor_index).getUser_no());
 			
-			String[] db_day_list = db_day_str.split(", ");
+			String[] db_day_list = db_day_str.replace(" ", "").split(",");
 			for(int db_day_index = 0 ; db_day_index < db_day_list.length ; db_day_index++) {
-				System.out.println("db_day_index : "+ db_day_list[db_day_index]);
+				System.out.println("db_day_list : "+ db_day_list[db_day_index]);
 			}
+			
 			String db_keyword_str = "";
 			
 			
@@ -341,7 +332,7 @@ public class MainController {
 			detailSearch.setMin_price(min_price);
 			
 			detailSearch.setDay_str(day_str);
-			detailSearch.setDb_day_str(db_day_str);
+			detailSearch.setDb_day_list(db_day_list);
 			
 			detailSearch.setKeyword_list(keyword_list);
 			detailSearch.setOnline_ok_list(online_ok_list);

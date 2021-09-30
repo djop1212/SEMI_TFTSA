@@ -54,6 +54,5 @@
 		GROUP BY USER_NO
 
 	</select>
-
 	
 </mapper>
