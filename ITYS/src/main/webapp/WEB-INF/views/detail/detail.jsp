@@ -482,7 +482,7 @@
                 	<li class="d-d"  id="d-d"><a href="${ tr }" style="width:300px;border-top:0px;border-left:0px;border-right:0px;background:white; display:block; text-align:center;color:black;outline:none;" >리뷰</a></li>
 						</c:if>
  	
-				 <c:if test="${ loginMember.user_position eq 'T' && !empty tutorqna}">
+				 <c:if test="${ loginMember.user_position eq 'T'}">
                 	<c:url var="tq" value="/tqnat.do">
 					<c:param name="tutor_no" value="${tutorno.user_no  }" />
 					</c:url>
@@ -491,7 +491,7 @@
                 </c:if> 
     
                 
-                <c:if test="${ loginMember.user_position eq 'T' && loginMember.user_no eq tutorno.user_no && empty tutorqna.tutor_no}"> 
+                <c:if test="${ loginMember.user_position eq 'T' && loginMember.user_no eq tutorno.user_no }"> 
          
                 	<c:url var="tqa" value="/qnaform.do">
 					<c:param name="tutor_no" value="${tutorno.user_no  }" />
