@@ -252,9 +252,9 @@ div.box {
 								</Tr>
 								<Tr>
 									<td>과외 가능 시간</td>
-									<td><input type="text" id="stime" name="stime" value="" class="timePicker" placeholder="00:00">
+									<td><input type="text" id="stime" name="stime" value="${stime }" class="timePicker">
 										 ~ 
-										<input type="text" id="etime" name="etime" value="" class="timePicker" placeholder="24:00">
+										<input type="text" id="etime" name="etime" value="${etime }" class="timePicker">
 									</td>
 								</Tr>
 								<Tr>
