@@ -414,52 +414,59 @@ public class MypageController {
 //		logger.info("city : "+city);
 //		logger.info("country : "+country);
 //		logger.info("sub_no : "+arr_sub_no);
+
+		member.setUser_position(mypageService.selectPosition(member.getUser_no()));
+		//logger.info("after : " + member);
 		
-		tutor.setTime(stime+", "+etime);
-		tutor.setArea(city+" "+country);
-		
-		String []array = arr_sub_no.split(",");
-		String sub_name="";
-		// 과목번호 subdata에 저장, tutor 테이블 subname 
-		if (mypageService.deleteSubData(member.getUser_no()) > 0) {
-			//logger.info("upUser.do : deleteSubData");
-		}
-		for (int i = 0; i < array.length; i++) {
-			//logger.info("array[" + i + "] : " + array[i]);
-			int sub_no = Integer.parseInt(array[i]);
-			subdata.setSub_no(sub_no);
-			if (mypageService.insertSubData(subdata) > 0) {
-				if (i == 0) {
-					sub_name += mypageService.selectSubName(sub_no);
-				} else {
-					sub_name += (", " + mypageService.selectSubName(sub_no));
+		if (member.getUser_position().equals("T")) {
+			tutor.setTime(stime + ", " + etime);
+			tutor.setArea(city + " " + country);
+
+			String[] array = arr_sub_no.split(",");
+			String sub_name = "";
+			// 과목번호 subdata에 저장, tutor 테이블 subname
+			if (mypageService.deleteSubData(member.getUser_no()) > 0) {
+				// logger.info("upUser.do : deleteSubData");
+			}
+			for (int i = 0; i < array.length; i++) {
+				// logger.info("array[" + i + "] : " + array[i]);
+				int sub_no = Integer.parseInt(array[i]);
+				subdata.setSub_no(sub_no);
+				if (mypageService.insertSubData(subdata) > 0) {
+					if (i == 0) {
+						sub_name += mypageService.selectSubName(sub_no);
+					} else {
+						sub_name += (", " + mypageService.selectSubName(sub_no));
+					}
 				}
 			}
-		}
-		String[] array2 = arr_key_no.split(",");
-		String key_name="";
-		if(mypageService.deleteKeyData(member.getUser_no())>0) {
-			//logger.info(key_name);
-		}
-		// 선생님 성격 key_data 에 저장, tutor 테이블 key_name 
-		for(int i=0;i<array2.length;i++) {
-			//logger.info("array["+i+"] : "+array2[i]);
-			int key_no = Integer.parseInt(array2[i]);
-			keydata.setKey_no(key_no);
-			if(mypageService.insertKeyData(keydata)>0) {
-				if(i == 0) {
-					logger.info(mypageService.selectTypePer(key_no));
-					key_name += mypageService.selectTypePer(key_no);
-				}else {
-					key_name += (", "+ mypageService.selectTypePer(key_no));
-				}
-			}//logger.info("key_name : "+key_name);
+			String[] array2 = arr_key_no.split(",");
+			String key_name = "";
+			if (mypageService.deleteKeyData(member.getUser_no()) > 0) {
+				// logger.info(key_name);
+			}
+			// 선생님 성격 key_data 에 저장, tutor 테이블 key_name
+			for (int i = 0; i < array2.length; i++) {
+				// logger.info("array["+i+"] : "+array2[i]);
+				int key_no = Integer.parseInt(array2[i]);
+				keydata.setKey_no(key_no);
+				if (mypageService.insertKeyData(keydata) > 0) {
+					if (i == 0) {
+						logger.info(mypageService.selectTypePer(key_no));
+						key_name += mypageService.selectTypePer(key_no);
+					} else {
+						key_name += (", " + mypageService.selectTypePer(key_no));
+					}
+				} // logger.info("key_name : "+key_name);
+			}
+
+			tutor.setSub_name(sub_name);
+			tutor.setKey_name(key_name);
+			// logger.info("uptprofile.do : "+tutor);
+		}else {
+			student.setTime(stime + ", " + etime);
 		}
 		
-		tutor.setSub_name(sub_name);
-		tutor.setKey_name(key_name);
-		//logger.info("uptprofile.do : "+tutor);
-
 		// 새로운 암호가 전송이 왔다면
 		String user_pwd = member.getUser_pwd().trim();
 		if (user_pwd != null && user_pwd.length() > 0) {
@@ -471,9 +478,6 @@ public class MypageController {
 			// 새로운 암호값이 전송오지 않았다면 원래 암호를 기록
 			member.setUser_pwd(originUserpwd);
 		}
-		
-		member.setUser_position(mypageService.selectPosition(member.getUser_no()));
-		//logger.info("after : " + member);
 		
 		if(member.getUser_position().equals("U") && mypageService.updateMember(member)>0) {
 			//logger.info("upUser.do : updateUser \nmember : "+member);

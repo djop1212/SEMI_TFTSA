@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.search.service.SearchService;
+import com.tftsa.itys.search.vo.Avg;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
@@ -45,20 +46,39 @@ public class MainController {
 		ArrayList<Tutor> tutorList = searchService.selectTop10();
 		ArrayList<com.tftsa.itys.mypage.model.vo.Subject> categoryList = searchService.selectCategory();
 		ArrayList<Keyword> keywordList = searchService.selectKeyword();
+		ArrayList<Avg> avgList_origin = searchService.selectAvg();
+		ArrayList<Avg> avgList = new ArrayList<Avg>();
+		
+		System.out.println(tutorList.get(0).getUser_no());
+		System.out.println(avgList_origin.get(0).getAvg());
+		System.out.println( Math.round( (avgList_origin.get(0).getAvg()/2.0 *100)) / 100.0 );
+		
+		for(int i = 0 ; i < avgList_origin.size() ; i++) {
+			String a = avgList_origin.get(i).getUser_no();
+			double b = 0.0;
+			if( !(avgList_origin.get(i).getAvg() == null) ) {
+				b = Math.round( (avgList_origin.get(i).getAvg()/2.0 *100)) / 100.0;
+			}
+			
+			avgList.add(new Avg( a,b ));
+		}
 		
 		
-		if ((tutorList != null && tutorList.size() > 0) 
-				&& (categoryList != null && categoryList.size() > 0)
+		if ((categoryList != null && categoryList.size() > 0)
 				&& (keywordList != null && keywordList.size() > 0)
 				) {
 			
 			mv.addObject("categoryList", categoryList);
-			mv.addObject("tutorList", tutorList);
 			mv.addObject("keywordList", keywordList);
+		}
+		if( !(tutorList != null && tutorList.isEmpty()) ) {
 			
-			mv.setViewName("search/tutor_search");
+			mv.addObject("tutorList", tutorList);
+			mv.addObject("avgList", avgList);
+			
 		}
 		
+		mv.setViewName("search/tutor_search");
 		return mv;
 	}
 	
@@ -175,19 +195,38 @@ public class MainController {
 		ArrayList<Subject> categoryList = searchService.selectCategory();
 		ArrayList<Keyword> keywordList = searchService.selectKeyword();
 		
-		if ( (searchTutor != null && searchTutor.size() > 0)
-			&& (tutorList != null && tutorList.size() > 0) 
-			&& (categoryList != null && categoryList.size() > 0)
+		ArrayList<Avg> avgList_origin = searchService.selectAvg();
+		ArrayList<Avg> avgList = new ArrayList<Avg>();
+		
+		System.out.println(tutorList.get(0).getUser_no());
+		System.out.println(avgList_origin.get(0).getAvg());
+		System.out.println( Math.round( (avgList_origin.get(0).getAvg()/2.0 *100)) / 100.0 );
+		
+		for(int i = 0 ; i < avgList_origin.size() ; i++) {
+			String a = avgList_origin.get(i).getUser_no();
+			double b = 0.0;
+			if( !(avgList_origin.get(i).getAvg() == null) ) {
+				b = Math.round( (avgList_origin.get(i).getAvg()/2.0 *100)) / 100.0;
+			}
+			
+			avgList.add(new Avg( a,b ));
+		}
+		
+		
+		if ( (categoryList != null && categoryList.size() > 0)
 			&& (keywordList != null && keywordList.size() > 0)) {
 		
 
-			mv.addObject("searchTutor", searchTutor);
 			mv.addObject("categoryList", categoryList);
-			mv.addObject("tutorList", tutorList);
 			mv.addObject("keywordList", keywordList);
 
-			mv.setViewName("search/tutor_search");
 		}
+		if ( !searchTutor.isEmpty() ) {
+
+			mv.addObject("avgList", avgList);	
+			mv.addObject("searchTutor", searchTutor);			
+		}
+		mv.setViewName("search/tutor_search");
 		
 		return mv;
 	}
@@ -320,8 +359,23 @@ public class MainController {
 			 * keyword_list[z]); } for(int z = 0 ; z < db_day_list.length ; z++) {
 			 * System.out.println("db_day_list : " + db_day_list[z]); }
 			 */
+			
+			System.out.println("user_no : " + searchTutor.get(tutor_index).getUser_no());
+			for(int z = 0 ; z < l_grd_list.length ; z++) {
+				System.out.println("l_grd_list : "+l_grd_list[z]+", "+z);
+			}
+			for(int z = 0 ; z < online_ok_list.length ; z++) {
+				System.out.println("online_ok_list : "+online_ok_list[z]+", "+z);
+			}
+			System.out.println("area : "+ area);
+			for(int z = 0 ; z < keyword_list.length ; z++) {
+				System.out.println("keyword_list : "+keyword_list[z]+", "+z);
+			}
+			System.out.println("day_str : "+day_str);
 			System.out.println("stime : " + detailSearch.getStime());
 			System.out.println("etime : " + detailSearch.getEtime());
+			System.out.println("min_price : "+min_price);
+			System.out.println("max_price : "+max_price);
 			
 			
 			detailSearch.setDb_day_list(db_day_list);
@@ -332,17 +386,41 @@ public class MainController {
 			// 날짜 검색을 포함한 결과 저장 변수
 			System.out.println("---------종료----------");
 			
+			System.out.println("tutor에 담긴 값"+tutor);
+			
 			if( tutor != null ) {
 				detailSearchTutor.add(tutor);
+				
+				System.out.println("---저장완료---");
+				System.out.println("detailSearchTutor.size() : "+detailSearchTutor.size());
 			}
 		}
 		//저장된 튜터들의 각 요일들 추출
 		ArrayList<Subject> categoryList = searchService.selectCategory();
 		ArrayList<Keyword> keywordList = searchService.selectKeyword();
+		ArrayList<Avg> avgList_origin = searchService.selectAvg();
+		ArrayList<Avg> avgList = new ArrayList<Avg>();
+		
+		
+		for(int i = 0 ; i < avgList_origin.size() ; i++) {
+			String a = avgList_origin.get(i).getUser_no();
+			double b = 0.0;
+			if( !(avgList_origin.get(i).getAvg() == null) ) {
+				b = Math.round( (avgList_origin.get(i).getAvg()/2.0 *100)) / 100.0;
+			}
+			
+			avgList.add(new Avg( a,b ));
+		}
 		
 		if ( (categoryList != null && categoryList.size() > 0)
-			&& (keywordList != null && keywordList.size() > 0)
-			&& ( !detailSearchTutor.isEmpty()) ) {
+			&& (keywordList != null && keywordList.size() > 0) ) {
+			mv.addObject("categoryList", categoryList);
+			mv.addObject("keywordList", keywordList);
+			
+		}
+		System.out.println("detailSearchTutor.size() : "+detailSearchTutor.size());
+		
+		if( ( !detailSearchTutor.isEmpty()) ) {
 			
 			/*
 			 * System.out.println("detailSearchTutor.size() : " +detailSearchTutor.size());
@@ -351,10 +429,9 @@ public class MainController {
 			 * System.out.println("detailSearchTutor : "+detailSearchTutor.get(0).getIntro()
 			 * );
 			 */
-			
-			mv.addObject("categoryList", categoryList);
-			mv.addObject("keywordList", keywordList);
+
 			mv.addObject("tutorList", detailSearchTutor);
+			mv.addObject("avgList", avgList);
 			
 		}
 		mv.setViewName("search/tutor_search");

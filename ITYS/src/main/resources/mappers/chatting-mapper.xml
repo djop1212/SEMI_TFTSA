@@ -91,6 +91,44 @@
 		<result column="login_ok" property="login_ok" />
 	</resultMap>
 	
+	<!-- 채팅방 학생 resultMap -->
+	<resultMap type="StudentChattingroom" id="resultStudentChattingroom">
+		<id column="chat_room_no" property="chat_room_no" />
+		<result column="student_no" property="student_no" />
+		<result column="tutor_no" property="tutor_no" />
+		<result column="student_name" property="student_name" />
+		<result column="tutor_name" property="tutor_name" />
+		<result column="user_no" property="user_no" />
+		<result column="pic" property="pic" />
+		<result column="stu_job" property="stu_job" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="stu_wish" property="stu_wish" />
+	</resultMap>
+	
+	<!-- 채팅방 선생님 resultMap -->
+	<resultMap type="TutorChattingroom" id="resultTutorChattingroom">
+		<id column="chat_room_no" property="chat_room_no" />
+		<result column="student_no" property="student_no" />
+		<result column="tutor_no" property="tutor_no" />
+		<result column="student_name" property="student_name" />
+		<result column="tutor_name" property="tutor_name" />
+		<result column="user_no" property="user_no" />
+		<result column="pic" property="pic" />
+		<result column="min_pay" property="min_pay" />
+		<result column="online_ok" property="online_ok" />
+		<result column="area" property="area" />
+		<result column="intro" property="intro" />
+		<result column="day" property="day" />
+		<result column="time" property="time" />
+		<result column="style" property="style" />
+		<result column="l_grd" property="l_grd" />
+		<result column="class_min" property="class_min" />
+		<result column="class_times" property="class_times" />
+		<result column="sub_name" property="sub_name" />
+		<result column="key_name" property="key_name" />
+	</resultMap>
+	
 	<!-- 채팅 정보 조회 SQL -->
 	<select id="selectChattingInfo" parameterType="Chatting" resultMap="resultChatting">
 		select chat_no, chat_room_no, wrtn_datetm + (INTERVAL '9' HOUR) as wrtn_datetm, user_no, chat_content from chatting
@@ -127,6 +165,20 @@
 		select * from likes
 		where tutor_no = #{ tutor_no }
 		and student_no = #{ student_no }
+	</select>
+	
+	<!-- 학생 채팅방 정보 조회 SQL -->
+	<select id="selectStudentChattingroom" parameterType="_int" resultMap="resultStudentChattingroom">
+		select * from chatting_room
+		join student on student_no = user_no
+		where chat_room_no = #{ chat_room_no }
+	</select>
+	
+	<!-- 선생님 채팅방 정보 조회 SQL -->
+	<select id="selectTutorChattingroom" parameterType="_int" resultMap="resultTutorChattingroom">
+		select * from chatting_room
+		join tutor on tutor_no = user_no
+		where chat_room_no = #{ chat_room_no }
 	</select>
 
 	<!-- 채팅 정보 삭제 SQL -->

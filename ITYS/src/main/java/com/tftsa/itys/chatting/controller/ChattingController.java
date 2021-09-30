@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tftsa.itys.adminChatting.model.vo.Chattingblock;
 import com.tftsa.itys.chatting.model.service.ChattingService;
 import com.tftsa.itys.chatting.model.vo.Chatting;
+import com.tftsa.itys.chatting.model.vo.StudentChattingroom;
+import com.tftsa.itys.chatting.model.vo.TutorChattingroom;
 import com.tftsa.itys.chatting.model.vo.UserChattingStudent;
 import com.tftsa.itys.chatting.model.vo.UserChattingTutor;
 import com.tftsa.itys.mypage.model.vo.Likes;
@@ -32,6 +34,8 @@ public class ChattingController {
 		UserChattingStudent userchattingstudent = chattingService.selectStudent(chat_room_no);
 		UserChattingTutor userchattingtutor = chattingService.selectTutor(chat_room_no);
 		ArrayList<Chatting> chat = chattingService.selectChattingInfo(chat_room_no);
+		StudentChattingroom studentchattingroom = chattingService.selectStudentChattingroom(chat_room_no);
+		TutorChattingroom tutorchattingroom = chattingService.selectTutorChattingroom(chat_room_no);
 		
 		likesList.setTutor_no(tutor_no);
 		likesList.setStudent_no(student_no);
@@ -43,6 +47,11 @@ public class ChattingController {
 		if (userchattingstudent != null && userchattingtutor != null && chat.size() > 0) {
 			mv.addObject("userchattingstudent", userchattingstudent);
 			mv.addObject("userchattingtutor", userchattingtutor);
+			mv.addObject("chat", chat);
+			mv.setViewName("chatting/chatting");
+		} else if (studentchattingroom != null && tutorchattingroom != null){
+			mv.addObject("studentchattingroom", studentchattingroom);
+			mv.addObject("tutorchattingroom", tutorchattingroom);
 			mv.addObject("chat", chat);
 			mv.setViewName("chatting/chatting");
 		} else {

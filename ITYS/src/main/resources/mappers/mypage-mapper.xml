@@ -294,12 +294,10 @@
 
 	<!-- 학생 채팅목록 조회 -->
 	<select id="selectChattingStudentList" parameterType="_int" resultMap="resultUserChattingroomTutor">
-		select user_no, chat_room_no, student_no, tutor_no, student_name, tutor_name, user_ssn, user_name, user_phone, user_id, user_pwd, user_email, user_position, login_ok, pic, min_pay, online_ok, area, intro, day, time, style, l_grd, class_min, class_times, sub_name from chatting
-		join chatting_room using(chat_room_no)
+		select * from chatting_room
+		join tutor on tutor.user_no = tutor_no
 		join user_info using(user_no)
-		join tutor using(user_no)
-		where student_no = #{ user_no }
-		group by user_no, chat_room_no, student_no, tutor_no, student_name, tutor_name, user_ssn, user_name, user_phone, user_id, user_pwd, user_email, user_position, login_ok, pic, min_pay, online_ok, area, intro, day, time, style, l_grd, class_min, class_times, sub_name
+		where student_no = #{ student_no }
 	</select>
 	
 	<!-- 선생님 채팅목록 조회 -->

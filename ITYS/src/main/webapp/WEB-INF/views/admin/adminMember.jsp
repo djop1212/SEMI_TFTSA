@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,7 +122,7 @@ a {
 					</div>
 					<div class="col-sm-12 col-md-6">
                 <form action="adminMember.do" method="POST" class="navbar-search">
-                  <div class="input-group" style="width:300px;float:right;margin-right:15px;margin-left:15px">
+                  <div class="input-group" style="width:200px;float:right;margin-right:15px;margin-left:15px">
                     <input type="text" name="user_id" class="form-control bg-light border-1 small" placeholder="Search an user ID"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
@@ -169,7 +171,7 @@ a {
 							<td>${ m.user_no }</td>
 							<td>${ m.user_id }</td>
 							<td>${ m.user_name }</td>
-							<td>${ m.user_ssn }</td>
+							<td><c:out value="${fn:substring(m.user_ssn, 0, fn:length(m.user_ssn) - 6)}"/>******</td>
 							<td>${ m.user_phone }</td>
 							<td>${ m.user_email }</td>
 							<td>${ m.login_ok }</td>
@@ -181,6 +183,7 @@ a {
                   </table>
                   </form>
                   <div align="right" style=50px>
+                  
                   <a href="#" class="btn btn-danger" onclick="ClickedData();">
                     <i class="fas fa-trash" ></i>
                   </a>
@@ -223,11 +226,11 @@ a {
         </div>
         <!---Container Fluid-->
       </div>
-			</div>
-		</div>
 	</div>
 </body>
 <c:import url="/WEB-INF/views/admin/common/footer.jsp" />
+  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="${ pageContext.servletContext.contextPath }/admin_resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script>
 	var user_id = $("#user_id").val();
 	function searchFunction(){	
@@ -236,19 +239,7 @@ a {
 			type: 'POST',
 			data : {user_id : user_id},
 			success : function(data){
-	/* 			//테이블 초기화
-				$('#memberTable > tbody').empty();
-				if(data.length>=1){
-					function(data){
-						str='<tr>'
-						str+="<td>"+item.user_position+"</td>";
-						str+="<td>"+item.user_no+"</td>";
-						str+="<td>"+item.user_id+"</td>"; 
-						str+="<td>"+item.title+"</td>";
-						str+="<td>"+item.date+"</td>";
-						str+="<td>"+item.hit+"</td>";
-						str+="</tr>"
-						$('#memberTable').append(str); */
+
 						console.log("user_id",data);
 	        		}				 
 				}
