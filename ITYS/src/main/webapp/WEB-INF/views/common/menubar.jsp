@@ -33,7 +33,7 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="main.do">
+          <a  class="navbar-brand" href="top10.do">
             <h3>
               Joson
             </h3>
@@ -48,10 +48,10 @@
           <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
             <ul class="navbar-nav  ml-auto">
 
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/course.jsp' }">active</c:if>">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/search/tutor_search.jsp' }">active</c:if>">
                 <a class="nav-link" href="top10.do"> 선생님 찾기 </a>
               </li>
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/event.jsp' }">active</c:if>">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/board/boardListView.jsp' }">active</c:if>">
                 <a class="nav-link" href="${ pageContext.servletContext.contextPath }/blist.do?page=1"> 질문하기 </a>   
               </li>
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/info.jsp' }">active</c:if>">
@@ -77,7 +77,7 @@
               </c:if>
               
               <c:if test="${ sessionScope.loginMember eq null}">
-              <li class="nav-item <%-- <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if> --%>">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if>">
                 <a class="nav-link" href="loginPage.do">로그인</a>
               </li>
               </c:if>
