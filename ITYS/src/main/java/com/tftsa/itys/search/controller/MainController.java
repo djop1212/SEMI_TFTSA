@@ -421,7 +421,7 @@ public class MainController {
 			 * );
 			 */
 
-			mv.addObject("tutorList", detailSearchTutor);
+			mv.addObject("searchTutor", detailSearchTutor);
 			mv.addObject("avgList", avgList);
 			
 		}

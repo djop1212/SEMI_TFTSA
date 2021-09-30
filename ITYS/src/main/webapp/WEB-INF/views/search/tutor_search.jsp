@@ -465,8 +465,14 @@ ol, ul, li {
 						<li><label class="sri_check" for="detailOption_education-6">
 								<input name="l_grd" type="checkbox"
 								id="detailOption_education-6" class="inp_check edu"
-								value="4년제 졸업"> <span class="txt_check">4년제 졸업</span>
+								value="대학교 졸업"> <span class="txt_check">4년제 졸업</span>
 						</label></li>
+						<li><label class="sri_check" for="detailOption_education-7">
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-7" class="inp_check edu"
+								value="대학원"> <span class="txt_check">대학원생</span>
+						</label></li>
+						
 					</ul>
 
 
@@ -636,11 +642,11 @@ ol, ul, li {
 
 				<c:choose>
 					<c:when test="${ not empty tutorList }">
-					
-					
 					<div class="container" style="padding-bottom : 30px;">
 						<h4>선생님 top 10</h4>
 					</div>
+					
+					
 						<c:forEach items="${ requestScope.tutorList }" var="t" varStatus="statusTL">
 						
 							<li>
@@ -743,12 +749,11 @@ ol, ul, li {
 					
 					
 					
-					
-					
 					</c:when>
-					<c:when test="${ not empty searchTutor }">
+					
+					<c:when test="${ not empty searchTutor  }">
 						<div class="container" style="padding-bottom : 30px;">
-						<h4>과외 검색 결과</h4>
+							<h4>과외 검색 결과</h4>
 						</div>
 						<c:forEach items="${ requestScope.searchTutor }" var="s" varStatus="statusST">
 											
@@ -1035,24 +1040,48 @@ function searchSend(){
 	}
 }
 
+	$.fn.setCursorPosition = function( pos )
+	{
+	  this.each( function( index, elem ) {
+	    if( elem.setSelectionRange ) {
+	      elem.setSelectionRange(pos, pos);
+	    } else if( elem.createTextRange ) {
+	      var range = elem.createTextRange()-2;
+	      range.collapse(true);
+	      range.moveEnd('character', pos);
+	      range.moveStart('character', pos);
+	      range.select();
+	    }
+	  });
+	  
+	  return this;
+	};
 $(function() {
-
 	
-	$("#detailOption_price_min").on('keyup change', function() {
+	
+	$("#detailOption_price_min").on('keyup', function() {
+
+		var len = $("#detailOption_price_min").val().length-2;
+		
+		
 		var min = $("#detailOption_price_min").val();
 		var mi = min.replace(/[^0-9]/g,'');
 
 		$(this).val(mi+"만원"); 
-		
+		$("#detailOption_price_min").focus().setCursorPosition ( len );
 	});
 	
 	$("#detailOption_price_max").on('keyup change', function() {
+		
+		var len = $("#detailOption_price_max").val().length-2;
+		
 		var max = $("#detailOption_price_max").val();
 		var ma = max.replace(/[^0-9]/g,'');
-
+	
 		$(this).val(ma+"만원"); 
-		
+		$("#detailOption_price_max").focus().setCursorPosition ( len );
 	});
+	
 	
 	
 	$("#search").on('click', function(){
