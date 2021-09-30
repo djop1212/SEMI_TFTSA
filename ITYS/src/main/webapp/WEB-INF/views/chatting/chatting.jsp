@@ -670,7 +670,7 @@ a.btn-layerClose:hover {
 			사용되는 프로토콜은 ws:// 임.
 			*/	
 			webSocket = new WebSocket(
-					"ws://localhost:8080/" +
+					"ws://localhost:8087/" +
 					"${ pageContext.servletContext.contextPath }/unicast");
 		
 			//웹소켓을 통해서 연결이 될 때 동작할 이벤트핸들러 작성
@@ -705,8 +705,12 @@ a.btn-layerClose:hover {
 			var hours = today.getHours();
 			var minutes = today.getMinutes();
 			
+			if (hours == 0){
+				hours = 12;
+			}
+			
 			if (hours > 12){
-				hours = hours % 12
+				hours = hours % 12;
 			}
 			
 			if (hours < 10){
@@ -758,7 +762,24 @@ a.btn-layerClose:hover {
 			var today = new Date();
 			var hours = today.getHours();
 			var minutes = today.getMinutes();
-			var timeString = hours + ' : ' + minutes
+			
+			if (hours == 0){
+				hours = 12;
+			}
+			
+			if (hours > 12){
+				hours = hours % 12;
+			}
+			
+			if (hours < 10){
+				hours = '0' + hours;
+			}
+			
+			if (minutes < 10){
+				minutes = '0' + minutes;
+			}
+			
+			var timeString = hours + ':' + minutes;
 			
 			//전송온 메세지가 비었거나, 보낸사람이 내가 연결한
 			//사람이 아닐 경우 아무 내용도 실행하지 않는다.

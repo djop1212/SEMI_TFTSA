@@ -72,7 +72,7 @@
 	
 	<!-- 결제 정보 추가 SQL -->
 	<insert id="insertPayment" parameterType="Payment" >
-		insert into payment
+		insert into payment (pay_no, student_name, tutor_name, pay_datetm, pay_method, pay_amount, pay_status)
 		values (payment_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, default, #{ pay_amount }, default)
 	</insert>
 	

@@ -54,22 +54,30 @@
 		<!-- SELECT distinct tutor.* from tutor, sub_data, user_info
 		WHERE tutor.user_no = sub_data.user_no(+)
 		AND sub_data.user_no = user_info.user_no(+) -->
-		SELECT distinct tutor.* from tutor, sub_data, subject, user_info
-		WHERE tutor.user_no = sub_data.user_no(+)
-		AND sub_data.sub_no = subject.sub_no(+)
-        AND tutor.user_no = user_info.user_no(+)
+<!-- 		SELECT *
+		FROM (
+		    SELECT ROWNUM rnum, tutor.*
+		    FROM( -->
+				SELECT distinct tutor.* from tutor, sub_data, subject, user_info
+				WHERE tutor.user_no = sub_data.user_no(+)
+				AND sub_data.sub_no = subject.sub_no(+)
+		        AND tutor.user_no = user_info.user_no(+)
         
-		<if test = "word != 'null'  ">
-			AND (tutor.intro like '%' || #{ word } || '%'
-			OR user_info.user_name like '%' || #{ word } || '%')
-		</if>
-		<if test = "category != 'null'  ">
-		
-			AND subject.category = #{ category }
-		</if>
-		<if test = "sub_name != 'null'  ">
-			AND subject.sub_name = #{ sub_name }
-		</if>
+				<if test = "word != 'null'  ">
+					AND (tutor.intro like '%' || #{ word } || '%'
+					OR user_info.user_name like '%' || #{ word } || '%')
+				</if>
+				<if test = "category != 'null'  ">
+				
+					AND subject.category = #{ category }
+				</if>
+				<if test = "sub_name != 'null'  ">
+					AND subject.sub_name = #{ sub_name }
+				</if>
+<!-- 				)tutor)
+    
+		WHERE rnum <![CDATA[>=]]> #{ startRow }
+		AND rnum <![CDATA[<=]]> #{ endRow } -->
 
 	</select>
 	
@@ -124,7 +132,7 @@
 		</if>
 		
 		<if test='day_str != "null"'>
-			<foreach collection="db_day_list" item="item" open="and" close="" separator="and" >
+			<foreach collection="db_day_list" item="item" open="and(" close=")" separator="or" >
 				#{ day_str } LIKE ('%' || #{ item } || '%')
 			</foreach>
 		</if>

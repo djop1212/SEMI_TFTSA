@@ -33,44 +33,18 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "redirect:/top10.do";
 	}
 	
 	@RequestMapping("main.do")
 	public String mainViewForward() {
-		return "common/main"; // 내보낼 뷰파일명 리턴
-	}
-	
-	@RequestMapping("about.do")
-	public String aboutViewForward() {
-		return "common/about"; // 내보낼 뷰파일명 리턴
-	}
-	
-	@RequestMapping("course.do")
-	public String courseViewForward() {
-		return "common/course"; // 내보낼 뷰파일명 리턴
-	}
-	
-	@RequestMapping("contact.do")
-	public String contactViewForward() {
-		return "common/contact"; // 내보낼 뷰파일명 리턴
-	}
-	
-//	@RequestMapping("event.do")
-//	public String eventViewForward() {
-//		return "common/event"; // 내보낼 뷰파일명 리턴
-//	}
+		return "redirect:/top10.do"; // 내보낼 뷰파일명 리턴
+	}	
 	
 	@RequestMapping("info.do")
 	public String infoViewForward() {
 		return "common/info"; // 내보낼 뷰파일명 리턴
 	}
-	
-//	@RequestMapping("login.do")
-//	public String loginViewForward() {
-//		return "common/login"; // 내보낼 뷰파일명 리턴
-//	}
-
 
 	@RequestMapping("adminDeposit.do")
 	public String AdminDepositViewForward() {

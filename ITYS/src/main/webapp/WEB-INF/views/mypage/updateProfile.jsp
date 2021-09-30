@@ -85,7 +85,7 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
-img{
+.img_size{
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
@@ -114,13 +114,13 @@ img{
 						<div>
 							<c:choose>
 								<c:when test="${student.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 								</c:when>
 								<c:when test="${tutor.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 								</c:when>
 								<c:otherwise>
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -140,7 +140,7 @@ img{
 			            <br><a style="color:#969ca2;" href="" onclick="deleteuser(); return false;">회원탈퇴</a>
 					</div>
 					<div id="right">
-					<form action="upUser.do" method="post" enctype="multipart/form-data">
+					<form action="upUser.do" method="post" enctype="multipart/form-data" onsubmit="return validate();">
 					<input type="hidden" name="user_no" value="${member.user_no}">
 					<c:if test="${loginMember.user_position eq 'S' }">
 						<input type="hidden" name="city" value="">
@@ -148,12 +148,7 @@ img{
 						<input type="hidden" name="sub_no" value="0">
 						<input type="hidden" name="key_no" value="0">
 					</c:if>
-						<!-- <div>
-						<table>
-							<tr>
-							</tr>
-						</table>
-						</div><br> -->
+						
 						<div>
 							<h4 align="left">내 프로필</h4>
 							<input type="hidden" name="origin_userpwd" value="${requestScope.member.user_pwd }">
@@ -169,7 +164,7 @@ img{
 								</Tr>
 								<tr>
 									<td>비밀번호</td>
-									<td><input type="password" id="user_pwd" name="user_pwd"></td>
+									<td><input type="password" id="userpwd" name="user_pwd"></td>
 								</tr>
 								<tr>
 									<td>비밀번호 확인</td>

@@ -92,22 +92,22 @@
 	
 	<select id="tutorReview" resultType="int" >
 	select count(*) from review
-	left join payment using (pay_no)
 	left join tutor on (user_no = tutor_no )
+    left join payment using (pay_no)
 	where user_no = #{ user_no }
 	</select>
 	
 	<select id="avgScore" resultType="double">
 	select round(avg(score)) from review
+left join tutor on (user_no = tutor_no )
 	left join payment using (pay_no)
-	left join tutor on (user_no = tutor_no )
 	where user_no = #{ user_no }
 	</select>
 	
 	<select id="reviewList" resultType="Detail">
 	select * from review
-	left join payment using (pay_no)
 	left join tutor on (user_no = tutor_no )
+	left join payment using (pay_no)
 	where user_no = #{ user_no }
 	order by rev_datetm desc
 	</select>

@@ -17,6 +17,14 @@
 
   <title></title>
 
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/bootstrap.css" />
   <!-- fonts style -->
@@ -25,7 +33,26 @@
   <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive.css" rel="stylesheet" />
+  
+  <style type="text/css">
+  
+@font-face {
+    font-family: 'KoPubDotumMedium';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/KoPubDotumMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+img{
+	object-fit: cover ; 
+}
+
+* {
+	font-family: 'KoPubDotumMedium', gulim, dotum, sans-serif;
+}
+  
+  </style>
 </head>
+
 
 <body>
 
@@ -33,11 +60,8 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="main.do">
-            <h3>
-              Joson
-            </h3>
-            <span> college</span>
+          <a  class="navbar-brand" href="top10.do">
+            <img src="${ pageContext.servletContext.contextPath }/resources/images/logo.png" width="154" height="70">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,10 +72,10 @@
           <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
             <ul class="navbar-nav  ml-auto">
 
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/course.jsp' }">active</c:if>">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/search/tutor_search.jsp' }">active</c:if>">
                 <a class="nav-link" href="top10.do"> 선생님 찾기 </a>
               </li>
-              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/event.jsp' }">active</c:if>">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/board/boardListView.jsp' }">active</c:if>">
                 <a class="nav-link" href="${ pageContext.servletContext.contextPath }/blist.do?page=1"> 질문하기 </a>   
               </li>
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/info.jsp' }">active</c:if>">
@@ -77,7 +101,7 @@
               </c:if>
               
               <c:if test="${ sessionScope.loginMember eq null}">
-              <li class="nav-item <%-- <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if> --%>">
+              <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if>">
                 <a class="nav-link" href="loginPage.do">로그인</a>
               </li>
               </c:if>

@@ -84,7 +84,7 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
-img{
+.img_size{
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
@@ -110,13 +110,13 @@ img{
 						<div>
 							<c:choose>
 								<c:when test="${student.pic ne null}">
-									<img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+									<img class="img_size" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 								</c:when>
 								<c:when test="${tutor.pic ne null}">
-									<img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+									<img class="img_size" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 								</c:when>
 								<c:otherwise>
-									<img src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+									<img class="img_size" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -152,17 +152,17 @@ img{
 									<tr>
 									<td valign="top">
 										<c:if test="${c.pic eq null }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>
 										<c:if test="${c.pic ne null and position eq 'S' }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${c.pic }"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>
 										<c:if test="${c.pic ne null and position eq 'T' }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${c.pic }"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>

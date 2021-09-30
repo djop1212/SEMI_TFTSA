@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
 
@@ -9,13 +10,24 @@
 <html>
 <head>
 <title>과외찾기</title>
+
+    
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/ec0d746c97.js" crossorigin="anonymous"></script>
 
 
 <style type="text/css">
-object-fit: cover ; * {
-	font-family: "Malgun Gothic", gulim, dotum, sans-serif;
+
+
+hr.dashed {
+  border-top: 3px dashed #bbb;
+}
+img{
+	object-fit: cover ; 
+}
+
+* {
+	font-family: "HSYuji-Regular", gulim, dotum, sans-serif;
 }
 
 a:link {
@@ -36,10 +48,67 @@ a:hover {
 .heading_container2 {
 	display: block;
 }
-
+.tab{
+	font-weight : 500;
+	color: #212121;
+}
+.tab_title{
+	font-size: 20px;
+	font-weight : 600;
+	color: #212121;
+	padding-bottom : 5px;
+}
 h2 {
 	font-size: 15px;
 }
+.tags {    
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    margin: 0 16px 8px 0;
+    padding: 0 10px 0 12px;
+    background: #777;    
+    -webkit-border-bottom-right-radius: 3px;    
+    border-bottom-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;    
+    border-top-right-radius: 3px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    color: #fff;
+    font-size: 12px;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    font-weight: bold;
+}
+.tags:before {
+    content: "";
+    position: absolute;
+    top:0;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-color: transparent #777 transparent transparent;
+    border-style: solid;
+    border-width: 12px 12px 12px 0;        
+    }
+
+.tags:after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 1px;
+    float: left;
+    width: 5px;
+    height: 5px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #fff;
+    -webkit-box-shadow: -1px -1px 2px rgba(0,0,0,0.4);
+    box-shadow: -1px -1px 2px rgba(0,0,0,0.4);
+    }
+    
 
 .search-icon {
 	display: inline-block;
@@ -91,11 +160,9 @@ h2 {
 }
 
 .detail_info, .img_box {
-	background-color: #F4F4F4;
 }
 
 .detail_info:hover, .img_box:hover {
-	box-shadow: 2px 2px 5px #999;
 }
 
 #detailOption_wrapper {
@@ -297,7 +364,6 @@ ol, ul, li {
 .detail_info {
 	width: 80%;
 	float: right;
-	border: 1px solid gray;
 	height: 100%;
 	border-radius: 25px;
 }
@@ -316,7 +382,6 @@ ol, ul, li {
 	<div class="container">
 		<div class="heading_container2">
 			<h3>과외찾기</h3>
-
 			
 		</div>
 	</div>
@@ -339,10 +404,10 @@ ol, ul, li {
 							<option>전체</option>
 						</select> 
 						
-						<div class = "search-icon" >
+						<div class = "search-icon" style="height : 40px;">
 						
 						<i class="fas fa-search"></i>						
-						<input style="width: 300px; border: none;" name="word" class="doBtnSearch"
+						<input style="width: 300px; border: none; height : 38px;" name="word" class="doBtnSearch"
 							id="searchWord" type="text" placeholder="검색어를 입력해주세요."/> 
 						</div>
 							<input
@@ -400,8 +465,14 @@ ol, ul, li {
 						<li><label class="sri_check" for="detailOption_education-6">
 								<input name="l_grd" type="checkbox"
 								id="detailOption_education-6" class="inp_check edu"
-								value="4년제 졸업"> <span class="txt_check">4년제 졸업</span>
+								value="대학교 졸업"> <span class="txt_check">4년제 졸업</span>
 						</label></li>
+						<li><label class="sri_check" for="detailOption_education-7">
+								<input name="l_grd" type="checkbox"
+								id="detailOption_education-7" class="inp_check edu"
+								value="대학원"> <span class="txt_check">대학원생</span>
+						</label></li>
+						
 					</ul>
 
 
@@ -570,21 +641,35 @@ ol, ul, li {
 			<ul>
 
 				<c:choose>
-					<c:when test="${ not empty searchTutor }">
-						<div class="container">
-						<h4>과외 검색 결과</h4>
-						</div>
-						<c:forEach items="${ requestScope.searchTutor }" var="s" varStatus="statusST">
-											
-					<li>
+					<c:when test="${ not empty tutorList }">
+					<div class="container" style="padding-bottom : 30px;">
+						<h4>선생님 top 10</h4>
+					</div>
+					
+					
+						<c:forEach items="${ requestScope.tutorList }" var="t" varStatus="statusTL">
+						
+							<li>
+							<hr class="dashed">
 						<c:url var="detail" value="/detail.do">
-                        <c:param name="user_no" value="${s.user_no }" />
-                        <c:param name="student_no" value="${loginMember.user_no }"/>
-                        <c:param name="tutor_no" value="${s.user_no }"/>
+                        	<c:param name="user_no" value="${t.user_no }" />
+                        	<c:param name="student_no" value="${ loginMember.user_no }"/>
+                        	<c:param name="tutor_no" value="${t.user_no }"/>
                         </c:url>
-                        <a href="${detail}">
                         
-								<div class="list_container"
+                        
+                        <c:if test="${ not empty sessionScope.loginMember.user_no  }">
+	                        <a href="${detail}">
+                       	</c:if>
+                       	
+                       	<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.user_position eq 'M'  }">
+                       	</c:if>
+                       	
+                       	<c:if test="${ empty sessionScope.loginMember.user_no }">
+	                        <a href="loginPage.do">
+                       	</c:if>
+                        
+									<div class="list_container"
 									style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
 
 									<div
@@ -595,103 +680,34 @@ ol, ul, li {
 
 											<img style="border-radius: 50%; height: 100%; width: 100%;"
 												alt="이미지"
-												src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${s.pic}">
+												src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${t.pic}">
 										</div>
 									</div>
 
 									<div class="detail_info"
 										style="text-align: left; padding: 20px 15px 20px 20px; display: inline-block; height: 100%">
-										<h4>${ s.intro }|${ s.sub_name  }</h4>
+										
+										<h4><div style= "display : inline-block; float:left; width:75%;  padding-bottom : 10px; font-weight : 700;">${ t.intro }</div></h4>
+										
+
+											
+										<div style= "display : inline-block; float:right;width:24%; height : 80px;"> 
+											<c:forTokens  var="sub_name" items="${ t.sub_name  }" delims=", ">
+												<span class="tags">${ sub_name  }
+												</span>
+											</c:forTokens>
+											
+										</div>
+										
 										<div style="width: 100%; height: 70%;">
-											<div
-												style="width: 80%; display: inline-block; height: 100%; float: left;">
-												<span class="tab">${ s.style }</span><br> <span
-													class="tab">지역 : ${ s.area }</span><br> <span
-													class="tab">요일 : ${ s.day }</span><br> <span
-													class="tab">시간 : ${ s.time }</span><br> <span
-													class="tab">금액 : ${ s.min_pay }</span>
-											</div>
-											<div style="width: 10%; display: inline-block; height: 100%;  position:relative; float:right;">
-											
-														<c:forEach items="${ requestScope.avgList }" var="al" varStatus="status">
-															<c:if test="${ al.user_no  eq  s.user_no }">
-														
-												<div style="display: inline-block; position:absolute; bottom:15px;">
-												
-																<input type="hidden" class="star_width"
-																	value= "${ al.avg }"/>${ al.avg }
-												</div>	
-												<div style="display: inline-block;">
-													<div class='star-rating' style="display : inline; position:absolute; bottom:0px;">
-												
-
-														<span class="star_wid" style= "width : ${ al.avg *20}%"></span>
-													</div>
-												</div>
-															</c:if>
-														</c:forEach>
-													<!-- <ul>
-														<li>
-															<span class="fa-li">
-																<i class="fas fa-star"></i>
-															</span>
-														</li>
-													</ul> -->
-												
-											</div>
-										</div>
-
-
-									</div>
-								</div>
-						</a></li>
-					</c:forEach>
-
-					</c:when>
-
-					<c:otherwise>
-					<div class="container">
-						<h4>선생님 top 10</h4>
-					</div>
-						<c:forEach items="${ requestScope.tutorList }" var="t" varStatus="statusTL">
-							<li>
-						<c:url var="detail" value="/detail.do">
-                        <c:param name="user_no" value="${t.user_no }" />
-                        <c:param name="student_no" value="${loginMember.user_no }"/>
-                        <c:param name="tutor_no" value="${t.user_no }"/>
-                        </c:url>
-                        <a href="${detail}">
-                        
-									<div class="list_container"
-										style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
-
-										<div
-											style="display: inline-block; margin-left: auto; margin-right: auto; text-align: center; height: 200px; width: 200px; position: relative;">
-
-											<div class="img_box"
-												style="border-radius: 50%; height: 150px; width: 150px; text-align: center; position: absolute; top: 25px; left: 25px;">
-
-												<img style="border-radius: 50%; height: 100%; width: 100%;"
-													alt="이미지"
-													src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${t.pic}">
-											</div>
-										</div>
-
-										<div class="detail_info"
-										style="text-align: left; padding: 20px 15px 20px 20px; display: inline-block; height: 100%">
-											
-											<h4>${ t.intro }|${ t.sub_name  }</h4>
-											
-											<div style="width: 100%; height: 70%;">
-											<div
-												style="width: 80%; display: inline-block; height: 100%; float: left;">
-												<span class="tab">${ t.style }</span><br> <span
+											<div style="width: 75%; display: inline-block; height: 100%; float: left; ">
+												<span class="tab_title">${ t.style }</span><br> <span
 													class="tab">지역 : ${ t.area }</span><br> <span
 													class="tab">요일 : ${ t.day }</span><br> <span
 													class="tab">시간 : ${ t.time }</span><br> <span
 													class="tab">금액 : ${ t.min_pay }</span>
 											</div>
-											<div style="width: 10%; display: inline-block; height: 100%;  position:relative; float:right;">
+											<div style="width: 13%; display: inline-block; height: 70px;  position:relative; float:left;">
 											
 														<c:forEach items="${ requestScope.avgList }" var="al" varStatus="status">
 															<c:if test="${ al.user_no  eq  t.user_no }">
@@ -721,10 +737,131 @@ ol, ul, li {
 											</div>
 										</div>
 
+
+									</div>
+								</div>
+							<c:if test="${ not empty sessionScope.loginMember.user_no or sessionScope.loginMember.user_position eq 'M'  }">
+							</a>
+							</c:if>
+							
+							</li>
+						</c:forEach>
+					
+					
+					
+					</c:when>
+					
+					<c:when test="${ not empty searchTutor  }">
+						<div class="container" style="padding-bottom : 30px;">
+							<h4>과외 검색 결과</h4>
+						</div>
+						<c:forEach items="${ requestScope.searchTutor }" var="s" varStatus="statusST">
+											
+					<li>
+					<hr class="dashed">
+						<c:url var="detail" value="/detail.do">
+                        <c:param name="user_no" value="${s.user_no }" />
+                        <c:param name="student_no" value="${loginMember.user_no }"/>
+                        <c:param name="tutor_no" value="${s.user_no }"/>
+                        </c:url>
+                        
+						
+                        	<c:if test="${ not empty sessionScope.loginMember.user_no  }">
+		                        <a href="${detail}">
+                        	</c:if>
+                        	
+                        	<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.user_position eq 'M'  }">
+                        		<a href="#">
+                        	</c:if>
+                        	
+                        	<c:if test="${ empty sessionScope.loginMember.user_no }">
+		                        <a href="loginPage.do">
+                        	</c:if>
+                        
+								<div class="list_container"
+									style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
+
+									<div
+										style="display: inline-block; margin-left: auto; margin-right: auto; text-align: center; height: 200px; width: 200px; position: relative;">
+
+										<div class="img_box"
+											style="border-radius: 50%; height: 150px; width: 150px; text-align: center; position: absolute; top: 25px; left: 25px;">
+
+											<img style="border-radius: 50%; height: 100%; width: 100%;"
+												alt="이미지"
+												src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${s.pic}">
 										</div>
 									</div>
-							</a></li>
-						</c:forEach>
+
+									<div class="detail_info"
+										style="text-align: left; padding: 20px 15px 20px 20px; display: inline-block; height: 100%">
+										
+										<h4><div style= "display : inline-block; float:left; width:75%;  padding-bottom : 10px; font-weight : 700;">${ s.intro }</div></h4>
+										
+
+											
+										<div style= "display : inline-block; float:right;width:24%; height : 80px;"> 
+											<c:forTokens  var="sub_name" items="${ s.sub_name  }" delims=", ">
+												<span class="tags">${ sub_name  }
+												</span>
+											</c:forTokens>
+											
+										</div>
+										
+										<div style="width: 100%; height: 70%;">
+											<div style="width: 75%; display: inline-block; height: 100%; float: left; ">
+												<span class="tab_title">${ s.style }</span><br> <span
+													class="tab">지역 : ${ s.area }</span><br> <span
+													class="tab">요일 : ${ s.day }</span><br> <span
+													class="tab">시간 : ${ s.time }</span><br> <span
+													class="tab">금액 : ${ s.min_pay }</span>
+											</div>
+											<div style="width: 13%; display: inline-block; height: 70px;  position:relative; float:left;">
+											
+														<c:forEach items="${ requestScope.avgList }" var="al" varStatus="status">
+															<c:if test="${ al.user_no  eq  s.user_no }">
+														
+												<div style="display: inline-block; position:absolute; bottom:15px;">
+												
+																<input type="hidden" class="star_width"
+																	value= "${ al.avg }"/>${ al.avg }
+												</div>	
+												<div style="display: inline-block;">
+													<div class='star-rating' style="display : inline; position:absolute; bottom:0px;">
+												
+
+														<span class="star_wid" style= "width : ${ al.avg *20}%"></span>
+													</div>
+												</div>
+															</c:if>
+														</c:forEach>
+													<!-- <ul>
+														<li>
+															<span class="fa-li">
+																<i class="fas fa-star"></i>
+															</span>
+														</li>
+													</ul> -->
+												
+											</div>
+										</div>
+
+									</div>
+								</div>
+						</a>
+						
+						</li>
+					</c:forEach>
+
+					</c:when>
+
+					<c:otherwise>
+					<div class="container" style= "margin-top : 100px; margin-bottom : 200px;">
+						<img style="border-radius: 50%; height: 100%; width: 100%;"
+												alt="이미지"
+												src="${ pageContext.servletContext.contextPath }/resources/images/search/img_search_nothing.jpg">
+					</div>
+						
 					</c:otherwise>
 				</c:choose>
 
@@ -903,24 +1040,48 @@ function searchSend(){
 	}
 }
 
+	$.fn.setCursorPosition = function( pos )
+	{
+	  this.each( function( index, elem ) {
+	    if( elem.setSelectionRange ) {
+	      elem.setSelectionRange(pos, pos);
+	    } else if( elem.createTextRange ) {
+	      var range = elem.createTextRange()-2;
+	      range.collapse(true);
+	      range.moveEnd('character', pos);
+	      range.moveStart('character', pos);
+	      range.select();
+	    }
+	  });
+	  
+	  return this;
+	};
 $(function() {
-
 	
-	$("#detailOption_price_min").on('keyup change', function() {
+	
+	$("#detailOption_price_min").on('keyup', function() {
+
+		var len = $("#detailOption_price_min").val().length-2;
+		
+		
 		var min = $("#detailOption_price_min").val();
 		var mi = min.replace(/[^0-9]/g,'');
 
 		$(this).val(mi+"만원"); 
-		
+		$("#detailOption_price_min").focus().setCursorPosition ( len );
 	});
 	
 	$("#detailOption_price_max").on('keyup change', function() {
+		
+		var len = $("#detailOption_price_max").val().length-2;
+		
 		var max = $("#detailOption_price_max").val();
 		var ma = max.replace(/[^0-9]/g,'');
-
+	
 		$(this).val(ma+"만원"); 
-		
+		$("#detailOption_price_max").focus().setCursorPosition ( len );
 	});
+	
 	
 	
 	$("#search").on('click', function(){
@@ -1103,7 +1264,7 @@ $(function() {
 				//string ==> json 객체로 바꿈
 				var json = JSON.parse(jsonStr);
 
-				var values = "";
+				var values = "<option value=전체>전체</option>";
 				
 				for ( var i in json.subjectList) {
 					values += "<option value="

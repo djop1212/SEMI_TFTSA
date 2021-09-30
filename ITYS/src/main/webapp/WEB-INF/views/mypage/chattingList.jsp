@@ -93,7 +93,7 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
-img{
+.img_size{
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
@@ -119,13 +119,13 @@ img{
 						<div>
 							<c:choose>
 								<c:when test="${student.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 								</c:when>
 								<c:when test="${tutor.pic ne null}">
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 								</c:when>
 								<c:otherwise>
-									<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+									<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -155,8 +155,10 @@ img{
 						</div><br>
 						<form action="delclist.do" method="post" onsubmit="confirm('채팅 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="user_no" value="${loginMember.user_no }">
+						<c:if test="${chk eq null }">
+							<input type="hidden" name="chk" value="0">
+						</c:if>
 						<div>
-						
 							<ul id="wlist">
 								<li>
 								<c:if test="${ requestScope.userchattingroomtutor != null }">
@@ -165,12 +167,12 @@ img{
 									<tr>
 									<td valign="top">
 										<c:if test="${ucrt.pic eq null }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>
 										<c:if test="${ucrt.pic ne null }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${ucrt.pic }"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>
@@ -193,12 +195,12 @@ img{
 									<tr>
 									<td valign="top">
 										<c:if test="${ucrt.pic eq null }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>
 										<c:if test="${ucrt.pic ne null }">
-											<img
+											<img class="img_size"
 											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${ucrt.pic }"
 											width="75px" height="75px" style="margin-top:5px" />
 										</c:if>

@@ -206,7 +206,7 @@ public class MemberController {
 		HttpSession session = request.getSession(false); // 새로 생성되면 안되니까
 		if (session != null) {
 			session.invalidate();
-			return "common/main";
+			return "redirect:/top10.do";
 		} else {
 			model.addAttribute("message", "로그인 세션이 존재하지 않습니다.");
 		}

@@ -118,35 +118,34 @@
 					<div class="loginForm">
 						<h5>회원가입</h5>
 						<form action="enroll.do" method="post" onsubmit="return validate();">
-							<div>* 이름 
-								<input type="text" name="user_name" placeholder="이름 " required/>
-							</div>
-							<div>* 아이디
-								<input type="text" id="id" name="user_id" placeholder="아이디" required oninput="checkId()" /><br>
+							
+							<table align="center">
+								<tr><th>* 이름</th>
+									<td><input type="text" name="user_name" placeholder="이름 " required/></td>
+								</tr>
+								<tr><th>* 아이디</th>
+									<td><input type="text" id="id" name="user_id" placeholder="아이디" required oninput="checkId()" /><br>
 								<span class="id_ok">사용 가능한 아이디입니다.</span>
-								<span class="id_already">이미 사용중인 아이디입니다.</span>
-							</div>
-							<div>* 비밀번호
-								<input type="password" name="user_pwd" id="userpwd" placeholder="비밀번호" required/>
-							</div>
-							<div>* 비밀번호 확인
-								<input type="password" id="userpwd2" placeholder="비밀번호 확인" required/>
-							</div>
-							<div>* 주민번호
-								<input type="text" name="user_ssn" placeholder="예) 940725-1234567" pattern="\d{6}-\d{7}" required/>
-							</div>
-							<div>* 핸드폰
-								<input type="tel" name="user_phone" placeholder="예) 010-1234-5678" pattern="\d{3}-\d{4}-\d{4}" required>
-							</div>
-							<div>* 이메일
-								<input type="email" id="email" name="user_email" placeholder="예) itys@study.co.kr" required oninput="checkEmail()"/><br>
+								<span class="id_already">이미 사용중인 아이디입니다.</span></td>
+								</tr>
+								<tr><th>* 비밀번호</th>
+									<td><input type="password" name="user_pwd" id="userpwd" placeholder="비밀번호" required/></td>
+								</tr>
+								<tr><th>* 비밀번호 확인 </th>
+									<td><input type="password" id="userpwd2" placeholder="비밀번호 확인" required onblur="validate();"/></td>
+								</tr>
+								<tr><th>* 주민번호</th>
+									<td><input type="text" name="user_ssn" placeholder="예) 940725-1234567" pattern="\d{6}-\d{7}" required/></td>
+								</tr>
+								<tr><th>* 핸드폰</th>
+									<td><input type="tel" name="user_phone" placeholder="예) 010-1234-5678" pattern="\d{3}-\d{4}-\d{4}" required></td>
+								</tr>
+								<tr><th>* 이메일</th>
+									<td><input type="email" id="email" name="user_email" placeholder="예) itys@study.co.kr" required oninput="checkEmail()"/><br>
 								<span class="email_ok">사용 가능한 이메일입니다.</span>
-								<span class="email_already">이미 사용중인 이메일입니다.</span>
-							</div>
-							<!-- <div>* 
-								<input type="radio" name="user_position" value="S" checked> 학생 &nbsp;
-								<input type="radio" name="user_position" value="T"> 선생님
-							</div> -->
+								<span class="email_already">이미 사용중인 이메일입니다.</span></td>
+								</tr>
+							</table>
 							<button type="submit">회원가입하기</button>
 						</form>
 					</div>
