@@ -43,12 +43,24 @@
 		GROUP BY MONTH
 	</select>
 	
-	<select id="fiveRecentPayments" resultType="resultPayment">
-		select student_name, tutor_name, pay_datetm, pay_method, pay_amount, pay_status
-		from (select student_name, tutor_name, pay_datetm, pay_method, pay_amount, pay_status, rank() over (order by pay_datetm desc) as new_5_pay 
-      		  from payment
-     		  order by pay_datetm desc) 
-		where rownum<=5
-	</select>
-	
+	<select id="oneYearEarning" resultMap="resultBarData">
+			WITH QR1 AS(SELECT MONTH
+	    	FROM (SELECT TO_CHAR(ADD_MONTHS(to_date(add_months(sysdate, -12), 'YY/MM/DD'), LEVEL-1),'YY/MM') AS MONTH FROM DUAL
+	          CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TO_DATE(TO_CHAR(SYSDATE,'YYYYMM'),'YYYYMM'),to_date(add_months(sysdate, -12), 'YY/MM/DD'))+1)),
+			QR2 AS (
+	    	SELECT MONTH,SUM(TO_NUMBER(REPLACE(STR,'만원','0000'))) AS TOTAL
+			FROM (SELECT PAY_AMOUNT AS STR,TO_CHAR(PAY_DATETM,'YY/MM') AS MONTH
+				  FROM PAYMENT 
+				  WHERE TO_CHAR(PAY_DATETM,'YY/MM') BETWEEN TO_CHAR(to_date(add_months(sysdate, -12), 'YY/MM/DD'),'YY/MM') AND TO_CHAR(to_date(sysdate,'YY/MM/DD'),'YY/MM'))
+			GROUP BY MONTH)
+			SELECT QR1.MONTH,NVL(QR2.TOTAL,0) AS EARNING
+			FROM QR1 LEFT JOIN QR2 ON QR1.MONTH=QR2.MONTH 
+			ORDER BY QR1.MONTH
+		</select>
+		
+		<select id="fiveNewlyPosted" resultMap="resultBoard">
+			select board_writer, board_content, board_date
+			from (select * from board order by board_date desc)
+			where rownum <![CDATA[<=]]> 5
+		</select>
 </mapper>
