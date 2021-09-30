@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tftsa.itys.adminDashboard.model.vo.BarData;
+import com.tftsa.itys.adminDashboard.model.vo.PieData;
 import com.tftsa.itys.adminPayment.model.vo.Payment;
 import com.tftsa.itys.board.model.vo.Board;
 
@@ -56,6 +57,12 @@ public class AdminDashboardDao {
 		List<Board> post_list = sqlSession.selectList("admindashboardMapper.fiveNewlyPosted");
 		return (ArrayList<Board>)post_list;
 	}
+	
+	public ArrayList<PieData> categorySaleRate(){
+		List<PieData> pie_list = sqlSession.selectList("admindashboardMapper.categorySaleRate");
+		return (ArrayList<PieData>)pie_list;
+	}
+
 }
 	
 

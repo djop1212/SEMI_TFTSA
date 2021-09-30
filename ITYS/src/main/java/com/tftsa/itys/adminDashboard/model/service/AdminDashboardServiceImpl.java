@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tftsa.itys.adminDashboard.model.dao.AdminDashboardDao;
 import com.tftsa.itys.adminDashboard.model.vo.BarData;
+import com.tftsa.itys.adminDashboard.model.vo.PieData;
 import com.tftsa.itys.adminPayment.model.vo.Payment;
 import com.tftsa.itys.board.model.vo.Board;
 
@@ -57,5 +58,10 @@ public class AdminDashboardServiceImpl implements AdminDashboardService{
 	@Override
 	public ArrayList<Board> fiveNewlyPosted() {
 		return admindashboardDao.fiveNewlyPosted();
+	}
+	
+	@Override
+	public ArrayList<PieData> categorySaleRate() {
+		return admindashboardDao.categorySaleRate();
 	}
 }

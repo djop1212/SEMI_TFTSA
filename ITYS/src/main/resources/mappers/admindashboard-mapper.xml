@@ -13,8 +13,7 @@
 		<result column="pay_amount" property="pay_amount" />
 		<result column="pay_status" property="pay_status" />
 	</resultMap>
-	
-	
+		
 	<resultMap type="BarData" id="resultBarData">
 		<id column="month" property="month" />
 		<result column="earning" property="earning" />
@@ -25,6 +24,11 @@
 		<result column="board_writer" property="board_writer" />
 		<result column="board_content" property="board_content" />
 		<result column="board_date" property="board_date" />	
+	</resultMap>
+	
+	<resultMap type="PieData" id="resultPieData">
+		<id column="category" property="category" />
+		<result column="cnt" property="cnt" />
 	</resultMap>
 
 	<select id="todayEarning" resultType="_int">
@@ -85,5 +89,16 @@
 		from (select * from board order by board_date desc)
 		where rownum <![CDATA[<=]]> 5
 	</select>
+	
+	<select id="categorySaleRate" resultMap="resultPieData">
+		SELECT CATEGORY,COUNT(*) CNT
+		FROM PAYMENT P 
+		LEFT OUTER JOIN TUTOR T ON P.TUTOR_NO=T.USER_NO
+		LEFT JOIN SUBJECT S ON T.SUB_NAME=S.SUB_NAME
+		WHERE P.PAY_STATUS='COMPLETE'
+		GROUP BY S.CATEGORY
+		ORDER BY CNT DESC
+	</select>
+	
 </mapper>
 
