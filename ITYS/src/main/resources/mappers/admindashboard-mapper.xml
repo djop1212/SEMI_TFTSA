@@ -55,6 +55,14 @@
 			  WHERE TO_CHAR(PAY_DATETM,'YY')='21')
 		GROUP BY MONTH
 	</select>
+  
+	<select id="fiveRecentPayments" resultMap="resultPayment">
+		select student_name, tutor_name, pay_datetm, pay_method, pay_amount, pay_status
+		from (select student_name, tutor_name, pay_datetm, pay_method, pay_amount, pay_status, rank() over (order by pay_datetm desc) as new_5_pay 
+      		  from payment
+     		  order by pay_datetm desc) 
+		where rownum<![CDATA[<=]]>5
+	</select>
 	
 	<select id="oneYearEarning" resultMap="resultBarData">
 			WITH QR1 AS(SELECT MONTH
@@ -70,6 +78,7 @@
 			FROM QR1 LEFT JOIN QR2 ON QR1.MONTH=QR2.MONTH 
 			ORDER BY QR1.MONTH
 	</select>
+
 		
 	<select id="fiveNewlyPosted" resultMap="resultBoard">
 		select board_writer, board_content, board_date
@@ -77,3 +86,4 @@
 		where rownum <![CDATA[<=]]> 5
 	</select>
 </mapper>
+
