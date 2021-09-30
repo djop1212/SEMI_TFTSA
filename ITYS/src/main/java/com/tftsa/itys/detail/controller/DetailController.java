@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import com.tftsa.itys.detail.model.vo.RoomNo;
 import com.tftsa.itys.detail.model.vo.TutorDetail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
+import com.tftsa.itys.member.model.vo.Member;
 
 
 
@@ -127,15 +129,22 @@ public class DetailController {
 
 	public String reviewInsert(Detail detail, Model model, @RequestParam("pay_no") int pay_no,
 										@RequestParam("student_no") int student_no,
-										@RequestParam("user_no")int user_no) {
+										@RequestParam("user_no")int user_no, HttpSession session) {
 		logger.info("pay_no " + pay_no);
 		TutorDetail tutorno = detailService.tutorNo(user_no);
+	
 		if (detailService.reviewInsert(detail) > 0) {
+			Member loginUser=(Member)session.getAttribute("loginMember");
 			model.addAttribute("tutorno", tutorno);
 			model.addAttribute("pay_no", pay_no);
 			model.addAttribute("student_no", student_no);
-			return  "redirect:detail.do?user_no=" + tutorno.getUser_no() + "&" + "student_no=" + student_no + "&" + "tutor_no=" + tutorno.getUser_no();
-
+			model.addAttribute("loginUser", loginUser);
+			logger.info("loginUser.getUser_name"+ loginUser.getUser_name());
+			/*
+			 * return "redirect:treview.do?user_no=" + tutorno.getUser_no() + "&" +
+			 * "student_no=" + student_no + "&" + "user_name=" + loginUser.getUser_name();
+			 */
+				return "redirect:detail.do?user_no="+user_no +"&"+"tutor_no=" +tutorno.getUser_no();
 		} else {
 			model.addAttribute("message", "회원가입 실패!");
 			return "common/error";
@@ -147,15 +156,22 @@ public class DetailController {
 	@RequestMapping("vdelete.do")
 	public String deleteReview(Detail detail, Model model, @RequestParam("rev_no") int rev_no,
 			@RequestParam("student_no") int student_no,
-			@RequestParam("user_no")int user_no) {
+			@RequestParam("user_no")int user_no, HttpSession session) {
 		TutorDetail tutorno = detailService.tutorNo(user_no);
+		
 		logger.info("student_no" + student_no);
 		if(detailService.deleteReview(detail) > 0) {
+			Member loginUser=(Member)session.getAttribute("loginMember");
 			model.addAttribute("tutorno", tutorno);
 			model.addAttribute("student_no", student_no);
 			model.addAttribute("user_no", user_no);
-			return  "redirect:detail.do?user_no=" + tutorno.getUser_no() + "&" + "student_no=" + student_no + "&" + "tutor_no=" + tutorno.getUser_no() ;
-
+			model.addAttribute("loginUser", loginUser);
+			logger.info("loginUser.getUser_name "+ loginUser.getUser_name());
+			/*
+			 * return "redirect:treview.do?user_name=" +loginUser.getUser_name() + "&" +
+			 * "student_no=" + student_no + "&" + "user_no=" + tutorno.getUser_no();
+			 */
+			return "redirect:detail.do?user_no="+user_no +"&"+"tutor_no=" +tutorno.getUser_no();
 		}else {
 			model.addAttribute("message");
 			return "common/error";
@@ -185,12 +201,14 @@ public class DetailController {
 			double avgScore = detailService.avgScore(user_no); 
 			model.addAttribute("reviewCount", reviewCount);
 			 model.addAttribute("avgScore", avgScore);
-			return "redirect:detail.do";
+			 model.addAttribute("user_no", user_no);
+			return "detail/detail";
 		}else if(tprofile.size() >0 && reviewCount <= 0){
 			 model.addAttribute("tprofile", tprofile); 
 			model.addAttribute("tutorno", tutorno);
 			model.addAttribute("pd", pd);
 			model.addAttribute("reviewCount", reviewCount);
+			
 			return "detail/detail";
 		}else {
 			model.addAttribute("message", "회원 목록이 존재 하지 않습니다.");
@@ -213,6 +231,7 @@ public class DetailController {
 		int reviewCount = detailService.tutorReview(user_no);
 		TutorDetail tutorno = detailService.tutorNo(user_no);
 		TutorLikes tlikes = detailService.tutorSave(lc);
+		TutorDetail tutorqna = detailService.tutorNo(user_no);
 		logger.info("tprofile " + tprofile.size()); 
 		logger.info("tlikes" + tlikes);
 		if(tprofile.size() >0  && reviewCount >0) {
@@ -226,7 +245,7 @@ public class DetailController {
 			 mv.addObject("user_no", user_no);
 			 mv.addObject("student_no", student_no);
 			 mv.addObject("tutor_no", tutor_no);
-			
+			mv.addObject("tutorqna",tutorqna);
 			 mv.setViewName("redirect:detail.do?user_no="+ user_no + "&" + "student_no=" + student_no + "&" + "tutor_no=" + tutor_no);
 		}else if(tprofile.size() >0  && reviewCount <=0){
 			
@@ -238,7 +257,7 @@ public class DetailController {
 			 mv.addObject("user_no", user_no);
 			 mv.addObject("student_no", student_no);
 			 mv.addObject("tutor_no", tutor_no);
-				
+			 mv.addObject("tutorqna",tutorqna);
 			 mv.setViewName("redirect:detail.do?user_no="+ user_no + "&" + "student_no=" + student_no + "&" + "tutor_no=" + tutor_no);
 		
 		}else {
@@ -267,13 +286,16 @@ return mv;
 			model.addAttribute("rl", rl);
 			model.addAttribute("td2", td2);
 			model.addAttribute("tutorno", tutorno);
-			return "redirect:detail.do";
+			model.addAttribute("user_no", user_no);
+			return "detail/detail";
 		}else if(td2 != null  && reviewCount <= 0){
 			
 			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("rl", rl);
 			model.addAttribute("td2", td2);
 			model.addAttribute("tutorno",tutorno);
+			model.addAttribute("user_no", user_no);
+			 model.addAttribute("message", "등록된 리뷰가 없습니다.");
 			return "detail/detail";
 		}else {
 			model.addAttribute("message", "회원 목록이 존재 하지 않습니다.");
@@ -295,6 +317,7 @@ return mv;
 		TutorLikes tlikes = detailService.tutorSave(cl);
 		TutorDetail tutorno = detailService.tutorNo(user_no);
 		RoomNo searchRoom = detailService.roomNo(rn);
+		logger.info("user_name "+user_name);
 		if(rl.size() > 0 && reviewCount > 0 ) {
 			double avgScore = detailService.avgScore(user_no);
 			model.addAttribute("reviewPay", reviewPay);
@@ -306,7 +329,7 @@ return mv;
 			 model.addAttribute("tutorno",tutorno);
 			 model.addAttribute("searchRoom",searchRoom);
 			 return "detail/detail";
-		}else if(rl.size() > 0 && reviewCount <= 0){
+		}else if(rl.size() >= 0 && reviewCount <= 0){
 			model.addAttribute("reviewPay", reviewPay);
 			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("rl", rl);
@@ -314,6 +337,7 @@ return mv;
 			 model.addAttribute("tlikes",tlikes);
 			 model.addAttribute("tutorno",tutorno);
 			 model.addAttribute("searchRoom",searchRoom);
+			 model.addAttribute("message", "등록된 리뷰가 없습니다.");
 			 return "detail/detail";
 		}else {
 			model.addAttribute("message", "회원 목록이 존재 하지 않습니다.");
@@ -329,6 +353,7 @@ public String tutorPicTeacher(@RequestParam(value="user_no" , required=false) in
 	int reviewCount = detailService.tutorReview(user_no);
 	ArrayList<TutorDetail> tpic = detailService.tutorPic(user_no);
 	TutorDetail tutorno = detailService.tutorNo(user_no);
+	logger.info("tpic" + tpic);
 	if(reviewCount > 0) {
 		double avgScore = detailService.avgScore(user_no);
 		model.addAttribute("reviewCount", reviewCount);
@@ -336,7 +361,7 @@ public String tutorPicTeacher(@RequestParam(value="user_no" , required=false) in
 		model.addAttribute("tpic", tpic);
 		model.addAttribute("tutorno", tutorno);
 		return "detail/detail";
-	}else if(reviewCount < 0) {
+	}else if(reviewCount <= 0) {
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("tpic", tpic);
 		model.addAttribute("tutorno", tutorno);
@@ -374,7 +399,7 @@ public String tutorPic(@RequestParam(value="user_no" , required=false) int user_
 		 model.addAttribute("searchRoom",searchRoom);
 		return "detail/detail";
 		
-	}else if(tpic.size() > 0 && reviewCount < 0){
+	}else if(tpic.size() > 0 && reviewCount <= 0){
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("tpic", tpic);
 		 model.addAttribute("tlikes",tlikes);
@@ -443,19 +468,40 @@ public String tutorQnaTeacher(Model model, @RequestParam(value="tutor_no") int t
 	int reviewCount = detailService.tutorReview(tutor_no);
 	TutorDetail tutorno = detailService.tutorNo(tutor_no);
 	
-	if(reviewCount >0) {
+	if(reviewCount >0 && tutorqna != null) {
 		double avgScore = detailService.avgScore(tutor_no); 
 		model.addAttribute("tutorqna", tutorqna);
 		model.addAttribute("reviewCount", reviewCount);
 		 model.addAttribute("avgScore", avgScore);
 		model.addAttribute("td2", td2);
 		model.addAttribute("tutorno", tutorno);
+		
 		return  "detail/detail";
-	}else if(reviewCount <= 0) {
+	}else if(reviewCount >0 && tutorqna == null) {
+		double avgScore = detailService.avgScore(tutor_no); 
+		model.addAttribute("tutorqna", tutorqna);
+		model.addAttribute("reviewCount", reviewCount);
+		 model.addAttribute("avgScore", avgScore);
+		model.addAttribute("td2", td2);
+		model.addAttribute("tutorno", tutorno);
+		model.addAttribute("message", "등록된 게시글이 아직 없습니다.");
+		return  "detail/detail";
+	}else if
+	(reviewCount <= 0 && tutorqna !=null) {
 		model.addAttribute("tutorqna", tutorqna);
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("td2", td2);
 		model.addAttribute("tutorno", tutorno);
+		logger.info("tutorno"+tutorno);
+	
+		return "detail/detail";
+	}else if(reviewCount <= 0 && tutorqna ==null) {
+		model.addAttribute("tutorqna", tutorqna);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("td2", td2);
+		model.addAttribute("tutorno", tutorno);
+		logger.info("tutorno"+tutorno);
+		model.addAttribute("message", "등록된 게시글이 아직 없습니다.");
 		return "detail/detail";
 	}else {
 		model.addAttribute("message", "회원 목록이 존재 하지 않습니다.");
@@ -475,7 +521,7 @@ public String tutorQnaTeacher(Model model, @RequestParam(value="tutor_no") int t
 		int reviewCount = detailService.tutorReview(tutor_no);
 		RoomNo searchRoom = detailService.roomNo(rn);
 		logger.info("tlikes" + tlikes);
-		if(reviewCount > 0 ) {
+		if(reviewCount > 0 && tutorqna != null ) {
 		double avgScore = detailService.avgScore(tutor_no);
 			model.addAttribute("tutorqna", tutorqna);
 			model.addAttribute("reviewCount", reviewCount);
@@ -484,8 +530,27 @@ public String tutorQnaTeacher(Model model, @RequestParam(value="tutor_no") int t
 			model.addAttribute("tlikes", tlikes);
 			model.addAttribute("tutorno", tutorno);
 			model.addAttribute("searchRoom", searchRoom);
+				return "detail/detail";
+		}else if(reviewCount > 0 && tutorqna == null ) {
+		double avgScore = detailService.avgScore(tutor_no);
+			model.addAttribute("tutorqna", tutorqna);
+			model.addAttribute("reviewCount", reviewCount);
+			model.addAttribute("avgScore", avgScore);
+			model.addAttribute("td2", td2);
+			model.addAttribute("tlikes", tlikes);
+			model.addAttribute("tutorno", tutorno);
+			model.addAttribute("searchRoom", searchRoom);
+			model.addAttribute("message", "등록된 게시글이 아직 없습니다.");
+				return "detail/detail";
+		}else if(reviewCount <= 0 && tutorqna != null ) {
+		
+			model.addAttribute("reviewCount", reviewCount);
+			model.addAttribute("td2", td2);
+			model.addAttribute("tlikes", tlikes);
+			model.addAttribute("tutorno", tutorno);
+			model.addAttribute("tutorqna", tutorqna);
 			return "detail/detail";
-		}else if(reviewCount <= 0 && tutorqna==null) {
+		}else if(reviewCount <= 0 && tutorqna == null ) {
 		
 			model.addAttribute("reviewCount", reviewCount);
 			model.addAttribute("td2", td2);
@@ -493,7 +558,8 @@ public String tutorQnaTeacher(Model model, @RequestParam(value="tutor_no") int t
 			model.addAttribute("tutorno", tutorno);
 			model.addAttribute("message", "등록된 게시글이 아직 없습니다.");
 			return "detail/detail";
-		}else {
+		}else
+		{
 			model.addAttribute("message", "정보가 없습니다.");
 			return "common/error";
 		}
@@ -503,12 +569,12 @@ public String tutorQnaTeacher(Model model, @RequestParam(value="tutor_no") int t
 	}
 	
 	@RequestMapping("qnaanswer.do")
-	public String qnaAnswer(TutorQna tq, Model model, @RequestParam(value="tutor_no") int tutor_no) {
-		logger.info("user_no "+ tutor_no);
+	public String qnaAnswer(TutorQna tutoqna, Model model, @RequestParam(value="tutor_no") int tutor_no) {
+		logger.info("tutor_no "+ tutor_no);
 		
 		
-		if(detailService.qnaAnswerInsert(tq) > 0) { 
-			model.addAttribute("tq", tq);
+		if(detailService.qnaAnswerInsert(tutoqna) > 0) { 
+			model.addAttribute("tutoqna", tutoqna);
 		
 		
 			return  "redirect:tqnat.do?tutor_no=" + tutor_no;
@@ -523,7 +589,7 @@ public String tutorQnaTeacher(Model model, @RequestParam(value="tutor_no") int t
 	  @RequestMapping("qnaupdate.do") 
 	  public String qnaUpdate(TutorQna tqup, Model model, @RequestParam(value="tutor_no") int tutor_no
 			 ) {
-	  logger.info("user_no "+ tutor_no);
+	  logger.info("tutor_no "+ tutor_no);
 	  
 	  
 	  if(detailService.qnaUpdate(tqup)> 0 ) { 

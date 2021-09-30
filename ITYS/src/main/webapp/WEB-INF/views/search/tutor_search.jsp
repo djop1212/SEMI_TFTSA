@@ -563,17 +563,27 @@ ol, ul, li {
 	
 	</section>
 		<hr>
-	<div class="container">
-	<h5>선생님 top 10</h5>
-	</div>
+	
 	
 	<div class="container">
 		<div style="text-align: center; margin-top: 30px;">
 			<ul>
+
 				<c:choose>
 					<c:when test="${ not empty searchTutor }">
+						<div class="container">
+						<h4>과외 검색 결과</h4>
+						</div>
 						<c:forEach items="${ requestScope.searchTutor }" var="s" varStatus="statusST">
-						<li><a href="#">
+											
+					<li>
+						<c:url var="detail" value="/detail.do">
+                        <c:param name="user_no" value="${s.user_no }" />
+                        <c:param name="student_no" value="${loginMember.user_no }"/>
+                        <c:param name="tutor_no" value="${s.user_no }"/>
+                        </c:url>
+                        <a href="${detail}">
+                        
 								<div class="list_container"
 									style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
 
@@ -631,6 +641,7 @@ ol, ul, li {
 											</div>
 										</div>
 
+
 									</div>
 								</div>
 						</a></li>
@@ -639,8 +650,18 @@ ol, ul, li {
 					</c:when>
 
 					<c:otherwise>
+					<div class="container">
+						<h4>선생님 top 10</h4>
+					</div>
 						<c:forEach items="${ requestScope.tutorList }" var="t" varStatus="statusTL">
-							<li><a href="#">
+							<li>
+						<c:url var="detail" value="/detail.do">
+                        <c:param name="user_no" value="${t.user_no }" />
+                        <c:param name="student_no" value="${loginMember.user_no }"/>
+                        <c:param name="tutor_no" value="${t.user_no }"/>
+                        </c:url>
+                        <a href="${detail}">
+                        
 									<div class="list_container"
 										style="width: 1000px; height: 200px; display: inline-block; margin-top: 20px;">
 

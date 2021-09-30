@@ -23,7 +23,7 @@ public interface DetailService {
 	int deleteReview(Detail detail);
 	int tutorSaveInsert(TutorLikes tlikes);
 	ArrayList<TutorQna> qnaList(int tutor_no);
-	int qnaAnswerInsert(TutorQna tq);
+	int qnaAnswerInsert(TutorQna tutoqna);
 	int qnaUpdate(TutorQna tqup);
 	TutorQna qnaOne(int tutor_no);
 	ArrayList<TutorDetail> tutorPic(int user_no);

@@ -71,8 +71,8 @@ public class DetailServiceImpl implements DetailService{
 		 return detailDao.qnaList(tutor_no);
 	 }
 	 @Override
-	 public int qnaAnswerInsert(TutorQna tq){
-		 return detailDao.qnaAnswerInsert(tq);
+	 public int qnaAnswerInsert(TutorQna tutoqna){
+		 return detailDao.qnaAnswerInsert(tutoqna);
 	 }
 	 @Override
 	 public int qnaUpdate(TutorQna tqup){
