@@ -158,7 +158,7 @@ public class MainController {
 //				job.put("sub_name", URLEncoder.encode(
 //						tutor.getSub_name(), "utf-8"));
 //				
-//				jarr.add(job); //jarr �뿉 job ���옣
+//				jarr.add(job); //jarr
 //			}
 //
 //		sendJson.put("searchTutor", jarr);

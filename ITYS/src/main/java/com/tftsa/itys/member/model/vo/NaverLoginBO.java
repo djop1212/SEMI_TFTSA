@@ -36,9 +36,7 @@ public class NaverLoginBO {
 		if(state != getSession(session) || getSession(session)==null) {
 			/* 세션 유효성 검증을 위하여 난수를 생성 */
 			state = generateRandomString();
-		} /*
-			 * else if(getSession(session) == null) { state = generateRandomString(); }
-			 */
+		} 
 		/* 생성한 난수 값을 session에 저장 */	
 		setSession(session, state);
 		System.out.println("state : "+state);
