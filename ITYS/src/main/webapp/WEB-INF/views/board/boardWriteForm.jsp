@@ -36,7 +36,7 @@
 <tr><th colspan="2">
 <input type="submit" value="등록하기"> &nbsp; 
 <input type="reset" value="작성취소"> &nbsp;
-<input type="button" value="목록" onclick="javascript:history.go(-1); return false;">
+<input type="button" value="이전 페이지" onclick="javascript:history.go(-1); return false;">
 </th></tr>
 </table>
 </form>
