@@ -139,7 +139,12 @@ img{
 								<c:if test="${position eq 'T' }">
 								<li><a href="clist.do?user_no=${tutor.user_no }" style="color:white; background: #42acae; border-radius:3px;">채팅목록</a></li>
 								</c:if>
+								<c:if test="${position eq 'S' }">
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
+								</c:if>
+								<c:if test="${position eq 'T' }">
+								<li><a href="msclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>	
+								</c:if>
 							</ul>
 						</div>
 						<div><a style="color:#969ca2;" href="#" onclick="deleteuser(); return false;">회원탈퇴</a></div>
@@ -148,7 +153,7 @@ img{
 						<div>
 							<h4>💬 채팅 목록</h4>
 						</div><br>
-						<form action="delclist.do" method="post">
+						<form action="delclist.do" method="post" onsubmit="confirm('채팅 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="user_no" value="${loginMember.user_no }">
 						<div>
 						
@@ -159,9 +164,16 @@ img{
 								<table>
 									<tr>
 									<td valign="top">
-										<img
-										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" style="margin-top:5px" />
+										<c:if test="${ucrt.pic eq null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										<c:if test="${ucrt.pic ne null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${ucrt.pic }"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
 									</td>
 									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }&tutor_no=${ ucrt.tutor_no }&student_no=${ ucrt.student_no }'">
 										선생님이름 : ${ ucrt.tutor_name }<br>	
@@ -179,6 +191,19 @@ img{
 								<c:forEach items="${ requestScope.userchattingroomstudent }" var="ucrt">
 								<table>
 									<tr>
+									<td valign="top">
+										<c:if test="${ucrt.pic eq null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										<c:if test="${ucrt.pic ne null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${ucrt.pic }"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										
+									</td>
 									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='selectChatting.do?chat_room_no=${ ucrt.chat_room_no }&tutor_no=${ ucrt.tutor_no }&student_no=${ ucrt.student_no }'">
 										학생이름 : ${ ucrt.student_name }<br>	
 										학년 : ${ ucrt.stu_job }<br>

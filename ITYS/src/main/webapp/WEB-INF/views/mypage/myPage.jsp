@@ -130,7 +130,12 @@ img{
 								<c:if test="${member.user_position eq 'T' }">
 								<li><a href="clist.do?user_no=${tutor.user_no }">채팅목록</a></li>
 								</c:if>
+								<c:if test="${member.user_position eq 'S' }">
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
+								</c:if>
+								<c:if test="${member.user_position eq 'T' }">
+								<li><a href="msclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>	
+								</c:if>
 							</ul>
 						</div>
 			            <br><a style="color:#969ca2;" href="#" onclick="deleteuser(); return false;">회원탈퇴</a>
@@ -148,18 +153,6 @@ img{
 										<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
 									</td>
 								</c:if>
-								<%-- <c:if test="${member.user_position eq 'S'}">
-									<td><h4>학생 프로필 수정</h4></td>
-									<td width="100px" align="right">
-										<input type="radio" name="profile_type" id="student" value="student" onchange="Click()">학생 &nbsp;
-									</td>
-								</c:if>
-								<c:if test="${member.user_position eq 'T'}">
-									<td><h4>선생님 프로필 수정</h4></td>
-									<td>
-										<input type="radio" name="profile_type" id="tutor" value="tutor" onchange="Click()">선생님
-									</td>
-								</c:if> --%>
 							</tr>
 						</table>
 						</div><br>

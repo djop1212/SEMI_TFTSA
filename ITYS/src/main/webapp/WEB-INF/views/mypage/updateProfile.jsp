@@ -142,6 +142,12 @@ img{
 					<div id="right">
 					<form action="upUser.do" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="user_no" value="${member.user_no}">
+					<c:if test="${loginMember.user_position eq 'S' }">
+						<input type="hidden" name="city" value="">
+						<input type="hidden" name="country" value="">
+						<input type="hidden" name="sub_no" value="0">
+						<input type="hidden" name="key_no" value="0">
+					</c:if>
 						<!-- <div>
 						<table>
 							<tr>
@@ -384,7 +390,7 @@ img{
 									</td>
 								</Tr>
 								<Tr>
-									<td>최소페이${tutor.min_pay }</td>
+									<td>최소페이</td>
 									<td>
 										<select id="min_pay" name="min_pay">
 										<c:if test="${tutor.min_pay eq '15만원 이하' }">
@@ -601,7 +607,7 @@ function validate() {
 
 function deleteuser(){
 	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
-		location.href="deleteUser.do?user_id=${member.user_id}";	
+		location.href="deleteUser.do?user_no=${member.user_no}";	
 	}else{
 		return;
 	}

@@ -26,12 +26,18 @@
 		
 		<typeAlias type="com.tftsa.itys.adminKeyword.model.vo.AdminKeyword" alias="AdminKeyword" />
 		<typeAlias type="com.tftsa.itys.adminReview.model.vo.AdminReview" alias="AdminReview" />
+		<typeAlias type="com.tftsa.itys.adminDashboard.model.vo.BarData" alias="BarData"/>
 		<typeAlias type="com.tftsa.itys.payment.model.vo.UserStudent" alias="UserStudent"/>
+
 		<typeAlias type="com.tftsa.itys.adminDashboard.model.vo.BarData" alias="BarData"/>
 		
+
     	<typeAlias type="com.tftsa.itys.member.model.vo.Member" alias="Member"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Likes" alias="Likes"/>
 		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyLikes" alias="MyLikes"/>
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.StudentChattingroom" alias="StudentChattingroom"/>
+		<typeAlias type="com.tftsa.itys.chatting.model.vo.TutorChattingroom" alias="TutorChattingroom"/>
+
     	<typeAlias type="com.tftsa.itys.mypage.model.vo.Student" alias="Student"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.Tutor" alias="Tutor"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.SubData" alias="SubData"/>
@@ -41,14 +47,18 @@
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.UserChattingroomStudent" alias="UserChattingroomStudent"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyKeyword" alias="MyKeyword"/>
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyKeyData" alias="MyKeyData"/>
+
  		<typeAlias type="com.tftsa.itys.mypage.model.vo.MyStudent" alias="MyStudent"/>
+
 
  		<typeAlias type="com.tftsa.itys.detail.model.vo.Detail" alias="Detail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorDetail" alias="tutorDetail"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorLikes" alias="tutorLikes"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.TutorQna" alias="tutorQna"/>
-		<typeAlias type="com.tftsa.itys.detail.model.vo.AfterPay" alias="AfterPay"/>
-		<typeAlias type="com.tftsa.itys.detail.model.vo.OpenChat" alias="OpenChat"/>
+
+	    <typeAlias type="com.tftsa.itys.detail.model.vo.AfterPay" alias="AfterPay"/>
+	    <typeAlias type="com.tftsa.itys.detail.model.vo.OpenChat" alias="OpenChat"/>
+
 		<typeAlias type="com.tftsa.itys.detail.model.vo.LikesCheck" alias="LikesCheck"/>
 		<typeAlias type="com.tftsa.itys.detail.model.vo.RoomNo" alias="RoomNo"/>
 

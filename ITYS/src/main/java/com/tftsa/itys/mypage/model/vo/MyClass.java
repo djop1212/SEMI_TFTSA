@@ -10,7 +10,7 @@ public class MyClass implements java.io.Serializable{
 	private String pay_method;
 	private String pay_amount;
 	private String pay_status;
-	private String user_no;
+	private int user_no;
 	private String user_name;
 	private String user_phone;
 	private String user_email;
@@ -31,7 +31,7 @@ public class MyClass implements java.io.Serializable{
 	public MyClass () {}
 
 	public MyClass(int pay_no, String student_name, String tutor_name, String pay_datetm, String pay_method,
-			String pay_amount, String pay_status, String user_no, String user_name, String user_phone,
+			String pay_amount, String pay_status, int user_no, String user_name, String user_phone,
 			String user_email, String user_position, String pic, String min_pay, String online_ok, String area,
 			String intro, String day, String time, String style, String l_grd, String class_min, String class_times,
 			String sub_name) {
@@ -118,11 +118,11 @@ public class MyClass implements java.io.Serializable{
 		this.pay_status = pay_status;
 	}
 
-	public String getUser_no() {
+	public int getUser_no() {
 		return user_no;
 	}
 
-	public void setUser_no(String user_no) {
+	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
 

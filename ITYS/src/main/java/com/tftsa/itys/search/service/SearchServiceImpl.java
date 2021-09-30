@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
 import com.tftsa.itys.search.dao.SearchDao;
+import com.tftsa.itys.search.vo.Avg;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
 import com.tftsa.itys.search.vo.Search;
-import com.tftsa.itys.search.vo.Subject;
 
 @Service("searchService")
 public class SearchServiceImpl implements SearchService{
@@ -25,12 +26,17 @@ public class SearchServiceImpl implements SearchService{
 	}
 	
 	@Override
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectCategory(){
+	public ArrayList<Avg> selectAvg(){
+		return searchDao.selectAvg();
+	}
+	
+	@Override
+	public ArrayList<Subject> selectCategory(){
 		return searchDao.selectCategory();
 	}
 	
 	@Override
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectSubject(String category){
+	public ArrayList<Subject> selectSubject(String category){
 		return searchDao.selectSubject(category);
 	}
 	

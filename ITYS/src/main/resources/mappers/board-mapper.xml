@@ -28,7 +28,7 @@
 			               BOARD_ORIGINAL_FILENAME, BOARD_RENAME_FILENAME, VIEW_CNT 
 			       FROM (SELECT * FROM BOARD 
 			              ORDER BY BOARD_NO DESC))
-			<![CDATA[where rnum >= #{startRow} and rnum <= #{endRow}]]>	
+			<![CDATA[where rnum >= #{startRow} and rnum <= #{endRow}]]>
 	</select>
 
 	<!-- 게시글 작성 -->

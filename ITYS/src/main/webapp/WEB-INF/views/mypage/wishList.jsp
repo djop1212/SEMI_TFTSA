@@ -152,7 +152,7 @@ img{
 						
 							<h4>❤ 찜 목록</h4>
 						</div><br>
-						<form action="delwlist.do" method="post">
+						<form action="delwlist.do" method="post" onsubmit="confirm('찜 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="student_no" value="${loginMember.user_no}">
 						<div>
 							<ul id="wlist">
@@ -161,11 +161,18 @@ img{
 								<table>
 									<tr>
 									<td valign="top">
-										<img
-										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" style="margin-top:5px" />
+										<c:if test="${w.pic eq null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										<c:if test="${w.pic ne null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${w.pic }"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
 									</td>
-									<td style="width:475px; padding-left:15px">
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${w.user_no}&student_no=${loginMember.user_no }&tutor_no=${w.user_no }'">
 										선생님이름 : ${w.user_name }<br>	
 										과외 한 줄 소개 : ${w.intro }<br>
 										전화번호 : ${w.user_phone }<br>
@@ -175,7 +182,7 @@ img{
 									<td style="align: right;"><input type="checkbox" name="chk" value="${w.user_no }"></td>
 									</tr>
 								</table><hr>
-								<%-- <c:if test="${list. }"></c:if> --%>
+								
 								</c:forEach>
 								
 								<c:set var="e" value="<%= exception %>" />

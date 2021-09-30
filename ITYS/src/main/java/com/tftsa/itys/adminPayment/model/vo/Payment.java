@@ -2,7 +2,7 @@ package com.tftsa.itys.adminPayment.model.vo;
 
 import java.sql.Timestamp;
 
-public class Payment implements java.io.Serializable {
+public class Payment implements java.io.Serializable { // 결제 클래스
 	private static final long serialVersionUID = 2005L;
 	
 	private int pay_no;

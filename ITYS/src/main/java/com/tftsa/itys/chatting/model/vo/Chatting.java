@@ -2,8 +2,8 @@ package com.tftsa.itys.chatting.model.vo;
 
 import java.sql.Timestamp;
 
-public class Chatting implements java.io.Serializable {
-	private static final long serialVersionUID = 2009L;
+public class Chatting implements java.io.Serializable { // 채팅 클래스
+	private static final long serialVersionUID = 2004L;
 	
 	private int chat_no;
 	private int chat_room_no;

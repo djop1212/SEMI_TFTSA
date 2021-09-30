@@ -54,18 +54,18 @@ public class MemberController {
     @RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletResponse response, SessionStatus status)
             throws IOException, ParseException {
-        System.out.println("===== callback.do =====");
+        //System.out.println("===== callback.do =====");
         OAuth2AccessToken oauthToken;
         logger.info("session : "+session);
-        logger.info("code : "+code);
+        //logger.info("code : "+code);
         logger.info("state : "+state);
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
-        logger.info("oauthToken : "+oauthToken);
+        //logger.info("oauthToken : "+oauthToken);
         //로그인 사용자 정보를 읽어온다.
         apiResult = naverLoginBO.getUserProfile(oauthToken);
-        logger.info(apiResult.toString());
+        //logger.info(apiResult.toString());
         model.addAttribute("result", apiResult);
-        logger.info("result : "+apiResult);
+        //logger.info("result : "+apiResult);
         
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(apiResult);
@@ -82,7 +82,7 @@ public class MemberController {
         String birthyear = (String)response_obj.get("birthyear");
         String mobile = (String)response_obj.get("mobile");
 
-        System.out.println(id);
+        //System.out.println(id);
         session.setAttribute("sessionId",id); //세션 생성        
 
         Member loginMember = memberService.selectEmail(email);
@@ -114,7 +114,7 @@ public class MemberController {
 	        if (memberService.insertUser(member) > 0) {
 			//Member loginMember = memberService.selectUser(member.getUser_id());
 	        member = memberService.selectEmail(email);
-	        System.out.println("member : "+member.toString());
+	        //System.out.println("member : "+member.toString());
 	        session.setAttribute("loginMember", member);
 			status.setComplete(); // 요청 성공. 200 전송보냄
 //			PrintWriter out = response.getWriter();
@@ -167,7 +167,7 @@ public class MemberController {
         
         //https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=O1DNpjOo6U7RT1EEQ0Cw
         //&redirect_uri=http%3A%2F%2Flocalhost%3A8087%2Fitys%2Fcallback.do&state=024d2a87-a3d2-4c22-91e0-17828c920786
-        System.out.println("네이버 : \n" + naverAuthUrl);
+        //System.out.println("네이버 : \n" + naverAuthUrl);
         
         //네이버 
         model.addAttribute("url", naverAuthUrl);

@@ -51,14 +51,20 @@
 
 	<select id="selectSearch" parameterType="Search" resultMap="resultTutor">
 
-		SELECT * from tutor, subject, user_info
-		WHERE tutor.sub_name = subject.sub_name
-		AND tutor.user_no = user_info.user_no
+		<!-- SELECT distinct tutor.* from tutor, sub_data, user_info
+		WHERE tutor.user_no = sub_data.user_no(+)
+		AND sub_data.user_no = user_info.user_no(+) -->
+		SELECT distinct tutor.* from tutor, sub_data, subject, user_info
+		WHERE tutor.user_no = sub_data.user_no(+)
+		AND sub_data.sub_no = subject.sub_no(+)
+        AND tutor.user_no = user_info.user_no(+)
+        
 		<if test = "word != 'null'  ">
 			AND (tutor.intro like '%' || #{ word } || '%'
 			OR user_info.user_name like '%' || #{ word } || '%')
 		</if>
 		<if test = "category != 'null'  ">
+		
 			AND subject.category = #{ category }
 		</if>
 		<if test = "sub_name != 'null'  ">
@@ -97,7 +103,13 @@
 		
 		<if test = "l_grd_list[0] != 'null'  ">
 			<foreach collection="l_grd_list" item="item" open="and(" close=")" separator="or" >
-				regexp_like(REPLACE(tutor.l_grd,' ',''), #{ item })
+				regexp_like(tutor.l_grd, #{ item })
+			</foreach>
+		</if>
+		
+		<if test = "online_ok_list[0] != 'null'  ">
+		<foreach collection="online_ok_list" item="item" open="and(" close=")" separator="or" >
+			online_ok = #{ item }
 			</foreach>
 		</if>
 		
@@ -110,16 +122,28 @@
 				regexp_like(keyword.type_per, #{ item })
 			</foreach>
 		</if>
-		<if test='day_str != "null, "'>
+		
+		<if test='day_str != "null"'>
 			<foreach collection="db_day_list" item="item" open="and" close="" separator="and" >
 				#{ day_str } LIKE ('%' || #{ item } || '%')
 			</foreach>
 		</if>
+		
 		<if test='stime != "null"'>
 			AND SUBSTR(time,1,5) <![CDATA[>=]]>  #{ stime }
+		</if>	
+		
+		<if test='etime != "null"'>
        		AND SUBSTR(time,8,12) <![CDATA[<=]]> #{ etime }
 		</if>
         
+        <if test='min_price != ""'>
+			AND ( TO_NUMBER( replace(#{ min_price }, '만원', ''), '999999' ) <![CDATA[<=]]> TO_NUMBER(replace(min_pay, '만원', ''), '999999'))
+		</if>
+		
+		<if test='max_price != ""'>
+        	AND (TO_NUMBER(replace(min_pay, '만원', ''), '999999') <![CDATA[<=]]> TO_NUMBER( replace(#{ max_price }, '만원', ''), '999999' ))
+       	</if>
 	</select>
 </mapper>
 

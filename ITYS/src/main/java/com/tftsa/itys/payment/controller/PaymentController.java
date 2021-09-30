@@ -32,7 +32,7 @@ public class PaymentController {
 	@Autowired
 	PaymentService paymentService;
 	
-	// 결제 페이지로 이동
+	// 결제 페이지 컨트롤러
 	@RequestMapping("payment.do")
 	public ModelAndView paymentViewForward(Payment paymentList, ModelAndView mv, @RequestParam("tutor_no") int tutor_no, 
 			@RequestParam("student_no") int student_no, @RequestParam("student_name") String student_name, 
@@ -64,9 +64,12 @@ public class PaymentController {
 		return mv;
     }
 
+	// 카카오페이 컨트롤러
 	@RequestMapping("kakaoPay.do")
 	public String kakaoPay(@RequestParam("user_name") String user_name, @RequestParam("pay_no") int pay_no, 
-			@RequestParam("sub_name") String sub_name) throws ParseException {
+			@RequestParam("sub_name") String sub_name, @RequestParam("tutor_no") int tutor_no, 
+			@RequestParam("student_no") int student_no, @RequestParam("pay_amount") String pay_amount, 
+			@RequestParam("tutor_name") String tutor_name) throws ParseException {
 		try {
 			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -86,7 +89,7 @@ public class PaymentController {
 			params.put("tax_free_amount", "0");
 			params.put("approval_url", "http://localhost:8080/itys/kakaoPaySuccess.do?pay_no=" + pay_no);
 			params.put("fail_url", "http://localhost:8080/itys/kakaoPaySuccessFail.do");
-			params.put("cancel_url", "http://localhost:8080/itys/payment.do?user_no=2");
+			params.put("cancel_url", "http://localhost:8080/itys/payment.do?tutor_no=" + tutor_no + "%26student_no=" + student_no + "%26tutor_name=" + tutor_name + "%26student_name=" + user_name + "%26pay_amount=" + pay_amount);
 			
 			String string_params = new String();
 			for (Map.Entry<String, String> elem : params.entrySet()) {
@@ -111,6 +114,7 @@ public class PaymentController {
 		return "payment/payment";
 	}
 	
+	// 카카오페이 성공 컨트롤러
 	@RequestMapping("kakaoPaySuccess.do")
 	public String kakaoPaySuccess(@RequestParam("pay_no") int pay_no) {
 		paymentService.updatePayment(pay_no);
@@ -118,6 +122,7 @@ public class PaymentController {
 		return "payment/kakaoPaySuccess"; // 내보낼 뷰파일명 리턴
 	}
 	
+	// 카카오페이 실패 컨트롤러
 	@RequestMapping("kakaoPaySuccessFail.do")
 	public String kakaoPaySuccessFail() {
 		return "payment/kakaoPaySuccessFail"; // 내보낼 뷰파일명 리턴

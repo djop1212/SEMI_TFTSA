@@ -3,6 +3,8 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="paymentMapper">
+
+	<!-- 선생님 resultMap -->
 	<resultMap type="Tutor" id="resultTutor">
 		<id column="user_no" property="user_no" />
 		<result column="pic" property="pic" />
@@ -19,6 +21,7 @@
 		<result column="sub_name" property="sub_name" />
 	</resultMap>
 	
+	<!-- 사용자 학생 resultMap -->
 	<resultMap type="UserStudent" id="resultUserStudent">
 		<id column="user_no" property="user_no" />
 		<result column="pic" property="pic" />
@@ -36,6 +39,7 @@
 		<result column="login_ok" property="login_ok" />
 	</resultMap>
 	
+	<!-- 결제 resultMap -->
 	<resultMap type="Payment" id="resultPayment">
 		<id column="pay_no" property="pay_no" />
 		<result column="stuent_name" property="stuent_name" />
@@ -46,28 +50,33 @@
 		<result column="pay_status" property="pay_status" />
 	</resultMap>
 
+	<!-- 선생님 정보 조회 SQL -->
 	<select id="selectTutor" parameterType="_int" resultMap="resultTutor">
 		select * from Tutor
 		where user_no = #{ user_no }
 	</select>
 	
+	<!-- 학생 정보 조회 SQL -->
 	<select id="selectUserStudent" parameterType="_int" resultMap="resultUserStudent">
 		select * from student
 		join user_info using(user_no)
 		where user_no = #{ user_no }
 	</select>
 	
+	<!-- 결제 정보 조회 SQL -->
 	<select id="selectPayment" parameterType="Payment" resultMap="resultPayment">
 		select * from payment
 		where student_name = #{ student_name }
 		and tutor_name = #{ tutor_name }
 	</select>
 	
+	<!-- 결제 정보 추가 SQL -->
 	<insert id="insertPayment" parameterType="Payment" >
 		insert into payment
 		values (payment_seq.nextval, #{ student_name }, #{ tutor_name }, systimestamp, default, #{ pay_amount }, default)
 	</insert>
 	
+	<!-- 결제 정보 업데이트 SQL -->
 	<update id="updatePayment" parameterType="Payment">
 		update payment 
 		set pay_status = 'COMPLETE'

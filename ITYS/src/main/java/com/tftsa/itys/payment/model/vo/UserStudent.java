@@ -1,8 +1,8 @@
 package com.tftsa.itys.payment.model.vo;
 
-public class UserStudent implements java.io.Serializable {
+public class UserStudent implements java.io.Serializable { // 사용자 학생 클래스
 
-	private static final long serialVersionUID = 2010L;
+	private static final long serialVersionUID = 2009L;
 	
 	private int user_no;
 	private String pic;

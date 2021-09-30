@@ -3,7 +3,8 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminchattingMapper">
-
+	
+	<!-- 사용자 채팅 채팅방 resultMap -->
 	<resultMap type="UserChatting" id="resultUserChatting">
 		<id column="user_no" property="user_no" />
 		<result column="chat_room_no" property="chat_room_no" />
@@ -24,6 +25,7 @@
 		<result column="login_ok" property="login_ok" />
 	</resultMap>
 	
+	<!-- 채팅 신고 resultMap -->
 	<resultMap type="Chattingblock" id="resultChattingblock">
 		<id column="block_no" property="block_no"/>
 		<result column="student_name" property="student_name"/>
@@ -34,6 +36,7 @@
 		<result column="user_name" property="user_name"/>
 	</resultMap>
 	
+	<!-- 사용자 resultMap -->
 	<resultMap type="Userinfo" id="resultUserinfo">
 		<id column="user_no" property="user_no"/>
 		<result column="user_ssn" property="user_ssn"/>
@@ -46,16 +49,19 @@
 		<result column="login_ok" property="login_ok"/>
 	</resultMap>
 	
+	<!-- 채팅 정보 조회 SQL -->
 	<select id="selectChattingAll" resultMap="resultUserChatting">
 		select * from chatting
 		join chatting_room using(chat_room_no)
 		join user_info using(user_no)
 	</select>
 	
+	<!-- 채팅 신고 정보 조회 SQL -->
 	<select id="selectChattingBlockAll" resultMap="resultChattingblock">
 		select * from chatting_block
 	</select>
 	
+	<!-- 로그인 정보 업데이트 SQL -->
 	<update id="updateLoginOk" parameterType="Userinfo">
 		update user_info set login_ok = #{ login_ok } 
 		where user_id = #{ user_id }
