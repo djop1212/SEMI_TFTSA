@@ -47,6 +47,7 @@
 <%--   		<c:if test="${ sessionScope.loginMember eq null}"> --%>
           <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
             <ul class="navbar-nav  ml-auto">
+
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/common/course.jsp' }">active</c:if>">
                 <a class="nav-link" href="top10.do"> 선생님 찾기 </a>
               </li>
@@ -68,7 +69,7 @@
               
               <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.user_position ne 'M'}">
               <li class="nav-item <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/mypage/myPage.jsp' }">active</c:if>">
-                <a class="nav-link" href="myPage.do?user_id=${loginMember.user_id }">마이페이지</a>
+                <a class="nav-link" href="myPage.do?user_no=${loginMember.user_no }">마이페이지</a>
               </li>
               <li class="nav-item "><%-- <c:if test="${ pageContext.request.requestURI eq '/itys/WEB-INF/views/member/loginPage.jsp' }">active</c:if> --%>
                 <a class="nav-link" href="logout.do">로그아웃</a>

@@ -21,6 +21,7 @@ public class AdminChattingController {
 	@Autowired
 	private AdminChattingService adminchattingService;
 	
+	// 채팅 내역 조회 컨트롤러
 	@RequestMapping("selectchattingall.do")
 	public String selectChattingAll(Model model) {
 		ArrayList<UserChatting> list1 = adminchattingService.selectChattingAll();
@@ -36,6 +37,7 @@ public class AdminChattingController {
 		}
 	}
 	
+	// 로그인 제한 업데이트 컨트롤러
 	@RequestMapping("updateLoginOk.do")
 	public String updateLoginOK(Userinfo userinfo, Model model) {
 		logger.info("updateLoginOK.do : " + userinfo.getUser_id() + ", " + userinfo.getLogin_ok());

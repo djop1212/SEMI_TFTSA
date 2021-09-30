@@ -245,14 +245,28 @@ a.btn-layerClose:hover {
 	    			<div class="panel-control">
 	    				<div class="btn-group">
 	    					<c:url var="insertLikes" value="insertLikes.do">
+	    						<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 								<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
 								<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
+								</c:if>
+								<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+								<c:param name="student_no" value="${ requestScope.studentchattingroom.user_no }"/>
+								<c:param name="tutor_no" value="${ requestScope.tutorchattingroom.user_no }"/>
+								<c:param name="chat_room_no" value="${ requestScope.studentchattingroom.chat_room_no }"/>
+								</c:if>
 							</c:url>
 							<c:url var="deleteLikes" value="deleteLikes.do">
+								<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 								<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
 								<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
+								</c:if>
+								<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+								<c:param name="student_no" value="${ requestScope.studentchattingroom.user_no }"/>
+								<c:param name="tutor_no" value="${ requestScope.tutorchattingroom.user_no }"/>
+								<c:param name="chat_room_no" value="${ requestScope.studentchattingroom.chat_room_no }"/>
+								</c:if>
 							</c:url>
 							<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 							<c:if test="${ requestScope.likes == null }">
@@ -263,17 +277,33 @@ a.btn-layerClose:hover {
 	    					</c:if>
 	    					</c:if>
 	    					<c:url var="deleteChatting" value="deleteChatting.do">
+	    						<c:if test="${ requestScope.userchattingstudent != null }">
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
+								</c:if>
+								<c:if test="${ requestScope.userchattingstudent == null }">
+								<c:param name="chat_room_no" value="${ requestScope.studentchattingroom.chat_room_no }"/>
+								</c:if>
 							</c:url>
 	    					<button type="button" class="btn btn-default" onclick="nextDelete()"><i class="fa">대화삭제</i></button>
 	    				</div>
 	    			</div>
 	    			<div>
+	    				<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 	    				<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
-	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name } 선생님</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${ requestScope.userchattingtutor.pic }" class="img-circle img-sm">${ requestScope.userchattingtutor.user_name } 선생님</h3>
 	    				</c:if>
 	    				<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
-	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/${ requestScope.userchattingstudent.pic }" class="img-circle img-sm">${ requestScope.userchattingstudent.user_name } 학생</h3>
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${ requestScope.userchattingstudent.pic }" class="img-circle img-sm">${ requestScope.userchattingstudent.user_name } 학생</h3>
+	    				</c:if>
+	    				</c:if>
+	    				
+	    				<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+	    				<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${ requestScope.tutorchattingroom.pic }" class="img-circle img-sm">${ requestScope.tutorchattingroom.tutor_name } 선생님</h3>
+	    				</c:if>
+	    				<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
+	    				<h3 class="panel-title speech-left"><img src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${ requestScope.studentchattingroom.pic }" class="img-circle img-sm">${ requestScope.studentchattingroom.student_name } 학생</h3>
+	    				</c:if>
 	    				</c:if>
 	    			</div>	
 	    		</div>
@@ -284,7 +314,21 @@ a.btn-layerClose:hover {
 	    			</div>
 	    			<div class="col-6">
 	    				<c:url var="payment" value="payment.do">
-							<c:param name="user_no" value="${ requestScope.userchattingtutor.user_no }"/>
+	    					<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
+							<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
+							<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+							<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
+							<c:param name="student_name" value="${ requestScope.userchattingstudent.user_name }"/>
+							<c:param name="pay_amount" value="${ requestScope.userchattingtutor.min_pay }"/>
+							</c:if>
+							
+							<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+							<c:param name="tutor_no" value="${ requestScope.tutorchattingroom.user_no }"/>
+							<c:param name="student_no" value="${ requestScope.studentchattingroom.user_no }"/>
+							<c:param name="tutor_name" value="${ requestScope.tutorchattingroom.tutor_name }"/>
+							<c:param name="student_name" value="${ requestScope.studentchattingroom.student_name }"/>
+							<c:param name="pay_amount" value="${ requestScope.tutorchattingroom.min_pay }"/>
+							</c:if>
 						</c:url>
 	    				<input class="btn btn-primary btn-block" type="button" value="과외성사" onclick="nextPayment()">
 	    			</div>
@@ -298,6 +342,7 @@ a.btn-layerClose:hover {
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
 	    					<ul class="list-unstyled media-block" id="messageWindow">
 	    						<c:forEach items="${ requestScope.chat }" var="ch">
+	    						<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 	    						<c:if test="${ ch.user_no eq requestScope.userchattingstudent.user_no }">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-right">
@@ -323,6 +368,35 @@ a.btn-layerClose:hover {
 	    								</div>
 	    							</div>
 	    						</li>
+	    						</c:if>
+	    						</c:if>
+	    						<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+	    						<c:if test="${ ch.user_no eq requestScope.studentchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-right">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						<c:if test="${ ch.user_no eq requestScope.tutorchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-left">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
 	    						</c:if>
 	    						</c:forEach>
 	    					</ul>
@@ -335,6 +409,7 @@ a.btn-layerClose:hover {
 	    				<div class="nano-content pad-all" tabindex="0" style="right: -17px;">
 	    					<ul class="list-unstyled media-block" id="messageWindow">
 	    						<c:forEach items="${ requestScope.chat }" var="ch">
+	    						<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 	    						<c:if test="${ ch.user_no eq requestScope.userchattingtutor.user_no }">
 	    						<li class="mar-btm">
 	    							<div class="media-body pad-hor speech-right">
@@ -361,6 +436,35 @@ a.btn-layerClose:hover {
 	    							</div>
 	    						</li>
 	    						</c:if>
+	    						</c:if>
+	    						<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+	    						<c:if test="${ ch.user_no eq requestScope.tutorchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-right">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    										<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>	    										
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						<c:if test="${ ch.user_no eq requestScope.studentchattingroom.user_no }">
+	    						<li class="mar-btm">
+	    							<div class="media-body pad-hor speech-left">
+	    								<div class="speech">
+	    									<p>${ ch.chat_content }<br></p>
+	    									<p class="speech-time">
+	    									<i class="fa fa-clock-o fa-fw"></i><fmt:formatDate value="${ ch.wrtn_datetm }" type="both" pattern="hh:mm"/>
+	    									</p>
+	    									<!-- <p class="speech-time">읽음</p> -->
+	    								</div>
+	    							</div>
+	    						</li>
+	    						</c:if>
+	    						</c:if>
 	    						</c:forEach>
 	    					</ul>
 	    				</div>
@@ -371,18 +475,36 @@ a.btn-layerClose:hover {
 	    			<div class="panel-footer">
 	    				<div class="row">
 	    					<div class="col-9">
-	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input" id="inputMessage" onkeyup="enterKey();">
+	    						<input type="text" placeholder="대화내용 입력" class="form-control chat-input" id="inputMessage" onkeydown="enterKey();">
 	    					</div>
 	    					<div class="col-3">
 		    					<c:url var="insertChatting" value="insertChatting.do">
+		    						<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 									<c:param name="student_name" value="${ requestScope.userchattingstudent.user_name }"/>
 									<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
+									<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
+									<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
 									<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 									<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
 										<c:param name="user_no" value="${ requestScope.userchattingstudent.user_no }"/>
 									</c:if>
 									<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
 										<c:param name="user_no" value="${ requestScope.userchattingtutor.user_no }"/>
+									</c:if>
+									</c:if>
+									
+									<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+									<c:param name="student_name" value="${ requestScope.studentchattingroom.student_name }"/>
+									<c:param name="tutor_name" value="${ requestScope.tutorchattingroom.tutor_name }"/>
+									<c:param name="student_no" value="${ requestScope.studentchattingroom.user_no }"/>
+									<c:param name="tutor_no" value="${ requestScope.tutorchattingroom.user_no }"/>
+									<c:param name="chat_room_no" value="${ requestScope.studentchattingroom.chat_room_no }"/>
+									<c:if test="${ sessionScope.loginMember.user_position eq 'S' }">
+										<c:param name="user_no" value="${ requestScope.studentchattingroom.user_no }"/>
+									</c:if>
+									<c:if test="${ sessionScope.loginMember.user_position eq 'T' }">
+										<c:param name="user_no" value="${ requestScope.tutorchattingroom.user_no }"/>
+									</c:if>
 									</c:if>
 								</c:url>
 	    						<button class="btn btn-primary btn-block" type="button" onclick="send();">보내기</button>
@@ -405,12 +527,23 @@ a.btn-layerClose:hover {
 	                <input type="text" class="ctxt mb20" id="contents"><br>
 	                <div class="btn-r">
 	                		<c:url var="insertBlock" value="insertBlock.do">
+	                			<c:if test="${ requestScope.userchattingstudent != null and requestScope.userchattingtutor != null }">
 								<c:param name="student_name" value="${ requestScope.userchattingstudent.user_name }"/>
 								<c:param name="tutor_name" value="${ requestScope.userchattingtutor.user_name }"/>
-								<c:param name="user_no" value="${ requestScope.userchattingtutor.user_no }"/>
+								<c:param name="user_no" value="${ requestScope.userchattingstudent.user_no }"/>
 								<c:param name="chat_room_no" value="${ requestScope.userchattingstudent.chat_room_no }"/>
 								<c:param name="student_no" value="${ requestScope.userchattingstudent.user_no }"/>
-								<c:param name="tutor_no" value="${ requestScope.userchattingstudent.user_no }"/>
+								<c:param name="tutor_no" value="${ requestScope.userchattingtutor.user_no }"/>
+								</c:if>
+								
+								<c:if test="${ requestScope.userchattingstudent == null or requestScope.userchattingtutor == null }">
+								<c:param name="student_name" value="${ requestScope.studentchattingroom.student_name }"/>
+								<c:param name="tutor_name" value="${ requestScope.tutorchattingroom.tutor_name }"/>
+								<c:param name="user_no" value="${ requestScope.studentchattingroom.user_no }"/>
+								<c:param name="chat_room_no" value="${ requestScope.studentchattingroom.chat_room_no }"/>
+								<c:param name="student_no" value="${ requestScope.studentchattingroom.user_no }"/>
+								<c:param name="tutor_no" value="${ requestScope.tutorchattingroom.user_no }"/>
+								</c:if>
 							</c:url>
 	                	<a href="#" class="btn-layerClose" onclick="nextBlock()">확인</a>
 	                    <a href="#" class="btn-layerClose">취소</a>
@@ -571,7 +704,20 @@ a.btn-layerClose:hover {
 			var today = new Date();
 			var hours = today.getHours();
 			var minutes = today.getMinutes();
-			var timeString = hours + ' : ' + minutes
+			
+			if (hours > 12){
+				hours = hours % 12
+			}
+			
+			if (hours < 10){
+				hours = '0' + hours;
+			}
+			
+			if (minutes < 10){
+				minutes = '0' + minutes;
+			}
+			
+			var timeString = hours + ':' + minutes;
 			var message;
 			
 			//메세지가 입력된 경우

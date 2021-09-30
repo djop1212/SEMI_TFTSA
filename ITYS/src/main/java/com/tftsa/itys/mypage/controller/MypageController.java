@@ -30,6 +30,7 @@ import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.MyKeyData;
 import com.tftsa.itys.mypage.model.vo.MyKeyword;
+import com.tftsa.itys.mypage.model.vo.MyStudent;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -66,10 +67,10 @@ public class MypageController {
 		if(!mfile.isEmpty()) {
 			String originFileName = mfile.getOriginalFilename();
 			if(originFileName!= null && originFileName.length()>0) {
-				logger.info(savePath);
-				logger.info("upsprofile.do : "+originFileName);
-				logger.info("getSize() : "+mfile.getSize());
-				logger.info("getInputStream() : "+mfile.getInputStream());
+//				logger.info(savePath);
+//				logger.info("upsprofile.do : "+originFileName);
+//				logger.info("getSize() : "+mfile.getSize());
+//				logger.info("getInputStream() : "+mfile.getInputStream());
 				try {
 					mfile.transferTo(new File(savePath+"\\"+originFileName));
 					
@@ -106,7 +107,7 @@ public class MypageController {
 		}// 첨부 파일 있음
 		
 		student.setTime(stime+", "+etime);
-		logger.info("upsprofile.do : "+student);
+		//logger.info("upsprofile.do : "+student);
 		
 		if((mypageService.insertStudent(student) & mypageService.updateStudentPosition(student.getUser_no()))>0) {
 			PrintWriter out = response.getWriter();
@@ -127,7 +128,7 @@ public class MypageController {
 	@RequestMapping(value = "upTPage.do")
 	public ModelAndView moveTutorPage(@RequestParam("user_no") int user_no, ModelAndView mv) {
 		List<MyKeyword> keyList = mypageService.selectKeywordList();
-		logger.info("upTPage.do");
+		//logger.info("upTPage.do");
 		
 		mv.addObject("keyList", keyList);
 		mv.addObject("user_no", user_no);
@@ -142,11 +143,11 @@ public class MypageController {
 			@RequestParam(name="upfile") MultipartFile mfile, @RequestParam("sub_no") String arr_sub_no, 
 			@RequestParam(name="stime") String stime, @RequestParam(name="etime") String etime, 
 			@RequestParam(name="city") String city, @RequestParam(name="country") String country, @RequestParam(name="key_no") String arr_key_no) throws IOException {
-		logger.info("stime : "+stime);
-		logger.info("etime : "+etime);
-		logger.info("city : "+city);
-		logger.info("country : "+country);
-		logger.info("sub_no : "+arr_sub_no);
+//		logger.info("stime : "+stime);
+//		logger.info("etime : "+etime);
+//		logger.info("city : "+city);
+//		logger.info("country : "+country);
+//		logger.info("sub_no : "+arr_sub_no);
 		
 		tutor.setTime(stime+", "+etime);
 		tutor.setArea(city+" "+country);
@@ -173,7 +174,7 @@ public class MypageController {
 		String key_name="";
 		// 선생님 성격 key_data 에 저장, tutor 테이블 key_name 
 		for(int i=0;i<array2.length;i++) {
-			logger.info("array["+i+"] : "+array2[i]);
+			//logger.info("array["+i+"] : "+array2[i]);
 			int key_no = Integer.parseInt(array2[i]);
 			keydata.setKey_no(key_no);
 			if(mypageService.insertKeyData(keydata)>0) {
@@ -184,7 +185,7 @@ public class MypageController {
 				}
 			}
 		}
-		logger.info("insertSub_data cnt : " + cnt);
+		//logger.info("insertSub_data cnt : " + cnt);
 		tutor.setSub_name(sub_name);
 		tutor.setKey_name(key_name);
 		tutor.setTime(stime + ", " + etime);
@@ -232,7 +233,7 @@ public class MypageController {
 				// tutor.setOriginal_filename(originFileName);
 		} // 첨부 파일 있음
 
-		logger.info("upsprofile.do : " + tutor);
+		//logger.info("upsprofile.do : " + tutor);
 
 		if((mypageService.insertTutor(tutor) & mypageService.updateTutorPosition(tutor.getUser_no()))>0) {
 			PrintWriter out = response.getWriter();
@@ -262,7 +263,7 @@ public class MypageController {
 			model.addAttribute("student", student);
 		}
 		if (list.size() > 0) {
-			logger.info("wishList : " + list.toString());
+			//logger.info("wishList : " + list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 찜이 없습니다");
@@ -274,7 +275,7 @@ public class MypageController {
 	@RequestMapping("delwlist.do")
 	public String deleteWishList(@RequestParam("chk") String checkedList, Likes likes) {
 		//logger.info("delwlist.do : "+checkedList);
-		logger.info("delwlist.do likes : "+likes.toString());
+		//logger.info("delwlist.do likes : "+likes.toString());
 		
 		String[] array = checkedList.split(",");
 	    for(int i=0 ;i<array.length; i++) {
@@ -295,23 +296,61 @@ public class MypageController {
 		return "redirect:selectChattingList.do?user_no=" + user_no;
 	}
 	
-	// 내 수업 목록 조회
+	// 채팅 목록 삭제
+	@RequestMapping(value="delclist.do", method=RequestMethod.POST)
+	public String deleteChattingList(@RequestParam("chk") String checkedList, @RequestParam("user_no") int user_no) {
+		//logger.info("delclist.do : "+checkedList);
+		//logger.info("user_no : "+user_no);
+		
+		String[] array = checkedList.split(",");
+	    for(int i=0 ;i<array.length; i++) {
+	    	//logger.info(array[i]);
+	    	
+	    	if(mypageService.deleteChattingRoom(Integer.parseInt(array[i]))>0) {
+	    		//logger.info("delclist.do delete["+i+"] : "+array[i]);
+	    	}
+	    }
+		
+		return "redirect:clist.do?user_no="+user_no;
+	}
+	
+	// 학생이 내 수업 목록 조회
 	@RequestMapping("mclass.do")
 	public String moveMyClass(@RequestParam("user_no") int user_no, Model model) {
 		logger.info("mclass.do");
-		ArrayList<MyClass> list = mypageService.selectMyclassList(user_no);
-		if(mypageService.selectPosition(user_no).equals("T")) {
-			Tutor tutor = mypageService.selectTutor(user_no);
-			model.addAttribute("tutor", tutor);
-		}else if(mypageService.selectPosition(user_no).equals("S")) {
-			Student student = mypageService.selectStudent(user_no);
-			model.addAttribute("student", student);
-		}		
+		ArrayList<MyClass> list = mypageService.selectMyTutorclassList(user_no);
+		
+		Student student = mypageService.selectStudent(user_no);
+		model.addAttribute("student", student);
+		//logger.info("student list : "+list);
 		String position = mypageService.selectPosition(user_no);
 		model.addAttribute("position", position);
+		//logger.info("list : "+list);
 		
 		if(list.size()>0) {
-			logger.info("myclassList : "+list.toString());
+			//logger.info("mytutorclassList : "+list.toString());
+			model.addAttribute("list", list);
+		}else {
+			model.addAttribute("message", "등록된 수업목록이 없습니다");
+		}
+		return "mypage/myClass";
+	}
+	
+	// 선생님이 수업목록 조회
+	@RequestMapping("msclass.do")
+	public String moveMyStudentClass(@RequestParam("user_no") int user_no, Model model) {
+		logger.info("msclass.do");
+		ArrayList<MyStudent> list = mypageService.selectMyclassList(user_no); 
+		
+		Tutor tutor = mypageService.selectTutor(user_no);
+		model.addAttribute("tutor", tutor);	
+		//logger.info("tutor : "+tutor);
+		String position = mypageService.selectPosition(user_no);
+		model.addAttribute("position", position);
+		//logger.info("list : "+list);
+			
+		if(list.size()>0) {
+			//logger.info("myclassList : "+list.toString());
 			model.addAttribute("list", list);
 		}else {
 			model.addAttribute("message", "등록된 수업목록이 없습니다");
@@ -321,9 +360,10 @@ public class MypageController {
 	
 	// 수정페이지로 이동
 	@RequestMapping("upUserPage.do")
-	public ModelAndView moveUpdateUserView(@RequestParam("user_id") String user_id, ModelAndView mv) {
+	public ModelAndView moveUpdateUserView(@RequestParam("user_no") int user_no, ModelAndView mv) {
 		logger.info("upUserPage.do");
-		Member member = mypageService.selectUser(user_id);
+		//Member member = mypageService.selectUser(user_no);
+		Member member = mypageService.selectUserNo(user_no);
 		Student student = mypageService.selectStudent(member.getUser_no());
 		Tutor tutor = mypageService.selectTutor(member.getUser_no());
 				
@@ -353,7 +393,7 @@ public class MypageController {
 			mv.addObject("member", member);
 			mv.setViewName("mypage/updateProfile");
 		}else {
-			mv.addObject("message", member.getUser_id() + "님 회원 정보 수정페이지로 이동 실패..");
+			mv.addObject("message", member.getUser_no() + "님 회원 정보 수정페이지로 이동 실패..");
 			mv.setViewName("common/error");
 		}
 		return mv;
@@ -364,61 +404,69 @@ public class MypageController {
 	public String updateUser(Member member, Student student, Tutor tutor, SubData subdata, MyKeyData keydata, Model model,
 			@RequestParam("origin_userpwd") String originUserpwd, @RequestParam("stime") String stime, @RequestParam("etime") String etime,
 			@RequestParam("city") String city, @RequestParam("country") String country,
-			@RequestParam("sub_no") String arr_sub_no, @RequestParam("key_no")String arr_key_no) throws IOException {
-		logger.info("upUser.do - member : " + member);
-		logger.info("upUser.do - student : " + student);
-		logger.info("upUser.do - tutor : " + tutor);
+			@RequestParam("sub_no") String arr_sub_no, @RequestParam("key_no") String arr_key_no) throws IOException {
+//		logger.info("upUser.do - member : " + member);
+//		logger.info("upUser.do - student : " + student);
+//		logger.info("upUser.do - tutor : " + tutor);
 //		logger.info("opwd : " + originUserpwd);
 //		logger.info("stime : "+stime);
 //		logger.info("etime : "+etime);
 //		logger.info("city : "+city);
 //		logger.info("country : "+country);
 //		logger.info("sub_no : "+arr_sub_no);
-		
-		tutor.setTime(stime+", "+etime);
-		tutor.setArea(city+" "+country);
-		
-		String []array = arr_sub_no.split(",");
-		String sub_name="";
-		// 과목번호 subdata에 저장, tutor 테이블 subname 
-		if (mypageService.deleteSubData(member.getUser_no()) > 0) {
-			logger.info("upUser.do : deleteSubData");
-		}
-		for (int i = 0; i < array.length; i++) {
-			logger.info("array[" + i + "] : " + array[i]);
-			int sub_no = Integer.parseInt(array[i]);
-			subdata.setSub_no(sub_no);
-			if (mypageService.insertSubData(subdata) > 0) {
-				if (i == 0) {
-					sub_name += mypageService.selectSubName(sub_no);
-				} else {
-					sub_name += (", " + mypageService.selectSubName(sub_no));
-				}
-			}
-		}
-		String[] array2 = arr_key_no.split(",");
-		String key_name="";
-		if(mypageService.deleteKeyData(member.getUser_no())>0) {
-			logger.info(key_name);
-		}
-		// 선생님 성격 key_data 에 저장, tutor 테이블 key_name 
-		for(int i=0;i<array2.length;i++) {
-			logger.info("array["+i+"] : "+array2[i]);
-			int key_no = Integer.parseInt(array2[i]);
-			keydata.setKey_no(key_no);
-			if(mypageService.insertKeyData(keydata)>0) {
-				if(i == 0) {
-					key_name += mypageService.selectTypePer(key_no);
-				}else {
-					key_name += (", "+ mypageService.selectTypePer(key_no));
-				}
-			}
-		}
-		
-		tutor.setSub_name(sub_name);
-		tutor.setKey_name(key_name);
-		logger.info("uptprofile.do : "+tutor);
 
+		member.setUser_position(mypageService.selectPosition(member.getUser_no()));
+		//logger.info("after : " + member);
+		
+		if (member.getUser_position().equals("T")) {
+			tutor.setTime(stime + ", " + etime);
+			tutor.setArea(city + " " + country);
+
+			String[] array = arr_sub_no.split(",");
+			String sub_name = "";
+			// 과목번호 subdata에 저장, tutor 테이블 subname
+			if (mypageService.deleteSubData(member.getUser_no()) > 0) {
+				// logger.info("upUser.do : deleteSubData");
+			}
+			for (int i = 0; i < array.length; i++) {
+				// logger.info("array[" + i + "] : " + array[i]);
+				int sub_no = Integer.parseInt(array[i]);
+				subdata.setSub_no(sub_no);
+				if (mypageService.insertSubData(subdata) > 0) {
+					if (i == 0) {
+						sub_name += mypageService.selectSubName(sub_no);
+					} else {
+						sub_name += (", " + mypageService.selectSubName(sub_no));
+					}
+				}
+			}
+			String[] array2 = arr_key_no.split(",");
+			String key_name = "";
+			if (mypageService.deleteKeyData(member.getUser_no()) > 0) {
+				// logger.info(key_name);
+			}
+			// 선생님 성격 key_data 에 저장, tutor 테이블 key_name
+			for (int i = 0; i < array2.length; i++) {
+				// logger.info("array["+i+"] : "+array2[i]);
+				int key_no = Integer.parseInt(array2[i]);
+				keydata.setKey_no(key_no);
+				if (mypageService.insertKeyData(keydata) > 0) {
+					if (i == 0) {
+						logger.info(mypageService.selectTypePer(key_no));
+						key_name += mypageService.selectTypePer(key_no);
+					} else {
+						key_name += (", " + mypageService.selectTypePer(key_no));
+					}
+				} // logger.info("key_name : "+key_name);
+			}
+
+			tutor.setSub_name(sub_name);
+			tutor.setKey_name(key_name);
+			// logger.info("uptprofile.do : "+tutor);
+		}else {
+			student.setTime(stime + ", " + etime);
+		}
+		
 		// 새로운 암호가 전송이 왔다면
 		String user_pwd = member.getUser_pwd().trim();
 		if (user_pwd != null && user_pwd.length() > 0) {
@@ -431,20 +479,17 @@ public class MypageController {
 			member.setUser_pwd(originUserpwd);
 		}
 		
-		member.setUser_position(mypageService.selectPosition(member.getUser_no()));
-		logger.info("after : " + member);
-		
 		if(member.getUser_position().equals("U") && mypageService.updateMember(member)>0) {
-			logger.info("upUser.do : updateUser \nmember : "+member);
-			return "redirect:myPage.do?user_id=" + member.getUser_id();
+			//logger.info("upUser.do : updateUser \nmember : "+member);
+			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		}else if(member.getUser_position().equals("S") && mypageService.updateStudent(student)>0) {
-			logger.info("upUser.do : updateStudent \nstudent : "+student);
-			return "redirect:myPage.do?user_id=" + member.getUser_id();
+			//logger.info("upUser.do : updateStudent \nstudent : "+student);
+			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		}else if(member.getUser_position().equals("T") && mypageService.updateTutor(tutor)>0) {
-			logger.info("upUser.do : updateTutor \ntutor : "+tutor);
-			return "redirect:myPage.do?user_id=" + member.getUser_id();
+			//logger.info("upUser.do : updateTutor \ntutor : "+tutor);
+			return "redirect:myPage.do?user_no=" + member.getUser_no();
 		} else {
-			model.addAttribute("message", member.getUser_id() + "회원정보 수정 실패..");
+			model.addAttribute("message", member.getUser_name() + "님 회원정보 수정 실패..");
 			return "common/error";
 		}
 	}

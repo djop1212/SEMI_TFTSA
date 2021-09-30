@@ -22,4 +22,12 @@ public class AdminCategoryDao {
 	public int deleteCategory(String sname){
 		return sqlSession.delete("admincategoryMapper.deleteCategory",sname);
 	}
+	
+	public int insertSubject(Subject subject) {
+		return sqlSession.insert("admincategoryMapper.insertSubject", subject);
+	}
+	
+	public int cntSubject(String sname) {
+		return sqlSession.selectOne("admincategoryMapper.cntSubject",sname);
+	}
 }

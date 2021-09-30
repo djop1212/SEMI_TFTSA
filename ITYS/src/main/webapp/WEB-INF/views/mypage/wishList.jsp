@@ -10,7 +10,7 @@
 <script type="text/javascript">
 function deleteuser(){
 	if(confirm("회원탈퇴를 계속 진행하시겠습니까?")== true){
-		location.href="deleteUser.do?user_id=${member.user_id}";	
+		location.href="deleteUser.do?user_no=${loginMember.user_no}";	
 	}else{
 		return;
 	}
@@ -35,6 +35,7 @@ div#right{
 	flex: 1.4;
 	padding: 10px 0;
 	padding-left: 50px;
+	padding-right: 20px;
 	align-items: baseline !important;
 }
 ul{
@@ -138,7 +139,7 @@ img{
 						</div>
 						<div style="padding-top: 5px;">
 							<ul id="bar">
-								<li><a href="myPage.do?user_id=${loginMember.user_id }">프로필</a></li>
+								<li><a href="myPage.do?user_no=${loginMember.user_no }">프로필</a></li>
 								<li><a href="clist.do?user_no=${loginMember.user_no }">채팅목록</a></li>
 								<li><a href="wishl.do?user_no=${loginMember.user_no }" style="color:white; background: #42acae; border-radius:3px;">찜 목록</a></li>
 								<li><a href="mclass.do?user_no=${loginMember.user_no }">내 강의 내역</a></li>
@@ -151,7 +152,7 @@ img{
 						
 							<h4>❤ 찜 목록</h4>
 						</div><br>
-						<form action="delwlist.do" method="post">
+						<form action="delwlist.do" method="post" onsubmit="confirm('찜 목록을 삭제하시겠습니까?');">
 						<input type="hidden" name="student_no" value="${loginMember.user_no}">
 						<div>
 							<ul id="wlist">
@@ -160,11 +161,18 @@ img{
 								<table>
 									<tr>
 									<td valign="top">
-										<img
-										src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
-										width="75px" height="75px" style="margin-top:5px" />
+										<c:if test="${w.pic eq null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
+										<c:if test="${w.pic ne null }">
+											<img
+											src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${w.pic }"
+											width="75px" height="75px" style="margin-top:5px" />
+										</c:if>
 									</td>
-									<td style="width:475px; padding-left:15px">
+									<td style="width:475px; padding-left:15px; cursor: pointer;" onclick="location.href='detail.do?user_no=${w.user_no}&student_no=${loginMember.user_no }&tutor_no=${w.user_no }'">
 										선생님이름 : ${w.user_name }<br>	
 										과외 한 줄 소개 : ${w.intro }<br>
 										전화번호 : ${w.user_phone }<br>
@@ -174,7 +182,7 @@ img{
 									<td style="align: right;"><input type="checkbox" name="chk" value="${w.user_no }"></td>
 									</tr>
 								</table><hr>
-								<%-- <c:if test="${list. }"></c:if> --%>
+								
 								</c:forEach>
 								
 								<c:set var="e" value="<%= exception %>" />

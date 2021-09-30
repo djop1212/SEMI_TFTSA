@@ -1,14 +1,15 @@
 package com.tftsa.itys.search.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tftsa.itys.mypage.model.vo.Subject;
 import com.tftsa.itys.mypage.model.vo.Tutor;
+import com.tftsa.itys.search.vo.Avg;
 import com.tftsa.itys.search.vo.DaySearch;
 import com.tftsa.itys.search.vo.DetailSearch;
 import com.tftsa.itys.search.vo.Keyword;
@@ -26,12 +27,17 @@ public class SearchDao {
 		return (ArrayList<Tutor>) list;
 	}
 	
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectCategory() {
+	public ArrayList<Avg> selectAvg() {
+		List<Avg> list = sqlSession.selectList("top10Mapper.selectAvg");
+		return (ArrayList<Avg>) list;
+	}
+	
+	public ArrayList<Subject> selectCategory() {
 		List<com.tftsa.itys.mypage.model.vo.Subject> list = sqlSession.selectList("subjectMapper.selectCategory");
 		return (ArrayList<com.tftsa.itys.mypage.model.vo.Subject>) list;
 	}
 	
-	public ArrayList<com.tftsa.itys.mypage.model.vo.Subject> selectSubject(String category) {
+	public ArrayList<Subject> selectSubject(String category) {
 		List<com.tftsa.itys.mypage.model.vo.Subject> list = sqlSession.selectList("subjectMapper.selectSubject", category);
 		return (ArrayList<com.tftsa.itys.mypage.model.vo.Subject>) list;
 	}

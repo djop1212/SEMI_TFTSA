@@ -10,6 +10,7 @@ import com.tftsa.itys.mypage.model.vo.Likes;
 import com.tftsa.itys.mypage.model.vo.MyClass;
 import com.tftsa.itys.mypage.model.vo.MyKeyData;
 import com.tftsa.itys.mypage.model.vo.MyKeyword;
+import com.tftsa.itys.mypage.model.vo.MyStudent;
 import com.tftsa.itys.mypage.model.vo.Student;
 import com.tftsa.itys.mypage.model.vo.SubData;
 import com.tftsa.itys.mypage.model.vo.Tutor;
@@ -19,7 +20,8 @@ import com.tftsa.itys.mypage.model.vo.UserChattingroomTutor;
 public interface MypageService {
 
 	ArrayList<Likes> selectLikesList(int user_no);
-	ArrayList<MyClass> selectMyclassList(int user_no);
+	ArrayList<MyStudent> selectMyclassList(int user_no);
+	ArrayList<MyClass> selectMyTutorclassList(int user_no);
 	int insertTutor(Tutor tutor);
 	int updateTutorPosition(int user_no);
 	int insertStudent(Student student);
@@ -42,5 +44,7 @@ public interface MypageService {
 	int insertKeyData(MyKeyData keydata);
 	String selectTypePer(int key_no);
 	int deleteKeyData(int user_no);
+	int deleteChattingRoom(int parseInt);
+	Member selectUserNo(int user_no);
 
 }

@@ -22,4 +22,14 @@ public class AdminKeywordServiceImpl implements AdminKeywordService{
 	public int deleteKeyword(String type_per) {
 		return adminkeywordDao.deleteKeyword(type_per);
 	}
+	
+	@Override
+	public int insertKeyword(String type_per) {
+		return adminkeywordDao.insertKeyword(type_per);
+	}
+	
+	@Override
+	public int cntKeyword(String type_per) {
+		return adminkeywordDao.cntKeyword(type_per);
+	}
 }

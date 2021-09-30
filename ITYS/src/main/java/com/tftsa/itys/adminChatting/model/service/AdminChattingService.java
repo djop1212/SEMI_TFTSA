@@ -7,7 +7,7 @@ import com.tftsa.itys.adminChatting.model.vo.UserChatting;
 import com.tftsa.itys.adminChatting.model.vo.Userinfo;
 
 public interface AdminChattingService {
-	ArrayList<UserChatting> selectChattingAll();
-	ArrayList<Chattingblock> selectChattingBlockAll();
-	int updateLoginOk(Userinfo userinfo);
+	ArrayList<UserChatting> selectChattingAll(); // 채팅 내역 조회 Service
+	ArrayList<Chattingblock> selectChattingBlockAll(); // 신고 내역 조회 Service
+	int updateLoginOk(Userinfo userinfo); // 로그인 제한 업데이트 Service
 }

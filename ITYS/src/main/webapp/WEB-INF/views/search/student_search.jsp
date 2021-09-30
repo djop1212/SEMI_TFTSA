@@ -244,9 +244,19 @@ ol, ul, li {
 					<input style="width : 300px;" name= "word" class = "doBtnSearch" id = "searchWord" type="text" placeholder="검색어를 입력해주세요."/>
 					
 					<input  style="width : 130px;" type ="button" onclick = "searchSend()" value="검색" class="searchBtn">
+					
+					<input type="hidden" name = "l_grd_list">
+					<input type="hidden" name = "stime">
+					<input type="hidden" name = "etime">
+					<input type="hidden" name = "keyword_list">
+					<input type="hidden" name = "day_list">
+					<input type="hidden" name = "area">
+					<input type="hidden" name = "online_ok_list">
+					<input type="hidden" name = "min_price">
+					<input type="hidden" name = "max_price">
+					
 					</div>
 					<!--<button value="검색" id="search" onclick="searchSend()">검색</button> -->
-					
 					
 				</form>
 
@@ -307,15 +317,15 @@ ol, ul, li {
 					<ul class="option_check"  id = "ul_online_all" style="width : 270px; display : inline-block; padding : 0px;">
 						<li><label class="sri_check" for="detailOption_online_all">
 								<input  type="checkbox" id="detailOption_online_all"
-								class="inp_check"> <span class="txt_check">전체</span>
+								class="inp_check online_ok"  name= "online_ok" value="all"> <span class="txt_check">전체</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_online_ok">
 								<input  type="checkbox" id="detailOption_online_ok"
-								class="inp_check"> <span class="txt_check">대면</span>
+								class="inp_check online_ok"  name= "online_ok" value="Y"> <span class="txt_check">대면</span>
 						</label></li>
 						<li><label class="sri_check" for="detailOption_online_no">
 								<input  type="checkbox" id="detailOption_online_no"
-								class="inp_check"> <span class="txt_check">비대면</span>
+								class="inp_check online_ok"  name= "online_ok" value="N"> <span class="txt_check">비대면</span>
 						</label></li>
 					</ul>
 				</div>
@@ -414,10 +424,10 @@ ol, ul, li {
 					<ul class="option_check">
 						<li><label class="sri_check" for="detailOption_price_min">
 								<input type="text" id="detailOption_price_min"
-								class="inp_check" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
+								class="inp_check min_price" name = "min_price" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
 						</label> ~ <label class="sri_check" for="detailOption_price_max">
 								<input type="text" id="detailOption_price_max"
-								class="inp_check" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
+								class="inp_check max_price" name = "max_price" style="height : 100%; border : none; text-align:right;" placeholder="만원"> <span class="txt_check"> </span>
 						</label></li>
 					</ul>
 
@@ -556,17 +566,27 @@ function searchSend(){
 	}
 	var stime = $("#stime").val();
 	var etime = $("#etime").val();
-	var time = stime+", "+etime;
 	
-	if(time == ", "){
-		time = "null";
+	var online_ok_list = [];
+	
+	if(stime == ""){
+		stime = "null";
+	}
+	if(etime == ""){
+		etime = "null";
 	}
 	
+	var min_price = $(".min_price").val();
+	var max_price = $(".max_price").val();
 	
 	if( $("#detailOption_wrapper").is(":hidden")){
 		sfnm.action = "search.do";
 		sfnm.submit();
 	}else{
+
+		var category = $("#category").val();
+		var sub_name = $("#subject").val();
+		var word = $("#searchWord").val();
 		
 		// 학력 
 		$("input[name=l_grd]:checked").each(function() { 
@@ -578,6 +598,8 @@ function searchSend(){
 		if(l_grd_list == ""){
 			l_grd_list.push("null");
 		}
+		
+		
 		// 키워드
 		$("input[name=keyword]:checked").each(function() { 
 		
@@ -585,6 +607,7 @@ function searchSend(){
 			keyword_list.push(keyword);
 			
 		});
+		
 		if(keyword_list == ""){
 			keyword_list.push("null");
 		}
@@ -598,42 +621,39 @@ function searchSend(){
 		if(day_list == ""){
 			day_list.push("null");
 		}
-		 
-		var arr= [ 
-				{ category : $("select[name=category] option:checked").text() },
-				{ sub_name : $("select[name=sub_name] option:checked").text() },
-				{ word : $("#searchWord").val() },
-				{ l_grd_list : l_grd_list },
-				{ area : area },
-				{ keyword_list : keyword_list },
-				{ day_list : day_list },
-				{ time : time }
-			];
 		
-		$.ajax({
-			url: "detailSearch.do",
-			type: "post",
-			data: JSON.stringify(arr),
-			contentType: "application/json; charset=utf-8",
-			success: function(result){
-				alert("전송 성공 : " + result);
-				
-				var values = $('#d6').html();
-				for(var i in jarr){
-					values += i + "번째 이름 : " + 
-						jarr[i].name + ", 나이 : " + 
-						jarr[i].age + "<br>";
-				}				
-				
-				$('#d6').html(values);				
-			},
-			error: function(request, status, errorData){
-				console.log("error code : " + request.status
-						+ "\nMessage : " + request.responseText
-						+ "\nError : " + errorData);
+		//대면 여부
+		$("input[name=online_ok]:checked").each(function() { 
+			
+			if( $(this).val() == "all"){
+				return true;
+			}else{
+				var online_ok = $(this).val(); 
+				online_ok_list.push(online_ok);
+			}
+		});
+		
+		if(online_ok_list == ""){
+			online_ok_list.push("null");
 		}
-	});
-		 
+		
+		
+		category : $("select[name=category] option:checked").text()
+		sub_name : $("select[name=sub_name] option:checked").text()
+		word : $("#searchWord").val()
+		
+		sfnm.l_grd_list.value = l_grd_list;
+		sfnm.keyword_list.value = keyword_list;
+		sfnm.day_list.value = day_list;
+		sfnm.area.value = area;
+		sfnm.etime.value = etime;
+		sfnm.stime.value = stime;
+		sfnm.online_ok_list.value = online_ok_list;
+		
+		sfnm.min_price.value = min_price;
+		sfnm.max_price.value = max_price;
+		sfnm.action = "detailSearch.do";
+		sfnm.method = "get";
 		sfnm.submit();
 		
 	}
@@ -652,7 +672,7 @@ $(function() {
 	
 	$("#detailOption_price_max").on('keyup change', function() {
 		var max = $("#detailOption_price_max").val();
-		var ma = min.replace(/[^0-9]/g,'');
+		var ma = max.replace(/[^0-9]/g,'');
 
 		$(this).val(ma+"만원"); 
 		
@@ -763,6 +783,14 @@ $(function() {
         	}
         }
     });
+	
+	$("#detailOption_online_all").on("click", function(){
+		if( $("#detailOption_online_all").prop("checked") ){
+			$(".online_ok").prop("checked", true);
+		}else{
+			$(".online_ok").prop("checked", false);
+		}
+	});
 	
 	$("#detailOption_keyword_all").on("click", function(){
 		if( $("#detailOption_keyword_all").prop("checked") ){

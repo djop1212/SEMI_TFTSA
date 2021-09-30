@@ -7,12 +7,14 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.tftsa.itys.detail.model.vo.AfterPay;
 import com.tftsa.itys.detail.model.vo.Detail;
+import com.tftsa.itys.detail.model.vo.LikesCheck;
+import com.tftsa.itys.detail.model.vo.OpenChat;
+import com.tftsa.itys.detail.model.vo.RoomNo;
+import com.tftsa.itys.detail.model.vo.TutorDetail;
 import com.tftsa.itys.detail.model.vo.TutorLikes;
 import com.tftsa.itys.detail.model.vo.TutorQna;
-
-import com.tftsa.itys.detail.model.vo.TutorDetail;
 
 @Repository("detailDao")
 public class DetailDao {
@@ -72,8 +74,8 @@ public class DetailDao {
 		return (ArrayList<TutorQna>)list;
 	}
 
-	public int qnaAnswerInsert(TutorQna tq) {
-		return sqlSession.insert("detailMapper.qnaAnswerInsert", tq);
+	public int qnaAnswerInsert(TutorQna tutoqna) {
+		return sqlSession.insert("detailMapper.qnaAnswerInsert", tutoqna);
 	}
 
 	public TutorQna qnaOne(int tutor_no) {
@@ -93,13 +95,30 @@ public class DetailDao {
 		return sqlSession.delete("detailMapper.tutorSaveCancel", tlikes);
 	}
 
-	public TutorLikes tutorSave(int student_no) {
-		return sqlSession.selectOne("detailMapper.tutorSave", student_no);
+	public TutorLikes tutorSave(LikesCheck lc) {
+		return sqlSession.selectOne("detailMapper.tutorSave", lc);
 	}
 
-	public Detail reviewPay(int student_no) {
-		return sqlSession.selectOne("detailMapper.reviewPay", student_no);
+	public AfterPay reviewPay(String user_name) {
+		return sqlSession.selectOne("detailMapper.reviewPay", user_name);
 	}
+
+	public TutorDetail tutorNo(int user_no) {
+		return sqlSession.selectOne("detailMapper.tutorNo", user_no);
+	}
+
+	public int openChattingInsert(OpenChat oc) {
+		return sqlSession.insert("detailMapper.openChattingInsert", oc);
+	}
+
+	public RoomNo roomNo(RoomNo rn) {
+		return sqlSession.selectOne("detailMapper.roomNo", rn);
+	}
+
+	public RoomNo findRoom(int chat_room_no) {
+		return sqlSession.selectOne("detailMapper.findRoom", chat_room_no);
+	}
+	
 
 	
 	}

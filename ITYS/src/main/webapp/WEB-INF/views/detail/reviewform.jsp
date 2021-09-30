@@ -198,7 +198,7 @@ S .br-theme-fontawesome-stars-o .br-widget {
             <h5>
               리뷰점수
             </h5>
-            <form action="reviewform.do" method="post">
+            <form action="reviewformsubmit.do" method="post">
 
 <select id="example">
 	<option value="1" >1</option>
@@ -229,10 +229,10 @@ S .br-theme-fontawesome-stars-o .br-widget {
 </div>  -->
 <span id="ex" class="ex">  </span> &nbsp;점
  <input type="hidden" name="score" id="score" > 
- <input type="hidden" name="pay_no" id="pay_no" value="1">
+ <input type="hidden" name="pay_no" id="pay_no" value="${pay_no }">
   <input type="hidden" name="student_no" id="student_no" value="${ loginMember.user_no }">
-  <input type="hidden" name="tutor_no" id="tutor_no" value="2">
-
+  <input type="hidden" name="tutor_no" id="tutor_no" value="${tutorno.user_no }">
+<input type="hidden" name="user_no" id="user_no" value="${tutorno.user_no }">
 <script type="text/javascript">
 $('#example').barrating('show', {
 	  theme: 'fontawesome-stars-o',

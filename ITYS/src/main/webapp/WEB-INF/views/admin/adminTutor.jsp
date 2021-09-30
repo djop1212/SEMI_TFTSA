@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,6 +80,9 @@ a {
   text-align : center;
   }
 
+#dropdownbtn {
+  margin-left:8px;
+}
 </style> 
 </head>
 <body id="page-top">
@@ -106,6 +111,7 @@ a {
                 </div>
                 
                 <div class="search-option" style="display:flex;">
+                <div class="col-sm-12 col-md-6">
 					<div class="dropdown">
 					  <button class="btn btn-primary dropdown-toggle" style="height:43px;min-width: 149px;"> 선생님 </button>
 					  <div class="dropdown-content">
@@ -114,7 +120,9 @@ a {
 					    <a href="/itys/adminTutor.do"> 선생님 </a>
 					  </div>
 					</div>
-                <form class="navbar-search">
+					</div>
+                <div class="col-sm-12 col-md-6">
+                <form action="adminMember.do" method="POST" class="navbar-search">
                   <div class="input-group" style="width:200px;float:right;margin-right:15px">
                     <input type="text" onkeyup="searchFunction()" class="form-control bg-light border-1 small" placeholder="Search an user"
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
@@ -125,6 +133,7 @@ a {
                     </div>
                   </div>
                 </form>
+                </div>
                 </div>
                 
                 <div class="table-responsive p-3">
@@ -160,7 +169,7 @@ a {
 							<td>${ m.user_no }</td>
 							<td>${ m.user_id }</td>
 							<td>${ m.user_name }</td>
-							<td>${ m.user_ssn }</td>
+							<td><c:out value="${fn:substring(m.user_ssn, 0, fn:length(m.user_ssn) - 6)}"/>******</td>
 							<td>${ m.user_phone }</td>
 							<td>${ m.user_email }</td>
 							<td>${ m.login_ok }</td>

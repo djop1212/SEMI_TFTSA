@@ -21,12 +21,14 @@ public class TutorDetail {
 	private String user_email;
 	private String user_position;
 	private String type_per;
+	private String key_name;
 
 	public TutorDetail() {}
 
 	public TutorDetail(int user_no, String pic, String min_pay, String online_ok, String intro, String day, String time,
 			String style, String area, String l_grd, String class_min, String class_times, String sub_name,
-			String user_name, String user_phone, String user_email, String user_position, String type_per) {
+			String user_name, String user_phone, String user_email, String user_position, String type_per,
+			String key_name) {
 		super();
 		this.user_no = user_no;
 		this.pic = pic;
@@ -46,6 +48,7 @@ public class TutorDetail {
 		this.user_email = user_email;
 		this.user_position = user_position;
 		this.type_per = type_per;
+		this.key_name = key_name;
 	}
 
 	public int getUser_no() {
@@ -192,10 +195,25 @@ public class TutorDetail {
 		this.type_per = type_per;
 	}
 
+	public String getKey_name() {
+		return key_name;
+	}
+
+	public void setKey_name(String key_name) {
+		this.key_name = key_name;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-
+	@Override
+	public String toString() {
+		return "TutorDetail [user_no=" + user_no + ", pic=" + pic + ", min_pay=" + min_pay + ", online_ok=" + online_ok
+				+ ", intro=" + intro + ", day=" + day + ", time=" + time + ", style=" + style + ", area=" + area
+				+ ", l_grd=" + l_grd + ", class_min=" + class_min + ", class_times=" + class_times + ", sub_name="
+				+ sub_name + ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_email=" + user_email
+				+ ", user_position=" + user_position + ", type_per=" + type_per + ", key_name=" + key_name + "]";
+	}
+   
 }
-	

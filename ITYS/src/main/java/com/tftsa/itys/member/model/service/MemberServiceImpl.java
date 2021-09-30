@@ -26,8 +26,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteUser(String user_id) {
-		return memberDao.deleteUser(user_id);
+	public int deleteUser(int user_no) {
+		return memberDao.deleteUser(user_no);
 	}
 
 	@Override
@@ -64,15 +64,16 @@ public class MemberServiceImpl implements MemberService {
 
 	// 이메일 발송
 	@Override
-	public void send_mail(Member member, String div) throws Exception {
+	public void send_mail(Member member) throws Exception {
 		// Mail Server 설정
+		System.out.println("send_mail");
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "jooo9898@naver.com";
-		String hostSMTPpwd = "XQR6EHLYW6H8";
+		String hostSMTPid = "locus0704@naver.com";
+		String hostSMTPpwd = "sktjstodsjgkrtod";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "jooo9898@naver.com";
+		String fromEmail = "locus0704@naver.com";
 		String fromName = "난 선생이고, 넌 학생이야";
 		String subject = "itys 임시 비밀번호 발송";
 		String msg = "";
@@ -125,11 +126,12 @@ public class MemberServiceImpl implements MemberService {
 			for (int i = 0; i < 12; i++) {
 				pw += (char) ((Math.random() * 26) + 97);
 			}
+			System.out.println("pw : "+pw);
 			member.setUser_pwd(pw);
 			// 비밀번호 변경
 			memberDao.updateUserPwd(member);
 			// 비밀번호 변경 메일 발송
-			send_mail(member, "find_pw");
+			send_mail(member);
 			
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();
@@ -150,6 +152,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Tutor selectTutor(int user_no) {
 		return memberDao.selectTutor(user_no);
+	}
+
+	@Override
+	public Member selectEmail(String email) {
+		return memberDao.selectEmail(email);
+	}
+
+	@Override
+	public Member selectUserNo(int user_no) {
+		return memberDao.selectUserNo(user_no);
 	}
 
 
