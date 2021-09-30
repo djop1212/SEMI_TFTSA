@@ -86,7 +86,7 @@ div.box {
 .event_section .event_container .box {
 	align-items: flex-start !important;
 }
-img{
+.img_size{
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
@@ -111,13 +111,13 @@ img{
 					<div id="left">
 						<div>
 							<c:if test="${member.user_position eq 'U'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
+								<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/member/profileDefault.gif">
 							</c:if>
 							<c:if test="${student.pic ne null and member.user_position eq 'S'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
+								<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/studentImg/${student.pic}">
 							</c:if>
 							<c:if test="${tutor.pic ne null and member.user_position eq 'T'}">
-								<img alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
+								<img class="img_size" alt="" src="${ pageContext.servletContext.contextPath }/resources/images/mypage/tutorImg/${tutor.pic}">
 							</c:if>
 						</div>
 						<div style="padding-top: 5px;">
