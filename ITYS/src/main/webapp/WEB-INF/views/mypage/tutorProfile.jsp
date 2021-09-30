@@ -96,8 +96,8 @@ $(function () {
 			<table align="center">
 					<tr>
 						<th>프로필 사진</th>
-						<td><input type="file" name="upfile" required></td>
-					</tr> <!-- accept="image/*" -->
+						<td><input type="file" name="upfile" required accept="image/*"></td>
+					</tr> 
 						<tr>
 							<th>한줄소개</th>
 							<td>

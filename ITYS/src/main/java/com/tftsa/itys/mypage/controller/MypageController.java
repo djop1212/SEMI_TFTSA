@@ -377,6 +377,12 @@ public class MypageController {
 			mv.addObject("subjectList", subjectList);
 			mv.addObject("keyList", keyList);
 			if(member.getUser_position().equals("S")) {
+				String str = student.getTime();
+				String[] array = str.split(",");
+				String stime = array[0];
+				String etime = array[1];
+				mv.addObject("stime", stime);
+				mv.addObject("etime", etime);
 				mv.addObject("student", student);
 			}else if(member.getUser_position().equals("T")) {
 				String str = tutor.getTime();
